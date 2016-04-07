@@ -57,8 +57,8 @@ public class StoreCheckDetail extends BaseObservable {
         this.packUnit = packUnit;
     }
 
-    public int getPackSize(){
-        return  packSize;
+    public String getPackSize(){
+        return  String.valueOf(packSize) + " " + packUnit;
     }
 
     public void setPackSize(int packSize){
@@ -101,7 +101,7 @@ public class StoreCheckDetail extends BaseObservable {
 
     public String getCurrency(){return currency;}
 
-    public int getItemsPerPack(){return itemsPerPack;}
+    public String getItemsPerPack(){return String.valueOf(packSize) + "X" + String.valueOf(itemsPerPack) ;}
 
     public void setItemsPerPack(int itemsPerPack){this.itemsPerPack = itemsPerPack;}
 
