@@ -65,6 +65,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
     private static final String KEY_OUTLET_DATE = "outlet_date";
 
 
+
     //Products Table Column Names
 
     private  static final  String KEY_PRODUCT_ID  = "product_id";
@@ -232,6 +233,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
             values.put(KEY_INDUSTRY, outlet.get_industry());
             values.put(KEY_OUTLET_CITY, outlet.get_outlet_city());
             values.put(KEY_YEAR, outlet.get_year());
+            values.put(KEY_CHCCODE,outlet.get_chccode());
             values.put(KEY_OUTLET_DATE, String.valueOf(outlet.get_outlet_date()));
 
             // Inserting Row
@@ -371,6 +373,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
                 + KEY_INDUSTRY + " TEXT,"
                 + KEY_OUTLET_CITY + " TEXT,"
                 + KEY_YEAR + " TEXT,"
+                + KEY_CHCCODE + " TEXT,"
                 + KEY_OUTLET_DATE + " TEXT"+ ")";
 
         database.execSQL(CREATE_OUTLETS_TABLE);
