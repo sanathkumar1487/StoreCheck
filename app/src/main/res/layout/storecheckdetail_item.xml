@@ -1,4 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+            name="storeCheckDetail"
+            type="com.euromonitor.storecheck.model.StoreCheckDetail"/>
+    </data>
 <android.support.v7.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
@@ -22,7 +27,8 @@
                 android:id="@+id/productName"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/storeCheckLabel"/>
+                android:textColor="@color/storeCheckLabel"
+                android:text="@{storeCheckDetail.productName}"/>
         </LinearLayout>
         <GridLayout
             android:layout_width="wrap_content"
@@ -37,7 +43,8 @@
                 android:textSize="@dimen/detailfont_size"
                 android:inputType="numberDecimal"
                 android:textColor="@color/grey_700"
-                android:layout_row="0"/>
+                android:layout_row="0"
+                android:text="@{String.valueOf(storeCheckDetail.price)}"/>
             <TextView
                 android:id="@+id/packSize"
                 android:layout_width="wrap_content"
@@ -45,15 +52,18 @@
                 android:textSize="@dimen/detailfont_size"
                 android:inputType="numberDecimal"
                 android:textColor="@color/grey_700"
-                android:layout_row="1"/>
+                android:layout_row="1"
+                android:text="@{String.valueOf(storeCheckDetail.packSize)}"/>
             <TextView
                 android:id="@+id/itemsPerPack"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:textSize="@dimen/detailfont_size"
                 android:textColor="@color/grey_700"
-                android:layout_row="2"/>
+                android:layout_row="2"
+                android:text="@{String.valueOf(storeCheckDetail.itemsPerPack)}"/>
         </GridLayout>
     </LinearLayout>
 
 </android.support.v7.widget.CardView>
+</layout>

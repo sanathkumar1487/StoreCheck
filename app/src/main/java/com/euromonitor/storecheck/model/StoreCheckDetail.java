@@ -1,22 +1,26 @@
 package com.euromonitor.storecheck.model;
 
+import android.databinding.BaseObservable;
+import android.databinding.Bindable;
+
 import java.util.ArrayList;
 
 /**
  * Created by Sanath.Kumar on 4/7/2016.
  */
-public class StoreCheckDetail {
-    private int itemId;
-    private String productName;
-    private Double price;
-    private int packSize;
-    private String packUnit;
-    private String outletName;
-    private String nbo;
-    private String gbo;
-    private String brand;
-    private String currency;
-    private int itemsPerPack;
+public class StoreCheckDetail extends BaseObservable {
+    public int itemId;
+
+    public String productName;
+    public Double price;
+    public int packSize;
+    public String packUnit;
+    public String outletName;
+    public String nbo;
+    public String gbo;
+    public String brand;
+    public String currency;
+    public int itemsPerPack;
 
     public int getItemId(){
         return itemId;
@@ -26,6 +30,7 @@ public class StoreCheckDetail {
         this.itemId = itemId;
     }
 
+    @Bindable
     public String getProductName(){
         return productName;
     }
@@ -34,14 +39,16 @@ public class StoreCheckDetail {
         this.productName = productName;
     }
 
-    public Double getPrice(){
-        return  price;
+    @Bindable
+    public String getPrice(){
+        return  price.toString();
     }
 
     public void setPrice(Double price){
         this.price = price;
     }
 
+    @Bindable
     public String getPackUnit(){
         return  packUnit;
     }
