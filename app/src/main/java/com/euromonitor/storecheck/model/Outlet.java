@@ -14,8 +14,20 @@ public class Outlet {
 
     @SerializedName("ProjectId")
     private int _project_id;
+
     @SerializedName("GeographyCode")
     private String _geo_code;
+
+    public String get_chccode() {
+        return _chccode;
+    }
+
+    public void set_chccode(String _chccode) {
+        this._chccode = _chccode;
+    }
+
+    @SerializedName("CHCCode")
+    private  String _chccode;
 
     @SerializedName("Geography")
     private String _geo_name;
@@ -38,7 +50,7 @@ public class Outlet {
 
     }
 
-    public Outlet(int _outlet_id, int _project_id, String _geo_code, String _geo_name, String _industry, String _outlet_city, String _year, String _outlet_date) {
+    public Outlet(int _outlet_id, int _project_id, String _geo_code, String _geo_name, String _industry, String _outlet_city, String _year, String _outlet_date,String _chccode) {
         this._outlet_id = _outlet_id;
         this._project_id = _project_id;
         this._geo_code = _geo_code;
@@ -47,6 +59,7 @@ public class Outlet {
         this._outlet_city = _outlet_city;
         this._year = _year;
         this._outlet_date = _outlet_date;
+        this._chccode = _chccode;
     }
 
     public int get_id() {

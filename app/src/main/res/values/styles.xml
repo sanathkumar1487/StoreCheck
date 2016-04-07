@@ -43,4 +43,9 @@
                                                                     and color of Navigation Drawer Icon-->
     </style>
 
+    <style name="Buttons" parent="Theme.AppCompat.Light">
+        <item name="colorControlHighlight">@color/blue_700</item>
+        <item name="colorButtonNormal">@color/blue_500</item>
+    </style>
+
 </resources>

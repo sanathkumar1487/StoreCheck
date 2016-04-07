@@ -21,7 +21,7 @@ import com.euromonitor.storecheck.R;
 import com.euromonitor.storecheck.listener.ClickListener;
 import com.euromonitor.storecheck.listener.RecyclerTouchListener;
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends AppCompatActivity {
 
     Toolbar toolbar;
     private SearchView.OnQueryTextListener queryTextListener;

@@ -18,5 +18,8 @@
     <color name="grey_700">#616161</color>
     <color name="grey_800">#424242</color>
 
+    <color name="blue_500">#90CAF9</color>
+    <color name="blue_700">#64B5F6</color>
+
     <color name="storeCheckLabel">#1179b4</color>
 </resources>
