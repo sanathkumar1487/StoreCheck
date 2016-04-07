@@ -3,7 +3,9 @@ package com.euromonitor.storecheck.app;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.util.Log;
@@ -48,8 +50,8 @@ public class StoreCheckImportFragment extends Fragment implements AsyncPostExecu
         progressBar = (MaterialProgressBar) view.findViewById(R.id.progbar);
 
         int color = 0xFF00FF00;
-        progressBar.getIndeterminateDrawable().setColorFilter(color, PorterDuff.Mode.SRC_IN);
-        progressBar.getProgressDrawable().setColorFilter(color, PorterDuff.Mode.SRC_IN);
+        progressBar.getIndeterminateDrawable().setColorFilter(Color.parseColor("#1565C0"), PorterDuff.Mode.SRC_IN);
+        progressBar.getProgressDrawable().setColorFilter(Color.parseColor("#1565C0"), PorterDuff.Mode.SRC_IN);
 
         browseFile = (Button)view.findViewById(R.id.browseFile);
         browseFile.setOnClickListener(new View.OnClickListener() {
@@ -105,27 +107,50 @@ public class StoreCheckImportFragment extends Fragment implements AsyncPostExecu
                 importDataController.execute();
             } catch (Exception e)
             {
-                messageBox("onActivityResult",e.getMessage());
+                messageBox(e);
             }
         }
     }
 
-    public void messageBox(String method, String message)
+    public void messageBox(Exception e)
     {
-        Log.d("EXCEPTION: " + method, message);
+
 
         AlertDialog.Builder messageBox = new AlertDialog.Builder(this.getActivity());
-        messageBox.setTitle(method);
+        messageBox.setTitle("Error occurred");
+       final String errordata = Log.getStackTraceString(e);
+        messageBox.setNegativeButton("cancel", null);
+        messageBox.setPositiveButton("Email error details", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                Intent i = new Intent(Intent.ACTION_SEND);
+                i.setType("message/rfc822");
+                i.putExtra(Intent.EXTRA_EMAIL  , new String[]{"sanath.kumar@euromonitor.com","Fritze.George@euromonitor.com",});
+                i.putExtra(Intent.EXTRA_SUBJECT, "Storecheck app error Details");
+                i.putExtra(Intent.EXTRA_TEXT, errordata );
+                try {
+                    startActivity(Intent.createChooser(i, "Send mail..."));
+                } catch (android.content.ActivityNotFoundException ex) {
+                    Toast.makeText(getActivity(), "There are no email clients installed.", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+       /* messageBox.setTitle(method);
         messageBox.setMessage(message);
         messageBox.setCancelable(false);
-        messageBox.setNeutralButton("OK", null);
+        messageBox.
+        messageBox.setNeutralButton("OK", null);*/
         messageBox.show();
     }
 
     @Override
     public void PostExecute(String message) {
-      //  Toast.makeText(, "PostExecute :: " + message, Toast.LENGTH_LONG).show();
+        Toast.makeText(getActivity(), "PostExecute :: " + message, Toast.LENGTH_LONG).show();
         progressBar.setVisibility(View.GONE);
+        browseFile.setEnabled(true);
+        sqlLiteMonitor.setEnabled(true);
     }
 
     @Override
@@ -139,6 +164,8 @@ public class StoreCheckImportFragment extends Fragment implements AsyncPostExecu
     public void preExecute(String message) {
 
         progressBar.setVisibility(View.VISIBLE);
+        browseFile.setEnabled(false);
+        sqlLiteMonitor.setEnabled(false);
     }
 
 
