@@ -1,0 +1,43 @@
+
+<android.support.v4.widget.DrawerLayout
+    android:id="@+id/drawer_layout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/storecheckdetail_toolbar"/>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/containerFrame"/>
+         <!--   <fragment
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/containerFragment"
+            android:name="com.example.nooraakhtar.listview.app.StoreCheckDetailsFragment"
+            tools:layout="@layout/storecheck_details"/>
+-->
+    </LinearLayout>
+    <fragment
+        android:id="@+id/storeCheckNavDrawerFragment"
+        android:name="com.euromonitor.storecheck.app.StoreCheckNavigationFragment"
+        android:layout_width="@dimen/nav_drawer_width"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        app:layout="@layout/storecheck_navigation_drawer"
+        tools:layout="@layout/storecheck_navigation_drawer"
+        />
+
+</android.support.v4.widget.DrawerLayout>

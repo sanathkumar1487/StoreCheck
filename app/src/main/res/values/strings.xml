@@ -1,0 +1,23 @@
+<resources>
+    <string name="action_settings">Settings</string>
+    <string name="app_name">Store-Check</string>
+    <string name="product_name">Product Name: </string>
+    <string name="product_price">Price: </string>
+    <string name="settings">Settings</string>
+    <string name="edit">Edit</string>
+    <string name="search">Search</string>
+    <string name="exit">Exit</string>
+    <string name="nbo">NBO: </string>
+    <string name="gbo">GBO: </string>
+    <string name="brand">Brand: </string>
+    <string name="packSize">Pack Size: </string>
+    <string name="packUnit">Unit: </string>
+    <string name="outlet">Outlet: </string>
+    <string name="search_hint">Product Search</string>
+    <string name="drawer_open">Open</string>
+    <string name="drawer_close">Close</string>
+    <string name="browse_file">Browse file</string>
+    <string name="export">Export Store Check Data</string>
+    <string name="product_details">View/Edit Product Details </string>
+    <string name="browse_button_name">Browse</string>
+</resources>

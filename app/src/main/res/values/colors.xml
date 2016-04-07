@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#32a7de</color>
+    <color name="colorPrimaryDark">#2667a9</color>
+    <color name="colorAccent">#f344aca5</color>
+
+    <color name="overflowMenuBg">#fffcfff6</color>
+
+    <!-- Grey Color Shades -->
+    <color name="grey_25">#FDFDFD</color>
+    <color name="grey_50">#FAFAFA</color>
+    <color name="grey_100">#F5F5F5</color>
+    <color name="grey_200">#EEEEEE</color>
+    <color name="grey_300">#E0E0E0</color>
+    <color name="grey_400">#BDBDBD</color>
+    <color name="grey_500">#9E9E9E</color>
+    <color name="grey_600">#757575</color>
+    <color name="grey_700">#616161</color>
+    <color name="grey_800">#424242</color>
+
+    <color name="storeCheckLabel">#1179b4</color>
+</resources>
