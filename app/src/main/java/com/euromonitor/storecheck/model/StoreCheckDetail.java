@@ -1,7 +1,10 @@
 package com.euromonitor.storecheck.model;
 
+import android.content.Context;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
+
+import com.euromonitor.storecheck.utility.DatabaseHelper;
 
 import java.util.ArrayList;
 
@@ -105,8 +108,8 @@ public class StoreCheckDetail extends BaseObservable {
 
     public void setItemsPerPack(int itemsPerPack){this.itemsPerPack = itemsPerPack;}
 
-    public  static ArrayList<StoreCheckDetail> getData(){
-        ArrayList<StoreCheckDetail> storeCheckItems = new ArrayList<>();
+    public  static ArrayList<StoreCheckDetail> getData(Context context){
+        /*ArrayList<StoreCheckDetail> storeCheckItems = new ArrayList<>();
 
         for (int index = 0;index<100;index++){
             StoreCheckDetail tempItem = new StoreCheckDetail();
@@ -119,7 +122,9 @@ public class StoreCheckDetail extends BaseObservable {
             tempItem.setItemsPerPack(10);
             storeCheckItems.add(tempItem);
         }
-        return  storeCheckItems;
+        return  storeCheckItems;*/
+        DatabaseHelper dbHelper = new DatabaseHelper(context);
+        return dbHelper.GetAllProductDetails();
     }
 
 }

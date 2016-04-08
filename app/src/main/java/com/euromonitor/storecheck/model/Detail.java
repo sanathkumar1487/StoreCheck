@@ -18,6 +18,9 @@ public class Detail {
     @SerializedName("outletId")
     private  String _outlet_id;
 
+    @SerializedName("productId")
+    private String _product_id;
+
     @SerializedName("outletName")
     private  String _outlet_name;
 
@@ -36,7 +39,7 @@ public class Detail {
     @SerializedName("pricingId")
     private  String _pricing_id;
 
-    @SerializedName("unitCode")
+    @SerializedName("unit")
     private  String _unit_code;
 
     @SerializedName("unitPriceLocal")
@@ -99,6 +102,14 @@ public class Detail {
 
     public void set_outlet_id(String _outlet_id) {
         this._outlet_id = _outlet_id;
+    }
+
+    public String get_product_id(){
+        return _product_id;
+    }
+
+    public void set_product_id(String _product_id){
+        this._product_id = _product_id;
     }
 
     public String get_outlet_name() {

@@ -3,6 +3,7 @@ package com.euromonitor.storecheck.utility;
 import android.content.Context;
 import android.util.Log;
 
+import com.euromonitor.storecheck.model.Unit;
 import com.google.gson.Gson;
 
 import org.json.JSONException;
@@ -62,7 +63,7 @@ public  class JsonFileParser {
 
     }
 
-    public void loadModels(List<Outlet> outlets,List<CustomField> customFields,List<Detail> details,List<Market> markets,List<Option> options ,List<Product> products,List<Channel> channels,Context context) throws JSONException {
+    public void loadModels(List<Outlet> outlets,List<CustomField> customFields,List<Detail> details,List<Market> markets,List<Option> options ,List<Product> products,List<Channel> channels, List<Unit> units ,Context context) throws JSONException {
 
              JSONObject rootData = new JSONObject(rawJsonData);
 
@@ -103,13 +104,16 @@ public  class JsonFileParser {
                 }
                 Log.e("customFields data Count::", String.valueOf(customFields.size()));
 
+                 /* Store Check Market  data*/
+        units = Arrays.asList(gsonObject.fromJson(rootData.getJSONArray("Units").toString(),Unit[].class));
+        Log.e("Units data Count::", String.valueOf(units.size()));
 
 
 
 
         DatabaseHelper databaseHelper = new DatabaseHelper(context);
             Log.d("Insert :", "Inserting Products... ");
-            databaseHelper.loadData(products, outlets, channels, details, markets, options, customFields);
+            databaseHelper.loadData(products, outlets, channels, details, markets, options, customFields, units);
 
 
 

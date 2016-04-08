@@ -61,7 +61,7 @@ public class StoreCheckDetailAdapter extends RecyclerView.Adapter<StoreCheckDeta
         {
             for (StoreCheckDetail wp : allStoreCheckItems)
             {
-                if (wp.getProductName().toLowerCase(Locale.getDefault()).contains(productName))
+                if (wp.getBrand().toLowerCase(Locale.getDefault()).contains(productName))
                 {
                     storeCheckItems.add(wp);
                 }

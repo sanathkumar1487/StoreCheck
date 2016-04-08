@@ -46,7 +46,7 @@ public class StoreCheckDetailsFragment extends Fragment {
         RecyclerView recyclerView = (RecyclerView)view.findViewById(R.id.storecheckDetailsView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        adapter = new StoreCheckDetailAdapter(StoreCheckDetail.getData());
+        adapter = new StoreCheckDetailAdapter(StoreCheckDetail.getData(getActivity()));
         recyclerView.setAdapter(adapter);
     }
 

@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
             if(isLaunch)
             {
                 isLaunch = false;
-                loadView(VIEW_DETAILS);
+                loadView(IMPORT_STORECHECK_DETAILS);
             }
 
         } catch (Exception e) {
