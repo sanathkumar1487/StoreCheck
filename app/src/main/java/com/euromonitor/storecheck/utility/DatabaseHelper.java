@@ -644,7 +644,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
 
     public ArrayList<StoreCheckDetail> GetAllProductDetails(){
         SQLiteDatabase database = this.getReadableDatabase();
-        String query = "select d.price, d.packSize, u.unitname, p.product_Name, m.brand from details d inner join products p on p.product_id = d.productid inner join markets m on m.productcode = d.productid inner join units u on u.unitid = d.unitcode";
+        String query = "select distinct d.price, d.packSize, u.unitname, p.product_Name, m.brand from details d inner join products p on p.product_id = d.productid inner join markets m on m.productcode = d.productid inner join units u on u.unitid = d.unitcode";
         Cursor cursor = database.rawQuery(query, null);
         ArrayList<StoreCheckDetail> storeCheckDetails = null;
         try {
