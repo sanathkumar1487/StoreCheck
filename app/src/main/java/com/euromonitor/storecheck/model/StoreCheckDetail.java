@@ -23,7 +23,8 @@ public class StoreCheckDetail extends BaseObservable {
     public String gbo;
     public String brand;
     public String currency;
-    public int itemsPerPack;
+    public int multiPackSize;
+    public int priceId;
 
     public int getItemId(){
         return itemId;
@@ -49,6 +50,12 @@ public class StoreCheckDetail extends BaseObservable {
 
     public void setPrice(Double price){
         this.price = price;
+    }
+
+    public void setPriceId(int priceId){this.priceId = priceId;}
+
+    public int getPriceId(){
+        return priceId;
     }
 
     @Bindable
@@ -104,25 +111,11 @@ public class StoreCheckDetail extends BaseObservable {
 
     public String getCurrency(){return currency;}
 
-    public String getItemsPerPack(){return String.valueOf(packSize) + "X" + String.valueOf(itemsPerPack) ;}
+    public String getMultiPackSize(){return String.valueOf(packSize) + "X" + String.valueOf(multiPackSize) ;}
 
-    public void setItemsPerPack(int itemsPerPack){this.itemsPerPack = itemsPerPack;}
+    public void setMultiPackSize(int itemsPerPack){this.multiPackSize = itemsPerPack;}
 
     public  static ArrayList<StoreCheckDetail> getData(Context context){
-        /*ArrayList<StoreCheckDetail> storeCheckItems = new ArrayList<>();
-
-        for (int index = 0;index<100;index++){
-            StoreCheckDetail tempItem = new StoreCheckDetail();
-            tempItem.setItemId(index);
-            tempItem.setProductName("Coke " + index);
-            tempItem.setPackSize(10);
-            tempItem.setPackUnit("ml");
-            tempItem.setPrice(100.0 *index);
-            tempItem.setCurrency("INR");
-            tempItem.setItemsPerPack(10);
-            storeCheckItems.add(tempItem);
-        }
-        return  storeCheckItems;*/
         DatabaseHelper dbHelper = new DatabaseHelper(context);
         return dbHelper.GetAllProductDetails();
     }

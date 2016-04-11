@@ -644,7 +644,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
 
     public ArrayList<StoreCheckDetail> GetAllProductDetails(){
         SQLiteDatabase database = this.getReadableDatabase();
-        String query = "select distinct d.price, d.packSize, u.unitname, p.product_Name, m.brand from details d inner join products p on p.product_id = d.productid inner join markets m on m.productcode = d.productid inner join units u on u.unitid = d.unitcode";
+        String query = "select distinct d.price, d.packSize, d.multipackSize, u.unitname, p.product_Name, m.brand from details d inner join products p on p.product_id = d.productid inner join markets m on m.productcode = d.productid inner join units u on u.unitid = d.unitcode";
         Cursor cursor = database.rawQuery(query, null);
         ArrayList<StoreCheckDetail> storeCheckDetails = null;
         try {
@@ -662,17 +662,22 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
                     temp.setPackSize(Integer.valueOf(packSize));
                 }
 
-                String packUnit = cursor.getString(2);
+                String multiPackSize = cursor.getString(2);
+                if(packSize!=null) {
+                    temp.setMultiPackSize(Integer.valueOf(multiPackSize ));
+                }
+
+                String packUnit = cursor.getString(3);
                 if(packUnit!=null) {
                     temp.setPackUnit(packUnit);
                 }
 
-                String productName = cursor.getString(3);
+                String productName = cursor.getString(4);
                 if(productName!=null) {
                     temp.setProductName(productName);
                 }
 
-                String brand = cursor.getString(4);
+                String brand = cursor.getString(5);
                 if(brand!=null) {
                     temp.setBrand(brand);
                 }
