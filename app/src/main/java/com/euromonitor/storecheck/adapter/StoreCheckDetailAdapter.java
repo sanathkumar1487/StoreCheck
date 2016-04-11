@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.euromonitor.storecheck.BR;
 import com.euromonitor.storecheck.R;
+import com.euromonitor.storecheck.databinding.StorecheckdetailItemBinding;
 import com.euromonitor.storecheck.model.StoreCheckDetail;
 
 import java.util.ArrayList;
@@ -25,6 +26,7 @@ public class StoreCheckDetailAdapter extends RecyclerView.Adapter<StoreCheckDeta
 
     private List<StoreCheckDetail> storeCheckItems;
     private ArrayList<StoreCheckDetail> allStoreCheckItems;
+    private LayoutInflater layoutInflater;
 
     public StoreCheckDetailAdapter(List<StoreCheckDetail> details){
         this.storeCheckItems = details;
@@ -32,18 +34,28 @@ public class StoreCheckDetailAdapter extends RecyclerView.Adapter<StoreCheckDeta
         allStoreCheckItems.addAll(storeCheckItems);
     }
 
+    public StoreCheckDetailAdapter(LayoutInflater layoutInflater, Context context){
+        this.layoutInflater = layoutInflater;
+        this.storeCheckItems = StoreCheckDetail.getData(context);
+        allStoreCheckItems = new ArrayList<>();
+        allStoreCheckItems.addAll(storeCheckItems);
+    }
+
     @Override
     public BindingHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.storecheckdetail_item, parent, false);
-        BindingHolder holder = new BindingHolder(view);
-        return holder;
+
+        StorecheckdetailItemBinding binding = StorecheckdetailItemBinding.inflate(layoutInflater, parent,false);
+
+        return new BindingHolder(binding.getRoot());
     }
 
     @Override
     public void onBindViewHolder(BindingHolder holder, int position) {
-            StoreCheckDetail current = storeCheckItems.get(position);
-            holder.getBinding().setVariable(BR.storeCheckDetail, current);
-            holder.getBinding().executePendingBindings();
+        StoreCheckDetail current = storeCheckItems.get(position);
+        StorecheckdetailItemBinding binding = DataBindingUtil.getBinding(holder.itemView);
+        binding.setVariable(BR.storeCheckDetail, current);
+
     }
 
     @Override
@@ -67,7 +79,6 @@ public class StoreCheckDetailAdapter extends RecyclerView.Adapter<StoreCheckDeta
                 }
             }
         }
-
         notifyDataSetChanged();
     }
 
@@ -75,12 +86,6 @@ public class StoreCheckDetailAdapter extends RecyclerView.Adapter<StoreCheckDeta
     public static class BindingHolder extends RecyclerView.ViewHolder {
 
         private ViewDataBinding binding;
-
-        /*
-        TextView productName;
-        TextView productPrice;
-        TextView packSize;
-        TextView itemsPerPack;*/
 
         private int position;
         StoreCheckDetail current;
@@ -90,27 +95,9 @@ public class StoreCheckDetailAdapter extends RecyclerView.Adapter<StoreCheckDeta
             binding = DataBindingUtil.bind(v);
         }
 
-
-
-        public ViewDataBinding getBinding(){return binding;}
-
-
-        /*
-        public ItemsViewHolder(View itemView) {
-            super(itemView);
-            productName = (TextView)itemView.findViewById(R.id.productName);
-            productPrice = (TextView)itemView.findViewById(R.id.price);
-
-            packSize = (TextView)itemView.findViewById(R.id.packSize);
-            itemsPerPack = (TextView)itemView.findViewById(R.id.itemsPerPack);
+        public ViewDataBinding getBinding(){
+            //return binding;
+            return DataBindingUtil.getBinding(itemView);
         }
-
-        public  void setData(StoreCheckDetail current, int position){
-            this.productName.setText(current.getProductName());
-
-            this.productPrice.setText(current.getCurrency() + " " + current.getPrice().toString());
-            this.packSize.setText(current.getPackSize() + " " + current.getPackUnit());
-            itemsPerPack.setText(current.getPackSize() + "X" + current.getItemsPerPack());
-        }*/
     }
 }
