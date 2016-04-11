@@ -79,7 +79,6 @@ public class StoreCheckDetailAdapter extends RecyclerView.Adapter<StoreCheckDeta
                 }
             }
         }
-
         notifyDataSetChanged();
     }
 
@@ -87,12 +86,6 @@ public class StoreCheckDetailAdapter extends RecyclerView.Adapter<StoreCheckDeta
     public static class BindingHolder extends RecyclerView.ViewHolder {
 
         private ViewDataBinding binding;
-
-        /*
-        TextView productName;
-        TextView productPrice;
-        TextView packSize;
-        TextView itemsPerPack;*/
 
         private int position;
         StoreCheckDetail current;
@@ -102,30 +95,9 @@ public class StoreCheckDetailAdapter extends RecyclerView.Adapter<StoreCheckDeta
             binding = DataBindingUtil.bind(v);
         }
 
-
-
         public ViewDataBinding getBinding(){
             //return binding;
             return DataBindingUtil.getBinding(itemView);
         }
-
-
-        /*
-        public ItemsViewHolder(View itemView) {
-            super(itemView);
-            productName = (TextView)itemView.findViewById(R.id.productName);
-            productPrice = (TextView)itemView.findViewById(R.id.price);
-
-            packSize = (TextView)itemView.findViewById(R.id.packSize);
-            itemsPerPack = (TextView)itemView.findViewById(R.id.itemsPerPack);
-        }
-
-        public  void setData(StoreCheckDetail current, int position){
-            this.productName.setText(current.getProductName());
-
-            this.productPrice.setText(current.getCurrency() + " " + current.getPrice().toString());
-            this.packSize.setText(current.getPackSize() + " " + current.getPackUnit());
-            itemsPerPack.setText(current.getPackSize() + "X" + current.getItemsPerPack());
-        }*/
     }
 }

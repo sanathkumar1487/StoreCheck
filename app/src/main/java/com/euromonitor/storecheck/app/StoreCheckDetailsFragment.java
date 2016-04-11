@@ -7,6 +7,7 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,8 +57,13 @@ public class StoreCheckDetailsFragment extends Fragment {
             public void onClick(View view, int position) {
                 Fragment fragment = new StoreCheckAddProductDetailsFragment();
 
-                StoreCheckAddProductDetailsFragment.priceId = 1;
+                StorecheckdetailItemBinding binding = DataBindingUtil.getBinding(view);
+                StoreCheckDetail detail = binding.getStoreCheckDetail();
 
+                if(detail!=null) {
+                    StoreCheckAddProductDetailsFragment.priceId = detail.getPriceId();
+                    Log.e("PricingId", String.valueOf(StoreCheckAddProductDetailsFragment.priceId));
+                }
                 FragmentTransaction transaction = getActivity().getFragmentManager().beginTransaction();
                 transaction.replace(R.id.containerFrame, fragment);
                 transaction.addToBackStack(null);
