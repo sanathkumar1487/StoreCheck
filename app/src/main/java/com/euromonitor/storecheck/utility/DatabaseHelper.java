@@ -196,7 +196,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         db.close(); // Closing database connection
     }
 
-    private void loadChannelsTable(List<Channel> channels) {
+    public void loadChannelsTable(List<Channel> channels) {
         Log.e("loadChannelsTable::", "loadChannelsTable load data");
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -575,6 +575,33 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
 
         // return outlet list
         return outletList;
+    }
+
+    public ArrayList<String> getAllChannels()
+    {
+        ArrayList<String> my_array = new ArrayList<String>();
+        try {
+            String selectQuery = "SELECT  * FROM " + TABLE_CHANNELS;
+
+            SQLiteDatabase db = this.getWritableDatabase();
+            Cursor cursor = db.rawQuery(selectQuery, null);
+
+            if (cursor.moveToFirst()) {
+                do {
+
+                    String ID = cursor.getString(0);
+                    String CHANNELCODE = cursor.getString(1);
+                    String CHANNELNAME = cursor.getString(2);
+                    my_array.add(CHANNELNAME);
+
+                } while (cursor.moveToNext());
+            }
+            cursor.close();
+            db.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return my_array;
     }
 
 //    // Updating single outlet
