@@ -1,5 +1,6 @@
 <layout>
     <data>
+        <import type="android.view.View"/>
         <variable name="customField"
             type="com.euromonitor.storecheck.model.CustomField"/>
     </data>
@@ -14,25 +15,27 @@
             android:textSize="@dimen/default_font_size"
             android:layout_margin="@dimen/default_margin"/>
 
-       <!-- <LinearLayout
+        <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-           >
+            android:visibility="@{customField.IsTextVisible? View.VISIBLE:View.GONE }">
             <EditText
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="@{customField.CustomFieldTextValue}"
-                android:visibility="@{customField.IsTextVisible? View.VISIBLE:View.Gone }"/>
+                />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:visibility="@{customField.IsOptionVisible? View.VISIBLE:View.Gone }">
+            android:visibility="@{customField.IsOptionVisible? View.VISIBLE:View.GONE }">
             <Spinner
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content" />
-        </LinearLayout>-->
+                android:layout_height="wrap_content"
+                android:background="@color/blue_500"
+                android:id="@+id/options"/>
+        </LinearLayout>
 
     </LinearLayout>
 </layout>

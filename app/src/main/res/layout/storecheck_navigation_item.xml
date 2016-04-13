@@ -27,5 +27,5 @@
         android:text="Test Menu Item"
         android:paddingTop="@dimen/drawer_item_paddingtop"/>
 </LinearLayout>
- 
+
     </layout>

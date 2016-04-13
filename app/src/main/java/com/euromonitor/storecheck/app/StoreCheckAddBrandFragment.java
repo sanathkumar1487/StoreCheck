@@ -117,9 +117,10 @@ public class StoreCheckAddBrandFragment extends Fragment {
             temp.set_label(index + "Label text");
             temp.set_tooltip(index + "Tooltip text");
             temp.set_product_code(String.valueOf(index));
-            temp.set_object_id(String.valueOf(DropDown));
+
             Option[] options = null;
             if (index % 2 == 0) {
+                temp.set_object_id(String.valueOf(DropDown));
                 options  = new Option[5];
                 for (int sub = 0; sub < 5; sub++) {
                     Option tempOption = new Option(true, String.valueOf(sub), sub + "Available mainly off-trade", "0", "0");
@@ -128,6 +129,7 @@ public class StoreCheckAddBrandFragment extends Fragment {
                 temp.set_options(options);
             }
             else {
+                temp.set_object_id(String.valueOf(TextBox));
                 options = new Option[1];
                 Option tempOption = new Option(false, "10", "Text box", "0", "0");
                 options[0] = tempOption;
@@ -176,6 +178,4 @@ public class StoreCheckAddBrandFragment extends Fragment {
             return productItemView;
         }
     }
-
-
 }
