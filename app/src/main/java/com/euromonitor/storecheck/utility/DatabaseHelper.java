@@ -771,40 +771,98 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         return geography;
     }
 
-    public ArrayList<CustomField> getCustomFieldByProductCode(int productCode) {
-        SQLiteDatabase database = this.getReadableDatabase();
-        String query = "select c.id, c.label, c.objectid, c.options, c.tooltip, c.uniqueid, o.id, o.isdropdown, o.optionid, o.optionname, o.minimumallowed, o.maximumallowed from customfields c inner join options o on o.customfieldid = c.uniqueid where productcode=" + productCode;
-        Cursor cursor = database.rawQuery(query, null);
-        ArrayList<CustomField> customFields = null;
-        if (cursor.moveToFirst()) {
-            customFields = new ArrayList<>();
-            CustomField temp;
-            do {
+    public ArrayList<CustomField> getCustomFieldByProductCode(int productCode,ArrayList<CustomField> customFields) {
 
-                int id = cursor.getInt(0);
-                String uniqueId = cursor.getString(5);
-                if (!findCustomFieldBuUniqueId(uniqueId, customFields)) {
-                    temp = new CustomField();
-                }
+        SQLiteDatabase database = null;
+        Cursor cursor = null;
+        try{
+
+            database = this.getReadableDatabase();
+            String query = "select label,uniqueid,objectid  from customfields where productcode=" +"" + productCode+"";
+            Log.i("query is ::" ,query);
+            cursor = database.rawQuery(query, null);
+            customFields = new ArrayList<CustomField>();
+            if (cursor.moveToFirst()) {
+
+                do {
 
 
-            } while (cursor.moveToNext());
+                    CustomField customField = new CustomField();
+                    customField.set_label(cursor.getString(0));
+                    customField.setUniqueID(cursor.getString((1)));
+                    customField.set_object_id(cursor.getString((2)));
+                    customFields.add(customField);
+                } while ((cursor.moveToNext()));
 
-        }
-
-        return null;
-    }
-
-    private boolean findCustomFieldBuUniqueId(String uniqueId, ArrayList<CustomField> customFields){
-        boolean result = false;
-        for (CustomField wp : customFields)
-        {
-            if ( uniqueId.equals(wp.getUniqueID()))
-            {
-                result = true;
-                break;
             }
         }
-        return result;
+        catch (Exception ex)
+        {
+            throw  ex;
+        }
+        finally
+        {
+            Log.i("Custom Field count::", String.valueOf(customFields.size()));
+            if (cursor != null)
+                cursor.close();
+            if (database != null)
+            database.close();
+        }
+          return  customFields;
     }
+
+    public  void updateCustomFieldOptions(ArrayList<CustomField> customFields)
+    {
+
+        Log.i("Custom Field count ","updateCustomField::"+ String.valueOf(customFields.size()));
+        SQLiteDatabase database = null;
+        Cursor cursor = null;
+
+        try {
+
+        Iterator iterator = customFields.iterator();
+        while (iterator.hasNext()) {
+            CustomField customField = (CustomField) iterator.next();
+            ContentValues values = new ContentValues();
+            database = this.getReadableDatabase();
+            String query = "select optionname,minimumallowed,maximumallowed,optionid from options where customfieldid='" + customField.getUniqueID()+"'";
+            Log.i("query is ::" ,query);
+            cursor = database.rawQuery(query, null);
+            ArrayList<Option> options = new  ArrayList<Option> ();
+            if (cursor.moveToFirst()) {
+
+                do {
+
+
+                    Option option = new Option();
+                    option.setOptionName(cursor.getString(0));
+                    option.setMinimumAllowed(cursor.getString((1)));
+                    option.setMaximumAllowed(cursor.getString((2)));
+                    option.setOptionId(cursor.getString(3));
+                    options.add(option);
+                } while ((cursor.moveToNext()));
+
+            }
+            customField.set_options(options);
+        }
+
+
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+
+        }
+
+        finally
+        {
+            if (cursor != null)
+                cursor.close();
+            if (database != null)
+                database.close();
+        }
+
+    }
+
+
 }

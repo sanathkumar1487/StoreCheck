@@ -32,6 +32,11 @@ public class Option {
         MaximumAllowed = maximumAllowed;
     }
 
+    public  Option()
+    {
+
+    }
+
     public boolean is_is_dropdown() {
         return _is_dropdown;
     }

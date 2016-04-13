@@ -32,6 +32,7 @@ import com.euromonitor.storecheck.utility.DatabaseHelper;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Sanath.Kumar on 4/7/2016.
@@ -47,10 +48,12 @@ public class StoreCheckAddBrandFragment extends Fragment {
     StoreCheckBrand storeCheckBrand;
     DatabaseHelper databaseHelper;
     RecyclerView customFieldRecyclerView;
+    ArrayList<CustomField> customFields = new ArrayList<CustomField>() ;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.storecheck_addbrand, container, false);
+        databaseHelper = new DatabaseHelper(getActivity());
         setBinding();
 
         View view = binding.getRoot();
@@ -71,7 +74,7 @@ public class StoreCheckAddBrandFragment extends Fragment {
     }
 
     private ArrayList<Product> setProducts() {
-        databaseHelper = new DatabaseHelper(getActivity());
+
 
         ArrayList<Product> products = databaseHelper.getAllProducts();
 
@@ -85,7 +88,7 @@ public class StoreCheckAddBrandFragment extends Fragment {
                     Product selectedProduct = (Product)parent.getItemAtPosition(position);
                     int productID = Integer.valueOf(selectedProduct.get_product_id());
                     storeCheckBrand.setSelectedProductId(productID);
-                    ArrayList<CustomField> customFields =setCustomFieldByProductCode(productID);
+                   setCustomFieldByProductCode(productID);
                     storeCheckBrand.setCustomFields(customFields);
 
 
@@ -108,37 +111,11 @@ public class StoreCheckAddBrandFragment extends Fragment {
 
 
 
-    private ArrayList<CustomField> setCustomFieldByProductCode(int productCode) {
-        ArrayList<CustomField> customFields = new ArrayList<>();
+    private void setCustomFieldByProductCode(int productCode) {
 
-        for (int index = 0; index < 5; index++) {
-            CustomField temp = new CustomField();
-            temp.setUniqueID(String.valueOf(index));
-            temp.set_label(index + "Label text");
-            temp.set_tooltip(index + "Tooltip text");
-            temp.set_product_code(String.valueOf(index));
+               customFields =    databaseHelper.getCustomFieldByProductCode(productCode,customFields);
+                   databaseHelper.updateCustomFieldOptions(customFields);
 
-            Option[] options = null;
-            if (index % 2 == 0) {
-                temp.set_object_id(String.valueOf(DropDown));
-                options  = new Option[5];
-                for (int sub = 0; sub < 5; sub++) {
-                    Option tempOption = new Option(true, String.valueOf(sub), sub + "Available mainly off-trade", "0", "0");
-                    options[sub] = tempOption;
-                }
-                temp.set_options(options);
-            }
-            else {
-                temp.set_object_id(String.valueOf(TextBox));
-                options = new Option[1];
-                Option tempOption = new Option(false, "10", "Text box", "0", "0");
-                options[0] = tempOption;
-                temp.set_options(options);
-            }
-            customFields.add(temp);
-        }
-
-        return customFields;
     }
 
     public class ProductAdapter extends BaseAdapter implements SpinnerAdapter{

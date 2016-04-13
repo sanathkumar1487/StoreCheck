@@ -39,7 +39,7 @@ public class StoreCheckNavigationDrawerItem {
     private static String[] getTitles() {
 
         return new String[] {
-                "View Details", "View/Edit Product Details", "Add Brand", "Add Outlet", "Import Store-Check data", "Export Store-Check data"
+                "View Details", "View/Edit Product Details", "Add Brand", "Manage Outlet", "Import Store-Check data", "Export Store-Check data"
         };
     }
 }

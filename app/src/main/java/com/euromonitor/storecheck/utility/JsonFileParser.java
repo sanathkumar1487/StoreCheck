@@ -12,6 +12,7 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
@@ -93,16 +94,9 @@ public  class JsonFileParser {
                 {
                     CustomField customField = (CustomField)iterator.next();
                     customField.generateUniqueID();
-                    Option[] tempOptions =customField.get_options();
-
-                    for (int i=0;i < tempOptions.length;i++)
-                    {
-                        options.add(tempOptions[i]);
-                    }
-
-
+                    options.addAll(customField.get_options());
                 }
-                Log.e("customFields data Count::", String.valueOf(customFields.size()));
+
 
                  /* Store Check Market  data*/
         units = Arrays.asList(gsonObject.fromJson(rootData.getJSONArray("Units").toString(),Unit[].class));
@@ -114,20 +108,6 @@ public  class JsonFileParser {
         DatabaseHelper databaseHelper = new DatabaseHelper(context);
             Log.d("Insert :", "Inserting Products... ");
             databaseHelper.loadData(products, outlets, channels, details, markets, options, customFields, units);
-
-
-
-//            JSONObject marketData = extendedData.getJSONObject("StoreCheckMarkets");
-//            markets = Arrays.asList(gsonObject.fromJson(marketData.getJSONArray("StoreCheckMarket").toString(), Market[].class));
-//            Log.e("markets Count::",String.valueOf(markets.size()));
-//
-//            JSONObject outletData = extendedData.getJSONObject("StoreCheckOutlets");
-//            outlets = Arrays.asList(gsonObject.fromJson(outletData.getJSONArray("StoreCheckOutlet").toString(), Outlet[].class));
-//            Log.e("outlets Count::",String.valueOf(outlets.size()));
-//
-//            JSONObject customData = extendedData.getJSONObject("CustomFields");
-//             customFields = Arrays.asList(gsonObject.fromJson(customData.getJSONArray("StoreCheckCustomField").toString(), CustomField[].class));
-//            Log.e("customFields Count::",String.valueOf(customFields.size()));
 
 
 

@@ -27,6 +27,10 @@
                 android:id="@+id/productName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:minWidth="100sp"
+                android:maxWidth="100sp"
+                android:maxLines="10"
+                android:layout_marginRight="100sp"
                 android:textColor="@color/storeCheckLabel"
                 android:text="@{storeCheckDetail.brand}"/>
         </LinearLayout>

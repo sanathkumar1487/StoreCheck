@@ -75,27 +75,27 @@ public class StoreCheckCustomFieldsAdapter extends RecyclerView.Adapter<StoreChe
     }
 
     public class OptionsAdapter extends BaseAdapter implements SpinnerAdapter{
-        private Option[] options;
+        private ArrayList<Option> options;
         LayoutInflater layoutInflater;
 
-        public OptionsAdapter(Option[] options, LayoutInflater layoutInflater){
+        public OptionsAdapter(ArrayList<Option> options, LayoutInflater layoutInflater){
             this.options = options;
             this.layoutInflater = layoutInflater;
         }
 
         @Override
         public int getCount() {
-            return options.length;
+            return options.size();
         }
 
         @Override
         public Object getItem(int position) {
-            return options[position];
+            return options.get(position);
         }
 
         @Override
         public long getItemId(int position) {
-            return Long.valueOf(options[position].getOptionId());
+            return Long.valueOf(options.get(position).getOptionId());
         }
 
         @Override
@@ -108,7 +108,7 @@ public class StoreCheckCustomFieldsAdapter extends RecyclerView.Adapter<StoreChe
             }
             TextView productItem = (TextView)optionItemView.findViewById(R.id.productItem);
 
-            productItem.setText(options[position].getOptionName());
+            productItem.setText(options.get(position).getOptionName());
             return optionItemView;
         }
     }

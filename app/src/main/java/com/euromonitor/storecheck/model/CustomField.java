@@ -5,6 +5,8 @@ import android.databinding.Bindable;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.UUID;
 
 /**
@@ -38,7 +40,7 @@ public class CustomField  extends BaseObservable {
     private String _object_id;
 
     @SerializedName("Options")
-    private Option[] _options;
+    private ArrayList<Option> _options;
 
     @SerializedName("Tooltip")
     private String _tooltip;
@@ -55,7 +57,7 @@ public class CustomField  extends BaseObservable {
 
     private String uniqueID;
 
-    public CustomField(String _project_id, String _product_code, String _ctt_code, String _group_id, String _label, String _object_id, Option[] _options, String _tooltip) {
+    public CustomField(String _project_id, String _product_code, String _ctt_code, String _group_id, String _label, String _object_id, ArrayList<Option> _options, String _tooltip) {
         this._project_id = _project_id;
         this._product_code = _product_code;
         this._ctt_code = _ctt_code;
@@ -84,12 +86,15 @@ public class CustomField  extends BaseObservable {
         return _project_id;
     }
 
-    public void generateUniqueID() {
+    public void generateUniqueID()
+    {
         uniqueID = UUID.randomUUID().toString();
-        for (int i = 0; i < _options.length; i++) {
-            _options[i].setUniqueID(uniqueID);
-        }
-    }
+
+        Iterator iterator = _options.iterator();
+        while (iterator.hasNext()) {
+            Option option = (Option) iterator.next();
+            option.setUniqueID(uniqueID);
+    }}
 
     public void set_project_id(String _project_id) {
         this._project_id = _project_id;
@@ -150,11 +155,11 @@ public class CustomField  extends BaseObservable {
         this._object_id = _object_id;
     }
 
-    public Option[] get_options() {
+    public ArrayList<Option> get_options() {
         return _options;
     }
 
-    public void set_options(Option[] _options) {
+    public void set_options(ArrayList<Option> _options) {
         this._options = _options;
     }
 
