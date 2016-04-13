@@ -1,21 +1,51 @@
-<layout>
-    <data />
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add outlet"/>
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Outlet Name"
+        android:id="@+id/textView" />
+    <EditText
+        android:layout_width="280dp"
+        android:layout_height="60dp"
 
+        />
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/browse_file"/>
-
-    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/browse_file"/>
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="City"
+        />
+    <EditText
+        android:layout_width="280dp"
+        android:layout_height="60dp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Channel Type"
+        />
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinner"></Spinner>
+    <TextView
+        android:id="@+id/header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:text=""
+        android:textColor="#002aff"
+        android:textSize="30dp" />
+    <CalendarView
+        android:id="@+id/calenderView"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_below="@+id/textView1"></CalendarView>
 </LinearLayout>
-    </layout>
