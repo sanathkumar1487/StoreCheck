@@ -11,10 +11,13 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
+import java.util.Objects;
 
 import com.euromonitor.storecheck.model.Channel;
 import com.euromonitor.storecheck.model.CustomField;
 import com.euromonitor.storecheck.model.Detail;
+import com.euromonitor.storecheck.model.Geography;
 import com.euromonitor.storecheck.model.Market;
 import com.euromonitor.storecheck.model.Option;
 import com.euromonitor.storecheck.model.Outlet;
@@ -353,7 +356,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         db.close(); // Closing database connection
     }
 
-    private void loadUnitsTable(List<Unit> units){
+    private void loadUnitsTable(List<Unit> units) {
         Log.e("loadProdcutsTable::", "loadProdcutsTable load data");
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -482,7 +485,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
 
     }
 
-    private void createUnitTable(){
+    private void createUnitTable() {
         String CREATE_UNIT_TABLE = " CREATE TABLE " + TABLE_UNITS + "("
                 + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + KEY_UNITID + " TEXT, "
@@ -642,58 +645,139 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         }
     }
 
-    public ArrayList<StoreCheckDetail> GetAllProductDetails(){
+    public ArrayList<StoreCheckDetail> GetAllProductDetails() {
         SQLiteDatabase database = this.getReadableDatabase();
         String query = "select distinct d.pricingId, d.price, d.packSize, d.multipackSize, u.unitname, p.product_Name, m.brand from details d inner join products p on p.product_id = d.productid inner join markets m on m.productcode = d.productid inner join units u on u.unitid = d.unitcode";
         Cursor cursor = database.rawQuery(query, null);
         ArrayList<StoreCheckDetail> storeCheckDetails = null;
         try {
-        if(cursor.moveToFirst()){
-            storeCheckDetails = new ArrayList<>();
-            do{
-                StoreCheckDetail temp = new StoreCheckDetail();
+            if (cursor.moveToFirst()) {
+                storeCheckDetails = new ArrayList<>();
+                do {
+                    StoreCheckDetail temp = new StoreCheckDetail();
 
-                String priceId = cursor.getString(0);
-                if(priceId!=null) {
-                    temp.setPriceId(Integer.valueOf(priceId));
-                }
+                    String priceId = cursor.getString(0);
+                    if (priceId != null) {
+                        temp.setPriceId(Integer.valueOf(priceId));
+                    }
 
-                String price = cursor.getString(1);
-                if(price!=null) {
-                    temp.setPrice(Double.valueOf(price));
-                }
+                    String price = cursor.getString(1);
+                    if (price != null) {
+                        temp.setPrice(Double.valueOf(price));
+                    }
 
-                String packSize = cursor.getString(2);
-                if(packSize!=null) {
-                    temp.setPackSize(Integer.valueOf(packSize));
-                }
+                    String packSize = cursor.getString(2);
+                    if (packSize != null) {
+                        temp.setPackSize(Integer.valueOf(packSize));
+                    }
 
-                String multiPackSize = cursor.getString(3);
-                if(packSize!=null) {
-                    temp.setMultiPackSize(Integer.valueOf(multiPackSize));
-                }
+                    String multiPackSize = cursor.getString(3);
+                    if (packSize != null) {
+                        temp.setMultiPackSize(Integer.valueOf(multiPackSize));
+                    }
 
-                String packUnit = cursor.getString(4);
-                if(packUnit!=null) {
-                    temp.setPackUnit(packUnit);
-                }
+                    String packUnit = cursor.getString(4);
+                    if (packUnit != null) {
+                        temp.setPackUnit(packUnit);
+                    }
 
-                String productName = cursor.getString(5);
-                if(productName!=null) {
-                    temp.setProductName(productName);
-                }
+                    String productName = cursor.getString(5);
+                    if (productName != null) {
+                        temp.setProductName(productName);
+                    }
 
-                String brand = cursor.getString(6);
-                if(brand!=null) {
-                    temp.setBrand(brand);
-                }
+                    String brand = cursor.getString(6);
+                    if (brand != null) {
+                        temp.setBrand(brand);
+                    }
 
-                storeCheckDetails.add(temp);
-            }while ((cursor.moveToNext()));
-        }
-        }catch (Exception e){
+                    storeCheckDetails.add(temp);
+                } while ((cursor.moveToNext()));
+            }
+        } catch (Exception e) {
             Log.e("db-error", e.getMessage());
         }
         return storeCheckDetails;
+    }
+
+    public ArrayList<Product> getAllProducts() {
+        SQLiteDatabase database = this.getReadableDatabase();
+        String query = "select id, product_id, product_name from products";
+        Cursor cursor = database.rawQuery(query, null);
+        ArrayList<Product> products = null;
+        try {
+            if (cursor.moveToFirst()) {
+                products = new ArrayList<>();
+                do {
+                    String productId = cursor.getString(1);
+                    String productName = cursor.getString(2);
+
+                    Product temp = new Product(productId, productName);
+                    String id = cursor.getString(0);
+                    if (id != null) {
+                        temp.set_id(Integer.valueOf(id));
+                    }
+                    products.add(temp);
+                } while ((cursor.moveToNext()));
+            }
+        } catch (Exception e) {
+            Log.e("Product fetch", e.getMessage());
+        }
+        return products;
+    }
+
+    public Geography getGeography() {
+        SQLiteDatabase database = this.getReadableDatabase();
+        String query = "select geo_code, geo_name from outlets where id = 1";
+        Cursor cursor = database.rawQuery(query, null);
+        Geography geography = null;
+        if (cursor.moveToFirst()) {
+            geography = new Geography();
+
+            String geographyCode = cursor.getString(0);
+            String geographyName = cursor.getString(1);
+
+            geography.setGeographyCode(geographyCode);
+            geography.setGeographyName(geographyName);
+        }
+
+        return geography;
+    }
+
+    public ArrayList<CustomField> getCustomFieldByProductCode(int productCode) {
+        SQLiteDatabase database = this.getReadableDatabase();
+        String query = "select c.id, c.label, c.objectid, c.options, c.tooltip, c.uniqueid, o.id, o.isdropdown, o.optionid, o.optionname, o.minimumallowed, o.maximumallowed from customfields c inner join options o on o.customfieldid = c.uniqueid where productcode=" + productCode;
+        Cursor cursor = database.rawQuery(query, null);
+        ArrayList<CustomField> customFields = null;
+        if (cursor.moveToFirst()) {
+            customFields = new ArrayList<>();
+            CustomField temp;
+            do {
+
+                int id = cursor.getInt(0);
+                String uniqueId = cursor.getString(5);
+                if (!findCustomFieldBuUniqueId(uniqueId, customFields)) {
+                    temp = new CustomField();
+                }
+
+
+            } while (cursor.moveToNext());
+
+        }
+
+        return null;
+    }
+
+    private boolean findCustomFieldBuUniqueId(String uniqueId, ArrayList<CustomField> customFields){
+        boolean result = false;
+        for (CustomField wp : customFields)
+        {
+            if ( uniqueId.equals(wp.getUniqueID()))
+            {
+                result = true;
+                break;
+            }
+        }
+        return result;
     }
 }

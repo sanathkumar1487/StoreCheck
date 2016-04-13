@@ -1,5 +1,8 @@
 package com.euromonitor.storecheck.model;
 
+import android.databinding.BaseObservable;
+import android.databinding.Bindable;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.util.UUID;
@@ -7,12 +10,16 @@ import java.util.UUID;
 /**
  * Created by Sanath.Kumar on 3/31/2016.
  */
-public class CustomField {
+public class CustomField  extends BaseObservable {
 
+    final String DropDown = "1";
+    final String TextBox = "2";
+    final String CustomDropDown = "3";
+    final String CustomCompanyID = "4";
 
-    private  int _id;
+    private int _id;
 
-   @SerializedName("ProjectId")
+    @SerializedName("ProjectId")
     private String _project_id;
 
     @SerializedName("ProductCode")
@@ -31,10 +38,12 @@ public class CustomField {
     private String _object_id;
 
     @SerializedName("Options")
-    private   Option[] _options;
+    private Option[] _options;
 
     @SerializedName("Tooltip")
     private String _tooltip;
+
+    private String customFieldTextValue;
 
     public String getUniqueID() {
         return uniqueID;
@@ -75,14 +84,11 @@ public class CustomField {
         return _project_id;
     }
 
-    public void generateUniqueID()
-    {
-        uniqueID  = UUID.randomUUID().toString();
-        for (int i=0;i < _options.length;i++)
-        {
+    public void generateUniqueID() {
+        uniqueID = UUID.randomUUID().toString();
+        for (int i = 0; i < _options.length; i++) {
             _options[i].setUniqueID(uniqueID);
         }
-
     }
 
     public void set_project_id(String _project_id) {
@@ -117,6 +123,21 @@ public class CustomField {
         return _label;
     }
 
+    @Bindable
+    public String getLabel() {
+        return _label;
+    }
+
+    @Bindable
+    public boolean getIsTextVisible() {
+        return this._object_id.equals(TextBox);
+    }
+
+    @Bindable
+    public boolean getIsOptionVisible() {
+        return this._object_id.equals(DropDown);
+    }
+
     public void set_label(String _label) {
         this._label = _label;
     }
@@ -144,4 +165,14 @@ public class CustomField {
     public void set_tooltip(String _tooltip) {
         this._tooltip = _tooltip;
     }
+
+    public void setCustomFieldTextValue(String customFieldTextValue){
+        this.customFieldTextValue = customFieldTextValue;
+    }
+
+    @Bindable
+    public String getCustomFieldTextValue(){
+        return this.customFieldTextValue;
+    }
+
 }

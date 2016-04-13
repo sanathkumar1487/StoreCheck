@@ -43,7 +43,6 @@ public class StoreCheckDetailAdapter extends RecyclerView.Adapter<StoreCheckDeta
 
     @Override
     public BindingHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.storecheckdetail_item, parent, false);
 
         StorecheckdetailItemBinding binding = StorecheckdetailItemBinding.inflate(layoutInflater, parent,false);
 

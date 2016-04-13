@@ -20,4 +20,9 @@
     <string name="export">Export Store Check Data</string>
     <string name="product_details">View/Edit Product Details </string>
     <string name="browse_button_name">Browse</string>
+    <string name="geography">Geography</string>
+    <string name="product">Product</string>
+    <string name="brandName">Brand</string>
+    <string name="nboName">NBO</string>
+    <string name="customFields">Custom Fields</string>
 </resources>
