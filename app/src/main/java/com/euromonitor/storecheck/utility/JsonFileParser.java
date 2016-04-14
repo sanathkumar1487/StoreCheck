@@ -32,8 +32,6 @@ import com.euromonitor.storecheck.model.Product;
  * Loads the .EmmaStoreCheck file and populates all the Models values to be saved to the database
  */
 public  class JsonFileParser {
-
-
     Gson gsonObject = new Gson();
     StringBuilder rawJsonDataBuilder;
     String rawJsonData;
@@ -90,13 +88,13 @@ public  class JsonFileParser {
                  /* Store Check Custom Field  data*/
                 customFields = Arrays.asList(gsonObject.fromJson(rootData.getJSONArray("CustomFields").toString(),CustomField[].class));
                 Iterator iterator = customFields.iterator();
-                while (iterator.hasNext())
-                {
-                    CustomField customField = (CustomField)iterator.next();
-                    customField.generateUniqueID();
-                    options.addAll(customField.get_options());
+                while (iterator.hasNext()) {
+                    CustomField customField = (CustomField) iterator.next();
+                    if (customField != null) {
+                        customField.generateUniqueID();
+                        options.addAll(customField.get_options());
+                    }
                 }
-
 
                  /* Store Check Market  data*/
         units = Arrays.asList(gsonObject.fromJson(rootData.getJSONArray("Units").toString(),Unit[].class));

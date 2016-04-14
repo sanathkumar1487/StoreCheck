@@ -4,9 +4,11 @@ import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
@@ -41,13 +43,48 @@ public class StoreCheckCustomFieldsAdapter extends RecyclerView.Adapter<StoreChe
 
     @Override
     public void onBindViewHolder(BindingHolder holder, int position) {
-        CustomField current = customFields.get(position);
+        final CustomField current = customFields.get(position);
         StorecheckCustomfieldItemBinding binding = DataBindingUtil.getBinding(holder.itemView);
         binding.setVariable(BR.customField, current);
 
         OptionsAdapter optionsAdapter = new OptionsAdapter(current.get_options(),layoutInflater);
 
         holder.optionsSpinner.setAdapter(optionsAdapter);
+        holder.optionsSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                /*try {
+                    Option currentOption = current.get_options().get(position);
+
+                    if (current.getFrameGroupID() > 0) {
+                        String frameGroupId = String.valueOf(current.getFrameGroupID());
+
+                        for (int index = 0; index < customFields.size(); index++) {
+                            if (customFields.get(index).get_group_id().equals(frameGroupId)) {
+                                boolean isEnabled = !(currentOption.getMinimumAllowed().equals("0") && currentOption.getMaximumAllowed().equals("0"));
+
+                                customFields.get(index).setIsEnabled(isEnabled);
+                                customFields.get(index).setCurrentOptionId(Integer.valueOf(currentOption.getOptionId()));
+                                notifyCurrentDataSet();
+
+                                break;
+                            }
+                        }
+                    }
+                }catch (Exception e){
+                    Log.e("selection", e.getMessage());
+                }*/
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+
+    private void notifyCurrentDataSet(){
+        this.notifyDataSetChanged();
     }
 
     @Override

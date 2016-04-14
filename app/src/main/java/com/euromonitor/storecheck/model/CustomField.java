@@ -47,6 +47,13 @@ public class CustomField  extends BaseObservable {
 
     private String customFieldTextValue;
 
+    @SerializedName("FrameGroupId")
+    private int frameGroupID;
+
+    private boolean isEnabled;
+
+    private int currentOptionId;
+
     public String getUniqueID() {
         return uniqueID;
     }
@@ -55,9 +62,30 @@ public class CustomField  extends BaseObservable {
         this.uniqueID = uniqueID;
     }
 
+    public int getFrameGroupID() {
+        return frameGroupID;
+    }
+
+    public void setIsEnabled(boolean isEnabled) {
+        this.isEnabled = isEnabled;
+    }
+
+    public boolean getIsEnabled() {
+        return isEnabled;
+    }
+
+
+    public int getCurrentOptionId() {
+        return currentOptionId;
+    }
+
+    public void setCurrentOptionId(int currentOptionId) {
+        this.currentOptionId = currentOptionId;
+    }
+
     private String uniqueID;
 
-    public CustomField(String _project_id, String _product_code, String _ctt_code, String _group_id, String _label, String _object_id, ArrayList<Option> _options, String _tooltip) {
+    public CustomField(String _project_id, String _product_code, String _ctt_code, String _group_id, String _label, String _object_id, ArrayList<Option> _options, String _tooltip, int frameGroupID) {
         this._project_id = _project_id;
         this._product_code = _product_code;
         this._ctt_code = _ctt_code;
@@ -66,6 +94,7 @@ public class CustomField  extends BaseObservable {
         this._object_id = _object_id;
         this._options = _options;
         this._tooltip = _tooltip;
+        this.frameGroupID = frameGroupID;
 
     }
 
@@ -86,15 +115,15 @@ public class CustomField  extends BaseObservable {
         return _project_id;
     }
 
-    public void generateUniqueID()
-    {
+    public void generateUniqueID() {
         uniqueID = UUID.randomUUID().toString();
 
         Iterator iterator = _options.iterator();
         while (iterator.hasNext()) {
             Option option = (Option) iterator.next();
             option.setUniqueID(uniqueID);
-    }}
+        }
+    }
 
     public void set_project_id(String _project_id) {
         this._project_id = _project_id;
@@ -171,13 +200,16 @@ public class CustomField  extends BaseObservable {
         this._tooltip = _tooltip;
     }
 
-    public void setCustomFieldTextValue(String customFieldTextValue){
+    public void setCustomFieldTextValue(String customFieldTextValue) {
         this.customFieldTextValue = customFieldTextValue;
     }
 
-    @Bindable
-    public String getCustomFieldTextValue(){
-        return this.customFieldTextValue;
+    public void setFrameGroupID(int frameGroupID){
+        this.frameGroupID = frameGroupID;
     }
 
+    @Bindable
+    public String getCustomFieldTextValue() {
+        return this.customFieldTextValue;
+    }
 }

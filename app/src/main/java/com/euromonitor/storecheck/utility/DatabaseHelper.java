@@ -129,6 +129,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
     private static final String KEY_OPTIONS = "options";
     private static final String KEY_TOOLTIP = "tooltip";
     private static final String KEY_UNIQUEID = "uniqueid";
+    private static final String KEY_FRAMEGROUPID = "frameGroupId";
 
     // Units Table Column Names
     private static final String KEY_UNITID = "unitid";
@@ -337,20 +338,22 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         Iterator iterator = customFields.iterator();
         while (iterator.hasNext()) {
             CustomField customField = (CustomField) iterator.next();
+            if (customField != null) {
+                ContentValues values = new ContentValues();
+                values.put(KEY_PROJECTID, customField.get_project_id());
+                values.put(KEY_PRODUCTCODE, customField.get_product_code());
+                values.put(KEY_CTTCODE, customField.get_ctt_code());
+                values.put(KEY_GROUPID, customField.get_group_id());
+                values.put(KEY_LABEL, customField.get_label());
+                values.put(KEY_OBJECTID, customField.get_object_id());
+                values.put(KEY_TOOLTIP, customField.get_tooltip());
+                values.put(KEY_UNIQUEID, customField.getUniqueID());
+                values.put(KEY_FRAMEGROUPID, customField.getFrameGroupID());
 
-            ContentValues values = new ContentValues();
-            values.put(KEY_PROJECTID, customField.get_project_id());
-            values.put(KEY_PRODUCTCODE, customField.get_product_code());
-            values.put(KEY_CTTCODE, customField.get_ctt_code());
-            values.put(KEY_GROUPID, customField.get_group_id());
-            values.put(KEY_LABEL, customField.get_label());
-            values.put(KEY_OBJECTID, customField.get_object_id());
-            values.put(KEY_TOOLTIP, customField.get_tooltip());
-            values.put(KEY_UNIQUEID, customField.getUniqueID());
 
-
-            // Inserting Row
-            db.insert(TABLE_CUSTOMFIELDS, null, values);
+                // Inserting Row
+                db.insert(TABLE_CUSTOMFIELDS, null, values);
+            }
         }
 
         db.close(); // Closing database connection
@@ -480,6 +483,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
                 + KEY_OBJECTID + " TEXT,"
                 + KEY_OPTIONS + " TEXT,"
                 + KEY_TOOLTIP + " TEXT,"
+                + KEY_FRAMEGROUPID + " TEXT,"
                 + KEY_UNIQUEID + " TEXT" + ")";
         database.execSQL(CREATE_CUSTOMFIELDS_TABLE);
 
@@ -778,19 +782,19 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         try{
 
             database = this.getReadableDatabase();
-            String query = "select label,uniqueid,objectid  from customfields where productcode=" +"" + productCode+"";
+            String query = "select label,uniqueid,objectid, frameGroupId, groupid  from customfields where productcode=" +"" + productCode+"";
             Log.i("query is ::" ,query);
             cursor = database.rawQuery(query, null);
             customFields = new ArrayList<CustomField>();
             if (cursor.moveToFirst()) {
 
                 do {
-
-
                     CustomField customField = new CustomField();
                     customField.set_label(cursor.getString(0));
                     customField.setUniqueID(cursor.getString((1)));
                     customField.set_object_id(cursor.getString((2)));
+                    customField.setFrameGroupID(Integer.valueOf(cursor.getString((3))));
+                    customField.set_group_id(cursor.getString(4));
                     customFields.add(customField);
                 } while ((cursor.moveToNext()));
 
