@@ -50,7 +50,7 @@ public class CustomField  extends BaseObservable {
     @SerializedName("FrameGroupId")
     private int frameGroupID;
 
-    private boolean isEnabled;
+    private boolean isEnabled = true;
 
     private int currentOptionId;
 
@@ -83,9 +83,12 @@ public class CustomField  extends BaseObservable {
         this.currentOptionId = currentOptionId;
     }
 
+
+
     private String uniqueID;
 
-    public CustomField(String _project_id, String _product_code, String _ctt_code, String _group_id, String _label, String _object_id, ArrayList<Option> _options, String _tooltip, int frameGroupID) {
+    public CustomField(String _project_id, String _product_code, String _ctt_code, String _group_id, String _label, String _object_id,
+                       ArrayList<Option> _options, String _tooltip, int frameGroupID ) {
         this._project_id = _project_id;
         this._product_code = _product_code;
         this._ctt_code = _ctt_code;

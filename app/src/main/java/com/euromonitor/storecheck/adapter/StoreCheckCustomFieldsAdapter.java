@@ -19,6 +19,7 @@ import com.euromonitor.storecheck.R;
 import com.euromonitor.storecheck.databinding.StorecheckCustomfieldItemBinding;
 import com.euromonitor.storecheck.model.CustomField;
 import com.euromonitor.storecheck.model.Option;
+import com.euromonitor.storecheck.model.Product;
 import com.euromonitor.storecheck.model.StoreCheckDetail;
 
 import java.util.ArrayList;
@@ -29,6 +30,7 @@ import java.util.ArrayList;
 public class StoreCheckCustomFieldsAdapter extends RecyclerView.Adapter<StoreCheckCustomFieldsAdapter.BindingHolder> {
     private LayoutInflater layoutInflater;
     private ArrayList<CustomField> customFields;
+    CustomField current;
 
     public StoreCheckCustomFieldsAdapter(LayoutInflater layoutInflater, Context context, ArrayList<CustomField> customFields) {
         this.layoutInflater = layoutInflater;
@@ -43,7 +45,7 @@ public class StoreCheckCustomFieldsAdapter extends RecyclerView.Adapter<StoreChe
 
     @Override
     public void onBindViewHolder(BindingHolder holder, int position) {
-        final CustomField current = customFields.get(position);
+        current = customFields.get(position);
         StorecheckCustomfieldItemBinding binding = DataBindingUtil.getBinding(holder.itemView);
         binding.setVariable(BR.customField, current);
 
@@ -53,27 +55,28 @@ public class StoreCheckCustomFieldsAdapter extends RecyclerView.Adapter<StoreChe
         holder.optionsSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                /*try {
-                    Option currentOption = current.get_options().get(position);
+                CustomField currentCustomField =null;
+                Option selectedOption = (Option) parent.getItemAtPosition(position);
+                for(CustomField cf: customFields){
+                    if(cf.getUniqueID().equals(selectedOption.getUniqueID())){
+                        currentCustomField = cf;
+                        break;
+                    }
+                }
 
-                    if (current.getFrameGroupID() > 0) {
-                        String frameGroupId = String.valueOf(current.getFrameGroupID());
+                if(currentCustomField!=null) {
+                    String frameGroupId = String.valueOf(currentCustomField.getFrameGroupID());
+                    for (int index = 0; index < customFields.size(); index++) {
+                        if (customFields.get(index).get_group_id().equals((frameGroupId))) {
 
-                        for (int index = 0; index < customFields.size(); index++) {
-                            if (customFields.get(index).get_group_id().equals(frameGroupId)) {
-                                boolean isEnabled = !(currentOption.getMinimumAllowed().equals("0") && currentOption.getMaximumAllowed().equals("0"));
-
-                                customFields.get(index).setIsEnabled(isEnabled);
-                                customFields.get(index).setCurrentOptionId(Integer.valueOf(currentOption.getOptionId()));
-                                notifyCurrentDataSet();
-
-                                break;
-                            }
+                            Log.e("Minimum", selectedOption.getMinimumAllowed());
+                            Log.e("Maximum", selectedOption.getMaximumAllowed());
+                            customFields.get(index).setIsEnabled(!(selectedOption.getMinimumAllowed().equals("0") && selectedOption.getMaximumAllowed().equals("0")));
+                            notifyItemChangedAtPosition(index);
+                            break;
                         }
                     }
-                }catch (Exception e){
-                    Log.e("selection", e.getMessage());
-                }*/
+                }
             }
 
             @Override
@@ -83,8 +86,8 @@ public class StoreCheckCustomFieldsAdapter extends RecyclerView.Adapter<StoreChe
         });
     }
 
-    private void notifyCurrentDataSet(){
-        this.notifyDataSetChanged();
+    private void notifyItemChangedAtPosition(int position){
+        this.notifyItemChanged(position);
     }
 
     @Override

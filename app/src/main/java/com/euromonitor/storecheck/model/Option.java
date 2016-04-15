@@ -1,5 +1,7 @@
 package com.euromonitor.storecheck.model;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by Sanath.Kumar on 3/31/2016.
  */
@@ -11,6 +13,8 @@ public class Option {
     private String MinimumAllowed;
     private String MaximumAllowed;
     private String customFieldID;
+    private String isNumeric;
+    private String isZeroAllowed;
 
     public String getUniqueID() {
         return customFieldID;
@@ -24,12 +28,14 @@ public class Option {
 
     private  Option[]  DropdownOption;
 
-    public Option(boolean _is_dropdown, String optionId, String optionName, String minimumAllowed, String maximumAllowed) {
+    public Option(boolean _is_dropdown, String optionId, String optionName, String minimumAllowed, String maximumAllowed, String isNumeric, String isZeroAllowed) {
         this._is_dropdown = _is_dropdown;
         OptionId = optionId;
         OptionName = optionName;
         MinimumAllowed = minimumAllowed;
         MaximumAllowed = maximumAllowed;
+        this.isZeroAllowed = isZeroAllowed;
+        this.isNumeric = isNumeric;
     }
 
     public  Option()
@@ -75,5 +81,21 @@ public class Option {
 
     public void setMaximumAllowed(String maximumAllowed) {
         MaximumAllowed = maximumAllowed;
+    }
+
+    public String getIsNumeric(){
+        return isNumeric;
+    }
+
+    public String getIsZeroAllowed(){
+        return isZeroAllowed;
+    }
+
+    public void setIsNumeric(String isNumeric){
+        this.isNumeric = isNumeric;
+    }
+
+    public void setIsZeroAllowed(String isZeroAllowed){
+        this.isZeroAllowed = isZeroAllowed;
     }
 }

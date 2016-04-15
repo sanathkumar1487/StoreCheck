@@ -117,7 +117,8 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
     private static final String KEY_MINIMUMALLOWED = "minimumallowed";
     private static final String KEY_MAXIMUMALLOWED = "maximumallowed";
     private static final String KEY_CUSTOMFIELDID = "customfieldid";
-
+    private static final String KEY_ISNUMERIC = "isNumeric";
+    private static final String KEY_ISZEROALLOWED = "isZeroAllowed";
 
     //Custom Fields Column Names
 
@@ -130,6 +131,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
     private static final String KEY_TOOLTIP = "tooltip";
     private static final String KEY_UNIQUEID = "uniqueid";
     private static final String KEY_FRAMEGROUPID = "frameGroupId";
+
 
     // Units Table Column Names
     private static final String KEY_UNITID = "unitid";
@@ -323,7 +325,8 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
             values.put(KEY_MINIMUMALLOWED, option.getMinimumAllowed());
             values.put(KEY_MAXIMUMALLOWED, option.getMaximumAllowed());
             values.put(KEY_CUSTOMFIELDID, option.getUniqueID());
-
+            values.put(KEY_ISNUMERIC, option.getIsNumeric());
+            values.put(KEY_ISZEROALLOWED, option.getIsZeroAllowed());
             // Inserting Row
             db.insert(TABLE_OPTIONS, null, values);
         }
@@ -467,6 +470,8 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
                 + KEY_OPTIONNAME + " TEXT,"
                 + KEY_MINIMUMALLOWED + " TEXT,"
                 + KEY_MAXIMUMALLOWED + " TEXT,"
+                + KEY_ISNUMERIC + " TEXT,"
+                + KEY_ISZEROALLOWED + " TEXT,"
                 + KEY_CUSTOMFIELDID + " TEXT" + ")";
         database.execSQL(CREATE_OPTIONS_TABLE);
 
@@ -843,6 +848,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
                     option.setMinimumAllowed(cursor.getString((1)));
                     option.setMaximumAllowed(cursor.getString((2)));
                     option.setOptionId(cursor.getString(3));
+                    option.setUniqueID(customField.getUniqueID());
                     options.add(option);
                 } while ((cursor.moveToNext()));
 
