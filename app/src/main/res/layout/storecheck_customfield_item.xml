@@ -1,10 +1,11 @@
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
     <data>
         <import type="android.view.View"/>
+        <import type=" android.text.InputType"/>
         <variable name="customField"
             type="com.euromonitor.storecheck.model.CustomField"/>
     </data>
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -24,6 +25,7 @@
                 android:layout_height="wrap_content"
                 android:text="@{customField.CustomFieldTextValue}"
                 android:enabled="@{customField.IsEnabled}"
+                android:inputType="@{customField.IsNumeric? InputType.TYPE_CLASS_NUMBER:InputType.TYPE_CLASS_TEXT}"
                 android:background="@color/blue_500"
                 />
         </LinearLayout>

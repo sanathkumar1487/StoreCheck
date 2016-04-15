@@ -834,7 +834,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
             CustomField customField = (CustomField) iterator.next();
             ContentValues values = new ContentValues();
             database = this.getReadableDatabase();
-            String query = "select optionname,minimumallowed,maximumallowed,optionid from options where customfieldid='" + customField.getUniqueID()+"'";
+            String query = "select optionname,minimumallowed,maximumallowed,optionid, isnumeric, iszeroallowed from options where customfieldid='" + customField.getUniqueID()+"'";
             Log.i("query is ::" ,query);
             cursor = database.rawQuery(query, null);
             ArrayList<Option> options = new  ArrayList<Option> ();
@@ -848,6 +848,8 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
                     option.setMinimumAllowed(cursor.getString((1)));
                     option.setMaximumAllowed(cursor.getString((2)));
                     option.setOptionId(cursor.getString(3));
+                    option.setIsNumeric(cursor.getString(4));
+                    option.setIsZeroAllowed(cursor.getString(5));
                     option.setUniqueID(customField.getUniqueID());
                     options.add(option);
                 } while ((cursor.moveToNext()));

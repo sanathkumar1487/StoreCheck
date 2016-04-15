@@ -68,10 +68,16 @@ public class StoreCheckCustomFieldsAdapter extends RecyclerView.Adapter<StoreChe
                     String frameGroupId = String.valueOf(currentCustomField.getFrameGroupID());
                     for (int index = 0; index < customFields.size(); index++) {
                         if (customFields.get(index).get_group_id().equals((frameGroupId))) {
-
-                            Log.e("Minimum", selectedOption.getMinimumAllowed());
-                            Log.e("Maximum", selectedOption.getMaximumAllowed());
                             customFields.get(index).setIsEnabled(!(selectedOption.getMinimumAllowed().equals("0") && selectedOption.getMaximumAllowed().equals("0")));
+                            customFields.get(index).setSelectedOption(selectedOption);
+                            String isNumeric = selectedOption.getIsNumeric();
+
+                            if(isNumeric.equals("1")) {
+                                customFields.get(index).setIsNumeric(true);
+                            }else if(isNumeric.equals("0")){
+                                customFields.get(index).setIsNumeric(true);
+                            }
+
                             notifyItemChangedAtPosition(index);
                             break;
                         }

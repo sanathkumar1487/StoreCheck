@@ -2,7 +2,11 @@ package com.euromonitor.storecheck.model;
 
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
+import android.support.v4.widget.ContentLoadingProgressBar;
+import android.widget.EditText;
+import android.widget.Toast;
 
+import com.euromonitor.storecheck.BR;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
@@ -54,6 +58,10 @@ public class CustomField  extends BaseObservable {
 
     private int currentOptionId;
 
+    private boolean isNumeric;
+
+    private Option selectedOption;
+
     public String getUniqueID() {
         return uniqueID;
     }
@@ -74,7 +82,6 @@ public class CustomField  extends BaseObservable {
         return isEnabled;
     }
 
-
     public int getCurrentOptionId() {
         return currentOptionId;
     }
@@ -83,12 +90,26 @@ public class CustomField  extends BaseObservable {
         this.currentOptionId = currentOptionId;
     }
 
-
-
     private String uniqueID;
 
+    public void setIsNumeric(boolean isNumeric) {
+        this.isNumeric = isNumeric;
+    }
+
+    public boolean getIsNumeric() {
+        return isNumeric;
+    }
+
+    public void setSelectedOption(Option selectedOption) {
+        this.selectedOption = selectedOption;
+    }
+
+    public Option getSelectedOption() {
+        return selectedOption;
+    }
+
     public CustomField(String _project_id, String _product_code, String _ctt_code, String _group_id, String _label, String _object_id,
-                       ArrayList<Option> _options, String _tooltip, int frameGroupID ) {
+                       ArrayList<Option> _options, String _tooltip, int frameGroupID) {
         this._project_id = _project_id;
         this._product_code = _product_code;
         this._ctt_code = _ctt_code;
