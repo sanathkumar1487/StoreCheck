@@ -78,6 +78,7 @@ public class CustomField  extends BaseObservable {
         this.isEnabled = isEnabled;
     }
 
+    @Bindable
     public boolean getIsEnabled() {
         return isEnabled;
     }
@@ -96,8 +97,19 @@ public class CustomField  extends BaseObservable {
         this.isNumeric = isNumeric;
     }
 
+    @Bindable
     public boolean getIsNumeric() {
         return isNumeric;
+    }
+
+    private boolean isZeroAllowed;
+
+    public void setIsZeroAllowed(boolean isZeroAllowed){
+        this.isZeroAllowed = isZeroAllowed;
+    }
+
+    public boolean getIsZeroAllowed(){
+        return isZeroAllowed;
     }
 
     public void setSelectedOption(Option selectedOption) {

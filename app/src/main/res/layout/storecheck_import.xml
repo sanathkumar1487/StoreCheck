@@ -23,7 +23,7 @@
         android:onClick="selectFile"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:theme="@style/Buttons"
+
         android:id="@+id/browseFile"/>
 
     <Button
@@ -31,7 +31,6 @@
         android:id="@+id/sqlMonitor"
         android:layout_marginTop="80dp"
         android:layout_height="wrap_content"
-        android:theme="@style/Buttons"
         android:text="sqllite monitor" />
 
 </RelativeLayout>

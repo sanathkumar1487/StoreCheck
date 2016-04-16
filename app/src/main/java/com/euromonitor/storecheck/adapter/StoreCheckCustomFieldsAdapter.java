@@ -75,7 +75,7 @@ public class StoreCheckCustomFieldsAdapter extends RecyclerView.Adapter<StoreChe
                             if(isNumeric.equals("1")) {
                                 customFields.get(index).setIsNumeric(true);
                             }else if(isNumeric.equals("0")){
-                                customFields.get(index).setIsNumeric(true);
+                                customFields.get(index).setIsNumeric(false);
                             }
 
                             notifyItemChangedAtPosition(index);
