@@ -22,6 +22,7 @@ import com.euromonitor.storecheck.model.Market;
 import com.euromonitor.storecheck.model.Option;
 import com.euromonitor.storecheck.model.Outlet;
 import com.euromonitor.storecheck.model.Product;
+import com.euromonitor.storecheck.model.StoreCheckBrand;
 import com.euromonitor.storecheck.model.StoreCheckDetail;
 import com.euromonitor.storecheck.model.Unit;
 
@@ -34,6 +35,8 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
     // All Static variables
     // Database Version
     private static final int DATABASE_VERSION = 1;
+    private static final String KEY_BRANDID = "brandid";
+    private static final String KEY_OPTIONVALUE = "optionvalue";
 
     SQLiteDatabase database;
 
@@ -49,14 +52,15 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
     private static final String TABLE_OPTIONS = "options";
     private static final String TABLE_CUSTOMFIELDS = "customfields";
     private static final String TABLE_UNITS = "units";
-
+    private static final String TABLE_BRANDS = "brands";
+    private static final String TABLE_BRANDCUSTOMFIELDS = "brandcustomfields";
 
     private static final String KEY_ID = "id";
     private static final String KEY_BRAND = "brand";
     private static final String KEY_NBO = "nbo";
     private static final String KEY_PRODUCTCODE = "productcode";
     private static final String KEY_PROJECTID = "projectid";
-    private  static  final String KEY_NEW ="new";
+    private static final String KEY_NEW = "new";
 
 
     // Outlets Table Columns names
@@ -170,6 +174,8 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         createOptionTable();
         createCustimFieldssTable();
         createUnitTable();
+        createBrandsTable();
+        createBrandCustomFieldsTable();
     }
 
     public void loadData(List<Product> products, List<Outlet> outlets, List<Channel> channels, List<Detail> details, List<Market> markets, List<Option> options, List<CustomField> customFields, List<Unit> units) {
@@ -188,7 +194,6 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         loadUnitsTable(units);
 
     }
-
 
     private void loadProdcutsTable(List<Product> products) {
         Log.e("loadProdcutsTable::", "loadProdcutsTable load data");
@@ -226,7 +231,6 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
 
         db.close(); // Closing database connection
     }
-
 
     private void loadOutletsTable(List<Outlet> outlets) {
         Log.e("loadProdcutsTable::", "loadProdcutsTable load data");
@@ -290,7 +294,6 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         db.close(); // Closing database connection
     }
 
-
     private void loadMarketTable(List<Market> markets) {
         Log.e("loadProdcutsTable::", "loadProdcutsTable load data");
         SQLiteDatabase db = this.getWritableDatabase();
@@ -317,7 +320,6 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
 
         db.close(); // Closing database connection
     }
-
 
     private void loadOptionsTable(List<Option> options) {
         Log.e("loadProdcutsTable::", "loadProdcutsTable load data");
@@ -392,7 +394,6 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         db.close(); // Closing database connection
     }
 
-
     private void createOutletTable() {
         String CREATE_OUTLETS_TABLE = "CREATE TABLE " + TABLE_OUTLETS + "("
                 + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
@@ -421,7 +422,6 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         database.execSQL(CREATE_PRODUCTS_TABLE);
 
     }
-
 
     private void createChannelTable() {
 
@@ -473,7 +473,6 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
 
     }
 
-
     private void createOptionTable() {
         String CREATE_OPTIONS_TABLE = "CREATE TABLE " + TABLE_OPTIONS + "("
                 + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
@@ -516,13 +515,30 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         database.execSQL(CREATE_UNIT_TABLE);
     }
 
+    private void createBrandsTable() {
+        String CREATE_BRANDS_TABLE = " CREATE TABLE " + TABLE_BRANDS + "("
+                + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + KEY_BRAND + " TEXT, "
+                + KEY_NBO + " TEXT)";
+        database.execSQL(CREATE_BRANDS_TABLE);
+    }
+
+    private void createBrandCustomFieldsTable() {
+        String CREATE_BRANDCUSTOMFIELD_TABLE = " CREATE TABLE " + TABLE_BRANDCUSTOMFIELDS + "("
+                + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + KEY_BRANDID + " TEXT, "
+                + KEY_CUSTOMFIELDID + " TEXT, "
+                + KEY_OPTIONID + " TEXT, "
+                + KEY_OPTIONVALUE + " TEXT) ";
+        database.execSQL(CREATE_BRANDCUSTOMFIELD_TABLE);
+    }
+
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
         onCreate(db);
 
     }
-
 
     private void dropTables() {
         database = this.getWritableDatabase();
@@ -535,12 +551,6 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         database.execSQL("DROP TABLE IF EXISTS '" + TABLE_CUSTOMFIELDS + "'");
         database.execSQL("DROP TABLE IF EXISTS '" + TABLE_UNITS + "'");
     }
-
-
-    /**
-     * All CRUD(Create, Read, Update, Delete) Operations
-     */
-
 
     public ArrayList<Cursor> getData(String Query) {
         //get writable database
@@ -655,12 +665,11 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         return products;
     }
 
-    public  ArrayList<Outlet> getOutlets()
-    {
+    public ArrayList<Outlet> getOutlets() {
         SQLiteDatabase database = this.getReadableDatabase();
         String query = "select id, outlet_id,outlet_city,outlet_date,chccode,outlet_name,channel_name from outlets";
         Cursor cursor = database.rawQuery(query, null);
-        ArrayList<Outlet>  outlets = null;
+        ArrayList<Outlet> outlets = null;
         try {
             if (cursor.moveToFirst()) {
                 outlets = new ArrayList<>();
@@ -679,13 +688,9 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
                 } while ((cursor.moveToNext()));
 
             }
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             throw ex;
-        }
-            finally
-        {
+        } finally {
             if (cursor != null)
                 cursor.close();
             if (database != null)
@@ -779,12 +784,17 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
                     } while ((cursor.moveToNext()));
 
                 }
-                if (customField.get_object_id().equals(TextBox) && options.size() > 0) {
-                    String isNumeric = options.get(0).getIsNumeric();
-                    if (isNumeric != null && isNumeric.equals("1")) {
-                        customField.setIsNumeric(true);
-                    } else if (isNumeric != null && isNumeric.equals("0")) {
-                        customField.setIsNumeric(false);
+                if ( options.size() > 0) {
+                    if (customField.get_object_id().equals(TextBox)) {
+                        String isNumeric = options.get(0).getIsNumeric();
+                        if (isNumeric != null && isNumeric.equals("1")) {
+                            customField.setIsNumeric(true);
+                        } else if (isNumeric != null && isNumeric.equals("0")) {
+                            customField.setIsNumeric(false);
+                        }
+                        customField.setSelectedOption(options.get(0));
+                    }else if (customField.get_object_id().equals(DropDown)){
+                        customField.setSelectedOption(options.get(0));
                     }
                 }
 
@@ -803,10 +813,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         return customFields;
     }
 
-
-
-    public List<Channel> getAllChannels()
-    {
+    public List<Channel> getAllChannels() {
         List<Channel> my_array = new ArrayList<Channel>();
         try {
             String selectQuery = "SELECT  id,chccode,chcname FROM " + TABLE_CHANNELS;
@@ -816,7 +823,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
 
             if (cursor.moveToFirst()) {
                 do {
-                    Channel channel=new Channel(null,null);
+                    Channel channel = new Channel(null, null);
                     channel.set_id(cursor.getInt(cursor.getColumnIndex("id")));
                     channel.set_chc_code(cursor.getString(cursor.getColumnIndex("chccode")));
                     channel.set_chc_name(cursor.getString(cursor.getColumnIndex("chcname")));
@@ -832,6 +839,43 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         return my_array;
     }
 
+    public boolean saveBrand(StoreCheckBrand brand) {
+        boolean result = true;
+        SQLiteDatabase db = this.getWritableDatabase();
+        try {
 
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(KEY_BRAND, brand.getBrand());
+            contentValues.put(KEY_NBO, brand.getBrand());
 
+            long brandId = db.insert(TABLE_BRANDS, "", contentValues);
+
+            if (brandId > 0) {
+
+                for (CustomField cf : brand.getCustomFields()) {
+                    if (result) {
+                        contentValues = new ContentValues();
+
+                        contentValues.put(KEY_BRANDID, brandId);
+                        contentValues.put(KEY_CUSTOMFIELDID, cf.getUniqueID());
+                        contentValues.put(KEY_OPTIONID, cf.getSelectedOption().getOptionId());
+                        if (cf.get_object_id().equals("2")) {
+                            contentValues.put(KEY_OPTIONVALUE, cf.getCustomFieldTextValue());
+                        } else {
+                            contentValues.put(KEY_OPTIONVALUE, cf.getSelectedOption().getOptionName());
+                        }
+                        result = db.insert(TABLE_BRANDCUSTOMFIELDS, "", contentValues) > 0;
+                    }
+                }
+            } else {
+                result = false;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            result = false;
+        } finally {
+            db.close();
         }
+        return result;
+    }
+}
