@@ -46,4 +46,10 @@ public class Channel {
     public void set_chc_name(String _chc_name) {
         this._chc_name = _chc_name;
     }
+
+    @Override
+    public String  toString()
+    {
+        return this._chc_name;
+    }
 }

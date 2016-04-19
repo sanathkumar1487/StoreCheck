@@ -85,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
 
                                 break;
                             case ADD_OUTLET:
+                                ((StoreCheckOutletDetailsFragment)fragment).adapter.filterByOutLet(newText);
 
                                 break;
                             case IMPORT_STORECHECK_DETAILS:
@@ -168,7 +169,7 @@ public class MainActivity extends AppCompatActivity {
                 fragment = new StoreCheckAddBrandFragment();
                 break;
             case ADD_OUTLET:
-                fragment = new StoreCheckAddOutletFragment();
+                fragment = new StoreCheckOutletDetailsFragment();
                 break;
             case IMPORT_STORECHECK_DETAILS:
                 fragment = new StoreCheckImportFragment();

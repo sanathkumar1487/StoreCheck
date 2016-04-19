@@ -86,6 +86,7 @@ public  class JsonFileParser {
                  Log.e("markets data Count::", String.valueOf(markets.size()));
 
                  /* Store Check Custom Field  data*/
+        Log.e("customfield ::",rootData.getJSONArray("CustomFields").toString());
                 customFields = Arrays.asList(gsonObject.fromJson(rootData.getJSONArray("CustomFields").toString(),CustomField[].class));
                 Iterator iterator = customFields.iterator();
                 while (iterator.hasNext()) {

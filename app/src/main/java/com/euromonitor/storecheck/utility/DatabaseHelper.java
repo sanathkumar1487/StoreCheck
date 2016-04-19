@@ -56,11 +56,14 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
     private static final String KEY_NBO = "nbo";
     private static final String KEY_PRODUCTCODE = "productcode";
     private static final String KEY_PROJECTID = "projectid";
+    private  static  final String KEY_NEW ="new";
 
 
     // Outlets Table Columns names
 
     private static final String KEY_OUTLET_ID = "outlet_id";
+    private static final String KEY_OUTLET_Name = "outlet_name";
+    private static final String KEY_CHANNEL_NAME = "channel_name";
     private static final String KEY_PROJECT_ID = "project_id";
     private static final String KEY_GEO_CODE = "geo_code";
     private static final String KEY_GEO_NAME = "geo_name";
@@ -232,6 +235,9 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
 
             ContentValues values = new ContentValues();
             values.put(KEY_OUTLET_ID, outlet.get_outlet_id());
+            values.put(KEY_OUTLET_Name, outlet.get_outlet_Name());
+            values.put(KEY_CHANNEL_NAME, outlet.get_channel_name());
+
             values.put(KEY_PROJECT_ID, outlet.get_project_id());
             values.put(KEY_GEO_CODE, outlet.get_geo_code());
             values.put(KEY_GEO_NAME, outlet.get_geo_name());
@@ -327,7 +333,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
             values.put(KEY_CUSTOMFIELDID, option.getUniqueID());
             values.put(KEY_ISNUMERIC, option.getIsNumeric());
             values.put(KEY_ISZEROALLOWED, option.getIsZeroAllowed());
-            // Inserting Row
+
             db.insert(TABLE_OPTIONS, null, values);
         }
 
@@ -388,6 +394,8 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         String CREATE_OUTLETS_TABLE = "CREATE TABLE " + TABLE_OUTLETS + "("
                 + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + KEY_OUTLET_ID + " TEXT,"
+                + KEY_OUTLET_Name + " TEXT, "
+                + KEY_CHANNEL_NAME + " TEXT, "
                 + KEY_PROJECT_ID + " TEXT,"
                 + KEY_GEO_CODE + " TEXT,"
                 + KEY_GEO_NAME + " TEXT,"
@@ -395,6 +403,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
                 + KEY_OUTLET_CITY + " TEXT,"
                 + KEY_YEAR + " TEXT,"
                 + KEY_CHCCODE + " TEXT,"
+                + KEY_NEW + " TEXT,"
                 + KEY_OUTLET_DATE + " TEXT" + ")";
 
         database.execSQL(CREATE_OUTLETS_TABLE);
@@ -589,32 +598,6 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         return outletList;
     }
 
-    public ArrayList<String> getAllChannels()
-    {
-        ArrayList<String> my_array = new ArrayList<String>();
-        try {
-            String selectQuery = "SELECT  * FROM " + TABLE_CHANNELS;
-
-            SQLiteDatabase db = this.getWritableDatabase();
-            Cursor cursor = db.rawQuery(selectQuery, null);
-
-            if (cursor.moveToFirst()) {
-                do {
-
-                    String ID = cursor.getString(0);
-                    String CHANNELCODE = cursor.getString(1);
-                    String CHANNELNAME = cursor.getString(2);
-                    my_array.add(CHANNELNAME);
-
-                } while (cursor.moveToNext());
-            }
-            cursor.close();
-            db.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return my_array;
-    }
 
 //    // Updating single outlet
 //    public int updateOutlet(Outlet outlet) {
@@ -762,6 +745,45 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         return products;
     }
 
+    public  ArrayList<Outlet> getOutlets()
+    {
+        SQLiteDatabase database = this.getReadableDatabase();
+        String query = "select id, outlet_id,outlet_city,outlet_date,chccode,outlet_name,channel_name from outlets";
+        Cursor cursor = database.rawQuery(query, null);
+        ArrayList<Outlet>  outlets = null;
+        try {
+            if (cursor.moveToFirst()) {
+                outlets = new ArrayList<>();
+                do {
+
+                    Outlet outlet = new Outlet();
+                    outlet.set_id(Integer.parseInt(cursor.getString(0)));
+                    outlet.set_outlet_id(Integer.parseInt(cursor.getString(1)));
+                    outlet.set_outlet_city(cursor.getString(2));
+                    outlet.set_outlet_date(cursor.getString(3));
+                    outlet.set_chccode(cursor.getString(4));
+                    outlet.set_outlet_Name(cursor.getString(5));
+                    outlet.set_channel_name(cursor.getString(6));
+                    outlets.add(outlet);
+
+                } while ((cursor.moveToNext()));
+
+            }
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+            finally
+        {
+            if (cursor != null)
+                cursor.close();
+            if (database != null)
+                database.close();
+        }
+        return outlets;
+    }
+
     public Geography getGeography() {
         SQLiteDatabase database = this.getReadableDatabase();
         String query = "select geo_code, geo_name from outlets where id = 1";
@@ -873,6 +895,35 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         }
 
     }
+
+
+    public List<Channel> getAllChannels()
+    {
+        List<Channel> my_array = new ArrayList<Channel>();
+        try {
+            String selectQuery = "SELECT  id,chccode,chcname FROM " + TABLE_CHANNELS;
+
+            SQLiteDatabase db = this.getWritableDatabase();
+            Cursor cursor = db.rawQuery(selectQuery, null);
+
+            if (cursor.moveToFirst()) {
+                do {
+                    Channel channel=new Channel(null,null);
+                    channel.set_id(cursor.getInt(cursor.getColumnIndex("id")));
+                    channel.set_chc_code(cursor.getString(cursor.getColumnIndex("chccode")));
+                    channel.set_chc_name(cursor.getString(cursor.getColumnIndex("chcname")));
+                    my_array.add(channel);
+
+                } while (cursor.moveToNext());
+            }
+            cursor.close();
+            db.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return my_array;
+    }
+
 
 
 }

@@ -1,7 +1,5 @@
 package com.euromonitor.storecheck.model;
 
-import com.google.gson.annotations.SerializedName;
-
 /**
  * Created by Sanath.Kumar on 3/31/2016.
  */
@@ -13,8 +11,8 @@ public class Option {
     private String MinimumAllowed;
     private String MaximumAllowed;
     private String customFieldID;
-    private String isNumeric;
-    private String isZeroAllowed;
+    private String IsNumeric;
+    private String IsZeroAllowed;
 
     public String getUniqueID() {
         return customFieldID;
@@ -34,8 +32,8 @@ public class Option {
         OptionName = optionName;
         MinimumAllowed = minimumAllowed;
         MaximumAllowed = maximumAllowed;
-        this.isZeroAllowed = isZeroAllowed;
-        this.isNumeric = isNumeric;
+        this.IsZeroAllowed = isZeroAllowed;
+        this.IsNumeric = isNumeric;
     }
 
     public  Option()
@@ -84,18 +82,18 @@ public class Option {
     }
 
     public String getIsNumeric(){
-        return isNumeric;
+        return IsNumeric;
     }
 
     public String getIsZeroAllowed(){
-        return isZeroAllowed;
+        return IsZeroAllowed;
     }
 
     public void setIsNumeric(String isNumeric){
-        this.isNumeric = isNumeric;
+        this.IsNumeric = isNumeric;
     }
 
     public void setIsZeroAllowed(String isZeroAllowed){
-        this.isZeroAllowed = isZeroAllowed;
+        this.IsZeroAllowed = isZeroAllowed;
     }
 }

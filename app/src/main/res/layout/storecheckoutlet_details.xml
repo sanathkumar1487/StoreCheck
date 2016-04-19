@@ -1,0 +1,17 @@
+<layout>
+    <data>
+        <import type="java.util.List"/>
+        <import type="com.euromonitor.storecheck.model.Outlet"/>
+        <variable
+            name="storeCheckOutletList"
+            type="List&lt;Outlet>"/>
+    </data>
+<android.support.v7.widget.RecyclerView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/storecheckOutletDetailsView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:scrollbars="vertical"
+    />
+</layout>
+

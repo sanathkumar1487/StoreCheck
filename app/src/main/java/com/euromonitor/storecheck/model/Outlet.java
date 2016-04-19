@@ -1,16 +1,30 @@
 package com.euromonitor.storecheck.model;
 
+import android.content.Context;
+import android.databinding.BaseObservable;
+import android.databinding.Bindable;
+
+import com.euromonitor.storecheck.utility.DatabaseHelper;
 import com.google.gson.annotations.SerializedName;
+
+import java.util.ArrayList;
 
 /**
  * Created by Sanath.Kumar on 3/30/2016.
  */
-public class Outlet {
+public class Outlet extends BaseObservable {
+
+
 
     private int _id;
 
     @SerializedName("OutletId")
     private int _outlet_id;
+
+
+    @SerializedName("OutletName")
+    private String _outlet_Name;
+
 
     @SerializedName("ProjectId")
     private int _project_id;
@@ -18,13 +32,6 @@ public class Outlet {
     @SerializedName("GeographyCode")
     private String _geo_code;
 
-    public String get_chccode() {
-        return _chccode;
-    }
-
-    public void set_chccode(String _chccode) {
-        this._chccode = _chccode;
-    }
 
     @SerializedName("CHCCode")
     private  String _chccode;
@@ -38,6 +45,11 @@ public class Outlet {
     @SerializedName("OutletCity")
     private String _outlet_city;
 
+    @Bindable
+    public String getOutlet_city(){
+        return _outlet_city;
+    }
+
     @SerializedName("Year")
     private String _year;
 
@@ -46,26 +58,40 @@ public class Outlet {
 
 
 
+    @SerializedName("ChannelName")
+    private  String _channel_name;
+
+
+
     public Outlet() {
 
     }
 
-    public Outlet(int _outlet_id, int _project_id, String _geo_code, String _geo_name, String _industry, String _outlet_city, String _year, String _outlet_date,String _chccode) {
+
+    public Outlet(String _outlet_date, int _outlet_id, String _outlet_Name, int _project_id, String _geo_code, String _chccode, String _geo_name, String _industry, String _outlet_city, String _year, String _channel_name) {
+        this._outlet_date = _outlet_date;
         this._outlet_id = _outlet_id;
+        this._outlet_Name = _outlet_Name;
         this._project_id = _project_id;
         this._geo_code = _geo_code;
+        this._chccode = _chccode;
         this._geo_name = _geo_name;
         this._industry = _industry;
         this._outlet_city = _outlet_city;
         this._year = _year;
-        this._outlet_date = _outlet_date;
-        this._chccode = _chccode;
+        this._channel_name = _channel_name;
     }
 
+    @Bindable
     public int get_id() {
         return _id;
     }
 
+    public void set_id(int _id) {
+        this._id = _id;
+    }
+
+    @Bindable
     public int get_outlet_id() {
         return _outlet_id;
     }
@@ -106,9 +132,11 @@ public class Outlet {
         this._industry = _industry;
     }
 
+    @Bindable
     public String get_outlet_city() {
         return _outlet_city;
     }
+
 
     public void set_outlet_city(String _outlet_city) {
         this._outlet_city = _outlet_city;
@@ -122,6 +150,7 @@ public class Outlet {
         this._year = _year;
     }
 
+    @Bindable
     public String get_outlet_date() {
         return _outlet_date;
     }
@@ -130,5 +159,36 @@ public class Outlet {
         this._outlet_date = _outlet_date;
     }
 
+    @Bindable
+    public String get_chccode() {
+        return _chccode;
+    }
+
+    public void set_chccode(String _chccode) {
+        this._chccode = _chccode;
+    }
+
+    public  static ArrayList<Outlet> getData(Context context){
+        DatabaseHelper dbHelper = new DatabaseHelper(context);
+        return dbHelper.getOutlets();
+    }
+
+    @Bindable
+    public String get_outlet_Name() {
+        return _outlet_Name;
+    }
+
+    public void set_outlet_Name(String _outlet_Name) {
+        this._outlet_Name = _outlet_Name;
+    }
+
+    @Bindable
+    public String get_channel_name() {
+        return _channel_name;
+    }
+
+    public void set_channel_name(String _channel_name) {
+        this._channel_name = _channel_name;
+    }
 
 }
