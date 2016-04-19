@@ -109,7 +109,22 @@ public class StoreCheckAddBrandActivity extends MainActivity
                 case R.id.okAddBrand:
                     validateData(v);
                     break;
+                case R.id.resetAddBrand:
+                    resetData();
+                    break;
             }
+        }
+
+        private void resetData(){
+            binding.brandName.setText("");
+            binding.nboName.setText("");
+
+            Spinner productSpinner = (Spinner) ((View) (binding.getRoot()).findViewById(R.id.products));
+            if(productSpinner.getCount()>0) {
+                productSpinner.setSelection(0);
+            }
+            
+            setBindingProperties();
         }
 
         private void validateData(View v) {
@@ -179,6 +194,15 @@ public class StoreCheckAddBrandActivity extends MainActivity
 
             if (isValid) {
                 if(databaseHelper.saveBrand(data)){
+                    binding.brandName.setText(null);
+                    binding.nboName.setText(null);
+                    Spinner productSpinner = (Spinner) ((View) (binding.getRoot()).findViewById(R.id.products));
+                    if(productSpinner.getCount()>0) {
+                        productSpinner.setSelection(0);
+                    }
+                    setBindingProperties();
+
+
                     Toast.makeText(v.getContext(), "Saved successfully!", Toast.LENGTH_SHORT).show();
 
                     StoreCheckAddProductDetailsActivity  activity = new StoreCheckAddProductDetailsActivity();
@@ -218,6 +242,7 @@ public class StoreCheckAddBrandActivity extends MainActivity
         if (productSpinner != null) {
             StoreCheckAddBrandActivity.ProductAdapter adapter = new StoreCheckAddBrandActivity.ProductAdapter(products);
             productSpinner.setAdapter(adapter);
+
             productSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -250,6 +275,7 @@ public class StoreCheckAddBrandActivity extends MainActivity
         customFields = databaseHelper.getCustomFieldByProductCode(productCode, customFields);
         customFields = databaseHelper.updateCustomFieldOptions(customFields);
     }
+
     public class ProductAdapter extends BaseAdapter implements SpinnerAdapter {
 
         private ArrayList<Product> products;
@@ -283,8 +309,6 @@ public class StoreCheckAddBrandActivity extends MainActivity
             }
             else
             {
-                //productItemView=DataBindingUtil.setContentView(,R.layout.storecheck_productitem)
-
                productItemView =  getLayoutInflater().inflate(R.layout.storecheck_productitem, parent, false);
             }
             TextView productItem = (TextView)productItemView.findViewById(R.id.productItem);
