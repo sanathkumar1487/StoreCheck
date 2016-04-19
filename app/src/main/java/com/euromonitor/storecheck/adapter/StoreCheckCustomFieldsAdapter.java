@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
@@ -18,7 +17,6 @@ import android.widget.TextView;
 import com.euromonitor.storecheck.BR;
 import com.euromonitor.storecheck.R;
 import com.euromonitor.storecheck.databinding.StorecheckCustomfieldItemBinding;
-import com.euromonitor.storecheck.listener.EditTextWatcher;
 import com.euromonitor.storecheck.model.CustomField;
 import com.euromonitor.storecheck.model.Option;
 import com.euromonitor.storecheck.model.Product;
@@ -58,16 +56,16 @@ public class StoreCheckCustomFieldsAdapter extends RecyclerView.Adapter<StoreChe
         holder.optionsSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                CustomField currentCustomField = null;
+                CustomField currentCustomField =null;
                 Option selectedOption = (Option) parent.getItemAtPosition(position);
-                for (CustomField cf : customFields) {
-                    if (cf.getUniqueID().equals(selectedOption.getUniqueID())) {
+                for(CustomField cf: customFields){
+                    if(cf.getUniqueID().equals(selectedOption.getUniqueID())){
                         currentCustomField = cf;
                         break;
                     }
                 }
 
-                if (currentCustomField != null) {
+                if(currentCustomField!=null) {
                     String frameGroupId = String.valueOf(currentCustomField.getFrameGroupID());
                     for (int index = 0; index < customFields.size(); index++) {
                         if (customFields.get(index).get_group_id().equals((frameGroupId))) {
@@ -75,9 +73,9 @@ public class StoreCheckCustomFieldsAdapter extends RecyclerView.Adapter<StoreChe
                             customFields.get(index).setSelectedOption(selectedOption);
                             String isNumeric = selectedOption.getIsNumeric();
 
-                            if (isNumeric.equals("1")) {
+                            if(isNumeric.equals("1")) {
                                 customFields.get(index).setIsNumeric(true);
-                            } else if (isNumeric.equals("0")) {
+                            }else if(isNumeric.equals("0")){
                                 customFields.get(index).setIsNumeric(false);
                             }
 
@@ -93,7 +91,6 @@ public class StoreCheckCustomFieldsAdapter extends RecyclerView.Adapter<StoreChe
 
             }
         });
-        holder.optionName.addTextChangedListener(new EditTextWatcher(current));
     }
 
     private void notifyItemChangedAtPosition(int position){
@@ -108,7 +105,6 @@ public class StoreCheckCustomFieldsAdapter extends RecyclerView.Adapter<StoreChe
     public class BindingHolder  extends RecyclerView.ViewHolder {
         private ViewDataBinding binding;
         Spinner optionsSpinner;
-        public EditText optionName;
 
         private int position;
         StoreCheckDetail current;
@@ -117,8 +113,6 @@ public class StoreCheckCustomFieldsAdapter extends RecyclerView.Adapter<StoreChe
             super(v);
             binding = DataBindingUtil.bind(v);
             optionsSpinner = (Spinner)v.findViewById(R.id.options);
-            optionName = (EditText)v.findViewById(R.id.optionName);
-
         }
 
         public ViewDataBinding getBinding(){
