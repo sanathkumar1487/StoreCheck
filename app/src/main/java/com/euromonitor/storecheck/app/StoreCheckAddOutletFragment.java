@@ -120,7 +120,7 @@ public class StoreCheckAddOutletFragment extends Fragment {
                 DatabaseHelper db = new DatabaseHelper(getActivity());
 
 
-                List<Outlet> labels = db.getAllOutlets();
+              //  List<Outlet> labels = db.getAllOutlets();
 
 //
 ////                Outlet outlet1obj=new Outlet(labels.get(1).get_outlet_id(),

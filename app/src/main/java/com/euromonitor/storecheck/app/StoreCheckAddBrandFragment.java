@@ -40,6 +40,7 @@ import java.util.List;
 /**
  * Created by Sanath.Kumar on 4/7/2016.
  */
+/**
 public class StoreCheckAddBrandFragment extends Fragment {
 
     final static String DropDown = "1";
@@ -254,3 +255,4 @@ public class StoreCheckAddBrandFragment extends Fragment {
         }
     }
 }
+*/

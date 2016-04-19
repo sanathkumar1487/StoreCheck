@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 
 import com.euromonitor.storecheck.app.MainActivity;
+import com.euromonitor.storecheck.app.StoreCheckImportActivity;
 import com.euromonitor.storecheck.app.StoreCheckImportFragment;
 import com.euromonitor.storecheck.controller.interfaces.AsyncPostExecute;
 import com.euromonitor.storecheck.controller.interfaces.AsyncPreExecute;
@@ -36,7 +37,7 @@ public class ImportDataTask extends AsyncTask<Void,Void,Void> {
     private String filePath;
     JsonFileParser fileParser = new JsonFileParser();
     Context activityContext;
-    StoreCheckImportFragment _mactivity;
+    StoreCheckImportActivity _mactivity;
     Exception backgroundException;
 
     List<Detail> details = new ArrayList<Detail>();
@@ -82,7 +83,7 @@ public class ImportDataTask extends AsyncTask<Void,Void,Void> {
     }
 
 
-    public ImportDataTask(String filePath, Context context, StoreCheckImportFragment activity) {
+    public ImportDataTask(String filePath, Context context, StoreCheckImportActivity activity) {
         this.filePath = filePath;
         activityContext = context;
         _mactivity = activity;

@@ -100,7 +100,7 @@ public class StoreCheckImportFragment extends Fragment implements AsyncPostExecu
             try
             {
 
-                importDataController = new ImportDataTask(data.getStringExtra(FilePickerActivity.FILE_EXTRA_DATA_PATH), getActivity(), this);
+                //importDataController = new ImportDataTask(data.getStringExtra(FilePickerActivity.FILE_EXTRA_DATA_PATH), getActivity(), this);
                 importDataController.postExecute = this;
                 importDataController.preExecute = this;
                 importDataController.progressReport = this;
