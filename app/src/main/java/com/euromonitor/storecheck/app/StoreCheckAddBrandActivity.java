@@ -1,6 +1,7 @@
 package com.euromonitor.storecheck.app;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -36,13 +37,15 @@ import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.zip.Inflater;
 
 /**
- * Created by Sanath.Kumar on 4/7/2016.
+ * Created by Shashwat.Bajpai on 19/04/2016.
  */
-/**
-public class StoreCheckAddBrandFragment extends Fragment {
 
+public class StoreCheckAddBrandActivity extends MainActivity
+
+{
     final static String DropDown = "1";
     final static String TextBox ="2";
     final static String CustomDropDown="3";
@@ -53,23 +56,26 @@ public class StoreCheckAddBrandFragment extends Fragment {
     DatabaseHelper databaseHelper;
     RecyclerView customFieldRecyclerView;
     ArrayList<CustomField> customFields = new ArrayList<CustomField>() ;
+    Context context;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        databaseHelper = new DatabaseHelper(getActivity());
+    public void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.storecheck_addbrand);
+       // binding = DataBindingUtil.inflate(inflater, R.layout.storecheck_addbrand, container, false);
+        binding=DataBindingUtil.setContentView(this,R.layout.storecheck_addbrand);
 
-        binding = DataBindingUtil.inflate(inflater, R.layout.storecheck_addbrand, container, false);
-
-        binding.setListeners(new Listeners(binding, databaseHelper));
-
+       binding.setListeners(new Listeners(binding));
+        context=this;
+        databaseHelper = new DatabaseHelper(context);
         setBinding();
 
         View view = binding.getRoot();
         customFieldRecyclerView = (RecyclerView) view.findViewById(R.id.customFields);
 
-        return view;
-    }
 
+    }
     private void setBinding(){
         storeCheckBrand = new StoreCheckBrand();
         storeCheckBrand.setProducts(setProducts());
@@ -77,14 +83,12 @@ public class StoreCheckAddBrandFragment extends Fragment {
         storeCheckBrand.setGeography(databaseHelper.getGeography());
         binding.setStoreCheckBrand(storeCheckBrand);
     }
-
     public static class Listeners implements View.OnClickListener {
 
         private StorecheckAddbrandBinding binding;
-        DatabaseHelper databaseHelper;
-        public Listeners(StorecheckAddbrandBinding binding,DatabaseHelper databaseHelper) {
+
+        public Listeners(StorecheckAddbrandBinding binding) {
             this.binding = binding;
-            this.databaseHelper = databaseHelper;
         }
 
         @Override
@@ -100,15 +104,10 @@ public class StoreCheckAddBrandFragment extends Fragment {
         }
 
         private void resetData(){
-            binding.brandName.setText("");
-            binding.nboName.setText("");
 
-            setBindingProperties();
         }
 
         private void validateData(View v) {
-            setBindingProperties();
-
             StoreCheckBrand data = binding.getStoreCheckBrand();
             boolean isValid = true;
             String errors = "Please correct the following errors: ";
@@ -127,12 +126,12 @@ public class StoreCheckAddBrandFragment extends Fragment {
                 for (CustomField cf : customFields) {
 
                     Option selectedOption = cf.getSelectedOption();
-                    if (selectedOption != null) {
+                    if(selectedOption!=null) {
                         if (isValid && selectedOption.getMinimumAllowed().equals("0") && selectedOption.getMaximumAllowed().equals("0")) {
                             isValid = true;
                         }
 
-                        if (isValid && cf.get_object_id().equals(StoreCheckAddBrandFragment.TextBox)) {
+                        if (!isValid && cf.get_object_id().equals(StoreCheckAddBrandActivity.TextBox)) {
                             double minimum = 0;
                             if (selectedOption.getMinimumAllowed() != null) {
                                 minimum = Double.parseDouble(selectedOption.getMinimumAllowed());
@@ -148,23 +147,23 @@ public class StoreCheckAddBrandFragment extends Fragment {
 
                             try {
 
-                                if (cf.getCustomFieldTextValue() != null) {
+                                if(cf.getCustomFieldTextValue()!=null) {
                                     cfValue = Double.parseDouble(cf.getCustomFieldTextValue());
                                 }
                                 if (!cf.getIsNumeric()) {
-                                    if (cf.getCustomFieldTextValue() != null) {
+                                    if(cf.getCustomFieldTextValue()!=null) {
                                         cfValue = cf.getCustomFieldTextValue().trim().length();
                                     }
                                 }
 
-                                if (!validateValue(cfValue, minimum, maximum, noMaximum,  cf.getIsZeroAllowed())) {
-                                    errors += "\n" + cf.get_label() + " value should be between " + minimum + " and " + maximum;
+                                if (!validateValue(cfValue, minimum, maximum, noMaximum, cf.getIsNumeric(), cf.getIsZeroAllowed())) {
+                                    errors += "\n Custom field value should be between" + minimum + " and " + maximum;
                                     isValid = false;
                                 }
                             } catch (NumberFormatException e) {
                                 cfValue = cf.getCustomFieldTextValue().length();
-                                if (!validateValue(cfValue, minimum, maximum, noMaximum, cf.getIsZeroAllowed())) {
-                                    errors += "\n" + cf.get_label() + " value should be between " + minimum + " and " + maximum;
+                                if (!validateValue(cfValue, minimum, maximum, noMaximum, cf.getIsNumeric(), cf.getIsZeroAllowed())) {
+                                    errors += "\n Custom field value should be between" + minimum + " and " + maximum;
                                     isValid = false;
                                 }
                             }
@@ -173,36 +172,15 @@ public class StoreCheckAddBrandFragment extends Fragment {
                 }
             }
 
-            if (isValid) {
-                if(databaseHelper.saveBrand(data)){
-                    Toast.makeText(v.getContext(), "Saved successfully!", Toast.LENGTH_SHORT).show();
-                }
-
-            }
-            else{
+            if(!isValid){
                 Toast.makeText(v.getContext(), errors, Toast.LENGTH_SHORT).show();
             }
         }
 
-        private boolean validateValue (double value, double minimumAllowed, double maximumAllowed, boolean noMaximum, boolean isZeroAllowed){
-           return value >= minimumAllowed && (value <= maximumAllowed || noMaximum) || (isZeroAllowed && value == 0);
-        }
-
-        private void setBindingProperties(){
-            String newValue = null;
-            if(binding.brandName.getText()!=null){
-                newValue = binding.brandName.getText().toString();
-            }
-            binding.getStoreCheckBrand().setBrand(newValue);
-
-            newValue = null;
-            if(binding.nboName.getText()!=null){
-                newValue = binding.nboName.getText().toString();
-            }
-            binding.getStoreCheckBrand().setNbo(newValue);
+        private boolean validateValue (double value, double minimumAllowed, double maximumAllowed, boolean noMaximum, boolean isNumeric, boolean isZeroAllowed){
+            return value >= minimumAllowed && (value <= maximumAllowed || noMaximum) || (isZeroAllowed && value == 0);
         }
     }
-
     private ArrayList<Product> setProducts() {
 
 
@@ -210,7 +188,7 @@ public class StoreCheckAddBrandFragment extends Fragment {
 
         Spinner productSpinner = (Spinner) ((View) (binding.getRoot()).findViewById(R.id.products));
         if (productSpinner != null) {
-            ProductAdapter adapter = new ProductAdapter(products);
+            StoreCheckAddBrandActivity.ProductAdapter adapter = new StoreCheckAddBrandActivity.ProductAdapter(products);
             productSpinner.setAdapter(adapter);
             productSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
@@ -218,15 +196,16 @@ public class StoreCheckAddBrandFragment extends Fragment {
                     Product selectedProduct = (Product)parent.getItemAtPosition(position);
                     int productID = Integer.valueOf(selectedProduct.get_product_id());
                     storeCheckBrand.setSelectedProductId(productID);
-                   setCustomFieldByProductCode(productID);
+                    setCustomFieldByProductCode(productID);
                     storeCheckBrand.setCustomFields(customFields);
 
 
                     if(customFieldRecyclerView!=null) {
-                        customFieldRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-                        StoreCheckCustomFieldsAdapter adapter = new StoreCheckCustomFieldsAdapter(getActivity().getLayoutInflater(), getActivity(), customFields);
-                        customFieldRecyclerView.setAdapter(adapter);
+                        customFieldRecyclerView.setLayoutManager(new LinearLayoutManager(context));
+
+                      StoreCheckCustomFieldsAdapter adapter = new StoreCheckCustomFieldsAdapter(LayoutInflater.from(context), context, customFields);
+                       customFieldRecyclerView.setAdapter(adapter);
                     }
                 }
 
@@ -239,14 +218,11 @@ public class StoreCheckAddBrandFragment extends Fragment {
         return products;
     }
 
-
-
     private void setCustomFieldByProductCode(int productCode) {
         customFields = databaseHelper.getCustomFieldByProductCode(productCode, customFields);
         customFields = databaseHelper.updateCustomFieldOptions(customFields);
     }
-
-    public class ProductAdapter extends BaseAdapter implements SpinnerAdapter{
+    public class ProductAdapter extends BaseAdapter implements SpinnerAdapter {
 
         private ArrayList<Product> products;
 
@@ -272,16 +248,22 @@ public class StoreCheckAddBrandFragment extends Fragment {
         @Override
         public View getView(int position, View recycle, ViewGroup parent) {
             View productItemView;
-            if (recycle != null){
-                productItemView = recycle;
-            } else {
-                productItemView = getActivity().getLayoutInflater().inflate(R.layout.storecheck_productitem, parent, false);
+            productItemView = recycle;
+            if (recycle != null)
+           {
+               productItemView = recycle;
+            }
+            else
+            {
+                //productItemView=DataBindingUtil.setContentView(,R.layout.storecheck_productitem)
+
+               productItemView =  getLayoutInflater().inflate(R.layout.storecheck_productitem, parent, false);
             }
             TextView productItem = (TextView)productItemView.findViewById(R.id.productItem);
 
             productItem.setText(products.get(position).get_product_name());
-            return productItemView;
+           return productItemView;
         }
     }
+
 }
-*/

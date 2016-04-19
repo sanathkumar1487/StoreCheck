@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -30,7 +31,8 @@ public class MainActivity extends AppCompatActivity {
     DrawerLayout drawerLayout;
     Fragment fragment;
     int activeView;
-
+    Context context;
+    Intent intent;
     final static int VIEW_DETAILS = 0;
     final static int VIEW_PRODUCT_DETAILS = 1;
     final static int ADD_BRAND = 2;
@@ -52,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
             if(isLaunch)
             {
                 isLaunch = false;
-                loadView(IMPORT_STORECHECK_DETAILS);
+               // loadView(IMPORT_STORECHECK_DETAILS);
             }
 
         } catch (Exception e) {
@@ -162,21 +164,41 @@ public class MainActivity extends AppCompatActivity {
         fragment = null;
         switch (position){
             case VIEW_DETAILS:
-                fragment = new StoreCheckDetailsFragment();
+                // fragment = new StoreCheckDetailsFragment();
+                context=this;
+                intent=new Intent(context,StoreCheckDetailsActivity.class);
+                startActivity(intent);
                 break;
             case VIEW_PRODUCT_DETAILS:
-                fragment = new StoreCheckAddProductDetailsFragment();
+                //fragment = new StoreCheckAddProductDetailsFragment();
+                context=this;
+                intent=new Intent(context,StoreCheckAddProductDetailsActivity.class);
+                startActivity(intent);
+                break;
             case ADD_BRAND:
-                fragment = new StoreCheckAddBrandFragment();
+               // fragment = new StoreCheckAddBrandFragment();
+               context=this;
+                intent=new Intent(context,StoreCheckAddBrandActivity.class);
+                startActivity(intent);
+
                 break;
             case ADD_OUTLET:
-                fragment = new StoreCheckOutletDetailsFragment();
+                //fragment = new StoreCheckAddOutletFragment();
+                context=this;
+                intent=new Intent(context,StoreCheckAddoutletActivity.class);
+                startActivity(intent);
                 break;
             case IMPORT_STORECHECK_DETAILS:
-                fragment = new StoreCheckImportFragment();
+                //  fragment = new StoreCheckImportFragment();
+                context = this;
+                intent=new Intent(context,StoreCheckImportActivity.class);
+                startActivity(intent);
                 break;
             case EXPORT_STORECHECK_DETAILS:
-                fragment = new StoreCheckExportFragment();
+                // fragment = new StoreCheckExportFragment();
+                context=this;
+                intent=new Intent(context,StoreCheckExportActivity.class);
+                startActivity(intent);
                 break;
         }
 

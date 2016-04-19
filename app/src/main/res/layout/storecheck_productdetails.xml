@@ -1,13 +1,82 @@
 <layout>
-    <data />
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-<TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="@string/product_details"/>
+    <data  >
+        <variable
+            name="productDetails"
+            type="com.euromonitor.storecheck.model.ProductDetail"/>
+    </data>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-
-</LinearLayout>
-    </layout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/product_details"
+            android:textColor="@color/grey_700"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Edit Price"
+                android:layout_weight="2"
+                android:gravity="right"
+                android:layout_marginRight="10dip"
+                android:textColor="@color/grey_700"
+                />
+            <EditText
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:ems="10"
+                android:layout_weight="1"
+                android:text="@{productDetails.price}"
+                android:id="@+id/price"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="EditPack Size"
+                android:textColor="@color/grey_700"
+                android:gravity="right"
+                android:layout_marginRight="10dip"
+                android:layout_weight="2"/>
+            <EditText
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:ems="10"
+                android:text="@{productDetails.pack_size}"
+                android:layout_weight="1"/>
+            <Spinner
+                android:id="@+id/unit_spinner"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Number of items per pack"
+                android:layout_weight="2"
+                android:textColor="@color/grey_700"/>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:layout_weight="1"
+                android:inputType="numberDecimal"/>
+        </LinearLayout>
+    </LinearLayout>
+</layout>

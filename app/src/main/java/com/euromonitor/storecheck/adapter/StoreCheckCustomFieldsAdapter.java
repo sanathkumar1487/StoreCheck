@@ -29,6 +29,7 @@ import java.util.ArrayList;
 /**
  * Created by Noora.Akhtar on 13/04/2016.
  */
+
 public class StoreCheckCustomFieldsAdapter extends RecyclerView.Adapter<StoreCheckCustomFieldsAdapter.BindingHolder> {
     private LayoutInflater layoutInflater;
     private ArrayList<CustomField> customFields;
