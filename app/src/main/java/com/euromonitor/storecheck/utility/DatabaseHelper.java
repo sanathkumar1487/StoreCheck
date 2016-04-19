@@ -142,6 +142,9 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
     private static final String KEY_UNITBASE = "unitbase";
     private static final String KEY_UNITMULTIPLIER = "unitmultiplier";
 
+    // Custom Field Control Type
+    final String DropDown = "1";
+    final String TextBox = "2";
 
     public DatabaseHelper(Context context) {
 
@@ -598,6 +601,34 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         return outletList;
     }
 
+<<<<<<< HEAD
+=======
+    public ArrayList<String> getAllChannels() {
+        ArrayList<String> my_array = new ArrayList<String>();
+        try {
+            String selectQuery = "SELECT  * FROM " + TABLE_CHANNELS;
+
+            SQLiteDatabase db = this.getWritableDatabase();
+            Cursor cursor = db.rawQuery(selectQuery, null);
+
+            if (cursor.moveToFirst()) {
+                do {
+
+                    String ID = cursor.getString(0);
+                    String CHANNELCODE = cursor.getString(1);
+                    String CHANNELNAME = cursor.getString(2);
+                    my_array.add(CHANNELNAME);
+
+                } while (cursor.moveToNext());
+            }
+            cursor.close();
+            db.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return my_array;
+    }
+>>>>>>> 79e9e565df7ab7fb2060378aa7d84b03cdd613b1
 
 //    // Updating single outlet
 //    public int updateOutlet(Outlet outlet) {
@@ -802,15 +833,15 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         return geography;
     }
 
-    public ArrayList<CustomField> getCustomFieldByProductCode(int productCode,ArrayList<CustomField> customFields) {
+    public ArrayList<CustomField> getCustomFieldByProductCode(int productCode, ArrayList<CustomField> customFields) {
 
         SQLiteDatabase database = null;
         Cursor cursor = null;
-        try{
+        try {
 
             database = this.getReadableDatabase();
-            String query = "select label,uniqueid,objectid, frameGroupId, groupid  from customfields where productcode=" +"" + productCode+"";
-            Log.i("query is ::" ,query);
+            String query = "select label,uniqueid,objectid, frameGroupId, groupid  from customfields where productcode=" + "" + productCode + "";
+            Log.i("query is ::", query);
             cursor = database.rawQuery(query, null);
             customFields = new ArrayList<CustomField>();
             if (cursor.moveToFirst()) {
@@ -826,75 +857,73 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
                 } while ((cursor.moveToNext()));
 
             }
-        }
-        catch (Exception ex)
-        {
-            throw  ex;
-        }
-        finally
-        {
-            Log.i("Custom Field count::", String.valueOf(customFields.size()));
-            if (cursor != null)
-                cursor.close();
-            if (database != null)
-            database.close();
-        }
-          return  customFields;
-    }
-
-    public  void updateCustomFieldOptions(ArrayList<CustomField> customFields)
-    {
-
-        Log.i("Custom Field count ","updateCustomField::"+ String.valueOf(customFields.size()));
-        SQLiteDatabase database = null;
-        Cursor cursor = null;
-
-        try {
-
-        Iterator iterator = customFields.iterator();
-        while (iterator.hasNext()) {
-            CustomField customField = (CustomField) iterator.next();
-            ContentValues values = new ContentValues();
-            database = this.getReadableDatabase();
-            String query = "select optionname,minimumallowed,maximumallowed,optionid from options where customfieldid='" + customField.getUniqueID()+"'";
-            Log.i("query is ::" ,query);
-            cursor = database.rawQuery(query, null);
-            ArrayList<Option> options = new  ArrayList<Option> ();
-            if (cursor.moveToFirst()) {
-
-                do {
-
-
-                    Option option = new Option();
-                    option.setOptionName(cursor.getString(0));
-                    option.setMinimumAllowed(cursor.getString((1)));
-                    option.setMaximumAllowed(cursor.getString((2)));
-                    option.setOptionId(cursor.getString(3));
-                    option.setUniqueID(customField.getUniqueID());
-                    options.add(option);
-                } while ((cursor.moveToNext()));
-
-            }
-            customField.set_options(options);
-        }
-
-
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             throw ex;
-
-        }
-
-        finally
-        {
+        } finally {
+            Log.i("Custom Field count::", String.valueOf(customFields.size()));
             if (cursor != null)
                 cursor.close();
             if (database != null)
                 database.close();
         }
-
+        return customFields;
     }
+
+    public ArrayList<CustomField> updateCustomFieldOptions(ArrayList<CustomField> customFields) {
+
+        Log.i("Custom Field count ", "updateCustomField::" + String.valueOf(customFields.size()));
+        SQLiteDatabase database = null;
+        Cursor cursor = null;
+
+        try {
+
+            Iterator iterator = customFields.iterator();
+            while (iterator.hasNext()) {
+                CustomField customField = (CustomField) iterator.next();
+                ContentValues values = new ContentValues();
+                database = this.getReadableDatabase();
+                String query = "select optionname,minimumallowed,maximumallowed,optionid, isnumeric, iszeroallowed from options where customfieldid='" + customField.getUniqueID() + "'";
+                Log.i("query is ::", query);
+                cursor = database.rawQuery(query, null);
+                ArrayList<Option> options = new ArrayList<Option>();
+                if (cursor.moveToFirst()) {
+                    do {
+                        Option option = new Option();
+                        option.setOptionName(cursor.getString(0));
+                        option.setMinimumAllowed(cursor.getString((1)));
+                        option.setMaximumAllowed(cursor.getString((2)));
+                        option.setOptionId(cursor.getString(3));
+                        option.setIsNumeric(cursor.getString(4));
+                        option.setIsZeroAllowed(cursor.getString(5));
+                        option.setUniqueID(customField.getUniqueID());
+                        options.add(option);
+                    } while ((cursor.moveToNext()));
+
+                }
+                if (customField.get_object_id().equals(TextBox) && options.size() > 0) {
+                    String isNumeric = options.get(0).getIsNumeric();
+                    if (isNumeric != null && isNumeric.equals("1")) {
+                        customField.setIsNumeric(true);
+                    } else if (isNumeric != null && isNumeric.equals("0")) {
+                        customField.setIsNumeric(false);
+                    }
+                }
+
+                customField.set_options(options);
+            }
+
+
+        } catch (Exception ex) {
+            throw ex;
+        } finally {
+            if (cursor != null)
+                cursor.close();
+            if (database != null)
+                database.close();
+        }
+        return customFields;
+    }
+<<<<<<< HEAD
 
 
     public List<Channel> getAllChannels()
@@ -926,4 +955,6 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
 
 
 
+=======
+>>>>>>> 79e9e565df7ab7fb2060378aa7d84b03cdd613b1
 }

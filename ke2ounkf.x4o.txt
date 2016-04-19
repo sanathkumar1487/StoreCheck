@@ -1,0 +1,50 @@
+﻿list outlet screen
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+# On branch master
+# Your branch is behind 'origin/master' by 2 commits, and can be fast-forwarded.
+#   (use "git pull" to update your local branch)
+#
+# Changes to be committed:
+#	modified:   .gradle/2.8/taskArtifacts/cache.properties.lock
+#	modified:   .gradle/2.8/taskArtifacts/fileHashes.bin
+#	modified:   .gradle/2.8/taskArtifacts/fileSnapshots.bin
+#	modified:   .gradle/2.8/taskArtifacts/outputFileStates.bin
+#	modified:   .gradle/2.8/taskArtifacts/taskArtifacts.bin
+#	modified:   .idea/libraries/FilePickerLibrary_3_5_1.xml
+#	modified:   .idea/libraries/MaterialLibrary_1_0_5.xml
+#	modified:   .idea/libraries/adapters_1_0_rc3.xml
+#	modified:   .idea/libraries/animated_vector_drawable_23_2_1.xml
+#	modified:   .idea/libraries/appcompat_v7_23_2_1.xml
+#	modified:   .idea/libraries/cardview_v7_23_1_1.xml
+#	modified:   .idea/libraries/design_23_2_1.xml
+#	modified:   .idea/libraries/library_1_0_rc3.xml
+#	modified:   .idea/libraries/recyclerview_v7_23_2_1.xml
+#	modified:   .idea/libraries/support_annotations_23_2_1.xml
+#	modified:   .idea/libraries/support_v4_23_2_1.xml
+#	modified:   .idea/libraries/support_vector_drawable_23_2_1.xml
+#	modified:   app/app.iml
+#	new file:   app/src/main/java/com/euromonitor/storecheck/adapter/StoreCheckOutletDetailAdapter.java
+#	modified:   app/src/main/java/com/euromonitor/storecheck/app/MainActivity.java
+#	modified:   app/src/main/java/com/euromonitor/storecheck/app/StoreCheckAddOutletFragment.java
+#	new file:   app/src/main/java/com/euromonitor/storecheck/app/StoreCheckOutletDetailsFragment.java
+#	modified:   app/src/main/java/com/euromonitor/storecheck/model/Channel.java
+#	modified:   app/src/main/java/com/euromonitor/storecheck/model/Option.java
+#	modified:   app/src/main/java/com/euromonitor/storecheck/model/Outlet.java
+#	modified:   app/src/main/java/com/euromonitor/storecheck/utility/DatabaseHelper.java
+#	modified:   app/src/main/java/com/euromonitor/storecheck/utility/JsonFileParser.java
+#	modified:   app/src/main/res/layout/activity_main.xml
+#	modified:   app/src/main/res/layout/storecheck_addbrand.xml
+#	modified:   app/src/main/res/layout/storecheck_addoutlet.xml
+#	new file:   app/src/main/res/layout/storecheck_outlet.xml
+#	new file:   app/src/main/res/layout/storecheckoutlet_details.xml
+#	new file:   app/src/main/res/layout/storecheckoutlet_item.xml
+#	modified:   app/src/main/res/menu/storecheck_menu.xml
+#	new file:   app/src/main/res/mipmap-hdpi/ic_add_circle_outline_white_36dp.png
+#	new file:   app/src/main/res/mipmap-mdpi/ic_add_circle_outline_white_36dp.png
+#	new file:   app/src/main/res/mipmap-xhdpi/ic_add_circle_outline_white_36dp.png
+#	new file:   app/src/main/res/mipmap-xxhdpi/ic_add_circle_outline_white_36dp.png
+#	new file:   app/src/main/res/mipmap-xxxhdpi/ic_add_circle_outline_white_36dp.png
+#	modified:   local.properties
+#
+

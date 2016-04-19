@@ -25,4 +25,6 @@
     <string name="brandName">Brand</string>
     <string name="nboName">NBO</string>
     <string name="customFields">Custom Fields</string>
+    <string name="reset">Reset</string>
+    <string name="ok">OK</string>
 </resources>
