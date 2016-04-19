@@ -541,6 +541,127 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
      * All CRUD(Create, Read, Update, Delete) Operations
      */
 
+    // Adding new outlet
+    public void addOutlet(Outlet outlet) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_OUTLET_ID, outlet.get_outlet_id());
+        values.put(KEY_PROJECT_ID, outlet.get_project_id());
+       /* values.put(KEY_GEO_CODE, outlet.get_geo_code());
+        values.put(KEY_GEO_NAME, outlet.get_geo_name());
+        values.put(KEY_INDUSTRY, outlet.get_industry());
+        values.put(KEY_OUTLET_CITY, outlet.get_outlet_city());
+        values.put(KEY_YEAR, outlet.get_year());
+        values.put(KEY_OUTLET_DATE, String.valueOf(outlet.get_outlet_date()));*/
+
+        // Inserting Row
+        db.insert(TABLE_OUTLETS, null, values);
+        db.close(); // Closing database connection
+    }
+
+    // Getting single outlet
+//    Outlet getOutlet(int id) {
+//        SQLiteDatabase db = this.getReadableDatabase();
+//
+//        Cursor cursor = db.query(TABLE_OUTLETS, new String[] { KEY_ID,
+//                        KEY_NAME, KEY_PH_NO }, KEY_ID + "=?",
+//                new String[] { String.valueOf(id) }, null, null, null, null);
+//        if (cursor != null)
+//            cursor.moveToFirst();
+//
+//        Outlet outlet = new Outlet(Integer.parseInt(cursor.getString(0)),
+//                cursor.getString(1), cursor.getString(2));
+//        // return outlet
+//        return outlet;
+//    }
+
+    // Getting All Outlets
+    public List<Outlet> getAllOutlets() {
+        List<Outlet> outletList = new ArrayList<Outlet>();
+        // Select All Query
+        String selectQuery = "SELECT  * FROM " + TABLE_OUTLETS;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                Outlet outlet = new Outlet();
+                outlet.set_outlet_id(Integer.parseInt(cursor.getString(1)));
+                outlet.set_project_id(Integer.parseInt(cursor.getString(2)));
+                // outlet.set_geo_code(cursor.getString(3));
+                // Adding outlet to list
+                outletList.add(outlet);
+            } while (cursor.moveToNext());
+        }
+
+        // return outlet list
+        return outletList;
+    }
+
+<<<<<<< HEAD
+=======
+    public ArrayList<String> getAllChannels() {
+        ArrayList<String> my_array = new ArrayList<String>();
+        try {
+            String selectQuery = "SELECT  * FROM " + TABLE_CHANNELS;
+
+            SQLiteDatabase db = this.getWritableDatabase();
+            Cursor cursor = db.rawQuery(selectQuery, null);
+
+            if (cursor.moveToFirst()) {
+                do {
+
+                    String ID = cursor.getString(0);
+                    String CHANNELCODE = cursor.getString(1);
+                    String CHANNELNAME = cursor.getString(2);
+                    my_array.add(CHANNELNAME);
+
+                } while (cursor.moveToNext());
+            }
+            cursor.close();
+            db.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return my_array;
+    }
+>>>>>>> 79e9e565df7ab7fb2060378aa7d84b03cdd613b1
+
+//    // Updating single outlet
+//    public int updateOutlet(Outlet outlet) {
+//        SQLiteDatabase db = this.getWritableDatabase();
+//
+//        ContentValues values = new ContentValues();
+//        values.put(KEY_NAME, outlet.getName());
+//        values.put(KEY_PH_NO, outlet.getPhoneNumber());
+//
+//        // updating row
+//        return db.update(TABLE_CONTACTS, values, KEY_ID + " = ?",
+//                new String[] { String.valueOf(outlet.getID()) });
+//    }
+//
+//    // Deleting single outlet
+//    public void deleteOutlet(Outlet outlet) {
+//        SQLiteDatabase db = this.getWritableDatabase();
+//        db.delete(TABLE_CONTACTS, KEY_ID + " = ?",
+//                new String[] { String.valueOf(outlet.getID()) });
+//        db.close();
+//    }
+//
+//
+//    // Getting outlets Count
+//    public int getOutletsCount() {
+//        String countQuery = "SELECT  * FROM " + TABLE_CONTACTS;
+//        SQLiteDatabase db = this.getReadableDatabase();
+//        Cursor cursor = db.rawQuery(countQuery, null);
+//        cursor.close();
+//
+//        // return count
+//        return cursor.getCount();
+//    }
 
     public ArrayList<Cursor> getData(String Query) {
         //get writable database
@@ -802,7 +923,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         }
         return customFields;
     }
-
+<<<<<<< HEAD
 
 
     public List<Channel> getAllChannels()
@@ -834,4 +955,6 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
 
 
 
-        }
+=======
+>>>>>>> 79e9e565df7ab7fb2060378aa7d84b03cdd613b1
+}
