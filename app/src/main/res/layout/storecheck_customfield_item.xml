@@ -32,6 +32,7 @@
                 android:enabled="@{customField.IsEnabled}"
                 android:inputType="@{customField.IsNumeric? InputType.TYPE_CLASS_NUMBER:InputType.TYPE_CLASS_TEXT}"
                 android:textSize="@dimen/default_font_size"
+                android:id="@+id/optionName"
                 />
         </LinearLayout>
 

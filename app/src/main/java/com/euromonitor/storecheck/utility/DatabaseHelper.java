@@ -22,6 +22,7 @@ import com.euromonitor.storecheck.model.Market;
 import com.euromonitor.storecheck.model.Option;
 import com.euromonitor.storecheck.model.Outlet;
 import com.euromonitor.storecheck.model.Product;
+import com.euromonitor.storecheck.model.StoreCheckBrand;
 import com.euromonitor.storecheck.model.StoreCheckDetail;
 import com.euromonitor.storecheck.model.Unit;
 
@@ -49,6 +50,8 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
     private static final String TABLE_OPTIONS = "options";
     private static final String TABLE_CUSTOMFIELDS = "customfields";
     private static final String TABLE_UNITS = "units";
+    private static final String TABLE_BRANDS = "brands";
+    private static final String TABLE_BRANDCUSTOMFIELDS = "brandcustomfields";
 
 
     private static final String KEY_ID = "id";
@@ -142,6 +145,10 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
     private static final String KEY_UNITBASE = "unitbase";
     private static final String KEY_UNITMULTIPLIER = "unitmultiplier";
 
+    // Brands Column Names
+    private static final String KEY_BRANDID = "brandid";
+    private static final String KEY_OPTIONVALUE = "optionvalue";
+
     // Custom Field Control Type
     final String DropDown = "1";
     final String TextBox = "2";
@@ -170,6 +177,8 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         createOptionTable();
         createCustimFieldssTable();
         createUnitTable();
+        createBrandsTable();
+        createBrandCustomFieldsTable();
     }
 
     public void loadData(List<Product> products, List<Outlet> outlets, List<Channel> channels, List<Detail> details, List<Market> markets, List<Option> options, List<CustomField> customFields, List<Unit> units) {
@@ -516,6 +525,24 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         database.execSQL(CREATE_UNIT_TABLE);
     }
 
+    private void createBrandsTable() {
+        String CREATE_BRANDS_TABLE = " CREATE TABLE " + TABLE_BRANDS + "("
+                + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + KEY_BRAND + " TEXT, "
+                + KEY_NBO + " TEXT)";
+        database.execSQL(CREATE_BRANDS_TABLE);
+    }
+
+    private void createBrandCustomFieldsTable() {
+        String CREATE_BRANDCUSTOMFIELD_TABLE = " CREATE TABLE " + TABLE_BRANDCUSTOMFIELDS + "("
+                + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + KEY_BRANDID + " TEXT, "
+                + KEY_CUSTOMFIELDID + " TEXT, "
+                + KEY_OPTIONID + " TEXT, "
+                + KEY_OPTIONVALUE + " TEXT) ";
+        database.execSQL(CREATE_BRANDCUSTOMFIELD_TABLE);
+    }
+
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
@@ -601,8 +628,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         return outletList;
     }
 
-<<<<<<< HEAD
-=======
+
     public ArrayList<String> getAllChannels() {
         ArrayList<String> my_array = new ArrayList<String>();
         try {
@@ -628,40 +654,6 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         }
         return my_array;
     }
->>>>>>> 79e9e565df7ab7fb2060378aa7d84b03cdd613b1
-
-//    // Updating single outlet
-//    public int updateOutlet(Outlet outlet) {
-//        SQLiteDatabase db = this.getWritableDatabase();
-//
-//        ContentValues values = new ContentValues();
-//        values.put(KEY_NAME, outlet.getName());
-//        values.put(KEY_PH_NO, outlet.getPhoneNumber());
-//
-//        // updating row
-//        return db.update(TABLE_CONTACTS, values, KEY_ID + " = ?",
-//                new String[] { String.valueOf(outlet.getID()) });
-//    }
-//
-//    // Deleting single outlet
-//    public void deleteOutlet(Outlet outlet) {
-//        SQLiteDatabase db = this.getWritableDatabase();
-//        db.delete(TABLE_CONTACTS, KEY_ID + " = ?",
-//                new String[] { String.valueOf(outlet.getID()) });
-//        db.close();
-//    }
-//
-//
-//    // Getting outlets Count
-//    public int getOutletsCount() {
-//        String countQuery = "SELECT  * FROM " + TABLE_CONTACTS;
-//        SQLiteDatabase db = this.getReadableDatabase();
-//        Cursor cursor = db.rawQuery(countQuery, null);
-//        cursor.close();
-//
-//        // return count
-//        return cursor.getCount();
-//    }
 
     public ArrayList<Cursor> getData(String Query) {
         //get writable database
@@ -748,32 +740,6 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
             Log.e("db-error", e.getMessage());
         }
         return storeCheckDetails;
-    }
-
-    public ArrayList<Product> getAllProducts() {
-        SQLiteDatabase database = this.getReadableDatabase();
-        String query = "select id, product_id, product_name from products";
-        Cursor cursor = database.rawQuery(query, null);
-        ArrayList<Product> products = null;
-        try {
-            if (cursor.moveToFirst()) {
-                products = new ArrayList<>();
-                do {
-                    String productId = cursor.getString(1);
-                    String productName = cursor.getString(2);
-
-                    Product temp = new Product(productId, productName);
-                    String id = cursor.getString(0);
-                    if (id != null) {
-                        temp.set_id(Integer.valueOf(id));
-                    }
-                    products.add(temp);
-                } while ((cursor.moveToNext()));
-            }
-        } catch (Exception e) {
-            Log.e("Product fetch", e.getMessage());
-        }
-        return products;
     }
 
     public  ArrayList<Outlet> getOutlets()
@@ -900,12 +866,17 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
                     } while ((cursor.moveToNext()));
 
                 }
-                if (customField.get_object_id().equals(TextBox) && options.size() > 0) {
-                    String isNumeric = options.get(0).getIsNumeric();
-                    if (isNumeric != null && isNumeric.equals("1")) {
-                        customField.setIsNumeric(true);
-                    } else if (isNumeric != null && isNumeric.equals("0")) {
-                        customField.setIsNumeric(false);
+                if ( options.size() > 0) {
+                    if (customField.get_object_id().equals(TextBox)) {
+                        String isNumeric = options.get(0).getIsNumeric();
+                        if (isNumeric != null && isNumeric.equals("1")) {
+                            customField.setIsNumeric(true);
+                        } else if (isNumeric != null && isNumeric.equals("0")) {
+                            customField.setIsNumeric(false);
+                        }
+                        customField.setSelectedOption(options.get(0));
+                    }else if (customField.get_object_id().equals(DropDown)){
+                        customField.setSelectedOption(options.get(0));
                     }
                 }
 
@@ -923,38 +894,70 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         }
         return customFields;
     }
-<<<<<<< HEAD
 
-
-    public List<Channel> getAllChannels()
-    {
-        List<Channel> my_array = new ArrayList<Channel>();
+    public ArrayList<Product> getAllProducts() {
+        SQLiteDatabase database = this.getReadableDatabase();
+        String query = "select id, product_id, product_name from products";
+        Cursor cursor = database.rawQuery(query, null);
+        ArrayList<Product> products = null;
         try {
-            String selectQuery = "SELECT  id,chccode,chcname FROM " + TABLE_CHANNELS;
-
-            SQLiteDatabase db = this.getWritableDatabase();
-            Cursor cursor = db.rawQuery(selectQuery, null);
-
             if (cursor.moveToFirst()) {
+                products = new ArrayList<>();
                 do {
-                    Channel channel=new Channel(null,null);
-                    channel.set_id(cursor.getInt(cursor.getColumnIndex("id")));
-                    channel.set_chc_code(cursor.getString(cursor.getColumnIndex("chccode")));
-                    channel.set_chc_name(cursor.getString(cursor.getColumnIndex("chcname")));
-                    my_array.add(channel);
+                    String productId = cursor.getString(1);
+                    String productName = cursor.getString(2);
 
-                } while (cursor.moveToNext());
+                    Product temp = new Product(productId, productName);
+                    String id = cursor.getString(0);
+                    if (id != null) {
+                        temp.set_id(Integer.valueOf(id));
+                    }
+                    products.add(temp);
+                } while ((cursor.moveToNext()));
             }
-            cursor.close();
-            db.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e("Product fetch", e.getMessage());
         }
-        return my_array;
+        return products;
     }
 
+    public boolean saveBrand(StoreCheckBrand brand) {
+        boolean result = true;
+        SQLiteDatabase db = this.getWritableDatabase();
+        try {
 
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(KEY_BRAND, brand.getBrand());
+            contentValues.put(KEY_NBO, brand.getBrand());
 
-=======
->>>>>>> 79e9e565df7ab7fb2060378aa7d84b03cdd613b1
+            long brandId = db.insert(TABLE_BRANDS, "", contentValues);
+
+            if (brandId > 0) {
+
+                for (CustomField cf : brand.getCustomFields()) {
+                    if (result) {
+                        contentValues = new ContentValues();
+
+                        contentValues.put(KEY_BRANDID, brandId);
+                        contentValues.put(KEY_CUSTOMFIELDID, cf.getUniqueID());
+                        contentValues.put(KEY_OPTIONID, cf.getSelectedOption().getOptionId());
+                        if (cf.get_object_id().equals("2")) {
+                            contentValues.put(KEY_OPTIONVALUE, cf.getCustomFieldTextValue());
+                        } else {
+                            contentValues.put(KEY_OPTIONVALUE, cf.getSelectedOption().getOptionName());
+                        }
+                        result = db.insert(TABLE_BRANDCUSTOMFIELDS, "", contentValues) > 0;
+                    }
+                }
+            } else {
+                result = false;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            result = false;
+        } finally {
+            db.close();
+        }
+        return result;
+    }
 }

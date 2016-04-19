@@ -66,9 +66,12 @@ public class StoreCheckAddBrandActivity extends MainActivity
        // binding = DataBindingUtil.inflate(inflater, R.layout.storecheck_addbrand, container, false);
         binding=DataBindingUtil.setContentView(this,R.layout.storecheck_addbrand);
 
-       binding.setListeners(new Listeners(binding));
         context=this;
         databaseHelper = new DatabaseHelper(context);
+
+        binding.setListeners(new Listeners(binding, databaseHelper));
+
+
         setBinding();
 
         View view = binding.getRoot();
@@ -83,12 +86,14 @@ public class StoreCheckAddBrandActivity extends MainActivity
         storeCheckBrand.setGeography(databaseHelper.getGeography());
         binding.setStoreCheckBrand(storeCheckBrand);
     }
+
     public static class Listeners implements View.OnClickListener {
 
         private StorecheckAddbrandBinding binding;
-
-        public Listeners(StorecheckAddbrandBinding binding) {
+        DatabaseHelper databaseHelper;
+        public Listeners(StorecheckAddbrandBinding binding,DatabaseHelper databaseHelper) {
             this.binding = binding;
+            this.databaseHelper = databaseHelper;
         }
 
         @Override
@@ -104,10 +109,15 @@ public class StoreCheckAddBrandActivity extends MainActivity
         }
 
         private void resetData(){
+            binding.brandName.setText("");
+            binding.nboName.setText("");
 
+            setBindingProperties();
         }
 
         private void validateData(View v) {
+            setBindingProperties();
+
             StoreCheckBrand data = binding.getStoreCheckBrand();
             boolean isValid = true;
             String errors = "Please correct the following errors: ";
@@ -126,12 +136,12 @@ public class StoreCheckAddBrandActivity extends MainActivity
                 for (CustomField cf : customFields) {
 
                     Option selectedOption = cf.getSelectedOption();
-                    if(selectedOption!=null) {
+                    if (selectedOption != null) {
                         if (isValid && selectedOption.getMinimumAllowed().equals("0") && selectedOption.getMaximumAllowed().equals("0")) {
                             isValid = true;
                         }
 
-                        if (!isValid && cf.get_object_id().equals(StoreCheckAddBrandActivity.TextBox)) {
+                        if (isValid && cf.get_object_id().equals(StoreCheckAddBrandActivity.TextBox)) {
                             double minimum = 0;
                             if (selectedOption.getMinimumAllowed() != null) {
                                 minimum = Double.parseDouble(selectedOption.getMinimumAllowed());
@@ -147,23 +157,23 @@ public class StoreCheckAddBrandActivity extends MainActivity
 
                             try {
 
-                                if(cf.getCustomFieldTextValue()!=null) {
+                                if (cf.getCustomFieldTextValue() != null) {
                                     cfValue = Double.parseDouble(cf.getCustomFieldTextValue());
                                 }
                                 if (!cf.getIsNumeric()) {
-                                    if(cf.getCustomFieldTextValue()!=null) {
+                                    if (cf.getCustomFieldTextValue() != null) {
                                         cfValue = cf.getCustomFieldTextValue().trim().length();
                                     }
                                 }
 
-                                if (!validateValue(cfValue, minimum, maximum, noMaximum, cf.getIsNumeric(), cf.getIsZeroAllowed())) {
-                                    errors += "\n Custom field value should be between" + minimum + " and " + maximum;
+                                if (!validateValue(cfValue, minimum, maximum, noMaximum,  cf.getIsZeroAllowed())) {
+                                    errors += "\n" + cf.get_label() + " value should be between " + minimum + " and " + maximum;
                                     isValid = false;
                                 }
                             } catch (NumberFormatException e) {
                                 cfValue = cf.getCustomFieldTextValue().length();
-                                if (!validateValue(cfValue, minimum, maximum, noMaximum, cf.getIsNumeric(), cf.getIsZeroAllowed())) {
-                                    errors += "\n Custom field value should be between" + minimum + " and " + maximum;
+                                if (!validateValue(cfValue, minimum, maximum, noMaximum, cf.getIsZeroAllowed())) {
+                                    errors += "\n" + cf.get_label() + " value should be between " + minimum + " and " + maximum;
                                     isValid = false;
                                 }
                             }
@@ -172,15 +182,36 @@ public class StoreCheckAddBrandActivity extends MainActivity
                 }
             }
 
-            if(!isValid){
+            if (isValid) {
+                if(databaseHelper.saveBrand(data)){
+                    Toast.makeText(v.getContext(), "Saved successfully!", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+            else{
                 Toast.makeText(v.getContext(), errors, Toast.LENGTH_SHORT).show();
             }
         }
 
-        private boolean validateValue (double value, double minimumAllowed, double maximumAllowed, boolean noMaximum, boolean isNumeric, boolean isZeroAllowed){
+        private boolean validateValue (double value, double minimumAllowed, double maximumAllowed, boolean noMaximum, boolean isZeroAllowed){
             return value >= minimumAllowed && (value <= maximumAllowed || noMaximum) || (isZeroAllowed && value == 0);
         }
+
+        private void setBindingProperties(){
+            String newValue = null;
+            if(binding.brandName.getText()!=null){
+                newValue = binding.brandName.getText().toString();
+            }
+            binding.getStoreCheckBrand().setBrand(newValue);
+
+            newValue = null;
+            if(binding.nboName.getText()!=null){
+                newValue = binding.nboName.getText().toString();
+            }
+            binding.getStoreCheckBrand().setNbo(newValue);
+        }
     }
+
     private ArrayList<Product> setProducts() {
 
 

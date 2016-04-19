@@ -147,16 +147,16 @@ public class StoreCheckAddOutletFragment extends Fragment {
     {
         DatabaseHelper db = new DatabaseHelper(this.getActivity());
 
-        List<Channel> labels = db.getAllChannels();
+     //   List<Channel> labels = db.getAllChannels();
 
 
-        ArrayAdapter<Channel> dataAdapter = new ArrayAdapter<Channel>(this.getActivity(), android.R.layout.simple_spinner_item, labels);
+       // ArrayAdapter<Channel> dataAdapter = new ArrayAdapter<Channel>(this.getActivity(), android.R.layout.simple_spinner_item, labels);
 
         // Drop down layout style - list view with radio button
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+      //  dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         // attaching data adapter to spinner
-        spinner.setAdapter(dataAdapter);
+//        spinner.setAdapter(dataAdapter);
     }
 
 
