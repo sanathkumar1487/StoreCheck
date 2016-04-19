@@ -2,6 +2,7 @@ package com.euromonitor.storecheck.app;
 
 import android.app.Fragment;
 import android.content.Context;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -57,6 +58,8 @@ public class StoreCheckAddBrandActivity extends MainActivity
     RecyclerView customFieldRecyclerView;
     ArrayList<CustomField> customFields = new ArrayList<CustomField>() ;
     Context context;
+    ArrayList<Product> allProducts;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -69,7 +72,7 @@ public class StoreCheckAddBrandActivity extends MainActivity
         context=this;
         databaseHelper = new DatabaseHelper(context);
 
-        binding.setListeners(new Listeners(binding, databaseHelper));
+        binding.setListeners(new Listeners(binding, databaseHelper, this));
 
 
         setBinding();
@@ -81,6 +84,7 @@ public class StoreCheckAddBrandActivity extends MainActivity
     }
     private void setBinding(){
         storeCheckBrand = new StoreCheckBrand();
+
         storeCheckBrand.setProducts(setProducts());
 
         storeCheckBrand.setGeography(databaseHelper.getGeography());
@@ -90,29 +94,22 @@ public class StoreCheckAddBrandActivity extends MainActivity
     public static class Listeners implements View.OnClickListener {
 
         private StorecheckAddbrandBinding binding;
+        private Context context;
         DatabaseHelper databaseHelper;
-        public Listeners(StorecheckAddbrandBinding binding,DatabaseHelper databaseHelper) {
+
+        public Listeners(StorecheckAddbrandBinding binding,DatabaseHelper databaseHelper, Context context) {
             this.binding = binding;
             this.databaseHelper = databaseHelper;
+            this.context = context;
         }
 
         @Override
         public void onClick(View v) {
             switch (v.getId()){
-                case R.id.resetAddBrand:
-                    resetData();
-                    break;
                 case R.id.okAddBrand:
                     validateData(v);
                     break;
             }
-        }
-
-        private void resetData(){
-            binding.brandName.setText("");
-            binding.nboName.setText("");
-
-            setBindingProperties();
         }
 
         private void validateData(View v) {
@@ -137,11 +134,9 @@ public class StoreCheckAddBrandActivity extends MainActivity
 
                     Option selectedOption = cf.getSelectedOption();
                     if (selectedOption != null) {
-                        if (isValid && selectedOption.getMinimumAllowed().equals("0") && selectedOption.getMaximumAllowed().equals("0")) {
+                        if (selectedOption.getMinimumAllowed().equals("0") && selectedOption.getMaximumAllowed().equals("0")) {
                             isValid = true;
-                        }
-
-                        if (isValid && cf.get_object_id().equals(StoreCheckAddBrandActivity.TextBox)) {
+                        } else if (isValid && cf.get_object_id().equals(StoreCheckAddBrandActivity.TextBox)) {
                             double minimum = 0;
                             if (selectedOption.getMinimumAllowed() != null) {
                                 minimum = Double.parseDouble(selectedOption.getMinimumAllowed());
@@ -185,6 +180,10 @@ public class StoreCheckAddBrandActivity extends MainActivity
             if (isValid) {
                 if(databaseHelper.saveBrand(data)){
                     Toast.makeText(v.getContext(), "Saved successfully!", Toast.LENGTH_SHORT).show();
+
+                    StoreCheckAddProductDetailsActivity  activity = new StoreCheckAddProductDetailsActivity();
+                    Intent intent = new Intent(context,StoreCheckAddProductDetailsActivity.class);
+                    context.startActivity(intent);
                 }
 
             }
@@ -194,7 +193,7 @@ public class StoreCheckAddBrandActivity extends MainActivity
         }
 
         private boolean validateValue (double value, double minimumAllowed, double maximumAllowed, boolean noMaximum, boolean isZeroAllowed){
-            return value >= minimumAllowed && (value <= maximumAllowed || noMaximum) || (isZeroAllowed && value == 0);
+            return value >= minimumAllowed && (value <= maximumAllowed || noMaximum || maximumAllowed == 0) || (isZeroAllowed && value == 0);
         }
 
         private void setBindingProperties(){
@@ -213,8 +212,6 @@ public class StoreCheckAddBrandActivity extends MainActivity
     }
 
     private ArrayList<Product> setProducts() {
-
-
         ArrayList<Product> products = databaseHelper.getAllProducts();
 
         Spinner productSpinner = (Spinner) ((View) (binding.getRoot()).findViewById(R.id.products));
