@@ -4,24 +4,41 @@ import android.renderscript.Sampler;
 /**
  * Created by Shashwat.Bajpai on 19/04/2016.
  */
-public class ProductDetail
-{
+public class ProductDetail {
     double price;
-    double pack_size;
-    public void setPrice(Double price)
-    {
-        this.price=price;
+    double packSize;
+    String brandName;
+    private int brandId;
+
+    public void setPrice(double price) {
+        this.price = price;
     }
-    public String getPrice()
-    {
+
+    public String getPrice() {
         return String.valueOf(price);
     }
-    public void setPack_size(Double pack_size)
-    {
-        this.pack_size=pack_size;
+
+    public void setPackSize(double packSize) {
+        this.packSize = packSize;
     }
-    public String getPack_size()
-    {
-        return String.valueOf(pack_size);
+
+    public String getPackSize() {
+        return String.valueOf(packSize);
+    }
+
+    public void setBrandName(String brandName){
+        this.brandName = brandName;
+    }
+
+    public String getBrandName(){
+        return brandName;
+    }
+
+    public void setBrandId(int brandId){
+        this.brandId = brandId;
+    }
+
+    public int getBrandId(){
+        return brandId;
     }
 }

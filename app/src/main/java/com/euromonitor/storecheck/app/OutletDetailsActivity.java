@@ -1,13 +1,16 @@
 package com.euromonitor.storecheck.app;
 
 import android.app.FragmentTransaction;
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -33,6 +36,7 @@ public class OutletDetailsActivity extends MainActivity {
     StorecheckoutletDetailsBinding binding;
     Context context;
     Intent intent;
+    private SearchView.OnQueryTextListener queryTextListener;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -42,6 +46,36 @@ public class OutletDetailsActivity extends MainActivity {
         View view = binding.getRoot();
         setUpStoreCheckDetails(view);
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.storecheck_menu, menu);
+
+        SearchManager searchManager = (SearchManager)getSystemService(Context.SEARCH_SERVICE);
+
+        SearchView searchView = (SearchView)menu.findItem(R.id.searchItem).getActionView();
+
+        if(searchView!=null) {
+            searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+
+            queryTextListener = new SearchView.OnQueryTextListener(){
+                @Override
+                public boolean onQueryTextChange(String newText) {
+                    if (newText != null) {
+                        adapter.filterByOutLet(newText);
+                    }
+                    return true;
+                }
+
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+                    return true;
+                }
+            };
+            searchView.setOnQueryTextListener(queryTextListener);
+        }
+        return true;
     }
 
     public void setUpStoreCheckDetails(View view) {

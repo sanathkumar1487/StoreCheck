@@ -6,6 +6,7 @@ package com.euromonitor.storecheck.app;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
@@ -13,8 +14,10 @@ import android.os.Binder;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -34,21 +37,52 @@ public class StoreCheckDetailsActivity extends MainActivity
     StorecheckDetailsBinding binding;
     Context context;
     Intent intent;
+    private SearchView.OnQueryTextListener queryTextListener;
 
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.storecheck_details);
-        // setContentView(R.layout.storecheckdetail_item);
+
         View view=binding.getRoot();
         setUpStoreCheckDetails(view);
 
     }
 
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.storecheck_menu, menu);
+
+        SearchManager searchManager = (SearchManager)getSystemService(Context.SEARCH_SERVICE);
+
+        SearchView searchView = (SearchView)menu.findItem(R.id.searchItem).getActionView();
+
+        if(searchView!=null) {
+            searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+
+            queryTextListener = new SearchView.OnQueryTextListener(){
+                @Override
+                public boolean onQueryTextChange(String newText) {
+                    if (newText != null) {
+                        adapter.filterByProduct(newText);
+                    }
+                    return true;
+                }
+
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+                    return true;
+                }
+            };
+            searchView.setOnQueryTextListener(queryTextListener);
+        }
+        return true;
+    }
+
     public void setUpStoreCheckDetails(View view)
     {
-
         final RecyclerView recyclerView = (RecyclerView)view.findViewById(R.id.storecheckDetailsView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new StoreCheckDetailAdapter(this.getLayoutInflater(),this);

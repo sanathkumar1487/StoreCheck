@@ -5,12 +5,8 @@
     <data/>
     <android.support.v4.widget.DrawerLayout
         android:id="@+id/drawer_layout"
-
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -29,13 +25,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/containerFrame1"/>
-             <!--   <fragment
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/containerFragment"
-                android:name="com.example.nooraakhtar.listview.app.StoreCheckDetailsFragment"
-                tools:layout="@layout/storecheck_details"/>
-    -->
         </LinearLayout>
         <fragment
             android:id="@+id/storeCheckNavDrawerFragment"
