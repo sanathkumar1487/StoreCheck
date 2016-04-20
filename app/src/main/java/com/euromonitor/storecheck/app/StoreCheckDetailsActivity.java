@@ -57,8 +57,6 @@ public class StoreCheckDetailsActivity extends MainActivity
         {
             @Override
             public void onClick(View view,int position) {
-                //Fragment fragment = new StoreCheckAddProductDetailsFragment();
-
 
                 StorecheckdetailItemBinding binding = DataBindingUtil.getBinding(view);
                 StoreCheckDetail detail = binding.getStoreCheckDetail();
@@ -72,11 +70,6 @@ public class StoreCheckDetailsActivity extends MainActivity
                 StoreCheckAddProductDetailsActivity  activity=new StoreCheckAddProductDetailsActivity();
                 intent=new Intent(StoreCheckDetailsActivity.this,StoreCheckAddProductDetailsActivity.class);
                 startActivity(intent);
-
-                //FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                //transaction.replace(R.id.containerFrame, fragment);
-                //transaction.addToBackStack(null);
-                //transaction.commit();
             }
 
             @Override

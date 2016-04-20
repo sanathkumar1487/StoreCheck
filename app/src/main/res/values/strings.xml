@@ -27,4 +27,5 @@
     <string name="customFields">Custom Fields</string>
     <string name="reset">Reset</string>
     <string name="ok">OK</string>
+    <string name="title_activity_outlet">outlet</string>
 </resources>

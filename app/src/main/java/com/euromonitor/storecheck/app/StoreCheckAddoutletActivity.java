@@ -3,6 +3,7 @@ package com.euromonitor.storecheck.app;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,22 +41,22 @@ public class StoreCheckAddoutletActivity extends MainActivity
     EditText city;
  Context context;
 
-    public void onCreate(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-{
 
-    super.onCreate(savedInstanceState);
-    View view = inflater.inflate(R.layout.storecheck_addoutlet, container, false);
-    setContentView(R.layout.storecheck_addoutlet);
+    @Override
+    public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
+        super.onCreate(savedInstanceState, persistentState);
+        View view =  getLayoutInflater().inflate(R.layout.storecheck_addoutlet,null);
+      //  setContentView(R.layout.storecheck_addoutlet);
         spinner = (Spinner) view.findViewById(R.id.spinner);
-       textView=(TextView)view.findViewById(R.id.header);
-       outLet_Name = (EditText) view.findViewById(R.id.outlet_Name);
+        textView=(TextView)view.findViewById(R.id.header);
+        outLet_Name = (EditText) view.findViewById(R.id.outlet_Name);
         city = (EditText) view.findViewById(R.id.city);
-    context=this;
+        context=this;
         loadOutletui();
         loadSpinnerData();
 
 
-       etDate = (EditText)view.findViewById(R.id.etDate);
+        etDate = (EditText)view.findViewById(R.id.etDate);
         dateFormatter = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
         etDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,8 +79,9 @@ public class StoreCheckAddoutletActivity extends MainActivity
         },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH),
                 newCalendar.get(Calendar.DAY_OF_MONTH));
 
-
     }
+
+
 
     public Outlet getOutlet()
     {

@@ -9,6 +9,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
         <activity
             android:name=".app.MainActivity"
             android:label="@string/app_name"
@@ -19,14 +20,21 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".app.AndroidDatabaseManager"
-            android:theme="@style/Theme.AppCompat.Light"/>
-        <activity android:name=".app.StoreCheckAddBrandActivity"/>
-        <activity android:name=".app.StoreCheckAddoutletActivity"/>
-        <activity android:name=".app.StoreCheckAddProductDetailsActivity"/>
-        <activity android:name=".app.StoreCheckImportActivity"/>
-        <activity android:name=".app.StoreCheckExportActivity"/>
-        <activity android:name=".app.StoreCheckDetailsActivity"/>
+        <activity
+            android:name=".app.AndroidDatabaseManager"
+            android:theme="@style/Theme.AppCompat.Light" />
+        <activity android:name=".app.StoreCheckAddBrandActivity" />
+        <activity android:name=".app.StoreCheckAddoutletActivity" />
+        <activity android:name=".app.StoreCheckAddProductDetailsActivity" />
+        <activity android:name=".app.StoreCheckImportActivity" />
+        <activity android:name=".app.StoreCheckExportActivity" />
+        <activity android:name=".app.StoreCheckDetailsActivity" />
+        <activity
+            android:name=".app.StoreCheckOutletDetailsActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".app.OutletDetailsActivity"/>
+        <activity android:name=".app.AddOutletActivity"/>
+
     </application>
 
 </manifest>

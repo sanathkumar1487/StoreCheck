@@ -185,7 +185,7 @@ public class MainActivity extends AppCompatActivity {
             case ADD_OUTLET:
                 //fragment = new StoreCheckAddOutletFragment();
                 context=this;
-                intent=new Intent(context,StoreCheckAddoutletActivity.class);
+                intent=new Intent(context,OutletDetailsActivity.class);
                 startActivity(intent);
                 break;
             case IMPORT_STORECHECK_DETAILS:
