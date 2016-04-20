@@ -1,4 +1,6 @@
-<layout>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable
             name="storeCheckBrand"
@@ -7,7 +9,7 @@
             name="listeners"
             type="com.euromonitor.storecheck.app.StoreCheckAddBrandActivity.Listeners"/>
     </data>
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:orientation="vertical"
 
         android:layout_width="match_parent"
@@ -50,7 +52,8 @@
                 android:id="@+id/products"
                 android:drawSelectorOnTop="true"
                 android:layout_margin="@dimen/material_item_margin"
-                android:backgroundTint="@color/blue_500"/>
+                android:backgroundTint="@color/blue_500"
+                app:theme="@style/MaterialTheme"/>
 
             <TextView android:layout_height="wrap_content"
                 android:layout_width="wrap_content"

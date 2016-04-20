@@ -150,8 +150,10 @@ public class StoreCheckAddBrandActivity extends MainActivity
                     Option selectedOption = cf.getSelectedOption();
                     if (selectedOption != null) {
                         if (selectedOption.getMinimumAllowed().equals("0") && selectedOption.getMaximumAllowed().equals("0")) {
-                            isValid = true;
-                        } else if (isValid && cf.get_object_id().equals(StoreCheckAddBrandActivity.TextBox)) {
+                            if (isValid) {
+                                isValid = true;
+                            }
+                        } else if (cf.get_object_id().equals(StoreCheckAddBrandActivity.TextBox)) {
                             double minimum = 0;
                             if (selectedOption.getMinimumAllowed() != null) {
                                 minimum = Double.parseDouble(selectedOption.getMinimumAllowed());
@@ -170,6 +172,7 @@ public class StoreCheckAddBrandActivity extends MainActivity
                                 if (cf.getCustomFieldTextValue() != null) {
                                     cfValue = Double.parseDouble(cf.getCustomFieldTextValue());
                                 }
+
                                 if (!cf.getIsNumeric()) {
                                     if (cf.getCustomFieldTextValue() != null) {
                                         cfValue = cf.getCustomFieldTextValue().trim().length();
@@ -205,11 +208,9 @@ public class StoreCheckAddBrandActivity extends MainActivity
 
                     Toast.makeText(v.getContext(), "Saved successfully!", Toast.LENGTH_SHORT).show();
 
-                    StoreCheckAddProductDetailsActivity  activity = new StoreCheckAddProductDetailsActivity();
                     Intent intent = new Intent(context,StoreCheckAddProductDetailsActivity.class);
                     context.startActivity(intent);
                 }
-
             }
             else{
                 Toast.makeText(v.getContext(), errors, Toast.LENGTH_SHORT).show();

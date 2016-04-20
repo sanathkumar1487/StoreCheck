@@ -14,6 +14,9 @@ import com.euromonitor.storecheck.model.ProductDetail;
 public class StoreCheckAddProductDetailsActivity extends MainActivity
 {
     public static int priceId;
+
+    public static int brandId;
+
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
@@ -23,7 +26,7 @@ public class StoreCheckAddProductDetailsActivity extends MainActivity
         ProductDetail prod=new ProductDetail();
 
         prod.setPrice(9.0);
-        prod.setPack_size(13.0);
+        prod.setPackSize(13.0);
         binding.setProductDetails(prod);
     }
 }

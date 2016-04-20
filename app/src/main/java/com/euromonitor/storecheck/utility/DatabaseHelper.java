@@ -561,6 +561,8 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         database.execSQL("DROP TABLE IF EXISTS '" + TABLE_OPTIONS + "'");
         database.execSQL("DROP TABLE IF EXISTS '" + TABLE_CUSTOMFIELDS + "'");
         database.execSQL("DROP TABLE IF EXISTS '" + TABLE_UNITS + "'");
+        database.execSQL("DROP TABLE IF EXISTS '" + TABLE_BRANDS + "'");
+        database.execSQL("DROP TABLE IF EXISTS '" + TABLE_BRANDCUSTOMFIELDS + "'");
     }
 
 
