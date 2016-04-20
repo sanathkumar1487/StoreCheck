@@ -7,12 +7,13 @@ import android.databinding.Bindable;
 import com.euromonitor.storecheck.utility.DatabaseHelper;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by Sanath.Kumar on 3/30/2016.
  */
-public class Outlet extends BaseObservable {
+public class Outlet extends BaseObservable implements Serializable {
 
 
 

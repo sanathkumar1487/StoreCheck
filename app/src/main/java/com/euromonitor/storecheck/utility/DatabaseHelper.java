@@ -629,31 +629,6 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
     }
 
 
-    public ArrayList<String> getAllChannels() {
-        ArrayList<String> my_array = new ArrayList<String>();
-        try {
-            String selectQuery = "SELECT  * FROM " + TABLE_CHANNELS;
-
-            SQLiteDatabase db = this.getWritableDatabase();
-            Cursor cursor = db.rawQuery(selectQuery, null);
-
-            if (cursor.moveToFirst()) {
-                do {
-
-                    String ID = cursor.getString(0);
-                    String CHANNELCODE = cursor.getString(1);
-                    String CHANNELNAME = cursor.getString(2);
-                    my_array.add(CHANNELNAME);
-
-                } while (cursor.moveToNext());
-            }
-            cursor.close();
-            db.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return my_array;
-    }
 
     public ArrayList<Cursor> getData(String Query) {
         SQLiteDatabase sqlDB = this.getWritableDatabase();
@@ -957,5 +932,33 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
             db.close();
         }
         return result;
+    }
+
+
+    public ArrayList<Channel> getAllChannels()
+    {
+        ArrayList<Channel> my_array = new ArrayList<Channel>();
+        try {
+            String selectQuery = "SELECT  id,chccode,chcname FROM " + TABLE_CHANNELS;
+
+            SQLiteDatabase db = this.getWritableDatabase();
+            Cursor cursor = db.rawQuery(selectQuery, null);
+
+            if (cursor.moveToFirst()) {
+                do {
+                    Channel channel=new Channel(null,null);
+                    channel.set_id(cursor.getInt(cursor.getColumnIndex("id")));
+                    channel.set_chc_code(cursor.getString(cursor.getColumnIndex("chccode")));
+                    channel.set_chc_name(cursor.getString(cursor.getColumnIndex("chcname")));
+                    my_array.add(channel);
+
+                } while (cursor.moveToNext());
+            }
+            cursor.close();
+            db.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return my_array;
     }
 }
