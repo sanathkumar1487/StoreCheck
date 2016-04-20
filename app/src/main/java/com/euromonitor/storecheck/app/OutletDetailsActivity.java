@@ -1,5 +1,6 @@
 package com.euromonitor.storecheck.app;
 
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
@@ -7,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.euromonitor.storecheck.R;
@@ -58,8 +60,9 @@ public class OutletDetailsActivity extends MainActivity
                 StorecheckoutletItemBinding binding = DataBindingUtil.getBinding(view);
                 Outlet detail = binding.getStoreCheckOutlet();
 
-                AddOutletActivity  activity=new AddOutletActivity();
-                intent=new Intent(OutletDetailsActivity.this,AddOutletActivity.class);
+                AddOutletActivity activity = new AddOutletActivity();
+
+                intent = new Intent(OutletDetailsActivity.this, AddOutletActivity.class);
                 startActivity(intent);
 
             }
@@ -70,6 +73,29 @@ public class OutletDetailsActivity extends MainActivity
         }));
 
         }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.AddNew:
+                loadAddOutletScreen();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+
+    private void loadAddOutletScreen()
+    {
+        AddOutletActivity activity = new AddOutletActivity();
+        intent = new Intent(OutletDetailsActivity.this, AddOutletActivity.class);
+        startActivity(intent);
+
+
+    }
 
 }
 
