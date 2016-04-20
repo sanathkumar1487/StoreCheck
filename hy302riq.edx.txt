@@ -1,0 +1,18 @@
+﻿intermediate
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+# On branch master
+# Your branch and 'origin/master' have diverged,
+# and have 1 and 2 different commits each, respectively.
+#   (use "git pull" to merge the remote branch into yours)
+#
+# Changes to be committed:
+#	modified:   .gradle/2.8/taskArtifacts/cache.properties.lock
+#	modified:   .gradle/2.8/taskArtifacts/fileHashes.bin
+#	modified:   .gradle/2.8/taskArtifacts/fileSnapshots.bin
+#	modified:   .gradle/2.8/taskArtifacts/taskArtifacts.bin
+#	modified:   .idea/workspace.xml
+#	modified:   app/src/main/java/com/euromonitor/storecheck/app/OutletDetailsActivity.java
+#	modified:   app/src/main/res/layout/storecheck_addoutlet.xml
+#
+
