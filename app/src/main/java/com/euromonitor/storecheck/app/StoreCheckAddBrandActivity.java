@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -82,6 +83,13 @@ public class StoreCheckAddBrandActivity extends MainActivity
 
 
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.addbrand_menu, menu);
+        return true;
+    }
+
     private void setBinding(){
         storeCheckBrand = new StoreCheckBrand();
 

@@ -51,10 +51,9 @@ public class MainActivity extends AppCompatActivity {
             setupToolbar();
             setUpNavigationView();
 
-            if(isLaunch)
-            {
+            if (isLaunch) {
                 isLaunch = false;
-               // loadView(IMPORT_STORECHECK_DETAILS);
+                // loadView(IMPORT_STORECHECK_DETAILS);
             }
 
         } catch (Exception e) {
@@ -65,56 +64,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.storecheck_menu, menu);
-
-        SearchManager searchManager = (SearchManager)getSystemService(Context.SEARCH_SERVICE);
-
-        SearchView searchView = (SearchView)menu.findItem(R.id.searchItem).getActionView();
-
-        if(searchView!=null) {
-            searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-
-            queryTextListener = new SearchView.OnQueryTextListener(){
-                @Override
-                public boolean onQueryTextChange(String newText) {
-                    if (newText != null) {
-                        switch (activeView){
-                            case VIEW_DETAILS:
-                                ((StoreCheckDetailsFragment)fragment).adapter.filterByProduct(newText);
-                                break;
-                            case VIEW_PRODUCT_DETAILS:
-
-                                break;
-                            case ADD_BRAND:
-
-                                break;
-                            case ADD_OUTLET:
-                                ((StoreCheckOutletDetailsFragment)fragment).adapter.filterByOutLet(newText);
-
-                                break;
-                            case IMPORT_STORECHECK_DETAILS:
-
-                                break;
-                            case EXPORT_STORECHECK_DETAILS:
-
-                                break;
-                        }
-                    }
-                    return true;
-                }
-
-                @Override
-                public boolean onQueryTextSubmit(String query) {
-                    return true;
-                }
-            };
-            searchView.setOnQueryTextListener(queryTextListener);
-        }
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.searchItem:
 
                 break;
@@ -122,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void setupToolbar(){
+    private void setupToolbar() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -159,55 +114,44 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void loadView(int position){
+    private void loadView(int position) {
         activeView = position;
-        fragment = null;
-        switch (position){
+        navigationFragment.closeDrawer();
+        switch (position) {
             case VIEW_DETAILS:
-                // fragment = new StoreCheckDetailsFragment();
-                context=this;
-                intent=new Intent(context,StoreCheckDetailsActivity.class);
+                context = this;
+                intent = new Intent(context, StoreCheckDetailsActivity.class);
                 startActivity(intent);
                 break;
             case VIEW_PRODUCT_DETAILS:
-                //fragment = new StoreCheckAddProductDetailsFragment();
-                context=this;
-                intent=new Intent(context,StoreCheckAddProductDetailsActivity.class);
+                context = this;
+                intent = new Intent(context, StoreCheckAddProductDetailsActivity.class);
                 startActivity(intent);
                 break;
             case ADD_BRAND:
-               // fragment = new StoreCheckAddBrandFragment();
-               context=this;
-                intent=new Intent(context,StoreCheckAddBrandActivity.class);
+                context = this;
+                intent = new Intent(context, StoreCheckAddBrandActivity.class);
                 startActivity(intent);
 
                 break;
             case ADD_OUTLET:
-                //fragment = new StoreCheckAddOutletFragment();
-                context=this;
-                intent=new Intent(context,OutletDetailsActivity.class);
+                context = this;
+                intent = new Intent(context, OutletDetailsActivity.class);
                 startActivity(intent);
                 break;
             case IMPORT_STORECHECK_DETAILS:
-                //  fragment = new StoreCheckImportFragment();
                 context = this;
-                intent=new Intent(context,StoreCheckImportActivity.class);
+                intent = new Intent(context, StoreCheckImportActivity.class);
                 startActivity(intent);
                 break;
             case EXPORT_STORECHECK_DETAILS:
-                // fragment = new StoreCheckExportFragment();
-                context=this;
-                intent=new Intent(context,StoreCheckExportActivity.class);
+                context = this;
+                intent = new Intent(context, StoreCheckExportActivity.class);
                 startActivity(intent);
                 break;
         }
 
-        if(fragment!=null){
-            FragmentManager fragmentManager = getFragmentManager();
-            fragmentManager.beginTransaction()
-                    .replace(R.id.containerFrame, fragment).commit();
-            navigationFragment.closeDrawer();
-        }
+
     }
 
 }
