@@ -26,8 +26,7 @@ import com.euromonitor.storecheck.model.StoreCheckDetail;
 /**
  * Created by Sanath.Kumar on 4/20/2016.
  */
-public class OutletDetailsActivity extends MainActivity
-{
+public class OutletDetailsActivity extends MainActivity {
     public StoreCheckOutletDetailAdapter adapter;
     private StoreCheckDetail detail = new StoreCheckDetail();
     private int position;
@@ -36,22 +35,20 @@ public class OutletDetailsActivity extends MainActivity
     Intent intent;
 
     @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.storecheckoutlet_details);
-        // setContentView(R.layout.storecheckdetail_item);
-        View view=binding.getRoot();
+
+        View view = binding.getRoot();
         setUpStoreCheckDetails(view);
 
     }
 
-    public void setUpStoreCheckDetails(View view)
-    {
+    public void setUpStoreCheckDetails(View view) {
 
-        final RecyclerView recyclerView = (RecyclerView)view.findViewById(R.id.storecheckOutletDetailsView);
+        final RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.storecheckOutletDetailsView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new StoreCheckOutletDetailAdapter(this.getLayoutInflater(),this);
+        adapter = new StoreCheckOutletDetailAdapter(this.getLayoutInflater(), this);
         recyclerView.setAdapter(adapter);
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(this.getApplicationContext(), recyclerView, new ClickListener() {
             @Override
@@ -72,12 +69,11 @@ public class OutletDetailsActivity extends MainActivity
             }
         }));
 
-        }
+    }
 
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle item selection
         switch (item.getItemId()) {
             case R.id.AddNew:
                 loadAddOutletScreen();
@@ -88,13 +84,10 @@ public class OutletDetailsActivity extends MainActivity
     }
 
 
-    private void loadAddOutletScreen()
-    {
+    private void loadAddOutletScreen() {
         AddOutletActivity activity = new AddOutletActivity();
         intent = new Intent(OutletDetailsActivity.this, AddOutletActivity.class);
         startActivity(intent);
-
-
     }
 
 }
