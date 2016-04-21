@@ -57,130 +57,133 @@ public class AddOutletActivity extends MainActivity
     ArrayList<Channel> labels;
     boolean isvalueChanged = false;
     boolean isNew = false;
-
-
-
+    DatabaseHelper db;
 
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
 
-
         View view =  getLayoutInflater().inflate(R.layout.storecheck_addoutlet,null);
         setContentView(view);
-        spinner = (Spinner) view.findViewById(R.id.spinner);
-        textView = (TextView) view.findViewById(R.id.header);
-        outLet_Name = (EditText) view.findViewById(R.id.outlet_Name);
-        city = (EditText) view.findViewById(R.id.city);
-        setOutlet((Outlet) getIntent().getSerializableExtra("outlet"));
+        db = new DatabaseHelper(this);
 
-        isNew = (boolean)getIntent().getSerializableExtra("isnew");
-        loadSpinnerData();
-        loadOutletui();
+        if(db.isDatabaseAvailable()) {
+            spinner = (Spinner) view.findViewById(R.id.spinner);
+            textView = (TextView) view.findViewById(R.id.header);
+            outLet_Name = (EditText) view.findViewById(R.id.outlet_Name);
+            city = (EditText) view.findViewById(R.id.city);
+            setOutlet((Outlet) getIntent().getSerializableExtra("outlet"));
 
-        etDate = (EditText) view.findViewById(R.id.etDate);
-        dateFormatter = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
-        etDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                datePickerDialog.show();
-            }
+            isNew = (boolean) getIntent().getSerializableExtra("isnew");
+            loadSpinnerData();
+            loadOutletui();
 
-
-        });
-
-        Calendar newCalendar = Calendar.getInstance();
-        datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
-            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                Calendar newDate = Calendar.getInstance();
-                newDate.set(year, monthOfYear, dayOfMonth);
-                etDate.setText(dateFormatter.format(newDate.getTime()));
-
-            }
-
-        }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH),
-                newCalendar.get(Calendar.DAY_OF_MONTH));
-
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
-            public void onItemSelected(AdapterView<?> parent,
-                                       View view, int pos, long id) {
-                Channel g = (Channel) parent.getItemAtPosition(pos);
-
-            }
-
-            public void onNothingSelected(AdapterView parent) {
-                // Do nothing.
-            }
-
-        });
+            etDate = (EditText) view.findViewById(R.id.etDate);
+            dateFormatter = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
+            etDate.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    datePickerDialog.show();
+                }
 
 
-        outLet_Name.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            });
 
-            }
+            Calendar newCalendar = Calendar.getInstance();
+            datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+                public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                    Calendar newDate = Calendar.getInstance();
+                    newDate.set(year, monthOfYear, dayOfMonth);
+                    etDate.setText(dateFormatter.format(newDate.getTime()));
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                }
 
-            }
+            }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH),
+                    newCalendar.get(Calendar.DAY_OF_MONTH));
 
-            @Override
-            public void afterTextChanged(Editable s) {
-                isvalueChanged = true;
-            }
-        });
+            spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+                public void onItemSelected(AdapterView<?> parent,
+                                           View view, int pos, long id) {
+                    Channel g = (Channel) parent.getItemAtPosition(pos);
+
+                }
+
+                public void onNothingSelected(AdapterView parent) {
+                    // Do nothing.
+                }
+
+            });
 
 
-        city.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            outLet_Name.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-            }
+                }
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-            }
+                }
 
-            @Override
-            public void afterTextChanged(Editable s) {
-                isvalueChanged = true;
-            }
-        });
+                @Override
+                public void afterTextChanged(Editable s) {
+                    isvalueChanged = true;
+                }
+            });
 
-        etDate.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-            }
+            city.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                }
 
-            }
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-            @Override
-            public void afterTextChanged(Editable s) {
-                isvalueChanged = true;
-            }
-        });
+                }
 
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-               isvalueChanged = true;
-            }
+                @Override
+                public void afterTextChanged(Editable s) {
+                    isvalueChanged = true;
+                }
+            });
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parentView) {
-                // your code here
-            }
+            etDate.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-        });
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                    isvalueChanged = true;
+                }
+            });
+
+            spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                    isvalueChanged = true;
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parentView) {
+                    // your code here
+                }
+
+            });
+        }else {
+            Toast.makeText(this.getBaseContext(),"Please import EMMA generated file to proceed!", Toast.LENGTH_LONG).show();
+        }
     }
 
     Outlet outlet;
@@ -193,9 +196,7 @@ public class AddOutletActivity extends MainActivity
     }
 
     private void loadOutletui() {
-
         if (outlet != null)
-
         {
             outLet_Name.setText(outlet.get_outlet_Name());
             city.setText(outlet.get_outlet_city());
@@ -214,15 +215,12 @@ public class AddOutletActivity extends MainActivity
     }
 
     private void loadSpinnerData() {
-        DatabaseHelper db = new DatabaseHelper(this);
         labels = db.getAllChannels();
         ArrayAdapter<Channel> dataAdapter = new ArrayAdapter<Channel>(this, android.R.layout.simple_spinner_item, labels);
         // Drop down layout style - list view with radio button
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // attaching data adapter to spinner
         spinner.setAdapter(dataAdapter);
-
-
     }
 
 
@@ -257,8 +255,6 @@ public class AddOutletActivity extends MainActivity
             Log.i("etDate", etDate.getText().toString());
             if (outLet_Name.getText().toString().length() != 0 && city.getText().toString().length() != 0 && etDate.getText().toString().length() != 0)
             {
-                 DatabaseHelper databaseHelper = new DatabaseHelper(this);
-
                 outlet.set_outlet_Name(outLet_Name.getText().toString());
                 outlet.set_outlet_city(city.getText().toString());
                 outlet.set_outlet_date(etDate.getText().toString());
@@ -266,12 +262,12 @@ public class AddOutletActivity extends MainActivity
 
                 if (isNew)
                 {
-                    databaseHelper.insertOutlet(outlet);
+                    db.insertOutlet(outlet);
                     Toast.makeText(this.getBaseContext(), "New outlet saved", Toast.LENGTH_LONG).show();
                 }
                 else
                 {
-                    databaseHelper.updateOutlet(outlet);
+                    db.updateOutlet(outlet);
                     Toast.makeText(this.getBaseContext(), "Outlet updated", Toast.LENGTH_LONG).show();
                 }
 
@@ -287,9 +283,5 @@ public class AddOutletActivity extends MainActivity
         {
             Toast.makeText(this.getBaseContext(), "No changes to save", Toast.LENGTH_LONG).show();
         }
-
-
     }
-
-
 }

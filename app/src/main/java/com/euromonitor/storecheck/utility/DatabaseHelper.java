@@ -17,6 +17,7 @@ import com.euromonitor.storecheck.model.CustomField;
 import com.euromonitor.storecheck.model.Detail;
 import com.euromonitor.storecheck.model.Geography;
 import com.euromonitor.storecheck.model.Market;
+import com.euromonitor.storecheck.model.MetaData;
 import com.euromonitor.storecheck.model.Option;
 import com.euromonitor.storecheck.model.Outlet;
 import com.euromonitor.storecheck.model.Product;
@@ -40,6 +41,8 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
     private static final String DATABASE_NAME = "storeCheckDatabase";
 
     // Tables name
+
+    private static final String TABLE_METADATA = "storecheckmetadata";
     private static final String TABLE_OUTLETS = "outlets";
     private static final String TABLE_PRODUCTS = "products";
     private static final String TABLE_CHANNELS = "channels";
@@ -57,11 +60,15 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
     private static final String KEY_NBO = "nbo";
     private static final String KEY_PRODUCTCODE = "productcode";
     private static final String KEY_PROJECTID = "projectid";
-    private  static  final String KEY_UPDATED ="updated";
-    private  static  final String KEY_NEW ="new";
+    private static final String KEY_UPDATED = "updated";
+    private static final String KEY_NEW = "new";
+
+
+    // Meta-data Table columns name
 
 
     // Outlets Table Columns names
+    private static final String KEY_INDUSTRY_NAME = "industry_name";
 
     private static final String KEY_OUTLET_ID = "outlet_id";
     private static final String KEY_OUTLET_Name = "outlet_name";
@@ -168,6 +175,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
     private void createTables() {
 
         Log.e("createTables ::", "createTables is called");
+        createMetaDataTable();
         createOutletTable();
         createProductTable();
         createChannelTable();
@@ -180,12 +188,13 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         createBrandCustomFieldsTable();
     }
 
-    public void loadData(List<Product> products, List<Outlet> outlets, List<Channel> channels, List<Detail> details, List<Market> markets, List<Option> options, List<CustomField> customFields, List<Unit> units) {
+    public void loadData(MetaData storeCheckMetaData, List<Product> products, List<Outlet> outlets, List<Channel> channels, List<Detail> details, List<Market> markets, List<Option> options, List<CustomField> customFields, List<Unit> units) {
 
         Log.e("load Data is called ::", "load data");
 
         dropTables();
         createTables();
+        loadStoreCheckMetaDataTable(storeCheckMetaData);
         loadProdcutsTable(products);
         loadChannelsTable(channels);
         loadOutletsTable(outlets);
@@ -197,6 +206,19 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
 
     }
 
+    private void loadStoreCheckMetaDataTable(MetaData storeCheckMetaData) {
+        Log.e("loadStoreCheckMetaDataTable::", "loadStoreCheckMetaDataTable load data");
+        SQLiteDatabase db = this.getWritableDatabase();
+
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_GEOGRAPHYCODE, storeCheckMetaData.getGeographyCode());
+        values.put(KEY_GEOGRAPHY, storeCheckMetaData.getGeographyName());
+        values.put(KEY_INDUSTRY_NAME, storeCheckMetaData.getIndustryName());
+        values.put(KEY_YEAR, storeCheckMetaData.getYear());
+        db.insert(TABLE_METADATA, null, values);
+        db.close();
+    }
 
     private void loadProdcutsTable(List<Product> products) {
         Log.e("loadProdcutsTable::", "loadProdcutsTable load data");
@@ -234,7 +256,6 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
 
         db.close(); // Closing database connection
     }
-
 
     private void loadOutletsTable(List<Outlet> outlets) {
         Log.e("loadProdcutsTable::", "loadProdcutsTable load data");
@@ -298,7 +319,6 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         db.close(); // Closing database connection
     }
 
-
     private void loadMarketTable(List<Market> markets) {
         Log.e("loadProdcutsTable::", "loadProdcutsTable load data");
         SQLiteDatabase db = this.getWritableDatabase();
@@ -325,7 +345,6 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
 
         db.close(); // Closing database connection
     }
-
 
     private void loadOptionsTable(List<Option> options) {
         Log.e("loadProdcutsTable::", "loadProdcutsTable load data");
@@ -371,7 +390,6 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
                 values.put(KEY_FRAMEGROUPID, customField.getFrameGroupID());
 
 
-                // Inserting Row
                 db.insert(TABLE_CUSTOMFIELDS, null, values);
             }
         }
@@ -397,9 +415,21 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
             db.insert(TABLE_UNITS, null, values);
         }
 
-        db.close(); // Closing database connection
+        db.close();
     }
 
+    private void createMetaDataTable() {
+        //
+        String CREATE_METADAT_TABLE = "CREATE TABLE " + TABLE_METADATA + "("
+                + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + KEY_GEOGRAPHYCODE + " TEXT,"
+                + KEY_GEOGRAPHY + " TEXT, "
+                + KEY_INDUSTRY_NAME + " INT, "
+                + KEY_YEAR + " TEXT"
+                + ")";
+
+        database.execSQL(CREATE_METADAT_TABLE);
+    }
 
     private void createOutletTable() {
         String CREATE_OUTLETS_TABLE = "CREATE TABLE " + TABLE_OUTLETS + "("
@@ -430,7 +460,6 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         database.execSQL(CREATE_PRODUCTS_TABLE);
 
     }
-
 
     private void createChannelTable() {
 
@@ -481,7 +510,6 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         database.execSQL(CREATE_MARKETS_TABLE);
 
     }
-
 
     private void createOptionTable() {
         String CREATE_OPTIONS_TABLE = "CREATE TABLE " + TABLE_OPTIONS + "("
@@ -545,14 +573,12 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
         onCreate(db);
-
     }
-
 
     private void dropTables() {
         database = this.getWritableDatabase();
+        database.execSQL("DROP TABLE IF EXISTS '" + TABLE_METADATA + "'");
         database.execSQL("DROP TABLE IF EXISTS '" + TABLE_OUTLETS + "'");
         database.execSQL("DROP TABLE IF EXISTS '" + TABLE_CHANNELS + "'");
         database.execSQL("DROP TABLE IF EXISTS '" + TABLE_PRODUCTS + "'");
@@ -564,11 +590,6 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         database.execSQL("DROP TABLE IF EXISTS '" + TABLE_BRANDS + "'");
         database.execSQL("DROP TABLE IF EXISTS '" + TABLE_BRANDCUSTOMFIELDS + "'");
     }
-
-
-    /**
-     * All CRUD(Create, Read, Update, Delete) Operations
-     */
 
     // Adding new outlet
     public void addOutlet(Outlet outlet) {
@@ -629,7 +650,6 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         // return outlet list
         return outletList;
     }
-
 
 
     public ArrayList<Cursor> getData(String Query) {
@@ -717,12 +737,11 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         return storeCheckDetails;
     }
 
-    public  ArrayList<Outlet> getOutlets()
-    {
+    public ArrayList<Outlet> getOutlets() {
         SQLiteDatabase database = this.getReadableDatabase();
         String query = "select id, outlet_id,outlet_city,outlet_date,chccode,outlet_name,channel_name,project_id,geo_code,geo_name,year from outlets";
         Cursor cursor = database.rawQuery(query, null);
-        ArrayList<Outlet>  outlets = null;
+        ArrayList<Outlet> outlets = null;
         try {
             if (cursor.moveToFirst()) {
                 outlets = new ArrayList<>();
@@ -745,13 +764,9 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
                 } while ((cursor.moveToNext()));
 
             }
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             throw ex;
-        }
-            finally
-        {
+        } finally {
             if (cursor != null)
                 cursor.close();
             if (database != null)
@@ -845,7 +860,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
                     } while ((cursor.moveToNext()));
 
                 }
-                if ( options.size() > 0) {
+                if (options.size() > 0) {
                     if (customField.get_object_id().equals(TextBox)) {
                         String isNumeric = options.get(0).getIsNumeric();
                         if (isNumeric != null && isNumeric.equals("1")) {
@@ -854,7 +869,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
                             customField.setIsNumeric(false);
                         }
                         customField.setSelectedOption(options.get(0));
-                    }else if (customField.get_object_id().equals(DropDown)){
+                    } else if (customField.get_object_id().equals(DropDown)) {
                         customField.setSelectedOption(options.get(0));
                     }
                 }
@@ -940,8 +955,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         return result;
     }
 
-    public ArrayList<Channel> getAllChannels()
-    {
+    public ArrayList<Channel> getAllChannels() {
         ArrayList<Channel> my_array = new ArrayList<Channel>();
         try {
             String selectQuery = "SELECT  id,chccode,chcname FROM " + TABLE_CHANNELS;
@@ -951,7 +965,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
 
             if (cursor.moveToFirst()) {
                 do {
-                    Channel channel=new Channel(null,null);
+                    Channel channel = new Channel(null, null);
                     channel.set_id(cursor.getInt(cursor.getColumnIndex("id")));
                     channel.set_chc_code(cursor.getString(cursor.getColumnIndex("chccode")));
                     channel.set_chc_name(cursor.getString(cursor.getColumnIndex("chcname")));
@@ -982,11 +996,10 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
             // updating row
             return db.update(TABLE_OUTLETS, values, KEY_ID + " = ?",
                     new String[] { String.valueOf(outlet.get_id()) });
-
         }
         catch(Exception ex)
         {
-                throw  ex;
+            throw  ex;
         }
         finally {
             if (db != null)
@@ -994,27 +1007,35 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         }
     }
 
-
-    public void insertOutlet(Outlet outlet)
-    {
+    public void insertOutlet(Outlet outlet) {
         SQLiteDatabase db = this.getWritableDatabase();
 
-        try
-        {
+        try {
             ContentValues values = new ContentValues();
             values.put(KEY_OUTLET_Name, outlet.get_outlet_Name());
-            values.put(KEY_OUTLET_CITY,outlet.getOutlet_city());
-            values.put(KEY_OUTLET_DATE,outlet.get_outlet_date());
-            values.put(KEY_CHANNEL_NAME,outlet.get_channel_name());
-            values.put(KEY_NEW,1);
+            values.put(KEY_OUTLET_CITY, outlet.getOutlet_city());
+            values.put(KEY_OUTLET_DATE, outlet.get_outlet_date());
+            values.put(KEY_CHANNEL_NAME, outlet.get_channel_name());
+            values.put(KEY_NEW, 1);
             db.insert(TABLE_OUTLETS, null, values);
-        }
-        catch (Exception ex)
-        {
-            throw  ex;
-        }
-        finally {
+        } catch (Exception ex) {
+            throw ex;
+        } finally {
             db.close(); // Closing database connection
         }
+    }
+
+    public boolean isDatabaseAvailable() {
+        boolean result = false;
+        SQLiteDatabase database = this.getReadableDatabase();
+        try {
+            String query = "select count(1) from " + TABLE_METADATA;
+            result = database.rawQuery("SELECT name FROM sqlite_master WHERE type='table' AND name='" + TABLE_METADATA + "'", null).getCount() > 0;
+
+        } catch (Exception e) {
+        } finally {
+            database.close();
+        }
+        return result;
     }
 }

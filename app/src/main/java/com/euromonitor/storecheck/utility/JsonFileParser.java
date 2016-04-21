@@ -3,6 +3,7 @@ package com.euromonitor.storecheck.utility;
 import android.content.Context;
 import android.util.Log;
 
+import com.euromonitor.storecheck.model.MetaData;
 import com.euromonitor.storecheck.model.Unit;
 import com.google.gson.Gson;
 
@@ -36,9 +37,9 @@ public  class JsonFileParser {
     StringBuilder rawJsonDataBuilder;
     String rawJsonData;
 
-  public  void loadEmmaExtractFile(String path) throws Exception {
+    public void loadEmmaExtractFile(String path) throws Exception {
 
-     Log.e("calling::","  loadEmmaExtractFile");
+        Log.e("calling::", "  loadEmmaExtractFile");
 
         File emmaExtractFile = new File(path);
         rawJsonDataBuilder = new StringBuilder();
@@ -51,71 +52,61 @@ public  class JsonFileParser {
                 rawJsonDataBuilder.append('\n');
             }
             bufferedReader.close();
-            }
-
-        catch (Exception e)
-        {
-           throw e;
+        } catch (Exception e) {
+            throw e;
         }
 
-      rawJsonData = rawJsonDataBuilder.toString();
+        rawJsonData = rawJsonDataBuilder.toString();
 
     }
 
-    public void loadModels(List<Outlet> outlets,List<CustomField> customFields,List<Detail> details,List<Market> markets,List<Option> options ,List<Product> products,List<Channel> channels, List<Unit> units ,Context context) throws JSONException {
+    public void loadModels(MetaData storeCheckMetaData, List<Outlet> outlets, List<CustomField> customFields, List<Detail> details, List<Market> markets, List<Option> options, List<Product> products, List<Channel> channels, List<Unit> units, Context context) throws JSONException {
 
-             JSONObject rootData = new JSONObject(rawJsonData);
+        JSONObject rootData = new JSONObject(rawJsonData);
 
-             products = Arrays.asList(gsonObject.fromJson(rootData.getJSONArray("StoreCheckProduct").toString(),Product[].class));
-             Log.e("products data Count::", String.valueOf(products.size()));
+        products = Arrays.asList(gsonObject.fromJson(rootData.getJSONArray("StoreCheckProduct").toString(), Product[].class));
+        Log.e("products data Count::", String.valueOf(products.size()));
 
-            JSONObject outletJson =  rootData.getJSONObject("Outlets");
+        JSONObject outletJson = rootData.getJSONObject("Outlets");
 
-                outlets  = Arrays.asList(gsonObject.fromJson(outletJson.getJSONArray("StoreCheckOutlets").toString(),Outlet[].class));
-                Log.e("outlets data Count::", String.valueOf(outlets.size()));
+        outlets = Arrays.asList(gsonObject.fromJson(outletJson.getJSONArray("StoreCheckOutlets").toString(), Outlet[].class));
+        Log.e("outlets data Count::", String.valueOf(outlets.size()));
 
-                channels  = Arrays.asList(gsonObject.fromJson(outletJson.getJSONArray("Channels").toString(),Channel[].class));
-                Log.e("channels data Count::", String.valueOf(channels.size()));
+        channels = Arrays.asList(gsonObject.fromJson(outletJson.getJSONArray("Channels").toString(), Channel[].class));
+        Log.e("channels data Count::", String.valueOf(channels.size()));
 
                  /* Store Check Grid data*/
-                details = Arrays.asList(gsonObject.fromJson(rootData.getJSONArray("StoreChecks").toString(),Detail[].class));
-                Log.e("details data Count::", String.valueOf(details.size()));
+        details = Arrays.asList(gsonObject.fromJson(rootData.getJSONArray("StoreChecks").toString(), Detail[].class));
+        Log.e("details data Count::", String.valueOf(details.size()));
 
                  /* Store Check Market  data*/
-                 markets = Arrays.asList(gsonObject.fromJson(rootData.getJSONArray("StoreCheckMarkets").toString(),Market[].class));
-                 Log.e("markets data Count::", String.valueOf(markets.size()));
+        markets = Arrays.asList(gsonObject.fromJson(rootData.getJSONArray("StoreCheckMarkets").toString(), Market[].class));
+        Log.e("markets data Count::", String.valueOf(markets.size()));
 
                  /* Store Check Custom Field  data*/
-        Log.e("customfield ::",rootData.getJSONArray("CustomFields").toString());
-                customFields = Arrays.asList(gsonObject.fromJson(rootData.getJSONArray("CustomFields").toString(),CustomField[].class));
-                Iterator iterator = customFields.iterator();
-                while (iterator.hasNext()) {
-                    CustomField customField = (CustomField) iterator.next();
-                    if (customField != null) {
-                        customField.generateUniqueID();
-                        options.addAll(customField.get_options());
-                    }
-                }
+        Log.e("customfield ::", rootData.getJSONArray("CustomFields").toString());
+        customFields = Arrays.asList(gsonObject.fromJson(rootData.getJSONArray("CustomFields").toString(), CustomField[].class));
+        Iterator iterator = customFields.iterator();
+        while (iterator.hasNext()) {
+            CustomField customField = (CustomField) iterator.next();
+            if (customField != null) {
+                customField.generateUniqueID();
+                options.addAll(customField.get_options());
+            }
+        }
 
                  /* Store Check Market  data*/
-        units = Arrays.asList(gsonObject.fromJson(rootData.getJSONArray("Units").toString(),Unit[].class));
+        units = Arrays.asList(gsonObject.fromJson(rootData.getJSONArray("Units").toString(), Unit[].class));
         Log.e("Units data Count::", String.valueOf(units.size()));
 
-
-
+        storeCheckMetaData = gsonObject.fromJson(rootData.getJSONObject("StoreCheckMetaData").toString(), MetaData.class);
 
         DatabaseHelper databaseHelper = new DatabaseHelper(context);
-            Log.d("Insert :", "Inserting Products... ");
-            databaseHelper.loadData(products, outlets, channels, details, markets, options, customFields, units);
-
+        Log.d("Insert :", "Inserting Products... ");
+        databaseHelper.loadData(storeCheckMetaData, products, outlets, channels, details, markets, options, customFields, units);
 
 
     }
-
-
-
-
-
 
 
 }

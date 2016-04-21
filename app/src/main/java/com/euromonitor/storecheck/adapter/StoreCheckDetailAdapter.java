@@ -34,9 +34,9 @@ public class StoreCheckDetailAdapter extends RecyclerView.Adapter<StoreCheckDeta
         allStoreCheckItems.addAll(storeCheckItems);
     }
 
-    public StoreCheckDetailAdapter(LayoutInflater layoutInflater, Context context){
+    public StoreCheckDetailAdapter(LayoutInflater layoutInflater, Context context, List<StoreCheckDetail> storeCheckItems){
         this.layoutInflater = layoutInflater;
-        this.storeCheckItems = StoreCheckDetail.getData(context);
+        this.storeCheckItems = storeCheckItems;
         allStoreCheckItems = new ArrayList<>();
         allStoreCheckItems.addAll(storeCheckItems);
     }

@@ -52,9 +52,27 @@ Temporary Items
 >>>>>>> 99b63f44d695ee70bb86b37579340c061de44402
 *.bin
 *.lock
+<<<<<<< HEAD
 .gradle/2.8/taskArtifacts/cache.properties.lock
 *.bin
 .gradle/2.8/taskArtifacts/taskArtifacts.bin
 *.lock
 .gradle/2.8/taskArtifacts/fileHashes.bin
 .gradle/2.8/taskArtifacts/fileHashes.bin
+=======
+.gradle/2.8/taskArtifacts/fileHashes.bin
+*.bin
+*.iml
+.idea/libraries/support_vector_drawable_23_2_1.xml
+.idea/libraries/library_1_0_rc3.xml
+.idea/libraries/design_23_2_1.xml
+.idea/libraries/beta_1_1_4.xml
+.idea/libraries/animated_vector_drawable_23_2_1.xml
+.gradle/2.8/taskArtifacts/outputFileStates.bin
+>>>>>>> 938331b9aafbae9ef2e4b106283fa28aef12e43b
+.gradle/2.8/taskArtifacts/cache.properties.lock
+app/app.iml
+.idea/libraries/support_annotations_23_2_1.xml
+.idea/libraries/FilePickerLibrary_3_5_1.xml
+.idea/libraries/cardview_v7_23_1_1.xml
+.gradle/2.8/taskArtifacts/outputFileStates.bin
