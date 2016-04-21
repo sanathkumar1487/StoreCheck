@@ -74,7 +74,7 @@ public class StoreCheckAddBrandActivity extends MainActivity
         context=this;
         databaseHelper = new DatabaseHelper(context);
 
-        binding.setListeners(new Listeners(binding, databaseHelper, this));
+
 
 
         setBinding();
@@ -89,7 +89,7 @@ public class StoreCheckAddBrandActivity extends MainActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         menu.clear();
-        getMenuInflater().inflate(R.menu.addoutlet_menu, menu);
+        getMenuInflater().inflate(R.menu.addbrand_menu, menu);
         return true;
     }
 
@@ -100,6 +100,8 @@ public class StoreCheckAddBrandActivity extends MainActivity
             case R.id.Save:
                 validateData();
                 return true;
+            case R.id.Clear:
+                resetData();
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -234,152 +236,6 @@ public class StoreCheckAddBrandActivity extends MainActivity
         binding.setStoreCheckBrand(storeCheckBrand);
     }
 
-    public static class Listeners implements View.OnClickListener {
-
-        private StorecheckAddbrandBinding binding;
-        private Context context;
-        DatabaseHelper databaseHelper;
-
-        public Listeners(StorecheckAddbrandBinding binding,DatabaseHelper databaseHelper, Context context) {
-            this.binding = binding;
-            this.databaseHelper = databaseHelper;
-            this.context = context;
-        }
-
-        @Override
-        public void onClick(View v) {
-            switch (v.getId()){
-                case R.id.okAddBrand:
-                    //validateData(v);
-                    break;
-                case R.id.resetAddBrand:
-                  ///  resetData();
-                    break;
-            }
-        }
-
-
-
-//        private void resetData(){
-//            binding.brandName.setText("");
-//            binding.nboName.setText("");
-//
-//            Spinner productSpinner = (Spinner) ((View) (binding.getRoot()).findViewById(R.id.products));
-//            if(productSpinner.getCount()>0) {
-//                productSpinner.setSelection(0);
-//            }
-//
-//            setBindingProperties();
-//        }
-//
-//        private void validateData(View v) {
-//            setBindingProperties();
-//
-//            StoreCheckBrand data = binding.getStoreCheckBrand();
-//            boolean isValid = true;
-//            String errors = "Please correct the following errors: ";
-//            if (data.getBrand() == null || data.getBrand().equals("")) {
-//                errors += "\n Brand is required";
-//                isValid = false;
-//            }
-//
-//            if (data.getNBO() == null || data.getNBO().equals("")) {
-//                errors += "\n NBO is required";
-//                isValid = false;
-//            }
-//
-//            ArrayList<CustomField> customFields = data.getCustomFields();
-//            if (customFields != null) {
-//                for (CustomField cf : customFields) {
-//
-//                    Option selectedOption = cf.getSelectedOption();
-//                    if (selectedOption != null) {
-//                        if (selectedOption.getMinimumAllowed().equals("0") && selectedOption.getMaximumAllowed().equals("0")) {
-//                            if (isValid) {
-//                                isValid = true;
-//                            }
-//                        } else if (cf.get_object_id().equals(StoreCheckAddBrandActivity.TextBox)) {
-//                            double minimum = 0;
-//                            if (selectedOption.getMinimumAllowed() != null) {
-//                                minimum = Double.parseDouble(selectedOption.getMinimumAllowed());
-//                            }
-//
-//                            double maximum = 0;
-//                            boolean noMaximum = true;
-//                            if (selectedOption.getMaximumAllowed() != null) {
-//                                maximum = Double.parseDouble(selectedOption.getMaximumAllowed());
-//                                noMaximum = false;
-//                            }
-//                            double cfValue = 0;
-//
-//                            try {
-//
-//                                if (cf.getCustomFieldTextValue() != null) {
-//                                    cfValue = Double.parseDouble(cf.getCustomFieldTextValue());
-//                                }
-//
-//                                if (!cf.getIsNumeric()) {
-//                                    if (cf.getCustomFieldTextValue() != null) {
-//                                        cfValue = cf.getCustomFieldTextValue().trim().length();
-//                                    }
-//                                }
-//
-//                                if (!validateValue(cfValue, minimum, maximum, noMaximum,  cf.getIsZeroAllowed())) {
-//                                    errors += "\n" + cf.get_label() + " value should be between " + minimum + " and " + maximum;
-//                                    isValid = false;
-//                                }
-//                            } catch (NumberFormatException e) {
-//                                cfValue = cf.getCustomFieldTextValue().length();
-//                                if (!validateValue(cfValue, minimum, maximum, noMaximum, cf.getIsZeroAllowed())) {
-//                                    errors += "\n" + cf.get_label() + " value should be between " + minimum + " and " + maximum;
-//                                    isValid = false;
-//                                }
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//
-//            if (isValid) {
-//                if(databaseHelper.saveBrand(data)){
-//                    binding.brandName.setText(null);
-//                    binding.nboName.setText(null);
-//                    Spinner productSpinner = (Spinner) ((View) (binding.getRoot()).findViewById(R.id.products));
-//                    if(productSpinner.getCount()>0) {
-//                        productSpinner.setSelection(0);
-//                    }
-//                    setBindingProperties();
-//
-//
-//                    Toast.makeText(v.getContext(), "Saved successfully!", Toast.LENGTH_SHORT).show();
-//
-//                    Intent intent = new Intent(context,StoreCheckAddProductDetailsActivity.class);
-//                    context.startActivity(intent);
-//                }
-//            }
-//            else{
-//                Toast.makeText(v.getContext(), errors, Toast.LENGTH_SHORT).show();
-//            }
-//        }
-//
-//        private boolean validateValue (double value, double minimumAllowed, double maximumAllowed, boolean noMaximum, boolean isZeroAllowed){
-//            return value >= minimumAllowed && (value <= maximumAllowed || noMaximum || maximumAllowed == 0) || (isZeroAllowed && value == 0);
-//        }
-//
-//        private void setBindingProperties(){
-//            String newValue = null;
-//            if(binding.brandName.getText()!=null){
-//                newValue = binding.brandName.getText().toString();
-//            }
-//            binding.getStoreCheckBrand().setBrand(newValue);
-//
-//            newValue = null;
-//            if(binding.nboName.getText()!=null){
-//                newValue = binding.nboName.getText().toString();
-//            }
-//            binding.getStoreCheckBrand().setNbo(newValue);
-//        }
-    }
 
     private ArrayList<Product> setProducts() {
         ArrayList<Product> products = databaseHelper.getAllProducts();

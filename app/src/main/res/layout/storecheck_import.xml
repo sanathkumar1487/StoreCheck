@@ -25,7 +25,7 @@
         android:layout_marginTop="50sp"
         android:layout_marginRight="50sp"
         android:layout_marginLeft="50sp"
-         android:background="@color/blue_300"
+        android:background="@color/blue_300"
         android:id="@+id/browseFile"/>
 
     <Button

@@ -9,7 +9,6 @@
         android:icon="@mipmap/ic_save_white_36dp"
         android:orderInCategory="100"
         app:showAsAction="always"
-
         android:title="save">
 
     </item>

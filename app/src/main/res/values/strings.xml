@@ -17,12 +17,8 @@
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
     <string name="browse_file">Browse file</string>
-<<<<<<< HEAD
     <string name="browse_folder">Browse folder</string>
-    <string name="export">Export Store Check Data</string>
-=======
     <string name="export">Export</string>
->>>>>>> 99b63f44d695ee70bb86b37579340c061de44402
     <string name="product_details">View/Edit Product Details </string>
     <string name="browse_button_name">Browse</string>
     <string name="geography">Geography</string>

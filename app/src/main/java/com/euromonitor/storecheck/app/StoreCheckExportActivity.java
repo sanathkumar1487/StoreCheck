@@ -1,37 +1,23 @@
 package com.euromonitor.storecheck.app;
-import android.annotation.TargetApi;
-import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Fragment;
-import android.app.SearchManager;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.databinding.DataBindingUtil;
-import android.os.Build;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.Menu;
-<<<<<<< HEAD
 import android.view.MenuItem;
-=======
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.Toast;
->>>>>>> 99b63f44d695ee70bb86b37579340c061de44402
-import android.widget.Toolbar;
 
 import com.euromonitor.storecheck.R;
 import com.euromonitor.storecheck.controller.interfaces.AsyncPostExecute;
 import com.euromonitor.storecheck.controller.interfaces.AsyncPreExecute;
 import com.euromonitor.storecheck.controller.interfaces.AsyncProgressReport;
-import com.euromonitor.storecheck.controller.interfaces.ExportDataTask;
-import com.euromonitor.storecheck.databinding.StorecheckExportBinding;
-import com.euromonitor.storecheck.model.Export;
+import com.euromonitor.storecheck.controller.ExportDataTask;
 
 import me.zhanghai.android.materialprogressbar.MaterialProgressBar;
 
@@ -40,7 +26,7 @@ import me.zhanghai.android.materialprogressbar.MaterialProgressBar;
  */
 public class StoreCheckExportActivity extends MainActivity implements AsyncPostExecute,AsyncProgressReport,AsyncPreExecute {
 
-    EditText fileName ;
+    EditText fileName;
     MaterialProgressBar progressBar;
     Button export;
 
@@ -49,7 +35,7 @@ public class StoreCheckExportActivity extends MainActivity implements AsyncPostE
         super.onCreate(savedInstanceState);
         setContentView(R.layout.storecheck_export);
 
-        export = (Button)findViewById(R.id.exportFile);
+        export = (Button) findViewById(R.id.exportFile);
         export.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -59,11 +45,13 @@ public class StoreCheckExportActivity extends MainActivity implements AsyncPostE
 
         fileName = (EditText) findViewById(R.id.fileName);
         progressBar = (MaterialProgressBar) this.findViewById(R.id.exportProgress);
+        int color = 0xFF00FF00;
+        progressBar.getIndeterminateDrawable().setColorFilter(Color.parseColor("#42A5F5"), PorterDuff.Mode.SRC_IN);
+        progressBar.getProgressDrawable().setColorFilter(Color.parseColor("#42A5F5"), PorterDuff.Mode.SRC_IN);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-<<<<<<< HEAD
         menu.clear();
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
@@ -74,25 +62,15 @@ public class StoreCheckExportActivity extends MainActivity implements AsyncPostE
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.Save:
-
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
-
-    public void  crash()
-    {
-        throw  new NullPointerException("Dummy Exception Thrown");
+    public void crash() {
+        throw new NullPointerException("Dummy Exception Thrown");
     }
-
-
-=======
-        getMenuInflater().inflate(R.menu.storecheck_menu, menu);
-        return true;
-    }
-
 
     @Override
     public void PostExecute(String message) {
@@ -127,8 +105,7 @@ public class StoreCheckExportActivity extends MainActivity implements AsyncPostE
         }
     }
 
-    public void messageBox(Exception e)
-    {
+    public void messageBox(Exception e) {
         AlertDialog.Builder messageBox = new AlertDialog.Builder(this);
         messageBox.setTitle("Error occurred");
         final String errordata = Log.getStackTraceString(e);
@@ -152,5 +129,4 @@ public class StoreCheckExportActivity extends MainActivity implements AsyncPostE
         });
         messageBox.show();
     }
->>>>>>> 99b63f44d695ee70bb86b37579340c061de44402
 }

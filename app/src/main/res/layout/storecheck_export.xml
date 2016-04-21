@@ -1,67 +1,62 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data />
-<<<<<<< HEAD
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-
-    <Button
-=======
-<LinearLayout
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_margin="@dimen/material_item_margin">
-
-    <TextView
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/filename"
-        android:layout_margin="@dimen/material_item_margin"
-        />
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/material_item_margin">
 
-    <EditText
->>>>>>> 99b63f44d695ee70bb86b37579340c061de44402
-        android:layout_width="match_parent"
-        android:background="@color/blue_300"
-        android:layout_height="wrap_content"
-<<<<<<< HEAD
-        android:layout_marginTop="50sp"
-        android:layout_marginRight="50sp"
-        android:layout_marginLeft="50sp"
-        android:text="@string/browse_folder"/>
-=======
-        android:layout_margin="@dimen/material_item_margin"
-        android:id="@+id/fileName"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/filename"
+            android:layout_margin="@dimen/material_item_margin"
+            />
 
-    <me.zhanghai.android.materialprogressbar.MaterialProgressBar
-        android:layout_width="match_parent"
-        android:id="@+id/exportProgress"
-        android:layout_height="20dp"
-        android:indeterminate="true"
-        app:mpb_progressStyle="horizontal"
-        android:visibility="gone"
-        style="@style/Widget.MaterialProgressBar.ProgressBar.Horizontal" />
->>>>>>> 99b63f44d695ee70bb86b37579340c061de44402
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50sp"
+            android:layout_marginRight="50sp"
+            android:layout_marginLeft="50sp"
+            android:layout_margin="@dimen/material_item_margin"
+            android:id="@+id/fileName"/>
 
-    <Button
-        android:layout_width="match_parent"
-        android:background="@color/blue_300"
-        android:layout_height="wrap_content"
-<<<<<<< HEAD
-        android:layout_marginTop="150sp"
-        android:layout_marginRight="50sp"
-        android:layout_marginLeft="50sp"
-        android:onClick="crash"
-        android:text="Crash the app"/>
-=======
-        android:text="@string/export"
-        android:layout_margin="@dimen/material_item_margin"
-        android:id="@+id/exportFile"
-        />
+        <me.zhanghai.android.materialprogressbar.MaterialProgressBar
+            android:layout_width="match_parent"
+            android:id="@+id/exportProgress"
+            android:layout_height="20dp"
+            android:indeterminate="true"
+            app:mpb_progressStyle="horizontal"
+            android:visibility="gone"
+            style="@style/Widget.MaterialProgressBar.ProgressBar.Horizontal" />
 
->>>>>>> 99b63f44d695ee70bb86b37579340c061de44402
-</LinearLayout>
-    </layout>
+        <Button
+            android:layout_width="match_parent"
+            android:background="@color/blue_300"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="150sp"
+            android:layout_marginRight="50sp"
+            android:layout_marginLeft="50sp"
+
+            android:text="@string/export"
+            android:layout_margin="@dimen/material_item_margin"
+            android:id="@+id/exportFile"
+            />
+
+        <Button
+            android:layout_width="match_parent"
+            android:background="@color/blue_300"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="150sp"
+            android:layout_marginRight="50sp"
+            android:layout_marginLeft="50sp"
+            android:text="Crash the app"
+            android:layout_margin="@dimen/material_item_margin"
+            android:id="@+id/crashApp"
+            android:onClick="crash"
+            />
+
+    </LinearLayout>
+</layout>
