@@ -1,9 +1,11 @@
 package com.euromonitor.storecheck.app;
 
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -18,6 +20,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
 import com.euromonitor.storecheck.R;
@@ -61,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
 
         } catch (Exception e) {
             Log.i("Main Activity Exception", e.getMessage());
+          //  messageBox(e);
         }
     }
 
@@ -155,6 +159,34 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
+    }
+
+    public void messageBox(Exception e)
+    {
+
+
+        AlertDialog.Builder messageBox = new AlertDialog.Builder(this);
+        messageBox.setTitle("Error occurred");
+        final String errordata = Log.getStackTraceString(e);
+        messageBox.setNegativeButton("cancel", null);
+        messageBox.setPositiveButton("Email error details", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                Intent i = new Intent(Intent.ACTION_SEND);
+                i.setType("message/rfc822");
+                i.putExtra(Intent.EXTRA_EMAIL, new String[]{"sanath.kumar@euromonitor.com", "Fritze.George@euromonitor.com",});
+                i.putExtra(Intent.EXTRA_SUBJECT, "Storecheck app error Details");
+                i.putExtra(Intent.EXTRA_TEXT, errordata);
+                try {
+                    startActivity(Intent.createChooser(i, "Send mail..."));
+                } catch (android.content.ActivityNotFoundException ex) {
+                    Toast.makeText(getBaseContext(), "There are no email clients installed.", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+        messageBox.show();
     }
 
 }

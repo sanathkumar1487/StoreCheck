@@ -51,3 +51,10 @@ Temporary Items
 .idea/workspace.xml
 >>>>>>> 99b63f44d695ee70bb86b37579340c061de44402
 *.bin
+*.lock
+.gradle/2.8/taskArtifacts/cache.properties.lock
+*.bin
+.gradle/2.8/taskArtifacts/taskArtifacts.bin
+*.lock
+.gradle/2.8/taskArtifacts/fileHashes.bin
+.gradle/2.8/taskArtifacts/fileHashes.bin

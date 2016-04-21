@@ -75,7 +75,7 @@ public class ExportDataTask extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected void onPreExecute() {
-        preExecute.preExecute("you just called preExecute Async Task in the UI Thread");
+        preExecute.preExecute("Export Complete");
     }
 
     @Override

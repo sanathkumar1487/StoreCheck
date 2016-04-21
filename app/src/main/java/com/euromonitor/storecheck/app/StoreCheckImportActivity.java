@@ -92,7 +92,7 @@ public class StoreCheckImportActivity extends MainActivity implements AsyncPostE
         super.onActivityResult(requestCode, resultCode, data);
 
         if ((requestCode == 10) && (resultCode == this.RESULT_OK)) {
-            Toast.makeText(this.getBaseContext(), "File Selected: " + data.getStringExtra(FilePickerActivity.FILE_EXTRA_DATA_PATH), Toast.LENGTH_LONG).show();
+            Toast.makeText(this.getBaseContext(),"Importing file",Toast.LENGTH_LONG).show();
             try
             {
 

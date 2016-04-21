@@ -74,7 +74,7 @@ public class ImportDataTask extends AsyncTask<Void,Void,Void> {
 
         }
 
-        postExecute.PostExecute("you  just called postExecute Async Task on the UI Thread");
+        postExecute.PostExecute("Import completed successfully ");
     }
 
 
