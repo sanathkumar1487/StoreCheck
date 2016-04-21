@@ -1,4 +1,6 @@
-<layout  xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
     <data>
         <import type="java.util.List"/>
         <import type="com.euromonitor.storecheck.model.StoreCheckDetail"/>
@@ -6,11 +8,32 @@
             name="storeCheckDetailList"
             type="List&lt;StoreCheckDetail>"/>
     </data>
-<android.support.v7.widget.RecyclerView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+    <android.support.v4.widget.DrawerLayout
+        android:id="@+id/drawer_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/storecheckdetail_toolbar"/>
+    <android.support.v7.widget.RecyclerView
     android:id="@+id/storecheckDetailsView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     />
+        </LinearLayout>
+        <fragment
+            android:id="@+id/storeCheckNavDrawerFragment"
+            android:name="com.euromonitor.storecheck.app.StoreCheckNavigationFragment"
+            android:layout_width="280dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            app:layout="@layout/storecheck_navigation_drawer"
+            tools:layout="@layout/storecheck_navigation_drawer"
+            />
+    </android.support.v4.widget.DrawerLayout>
+
 </layout>
 

@@ -38,7 +38,8 @@ public class OutletDetailsActivity extends MainActivity {
     Intent intent;
     private SearchView.OnQueryTextListener queryTextListener;
 
-    public OutletDetailsActivity() {
+    public OutletDetailsActivity()
+    {
     }
 
     @Override

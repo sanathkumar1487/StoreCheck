@@ -139,7 +139,6 @@ public class MainActivity extends AppCompatActivity {
                 context = this;
                 intent = new Intent(context, StoreCheckAddBrandActivity.class);
                 startActivity(intent);
-
                 break;
             case ADD_OUTLET:
                 context = this;
