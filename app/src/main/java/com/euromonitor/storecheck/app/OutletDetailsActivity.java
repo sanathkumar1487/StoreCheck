@@ -91,9 +91,8 @@ public class OutletDetailsActivity extends MainActivity {
                 StorecheckoutletItemBinding binding = DataBindingUtil.getBinding(view);
                 Outlet detail = binding.getStoreCheckOutlet();
 
-                AddOutletActivity activity = new AddOutletActivity();
-
                 intent = new Intent(OutletDetailsActivity.this, AddOutletActivity.class);
+                intent.putExtra("outlet",detail);
                 startActivity(intent);
 
             }
