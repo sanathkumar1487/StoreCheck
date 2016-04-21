@@ -19,9 +19,11 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.crashlytics.android.Crashlytics;
 import com.euromonitor.storecheck.R;
 import com.euromonitor.storecheck.listener.ClickListener;
 import com.euromonitor.storecheck.listener.RecyclerTouchListener;
+import io.fabric.sdk.android.Fabric;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -46,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         try {
             super.onCreate(savedInstanceState);
+            Fabric.with(this, new Crashlytics());
             setContentView(R.layout.activity_main);
 
             setupToolbar();

@@ -11,8 +11,6 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
-import java.util.Objects;
 
 import com.euromonitor.storecheck.model.Channel;
 import com.euromonitor.storecheck.model.CustomField;
@@ -59,6 +57,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
     private static final String KEY_NBO = "nbo";
     private static final String KEY_PRODUCTCODE = "productcode";
     private static final String KEY_PROJECTID = "projectid";
+    private  static  final String KEY_UPDATED ="updated";
     private  static  final String KEY_NEW ="new";
 
 
@@ -415,6 +414,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
                 + KEY_OUTLET_CITY + " TEXT,"
                 + KEY_YEAR + " TEXT,"
                 + KEY_CHCCODE + " TEXT,"
+                + KEY_UPDATED + " TEXT,"
                 + KEY_NEW + " TEXT,"
                 + KEY_OUTLET_DATE + " TEXT" + ")";
 
@@ -618,7 +618,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 Outlet outlet = new Outlet();
-                outlet.set_outlet_id(Integer.parseInt(cursor.getString(1)));
+                outlet.set_outlet_id(cursor.getString(1));
                 outlet.set_project_id(Integer.parseInt(cursor.getString(2)));
                 // outlet.set_geo_code(cursor.getString(3));
                 // Adding outlet to list
@@ -720,7 +720,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
     public  ArrayList<Outlet> getOutlets()
     {
         SQLiteDatabase database = this.getReadableDatabase();
-        String query = "select id, outlet_id,outlet_city,outlet_date,chccode,outlet_name,channel_name from outlets";
+        String query = "select id, outlet_id,outlet_city,outlet_date,chccode,outlet_name,channel_name,project_id,geo_code,geo_name,year from outlets";
         Cursor cursor = database.rawQuery(query, null);
         ArrayList<Outlet>  outlets = null;
         try {
@@ -730,12 +730,16 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
 
                     Outlet outlet = new Outlet();
                     outlet.set_id(Integer.parseInt(cursor.getString(0)));
-                    outlet.set_outlet_id(Integer.parseInt(cursor.getString(1)));
+                    outlet.set_outlet_id(cursor.getString(1));
                     outlet.set_outlet_city(cursor.getString(2));
                     outlet.set_outlet_date(cursor.getString(3));
                     outlet.set_chccode(cursor.getString(4));
                     outlet.set_outlet_Name(cursor.getString(5));
                     outlet.set_channel_name(cursor.getString(6));
+                    outlet.set_project_id(cursor.getInt(7));
+                    outlet.set_geo_code(cursor.getString(8));
+                    outlet.set_geo_name(cursor.getString(9));
+                    outlet.set_year(cursor.getString(10));
                     outlets.add(outlet);
 
                 } while ((cursor.moveToNext()));
@@ -962,5 +966,62 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
             e.printStackTrace();
         }
         return my_array;
+    }
+
+
+    // Updating single outlet
+    public int updateOutlet(Outlet outlet) {
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        try
+        {
+            ContentValues values = new ContentValues();
+            values.put(KEY_OUTLET_Name, outlet.get_outlet_Name());
+            values.put(KEY_OUTLET_CITY,outlet.getOutlet_city());
+            values.put(KEY_OUTLET_DATE,outlet.get_outlet_date());
+            values.put(KEY_CHANNEL_NAME,outlet.get_channel_name());
+            values.put(KEY_UPDATED, "1");
+            // updating row
+            return db.update(TABLE_OUTLETS, values, KEY_ID + " = ?",
+                    new String[] { String.valueOf(outlet.get_id()) });
+
+        }
+        catch(Exception ex)
+        {
+                throw  ex;
+        }
+        finally {
+            if (db != null)
+                db.close();
+        }
+
+    }
+
+
+    public void insertOutlet(Outlet outlet)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+
+        try
+        {
+            ContentValues values = new ContentValues();
+            values.put(KEY_OUTLET_Name, outlet.get_outlet_Name());
+            values.put(KEY_OUTLET_CITY,outlet.getOutlet_city());
+            values.put(KEY_OUTLET_DATE,outlet.get_outlet_date());
+            values.put(KEY_CHANNEL_NAME,outlet.get_channel_name());
+            values.put(KEY_NEW,1);
+            db.insert(TABLE_OUTLETS, null, values);
+
+        }
+        catch (Exception ex)
+        {
+            throw  ex;
+        }
+        finally {
+            db.close(); // Closing database connection
+        }
+
+
     }
 }

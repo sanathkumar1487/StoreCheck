@@ -20,7 +20,7 @@ public class Outlet extends BaseObservable implements Serializable {
     private int _id;
 
     @SerializedName("OutletId")
-    private int _outlet_id;
+    private String _outlet_id;
 
 
     @SerializedName("OutletName")
@@ -69,7 +69,7 @@ public class Outlet extends BaseObservable implements Serializable {
     }
 
 
-    public Outlet(String _outlet_date, int _outlet_id, String _outlet_Name, int _project_id, String _geo_code, String _chccode, String _geo_name, String _industry, String _outlet_city, String _year, String _channel_name) {
+    public Outlet(String _outlet_date, String _outlet_id, String _outlet_Name, int _project_id, String _geo_code, String _chccode, String _geo_name, String _industry, String _outlet_city, String _year, String _channel_name) {
         this._outlet_date = _outlet_date;
         this._outlet_id = _outlet_id;
         this._outlet_Name = _outlet_Name;
@@ -93,11 +93,11 @@ public class Outlet extends BaseObservable implements Serializable {
     }
 
     @Bindable
-    public int get_outlet_id() {
+    public String get_outlet_id() {
         return _outlet_id;
     }
 
-    public void set_outlet_id(int _outlet_id) {
+    public void set_outlet_id(String _outlet_id) {
         this._outlet_id = _outlet_id;
     }
 

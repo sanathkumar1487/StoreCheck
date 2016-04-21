@@ -14,23 +14,30 @@
         android:layout_height="20dp"
         android:indeterminate="true"
         app:mpb_progressStyle="horizontal"
-         android:visibility="gone"
+        android:visibility="gone"
         style="@style/Widget.MaterialProgressBar.ProgressBar.Horizontal" />
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:text="@string/browse_button_name"
         android:onClick="selectFile"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-
+        android:layout_marginTop="50sp"
+        android:layout_marginRight="50sp"
+        android:layout_marginLeft="50sp"
+         android:background="@color/blue_300"
         android:id="@+id/browseFile"/>
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:id="@+id/sqlMonitor"
-        android:layout_marginTop="80dp"
+
         android:layout_height="wrap_content"
+        android:background="@color/blue_300"
+        android:layout_marginTop="150sp"
+        android:layout_marginRight="50sp"
+        android:layout_marginLeft="50sp"
+
         android:text="sqllite monitor" />
 
 </RelativeLayout>

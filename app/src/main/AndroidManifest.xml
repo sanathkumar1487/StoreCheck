@@ -24,7 +24,6 @@
             android:name=".app.AndroidDatabaseManager"
             android:theme="@style/Theme.AppCompat.Light" />
         <activity android:name=".app.StoreCheckAddBrandActivity" />
-        <activity android:name=".app.StoreCheckAddoutletActivity" />
         <activity android:name=".app.StoreCheckAddProductDetailsActivity" />
         <activity android:name=".app.StoreCheckImportActivity" />
         <activity android:name=".app.StoreCheckExportActivity" />
@@ -35,6 +34,10 @@
         <activity android:name=".app.OutletDetailsActivity"/>
         <activity android:name=".app.AddOutletActivity"/>
 
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="4b345bd310a45cfb27c568757996a5392a62d50c" />
     </application>
 
+    <uses-permission android:name="android.permission.INTERNET" />
 </manifest>

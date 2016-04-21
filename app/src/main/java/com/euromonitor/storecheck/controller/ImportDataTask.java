@@ -3,9 +3,7 @@ package com.euromonitor.storecheck.controller;
 import android.content.Context;
 import android.os.AsyncTask;
 
-import com.euromonitor.storecheck.app.MainActivity;
 import com.euromonitor.storecheck.app.StoreCheckImportActivity;
-import com.euromonitor.storecheck.app.StoreCheckImportFragment;
 import com.euromonitor.storecheck.controller.interfaces.AsyncPostExecute;
 import com.euromonitor.storecheck.controller.interfaces.AsyncPreExecute;
 import com.euromonitor.storecheck.controller.interfaces.AsyncProgressReport;

@@ -56,6 +56,7 @@ public class AddOutletActivity extends MainActivity
     EditText city;
     ArrayList<Channel> labels;
     boolean isvalueChanged = false;
+    boolean isNew = false;
 
 
 
@@ -64,6 +65,8 @@ public class AddOutletActivity extends MainActivity
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+
+
         View view =  getLayoutInflater().inflate(R.layout.storecheck_addoutlet,null);
         setContentView(view);
         spinner = (Spinner) view.findViewById(R.id.spinner);
@@ -72,6 +75,7 @@ public class AddOutletActivity extends MainActivity
         city = (EditText) view.findViewById(R.id.city);
         setOutlet((Outlet) getIntent().getSerializableExtra("outlet"));
 
+        isNew = (boolean)getIntent().getSerializableExtra("isnew");
         loadSpinnerData();
         loadOutletui();
 
@@ -200,12 +204,13 @@ public class AddOutletActivity extends MainActivity
             for (int i = 0; i < labels.size(); i++) {
                 Channel channel = labels.get(i);
 
-                if (channel.get_chc_name().toString().trim().equals(outlet.get_channel_name().toString().trim())) {
+                if (channel.get_chc_name() != null && outlet.get_channel_name()!= null  && channel.get_chc_name().toString().trim().equals(outlet.get_channel_name().toString().trim())) {
                     index = i;
                 }
             }
             spinner.setSelection(index);
         }
+        else outlet = new Outlet();
     }
 
     private void loadSpinnerData() {
@@ -252,7 +257,24 @@ public class AddOutletActivity extends MainActivity
             Log.i("etDate", etDate.getText().toString());
             if (outLet_Name.getText().toString().length() != 0 && city.getText().toString().length() != 0 && etDate.getText().toString().length() != 0)
             {
-                Toast.makeText(this.getBaseContext(), "Clicked on save", Toast.LENGTH_LONG).show();
+                 DatabaseHelper databaseHelper = new DatabaseHelper(this);
+
+                outlet.set_outlet_Name(outLet_Name.getText().toString());
+                outlet.set_outlet_city(city.getText().toString());
+                outlet.set_outlet_date(etDate.getText().toString());
+                outlet.set_channel_name(spinner.getSelectedItem().toString());
+
+                if (isNew)
+                {
+                    databaseHelper.insertOutlet(outlet);
+                    Toast.makeText(this.getBaseContext(), "New outlet saved", Toast.LENGTH_LONG).show();
+                }
+                else
+                {
+                    databaseHelper.updateOutlet(outlet);
+                    Toast.makeText(this.getBaseContext(), "Outlet updated", Toast.LENGTH_LONG).show();
+                }
+
             }
             else
             {

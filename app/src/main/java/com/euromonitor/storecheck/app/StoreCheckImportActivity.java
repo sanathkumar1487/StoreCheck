@@ -13,6 +13,8 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -46,8 +48,8 @@ public class StoreCheckImportActivity extends MainActivity implements AsyncPostE
         progressBar = (MaterialProgressBar) this.findViewById(R.id.progbar);
 
         int color = 0xFF00FF00;
-        progressBar.getIndeterminateDrawable().setColorFilter(Color.parseColor("#1565C0"), PorterDuff.Mode.SRC_IN);
-        progressBar.getProgressDrawable().setColorFilter(Color.parseColor("#1565C0"), PorterDuff.Mode.SRC_IN);
+        progressBar.getIndeterminateDrawable().setColorFilter(Color.parseColor("#42A5F5"), PorterDuff.Mode.SRC_IN);
+        progressBar.getProgressDrawable().setColorFilter(Color.parseColor("#42A5F5"), PorterDuff.Mode.SRC_IN);
 
         browseFile = (Button)this.findViewById(R.id.browseFile);
         browseFile.setOnClickListener(new View.OnClickListener() {
@@ -154,5 +156,26 @@ public class StoreCheckImportActivity extends MainActivity implements AsyncPostE
         progressBar.setVisibility(View.VISIBLE);
         browseFile.setEnabled(false);
         sqlLiteMonitor.setEnabled(false);
+    }
+
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        menu.clear();
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.Save:
+
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

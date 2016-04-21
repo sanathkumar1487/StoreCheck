@@ -20,4 +20,13 @@
 
     </item>
 
+    <item
+        android:id="@+id/Refresh"
+        android:icon="@mipmap/ic_cached_white_36dp"
+        android:orderInCategory="100"
+        app:showAsAction="always"
+        android:title="Refresh">
+
+    </item>
+
 </menu>

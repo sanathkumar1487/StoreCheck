@@ -17,6 +17,7 @@
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
     <string name="browse_file">Browse file</string>
+    <string name="browse_folder">Browse folder</string>
     <string name="export">Export Store Check Data</string>
     <string name="product_details">View/Edit Product Details </string>
     <string name="browse_button_name">Browse</string>

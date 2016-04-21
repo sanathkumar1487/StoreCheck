@@ -38,6 +38,9 @@ public class OutletDetailsActivity extends MainActivity {
     Intent intent;
     private SearchView.OnQueryTextListener queryTextListener;
 
+    public OutletDetailsActivity() {
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,9 +81,11 @@ public class OutletDetailsActivity extends MainActivity {
         return true;
     }
 
+
+    RecyclerView recyclerView ;
     public void setUpStoreCheckDetails(View view) {
 
-        final RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.storecheckOutletDetailsView);
+        recyclerView = (RecyclerView) view.findViewById(R.id.storecheckOutletDetailsView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new StoreCheckOutletDetailAdapter(this.getLayoutInflater(), this);
         recyclerView.setAdapter(adapter);
@@ -93,6 +98,7 @@ public class OutletDetailsActivity extends MainActivity {
 
                 intent = new Intent(OutletDetailsActivity.this, AddOutletActivity.class);
                 intent.putExtra("outlet",detail);
+                intent.putExtra("isnew",false);
                 startActivity(intent);
 
             }
@@ -111,17 +117,36 @@ public class OutletDetailsActivity extends MainActivity {
             case R.id.AddNew:
                 loadAddOutletScreen();
                 return true;
+            case  R.id.Refresh:
+                 refreshData();
+                  return  true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
 
+
     private void loadAddOutletScreen() {
         AddOutletActivity activity = new AddOutletActivity();
         intent = new Intent(OutletDetailsActivity.this, AddOutletActivity.class);
+        intent.putExtra("isnew",true);
         startActivity(intent);
     }
 
+
+    private void refreshData() {
+
+        adapter = new StoreCheckOutletDetailAdapter(this.getLayoutInflater(), this);
+        recyclerView.setAdapter(adapter);
+        recyclerView.invalidate();
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        refreshData();
+    }
 }
 
