@@ -940,6 +940,8 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         return result;
     }
 
+<<<<<<< HEAD
+=======
 
     public ArrayList<Channel> getAllChannels()
     {
@@ -967,6 +969,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         }
         return my_array;
     }
+<<<<<<< HEAD
 
 
     // Updating single outlet
@@ -1024,4 +1027,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
 
 
     }
+=======
+>>>>>>> 1d56b5dfaf5b609d97ed63027d4a3acb3d3ca8e3
+>>>>>>> 99b63f44d695ee70bb86b37579340c061de44402
 }
