@@ -115,9 +115,4 @@ public class StoreCheckDetail extends BaseObservable {
 
     public void setMultiPackSize(int itemsPerPack){this.multiPackSize = itemsPerPack;}
 
-    public  static ArrayList<StoreCheckDetail> getData(Context context){
-        DatabaseHelper dbHelper = new DatabaseHelper(context);
-        return dbHelper.GetAllProductDetails();
-    }
-
 }

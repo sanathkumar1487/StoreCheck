@@ -20,6 +20,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.euromonitor.storecheck.R;
 import com.euromonitor.storecheck.adapter.StoreCheckDetailAdapter;
@@ -28,6 +29,9 @@ import com.euromonitor.storecheck.databinding.StorecheckdetailItemBinding;
 import com.euromonitor.storecheck.listener.ClickListener;
 import com.euromonitor.storecheck.listener.RecyclerTouchListener;
 import com.euromonitor.storecheck.model.StoreCheckDetail;
+import com.euromonitor.storecheck.utility.DatabaseHelper;
+
+import java.util.ArrayList;
 
 public class StoreCheckDetailsActivity extends MainActivity
 {
@@ -38,6 +42,7 @@ public class StoreCheckDetailsActivity extends MainActivity
     Context context;
     Intent intent;
     private SearchView.OnQueryTextListener queryTextListener;
+    DatabaseHelper dbHelper;
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -45,9 +50,17 @@ public class StoreCheckDetailsActivity extends MainActivity
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.storecheck_details);
 
-        View view=binding.getRoot();
-        setUpStoreCheckDetails(view);
+        context = this;
 
+        dbHelper = new DatabaseHelper(context);
+
+        View view=binding.getRoot();
+
+        if(dbHelper.isDatabaseAvailable()) {
+            setUpStoreCheckDetails(view);
+        }else {
+            Toast.makeText(this.getBaseContext(), "Please import EMMA generated file to proceed!", Toast.LENGTH_LONG).show();
+        }
     }
 
 
@@ -85,7 +98,7 @@ public class StoreCheckDetailsActivity extends MainActivity
     {
         final RecyclerView recyclerView = (RecyclerView)view.findViewById(R.id.storecheckDetailsView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new StoreCheckDetailAdapter(this.getLayoutInflater(),this);
+        adapter = new StoreCheckDetailAdapter(this.getLayoutInflater(),this, dbHelper.GetAllProductDetails());
         recyclerView.setAdapter(adapter);
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(this.getApplicationContext(), recyclerView, new ClickListener()
         {
