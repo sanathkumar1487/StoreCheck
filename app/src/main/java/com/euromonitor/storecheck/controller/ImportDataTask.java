@@ -54,9 +54,6 @@ public class ImportDataTask extends AsyncTask<Void,Void,Void> {
     public AsyncProgressReport progressReport = null;
     public AsyncPostExecute postExecute = null;
 
-
-
-
     @Override
     protected void onPreExecute() {
 
