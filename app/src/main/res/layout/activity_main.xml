@@ -21,13 +21,9 @@
                 android:layout_height="match_parent"
                 android:id="@+id/containerFrame"/>
 
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/containerFrame1"/>
         </LinearLayout>
-        <fragment
-            android:id="@+id/storeCheckNavDrawerFragment"
+        <FrameLayout
+            android:id="@+id/navDrawerFrame"
             android:name="com.euromonitor.storecheck.app.StoreCheckNavigationFragment"
             android:layout_width="@dimen/nav_drawer_width"
             android:layout_height="match_parent"

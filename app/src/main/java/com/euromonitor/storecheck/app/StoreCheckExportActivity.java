@@ -40,6 +40,7 @@ public class StoreCheckExportActivity extends AppCompatActivity implements Async
     EditText fileName;
     MaterialProgressBar progressBar;
     Button export;
+
     private SearchView.OnQueryTextListener queryTextListener;
     StoreCheckNavigationFragment navigationFragment;
     DrawerLayout mDrawerLayout;
@@ -49,23 +50,27 @@ public class StoreCheckExportActivity extends AppCompatActivity implements Async
     Intent intent;
     ActionBarDrawerToggle mDrawerToggle;
     int activeView;
+    android.support.v7.widget.Toolbar toolbar;
+
     final static int VIEW_DETAILS = 0;
     final static int VIEW_PRODUCT_DETAILS = 1;
     final static int ADD_BRAND = 2;
     final static int ADD_OUTLET = 3;
     final static int IMPORT_STORECHECK_DETAILS = 4;
     final static int EXPORT_STORECHECK_DETAILS = 5;
-    android.support.v7.widget.Toolbar toolbar;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.storecheck_export);
+
         mDrawerLayout=(DrawerLayout)findViewById(R.id.drawer_layout);
         mDrawerToggle=new ActionBarDrawerToggle(this,mDrawerLayout,R.string.drawer_open,R.string.drawer_close);
         mDrawerToggle.setDrawerIndicatorEnabled(true);
         mDrawerToggle.syncState();
         setupToolbar();
         setUpNavigationView();
+
         export = (Button) findViewById(R.id.exportFile);
         export.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -150,30 +155,30 @@ public class StoreCheckExportActivity extends AppCompatActivity implements Async
 
     }
     public void setUpNavigationView() {
-        try {
-            navigationFragment = (StoreCheckNavigationFragment) getSupportFragmentManager().findFragmentById(R.id.storeCheckNavDrawerFragment);
-            mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-            navigationFragment.setUpDrawer(R.id.storeCheckNavDrawerFragment, mDrawerLayout, toolbar);
-
-            navigationFragment.recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), navigationFragment.recyclerView, new ClickListener()
-            {
-                @Override
-                public void onClick(View view, int position)
-                {
-
-                    loadView(position);
-                }
-
-                @Override
-                public void onLongClick(View view, int position) {
-
-                }
-            }
-            ));
-
-        } catch (Exception e) {
-            Log.e("Setup Drawer", e.getMessage());
-        }
+//        try {
+//            navigationFragment = (StoreCheckNavigationFragment) getSupportFragmentManager().findFragmentById(R.id.storeCheckNavDrawerFragment);
+//            mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+//            navigationFragment.setUpDrawer(R.id.storeCheckNavDrawerFragment, mDrawerLayout, toolbar);
+//
+//            navigationFragment.recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), navigationFragment.recyclerView, new ClickListener()
+//            {
+//                @Override
+//                public void onClick(View view, int position)
+//                {
+//
+//                    loadView(position);
+//                }
+//
+//                @Override
+//                public void onLongClick(View view, int position) {
+//
+//                }
+//            }
+//            ));
+//
+//        } catch (Exception e) {
+//            Log.e("Setup Drawer", e.getMessage());
+//        }
     }
     private void loadView(int position){
         activeView = position;

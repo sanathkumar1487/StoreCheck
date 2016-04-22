@@ -1,12 +1,19 @@
 package com.euromonitor.storecheck.app;
 
+import android.app.Activity;
 import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -23,6 +30,7 @@ import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.euromonitor.storecheck.Constants.NavigationConstants;
 import com.euromonitor.storecheck.R;
 
 import com.euromonitor.storecheck.R;
@@ -30,6 +38,8 @@ import com.euromonitor.storecheck.adapter.StoreCheckCustomFieldsAdapter;
 import com.euromonitor.storecheck.adapter.StoreCheckDetailAdapter;
 import com.euromonitor.storecheck.databinding.StorecheckAddbrandBinding;
 import com.euromonitor.storecheck.databinding.StorecheckProductdetailsBinding;
+import com.euromonitor.storecheck.listener.ClickListener;
+import com.euromonitor.storecheck.listener.RecyclerTouchListener;
 import com.euromonitor.storecheck.model.CustomField;
 import com.euromonitor.storecheck.model.Option;
 import com.euromonitor.storecheck.model.Product;
@@ -46,7 +56,7 @@ import java.util.zip.Inflater;
  * Created by Shashwat.Bajpai on 19/04/2016.
  */
 
-public class StoreCheckAddBrandActivity extends MainActivity
+public class StoreCheckAddBrandActivity extends AppCompatActivity
 
 {
     final static String DropDown = "1";
@@ -59,29 +69,40 @@ public class StoreCheckAddBrandActivity extends MainActivity
     DatabaseHelper databaseHelper;
     RecyclerView customFieldRecyclerView;
     ArrayList<CustomField> customFields = new ArrayList<CustomField>() ;
+
+
+
+    // Navigation
+
+    DrawerLayout mDrawerLayout;
+
     Context context;
-    ArrayList<Product> allProducts;
+
+    ActionBarDrawerToggle mDrawerToggle;
+
+    android.support.v7.widget.Toolbar toolbar;
 
 
     @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
+    public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.storecheck_addbrand);
-       // binding = DataBindingUtil.inflate(inflater, R.layout.storecheck_addbrand, container, false);
-        binding=DataBindingUtil.setContentView(this,R.layout.storecheck_addbrand);
 
-        context=this;
-        databaseHelper = new DatabaseHelper(context);
+        binding = DataBindingUtil.setContentView(this, R.layout.storecheck_addbrand);
 
+        context = this;
+        databaseHelper = new DatabaseHelper(this);
 
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.addBrand_Drawer);
+
+        setupToolbar();
+        setUpNavigationView();
 
 
         setBinding();
 
         View view = binding.getRoot();
         customFieldRecyclerView = (RecyclerView) view.findViewById(R.id.customFields);
-
 
     }
 
@@ -104,6 +125,35 @@ public class StoreCheckAddBrandActivity extends MainActivity
                 resetData();
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    public void setupToolbar(){
+
+        toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.addBrandToolBar);
+        setSupportActionBar(toolbar);
+        // actionbar.setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Welcome !");
+        toolbar.setSubtitle("Export Items");
+
+        toolbar.setTitle("Store-check details");
+        toolbar.inflateMenu(R.menu.storecheck_menu);
+        mDrawerToggle=new ActionBarDrawerToggle(this,mDrawerLayout,R.string.drawer_open,R.string.drawer_close);
+        mDrawerToggle.setDrawerIndicatorEnabled(true);
+
+    }
+
+    private void setUpNavigationView() {
+        try {
+            Fragment navFragment = StoreCheckNavigationFragment.newInstance(mDrawerLayout.getId(), toolbar.getId());
+
+            FragmentManager fragmentManager = this.getFragmentManager();
+            FragmentTransaction ft = fragmentManager.beginTransaction();
+            ft.replace(R.id.navDrawerFrame, navFragment, "Nav");
+            ft.commit();
+
+        } catch (Exception e) {
+            Log.e("Setup Drawer", e.getMessage());
         }
     }
 
@@ -259,8 +309,8 @@ public class StoreCheckAddBrandActivity extends MainActivity
 
                         customFieldRecyclerView.setLayoutManager(new LinearLayoutManager(context));
 
-                      StoreCheckCustomFieldsAdapter adapter = new StoreCheckCustomFieldsAdapter(LayoutInflater.from(context), context, customFields);
-                       customFieldRecyclerView.setAdapter(adapter);
+                        StoreCheckCustomFieldsAdapter adapter = new StoreCheckCustomFieldsAdapter(LayoutInflater.from(context), context, customFields);
+                        customFieldRecyclerView.setAdapter(adapter);
                     }
                 }
 
@@ -306,17 +356,17 @@ public class StoreCheckAddBrandActivity extends MainActivity
             View productItemView;
             productItemView = recycle;
             if (recycle != null)
-           {
-               productItemView = recycle;
+            {
+                productItemView = recycle;
             }
             else
             {
-               productItemView =  getLayoutInflater().inflate(R.layout.storecheck_productitem, parent, false);
+                productItemView =  getLayoutInflater().inflate(R.layout.storecheck_productitem, parent, false);
             }
             TextView productItem = (TextView)productItemView.findViewById(R.id.productItem);
 
             productItem.setText(products.get(position).get_product_name());
-           return productItemView;
+            return productItemView;
         }
     }
 

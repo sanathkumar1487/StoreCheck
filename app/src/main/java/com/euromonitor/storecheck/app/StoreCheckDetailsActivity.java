@@ -141,30 +141,30 @@ public class StoreCheckDetailsActivity extends AppCompatActivity
 
     }
     public void setUpNavigationView() {
-        try {
-            navigationFragment = (StoreCheckNavigationFragment) getSupportFragmentManager().findFragmentById(R.id.storeCheckNavDrawerFragment);
-            mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-            navigationFragment.setUpDrawer(R.id.storeCheckNavDrawerFragment, mDrawerLayout, toolbar);
-
-            navigationFragment.recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), navigationFragment.recyclerView, new ClickListener()
-            {
-                @Override
-                public void onClick(View view, int position)
-                {
-
-                    loadView(position);
-                }
-
-                @Override
-                public void onLongClick(View view, int position) {
-
-                }
-            }
-            ));
-
-        } catch (Exception e) {
-            Log.e("Setup Drawer", e.getMessage());
-        }
+//        try {
+//            navigationFragment = (StoreCheckNavigationFragment) getSupportFragmentManager().findFragmentById(R.id.storeCheckNavDrawerFragment);
+//            mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+//            navigationFragment.setUpDrawer(R.id.storeCheckNavDrawerFragment, mDrawerLayout, toolbar);
+//
+//            navigationFragment.recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), navigationFragment.recyclerView, new ClickListener()
+//            {
+//                @Override
+//                public void onClick(View view, int position)
+//                {
+//
+//                    loadView(position);
+//                }
+//
+//                @Override
+//                public void onLongClick(View view, int position) {
+//
+//                }
+//            }
+//            ));
+//
+//        } catch (Exception e) {
+//            Log.e("Setup Drawer", e.getMessage());
+//        }
     }
     private void loadView(int position){
         activeView = position;
@@ -192,7 +192,7 @@ public class StoreCheckDetailsActivity extends AppCompatActivity
             case ADD_OUTLET:
                 //fragment = new StoreCheckAddOutletFragment();
                 context=this;
-               // intent=new Intent(context,StoreCheckAddoutletActivity.class);
+                // intent=new Intent(context,StoreCheckAddoutletActivity.class);
                 startActivity(intent);
                 break;
             case IMPORT_STORECHECK_DETAILS:
