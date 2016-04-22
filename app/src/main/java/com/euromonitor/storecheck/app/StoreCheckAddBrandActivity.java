@@ -138,9 +138,6 @@ public class StoreCheckAddBrandActivity extends AppCompatActivity
 
         toolbar.setTitle("Store-check details");
         toolbar.inflateMenu(R.menu.storecheck_menu);
-        mDrawerToggle=new ActionBarDrawerToggle(this,mDrawerLayout,R.string.drawer_open,R.string.drawer_close);
-        mDrawerToggle.setDrawerIndicatorEnabled(true);
-
     }
 
     private void setUpNavigationView() {

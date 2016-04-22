@@ -140,7 +140,12 @@ public  class StoreCheckNavigationFragment extends Fragment {
             mDrawerToggle = new ActionBarDrawerToggle(getActivity(), mDrawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close) {
                 @Override
                 public void onDrawerOpened(View drawerView) {
-                    super.onDrawerOpened(drawerView);
+                    try {
+
+                        super.onDrawerOpened(drawerView);
+                    } catch (Exception e) {
+                        Log.e("Drawer open", e.getMessage());
+                    }
                 }
 
                 @Override

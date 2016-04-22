@@ -41,28 +41,17 @@ import java.util.ArrayList;
 public class StoreCheckDetailsActivity extends AppCompatActivity
 {
     public StoreCheckDetailAdapter adapter;
-    private StoreCheckDetail detail = new StoreCheckDetail();
-    private int position;
+
     StorecheckDetailsBinding binding;
     Context context;
     Intent intent;
-    private SearchView.OnQueryTextListener queryTextListener;
+
     DatabaseHelper dbHelper;
     android.support.v7.widget.Toolbar toolbar;
 
-    StoreCheckNavigationFragment navigationFragment;
     DrawerLayout mDrawerLayout;
-    Fragment fragment;
-    Activity activity;
+    private SearchView.OnQueryTextListener queryTextListener;
 
-    ActionBarDrawerToggle mDrawerToggle;
-    int activeView;
-    final static int VIEW_DETAILS = 0;
-    final static int VIEW_PRODUCT_DETAILS = 1;
-    final static int ADD_BRAND = 2;
-    final static int ADD_OUTLET = 3;
-    final static int IMPORT_STORECHECK_DETAILS = 4;
-    final static int EXPORT_STORECHECK_DETAILS = 5;
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -72,12 +61,12 @@ public class StoreCheckDetailsActivity extends AppCompatActivity
         context = this;
         dbHelper = new DatabaseHelper(context);
         View view=binding.getRoot();
-        mDrawerLayout=(DrawerLayout)findViewById(R.id.drawer_layout);
-        mDrawerToggle=new ActionBarDrawerToggle(this,mDrawerLayout,R.string.drawer_open,R.string.drawer_close);
-        mDrawerToggle.setDrawerIndicatorEnabled(true);
-        mDrawerToggle.syncState();
+
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.details_drawer);
+
         setupToolbar();
         setUpNavigationView();
+
         if(dbHelper.isDatabaseAvailable())
         {
             setUpStoreCheckDetails(view);
@@ -128,7 +117,7 @@ public class StoreCheckDetailsActivity extends AppCompatActivity
 
     public void setupToolbar(){
 
-        toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
+        toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.detailsToolbar);
         setSupportActionBar(toolbar);
         // actionbar.setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Welcome !");
@@ -136,84 +125,19 @@ public class StoreCheckDetailsActivity extends AppCompatActivity
 
         toolbar.setTitle("Store-check details");
         toolbar.inflateMenu(R.menu.storecheck_menu);
-        mDrawerToggle=new ActionBarDrawerToggle(this,mDrawerLayout,R.string.drawer_open,R.string.drawer_close);
-        mDrawerToggle.setDrawerIndicatorEnabled(true);
-
     }
-    public void setUpNavigationView() {
-//        try {
-//            navigationFragment = (StoreCheckNavigationFragment) getSupportFragmentManager().findFragmentById(R.id.storeCheckNavDrawerFragment);
-//            mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-//            navigationFragment.setUpDrawer(R.id.storeCheckNavDrawerFragment, mDrawerLayout, toolbar);
-//
-//            navigationFragment.recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), navigationFragment.recyclerView, new ClickListener()
-//            {
-//                @Override
-//                public void onClick(View view, int position)
-//                {
-//
-//                    loadView(position);
-//                }
-//
-//                @Override
-//                public void onLongClick(View view, int position) {
-//
-//                }
-//            }
-//            ));
-//
-//        } catch (Exception e) {
-//            Log.e("Setup Drawer", e.getMessage());
-//        }
-    }
-    private void loadView(int position){
-        activeView = position;
-        fragment = null;
-        switch (position){
-            case VIEW_DETAILS:
-                // fragment = new StoreCheckDetailsFragment();
-                context=this;
-                intent=new Intent(context,StoreCheckDetailsActivity.class);
-                startActivity(intent);
-                break;
-            case VIEW_PRODUCT_DETAILS:
-                //fragment = new StoreCheckAddProductDetailsFragment();
-                context=this;
-                intent=new Intent(context,StoreCheckAddProductDetailsActivity.class);
-                startActivity(intent);
-                break;
-            case ADD_BRAND:
-                // fragment = new StoreCheckAddBrandFragment();
-                context=this;
-                intent=new Intent(context,StoreCheckAddBrandActivity.class);
-                startActivity(intent);
 
-                break;
-            case ADD_OUTLET:
-                //fragment = new StoreCheckAddOutletFragment();
-                context=this;
-                // intent=new Intent(context,StoreCheckAddoutletActivity.class);
-                startActivity(intent);
-                break;
-            case IMPORT_STORECHECK_DETAILS:
-                //  fragment = new StoreCheckImportFragment();
-                context = this;
-                intent=new Intent(context,StoreCheckImportActivity.class);
-                startActivity(intent);
-                break;
-            case EXPORT_STORECHECK_DETAILS:
-                // fragment = new StoreCheckExportFragment();
-                context=this;
-                intent=new Intent(context,StoreCheckExportActivity.class);
-                startActivity(intent);
-                break;
-        }
+    private void setUpNavigationView() {
+        try {
+            Fragment navFragment = StoreCheckNavigationFragment.newInstance(mDrawerLayout.getId(), toolbar.getId());
 
-        if(fragment!=null){
-            FragmentManager fragmentManager = getFragmentManager();
-            fragmentManager.beginTransaction()
-                    .replace(R.id.containerFrame, fragment).commit();
-            navigationFragment.closeDrawer();
+            FragmentManager fragmentManager = this.getFragmentManager();
+            FragmentTransaction ft = fragmentManager.beginTransaction();
+            ft.replace(R.id.navDrawerFrame, navFragment, "Nav");
+            ft.commit();
+
+        } catch (Exception e) {
+            Log.e("Setup Drawer", e.getMessage());
         }
     }
 

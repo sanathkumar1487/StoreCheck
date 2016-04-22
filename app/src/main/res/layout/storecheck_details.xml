@@ -9,23 +9,33 @@
             type="List&lt;StoreCheckDetail>"/>
     </data>
     <android.support.v4.widget.DrawerLayout
-        android:id="@+id/drawer_layout"
+        android:id="@+id/details_drawer"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <include
-        android:id="@+id/toolbar"
-        layout="@layout/storecheckdetail_toolbar"/>
-    <android.support.v7.widget.RecyclerView
-    android:id="@+id/storecheckDetailsView"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <android.support.v7.widget.Toolbar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+                android:minHeight="?attr/actionBarSize"
+                app:popupTheme="@style/PopupTheme"
+                android:theme="@style/ToolBarTheme"
+                android:id="@+id/detailsToolbar"/>
+
+            <android.support.v7.widget.RecyclerView
+            android:id="@+id/storecheckDetailsView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
         </LinearLayout>
-        <fragment
-            android:id="@+id/storeCheckNavDrawerFragment"
+        <FrameLayout
+            android:id="@+id/navDrawerFrame"
             android:name="com.euromonitor.storecheck.app.StoreCheckNavigationFragment"
             android:layout_width="280dp"
             android:layout_height="match_parent"
