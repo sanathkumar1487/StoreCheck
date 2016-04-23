@@ -1,10 +1,14 @@
 package com.euromonitor.storecheck.app;
 
 import android.app.DatePickerDialog;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -59,6 +63,8 @@ public class AddOutletActivity extends MainActivity
     boolean isNew = false;
     DatabaseHelper db;
 
+    DrawerLayout mDrawerLayout;
+
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
@@ -66,6 +72,12 @@ public class AddOutletActivity extends MainActivity
 
         View view =  getLayoutInflater().inflate(R.layout.storecheck_addoutlet,null);
         setContentView(view);
+
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.addOutlet_Drawer);
+
+        setupToolbar();
+        setUpNavigationView();
+
         db = new DatabaseHelper(this);
 
         if(db.isDatabaseAvailable()) {
@@ -185,6 +197,33 @@ public class AddOutletActivity extends MainActivity
             Toast.makeText(this.getBaseContext(),"Please import EMMA generated file to proceed!", Toast.LENGTH_LONG).show();
         }
     }
+
+    public void setupToolbar(){
+
+        toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.addOutletToolBar);
+        setSupportActionBar(toolbar);
+        // actionbar.setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Welcome !");
+        toolbar.setSubtitle("Export Items");
+
+        toolbar.setTitle("Store-check details");
+        toolbar.inflateMenu(R.menu.storecheck_menu);
+    }
+
+    private void setUpNavigationView() {
+        try {
+            Fragment navFragment = StoreCheckNavigationFragment.newInstance(mDrawerLayout.getId(), toolbar.getId());
+
+            FragmentManager fragmentManager = this.getFragmentManager();
+            FragmentTransaction ft = fragmentManager.beginTransaction();
+            ft.replace(R.id.navDrawerFrame, navFragment, "Nav");
+            ft.commit();
+
+        } catch (Exception e) {
+            Log.e("Setup Drawer", e.getMessage());
+        }
+    }
+
 
     Outlet outlet;
     public Outlet getOutlet() {

@@ -1,11 +1,14 @@
 package com.euromonitor.storecheck.app;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -38,19 +41,24 @@ public class OutletDetailsActivity extends MainActivity {
     Intent intent;
     private SearchView.OnQueryTextListener queryTextListener;
 
-    public OutletDetailsActivity()
-    {
-    }
+    DrawerLayout mDrawerLayout;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.storecheckoutlet_details);
 
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.manageOutlet_Drawer);
+
+        setupToolbar();
+        setUpNavigationView();
+
         View view = binding.getRoot();
         setUpStoreCheckDetails(view);
 
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -98,8 +106,8 @@ public class OutletDetailsActivity extends MainActivity {
                 Outlet detail = binding.getStoreCheckOutlet();
 
                 intent = new Intent(OutletDetailsActivity.this, AddOutletActivity.class);
-                intent.putExtra("outlet",detail);
-                intent.putExtra("isnew",false);
+                intent.putExtra("outlet", detail);
+                intent.putExtra("isnew", false);
                 startActivity(intent);
 
             }
@@ -126,15 +134,12 @@ public class OutletDetailsActivity extends MainActivity {
         }
     }
 
-
-
     private void loadAddOutletScreen() {
         AddOutletActivity activity = new AddOutletActivity();
         intent = new Intent(OutletDetailsActivity.this, AddOutletActivity.class);
-        intent.putExtra("isnew",true);
+        intent.putExtra("isnew", true);
         startActivity(intent);
     }
-
 
     private void refreshData() {
 
@@ -143,11 +148,36 @@ public class OutletDetailsActivity extends MainActivity {
         recyclerView.invalidate();
     }
 
-
     @Override
     protected void onResume() {
         super.onResume();
         refreshData();
+    }
+
+    public void setupToolbar(){
+
+        toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.manageOutletToolBar);
+        setSupportActionBar(toolbar);
+        // actionbar.setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Welcome !");
+        toolbar.setSubtitle("Export Items");
+
+        toolbar.setTitle("Store-check details");
+        toolbar.inflateMenu(R.menu.storecheck_menu);
+    }
+
+    private void setUpNavigationView() {
+        try {
+            Fragment navFragment = StoreCheckNavigationFragment.newInstance(mDrawerLayout.getId(), toolbar.getId());
+
+            FragmentManager fragmentManager = this.getFragmentManager();
+            FragmentTransaction ft = fragmentManager.beginTransaction();
+            ft.replace(R.id.navDrawerFrame, navFragment, "Nav");
+            ft.commit();
+
+        } catch (Exception e) {
+            Log.e("Setup Drawer", e.getMessage());
+        }
     }
 }
 

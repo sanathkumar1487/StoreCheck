@@ -53,8 +53,8 @@
                   <state />
                 </provider>
                 <provider selected="true" editor-type-id="text-editor">
-                  <state vertical-scroll-proportion="-27.37931">
-                    <caret line="130" column="14" selection-start-line="122" selection-start-column="8" selection-end-line="130" selection-end-column="14" />
+                  <state vertical-scroll-proportion="-6.6896553">
+                    <caret line="100" column="38" selection-start-line="100" selection-start-column="38" selection-end-line="100" selection-end-column="38" />
                     <folding />
                   </state>
                 </provider>
@@ -63,8 +63,8 @@
             <file leaf-file-name="StoreCheckAddBrandActivity.java" pinned="false" current-in-tab="true">
               <entry file="file://$PROJECT_DIR$/app/src/main/java/com/euromonitor/storecheck/app/StoreCheckAddBrandActivity.java">
                 <provider selected="true" editor-type-id="text-editor">
-                  <state vertical-scroll-proportion="0.20754717">
-                    <caret line="76" column="0" selection-start-line="76" selection-start-column="0" selection-end-line="76" selection-end-column="31" />
+                  <state vertical-scroll-proportion="0.9837233">
+                    <caret line="124" column="57" selection-start-line="124" selection-start-column="57" selection-end-line="124" selection-end-column="57" />
                     <folding>
                       <element signature="e#2506#2519#0" expanded="true" />
                     </folding>
@@ -90,26 +90,26 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="storecheck_import.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/storecheck_import.xml">
-          <provider editor-type-id="android-designer">
-            <state />
-          </provider>
+      <file leaf-file-name="StoreCheckAddProductDetailsActivity.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/euromonitor/storecheck/app/StoreCheckAddProductDetailsActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="1.3793104">
-              <caret line="13" column="41" selection-start-line="13" selection-start-column="41" selection-end-line="13" selection-end-column="41" />
+            <state vertical-scroll-proportion="0.61227787">
+              <caret line="47" column="93" selection-start-line="47" selection-start-column="93" selection-end-line="47" selection-end-column="93" />
               <folding>
-                <element signature="e#1649#1677#0" expanded="true" />
+                <element signature="method#setUpNavigationView#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="OutletDetailsActivity.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/euromonitor/storecheck/app/OutletDetailsActivity.java">
+      <file leaf-file-name="storecheck_productdetails.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/storecheck_productdetails.xml">
+          <provider editor-type-id="android-designer">
+            <state />
+          </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.49707603">
-              <caret line="41" column="4" selection-start-line="41" selection-start-column="4" selection-end-line="41" selection-end-column="4" />
+            <state vertical-scroll-proportion="-17.241379">
+              <caret line="25" column="50" selection-start-line="25" selection-start-column="29" selection-end-line="25" selection-end-column="50" />
               <folding />
             </state>
           </provider>
@@ -1920,22 +1920,25 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/src/main/java/com/euromonitor/storecheck/app/OutletDetailsActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/styles.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/euromonitor/storecheck/app/MainActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/storecheck_addbrand.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/storecheck_navigation_drawer.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/storecheck_productdetails.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/euromonitor/storecheck/app/StoreCheckAddProductDetailsActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/euromonitor/storecheck/app/StoreCheckExportActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/euromonitor/storecheck/app/StoreCheckNavigationFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/storecheck_export.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/storecheck_details.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/euromonitor/storecheck/app/StoreCheckDetailsActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/euromonitor/storecheck/app/StoreCheckAddBrandActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/storecheck_import.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/euromonitor/storecheck/app/StoreCheckImportActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/storecheckoutlet_details.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/euromonitor/storecheck/app/OutletDetailsActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/storecheck_addoutlet.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/euromonitor/storecheck/app/AddOutletActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/storecheck_details.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/euromonitor/storecheck/app/StoreCheckDetailsActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/euromonitor/storecheck/app/StoreCheckAddProductDetailsActivity.java" />
       </list>
     </option>
   </component>
@@ -1971,19 +1974,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="AndroidView">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="StoreCheck" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
-      <pane id="Scratches" />
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -2272,6 +2262,19 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scratches" />
+      <pane id="AndroidView">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="StoreCheck" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -2280,6 +2283,9 @@
     <property name="recentsLimit" value="5" />
     <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="FBNPFX150361" />
     <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_AVD" value="Nexus_6_API_23" />
+    <property name="DEBUGGABLE_DEVICE" value="asus-p024-FBNPFX150361" />
+    <property name="DEBUGGABLE_PROCESS" value="com.euromonitor.storecheck" />
+    <property name="SHOW_ALL_PROCESSES" value="false" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -2459,9 +2465,9 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Android Model" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24174654" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Android Monitor" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3109691" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.399361" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -2498,21 +2504,54 @@
           <properties />
           <option name="timeStamp" value="1" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/euromonitor/storecheck/app/StoreCheckDetailsActivity.java</url>
+          <line>69</line>
+          <properties />
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/euromonitor/storecheck/app/StoreCheckDetailsActivity.java</url>
+          <line>145</line>
+          <properties />
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
       </breakpoints>
-      <option name="time" value="3" />
+      <option name="time" value="12" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/storecheck_import.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="13" column="41" selection-start-line="13" selection-start-column="41" selection-end-line="13" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/euromonitor/storecheck/app/OutletDetailsActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="method#onCreateOptionsMenu#0;class#OutletDetailsActivity#0" expanded="false" />
+            <element signature="method#setUpStoreCheckDetails#0;class#OutletDetailsActivity#0" expanded="false" />
+            <element signature="method#onOptionsItemSelected#0;class#OutletDetailsActivity#0" expanded="false" />
+            <element signature="method#loadAddOutletScreen#0;class#OutletDetailsActivity#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/euromonitor/storecheck/app/StoreCheckExportActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="89" column="0" selection-start-line="89" selection-start-column="0" selection-end-line="89" selection-end-column="0" />
           <folding>
-            <element signature="e#2085#2232#0" expanded="false" />
-            <element signature="e#2231#2232#0" expanded="false" />
-            <element signature="e#2868#2869#0" expanded="false" />
-            <element signature="e#3056#3057#0" expanded="false" />
+            <element signature="method#progressReport#0;class#StoreCheckExportActivity#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -2587,7 +2626,9 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="31" column="67" selection-start-line="31" selection-start-column="67" selection-end-line="31" selection-end-column="67" />
           <folding>
-            <element signature="imports" expanded="false" />
+            <element signature="method#PostExecute#0;class#StoreCheckImportActivity#0" expanded="false" />
+            <element signature="method#progressReport#0;class#StoreCheckImportActivity#0" expanded="false" />
+            <element signature="method#messageBox#0;class#StoreCheckImportActivity#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -2642,7 +2683,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2679,14 +2719,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/euromonitor/storecheck/app/StoreCheckAddProductDetailsActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.009879254">
-          <caret line="32" column="0" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/storecheck_export.xml">
       <provider editor-type-id="android-designer">
         <state />
@@ -2719,39 +2751,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/storecheck_productdetails.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.78125">
-          <caret line="24" column="47" selection-start-line="18" selection-start-column="7" selection-end-line="24" selection-end-column="47" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/euromonitor/storecheck/app/StoreCheckDetailsActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.68523">
-          <caret line="68" column="0" selection-start-line="68" selection-start-column="0" selection-end-line="68" selection-end-column="0" />
-          <folding>
-            <element signature="method#setupToolbar#0;class#StoreCheckDetailsActivity#0" expanded="false" />
-            <element signature="method#setUpNavigationView#0;class#StoreCheckDetailsActivity#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/storecheck_details.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.4583334">
-          <caret line="28" column="47" selection-start-line="28" selection-start-column="33" selection-end-line="28" selection-end-column="47" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/euromonitor/storecheck/app/StoreCheckExportActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -2762,32 +2761,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/storecheck_addbrand.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-27.37931">
-          <caret line="130" column="14" selection-start-line="122" selection-start-column="8" selection-end-line="130" selection-end-column="14" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/euromonitor/storecheck/app/StoreCheckAddBrandActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.20754717">
-          <caret line="76" column="0" selection-start-line="76" selection-start-column="0" selection-end-line="76" selection-end-column="31" />
-          <folding>
-            <element signature="e#2506#2519#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/AppData/Local/Android/android-sdk/sources/android-23/java/lang/reflect/Method.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.8245614">
           <caret line="440" column="0" selection-start-line="440" selection-start-column="0" selection-end-line="440" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2808,19 +2785,180 @@
         <state />
       </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.3793104">
+        <state vertical-scroll-proportion="0.0">
           <caret line="13" column="41" selection-start-line="13" selection-start-column="41" selection-end-line="13" selection-end-column="41" />
-          <folding>
-            <element signature="e#1649#1677#0" expanded="true" />
-          </folding>
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/storecheck_outlet.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-11.724138">
+          <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/storecheckoutlet_details.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-21.206896">
+          <caret line="46" column="14" selection-start-line="46" selection-start-column="14" selection-end-line="46" selection-end-column="14" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/euromonitor/storecheck/app/OutletDetailsActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.49707603">
-          <caret line="41" column="4" selection-start-line="41" selection-start-column="4" selection-end-line="41" selection-end-column="4" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="107" column="81" selection-start-line="107" selection-start-column="64" selection-end-line="107" selection-end-column="81" />
+          <folding>
+            <element signature="method#onCreateOptionsMenu#0;class#OutletDetailsActivity#0" expanded="false" />
+            <element signature="method#setUpStoreCheckDetails#0;class#OutletDetailsActivity#0" expanded="false" />
+            <element signature="method#onOptionsItemSelected#0;class#OutletDetailsActivity#0" expanded="false" />
+            <element signature="method#loadAddOutletScreen#0;class#OutletDetailsActivity#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/storecheck_addoutlet.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-3.4482758">
+          <caret line="5" column="41" selection-start-line="5" selection-start-column="25" selection-end-line="5" selection-end-column="41" />
+          <folding>
+            <element signature="e#1229#1258#0" expanded="true" />
+            <element signature="e#1558#1587#0" expanded="true" />
+            <element signature="e#1621#1645#0" expanded="true" />
+            <element signature="e#1982#2011#0" expanded="true" />
+            <element signature="e#2045#2069#0" expanded="true" />
+            <element signature="e#2476#2505#0" expanded="true" />
+            <element signature="e#2539#2563#0" expanded="true" />
+            <element signature="e#2865#2894#0" expanded="true" />
+            <element signature="e#2928#2952#0" expanded="true" />
+            <element signature="e#3361#3390#0" expanded="true" />
+            <element signature="e#3424#3448#0" expanded="true" />
+            <element signature="e#3804#3833#0" expanded="true" />
+            <element signature="e#3867#3891#0" expanded="true" />
+            <element signature="e#4350#4379#0" expanded="true" />
+            <element signature="e#4413#4437#0" expanded="true" />
+            <element signature="e#4832#4861#0" expanded="true" />
+            <element signature="e#4895#4919#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/storecheck_addbrand.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-6.6896553">
+          <caret line="100" column="38" selection-start-line="100" selection-start-column="38" selection-end-line="100" selection-end-column="38" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/euromonitor/storecheck/app/AddOutletActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.2105263">
+          <caret line="200" column="16" selection-start-line="200" selection-start-column="16" selection-end-line="200" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/AppData/Local/Android/android-sdk/extras/android/m2repository/com/android/support/recyclerview-v7/23.2.1/recyclerview-v7-23.2.1-sources.jar!/android/support/v7/widget/LinearLayoutManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="475" column="0" selection-start-line="475" selection-start-column="0" selection-end-line="475" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/AppData/Local/Android/android-sdk/extras/android/m2repository/com/android/support/recyclerview-v7/23.2.1/recyclerview-v7-23.2.1-sources.jar!/android/support/v7/widget/RecyclerView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="4737" column="0" selection-start-line="4737" selection-start-column="0" selection-end-line="4737" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/euromonitor/storecheck/adapter/StoreCheckDetailAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.8955224">
+          <caret line="53" column="0" selection-start-line="53" selection-start-column="0" selection-end-line="53" selection-end-column="0" />
+          <folding>
+            <element signature="e#2120#2121#0" expanded="true" />
+            <element signature="e#2165#2166#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Android/android-sdk/sources/android-23/android/app/Activity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33208954">
+          <caret line="6019" column="0" selection-start-line="6019" selection-start-column="0" selection-end-line="6019" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/storecheck_details.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-9.655172">
+          <caret line="29" column="47" selection-start-line="29" selection-start-column="33" selection-end-line="29" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/euromonitor/storecheck/app/StoreCheckDetailsActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="164" column="100" selection-start-line="164" selection-start-column="65" selection-end-line="164" selection-end-column="100" />
+          <folding>
+            <element signature="method#setupToolbar#0;class#StoreCheckDetailsActivity#0" expanded="false" />
+            <element signature="method#setUpNavigationView#0;class#StoreCheckDetailsActivity#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/euromonitor/storecheck/app/StoreCheckAddBrandActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.9837233">
+          <caret line="124" column="57" selection-start-line="124" selection-start-column="57" selection-end-line="124" selection-end-column="57" />
+          <folding>
+            <element signature="e#2506#2519#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/storecheck_productdetails.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-17.241379">
+          <caret line="25" column="50" selection-start-line="25" selection-start-column="29" selection-end-line="25" selection-end-column="50" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/euromonitor/storecheck/app/StoreCheckAddProductDetailsActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.61227787">
+          <caret line="47" column="93" selection-start-line="47" selection-start-column="93" selection-end-line="47" selection-end-column="93" />
+          <folding>
+            <element signature="method#setUpNavigationView#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>

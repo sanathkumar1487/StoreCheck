@@ -31,6 +31,8 @@ public class StoreCheckAddProductDetailsActivity extends MainActivity
         super.onCreate(savedInstanceState);
         StorecheckProductdetailsBinding binding= DataBindingUtil.setContentView(this, R.layout.storecheck_productdetails);
 
+        drawerLayout = (DrawerLayout)findViewById(R.id.addProductDetails_Drawer);
+
         setupToolbar();
         setUpNavigationView();
 
@@ -43,17 +45,14 @@ public class StoreCheckAddProductDetailsActivity extends MainActivity
 
     public void setupToolbar(){
 
-        toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.addBrandToolBar);
+        toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.productDetailsToolbar);
         setSupportActionBar(toolbar);
-
-        drawerLayout = (DrawerLayout) findViewById(R.id.addProductDetails_Drawer);
-
+        // actionbar.setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Welcome !");
-        toolbar.setSubtitle("Export Items");
+        toolbar.setSubtitle("View Details");
 
         toolbar.setTitle("Store-check details");
         toolbar.inflateMenu(R.menu.storecheck_menu);
-
     }
 
     private void setUpNavigationView() {
