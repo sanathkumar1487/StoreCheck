@@ -78,8 +78,6 @@ public class StoreCheckAddBrandActivity extends AppCompatActivity
 
     Context context;
 
-    ActionBarDrawerToggle mDrawerToggle;
-
     android.support.v7.widget.Toolbar toolbar;
 
 
