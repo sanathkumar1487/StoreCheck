@@ -14,6 +14,7 @@ import com.euromonitor.storecheck.model.Market;
 import com.euromonitor.storecheck.model.MetaData;
 import com.euromonitor.storecheck.model.Option;
 import com.euromonitor.storecheck.model.Outlet;
+import com.euromonitor.storecheck.model.PackType;
 import com.euromonitor.storecheck.model.Product;
 import com.euromonitor.storecheck.model.Unit;
 import com.euromonitor.storecheck.utility.JsonFileParser;
@@ -46,6 +47,7 @@ public class ImportDataTask extends AsyncTask<Void,Void,Void> {
     List<Product> products = new ArrayList<Product>();
     List<Channel> channels = new ArrayList<Channel>();
     List<Unit> units = new ArrayList<Unit>();
+    List<PackType> packTypes = new ArrayList<PackType>();
     List<CustomField> customFields = new ArrayList<CustomField>();
     MetaData storeCheckMetaData = new MetaData();
 
@@ -104,7 +106,7 @@ public class ImportDataTask extends AsyncTask<Void,Void,Void> {
 
 
     private void loadModels() throws JSONException {
-        fileParser.loadModels(storeCheckMetaData, outlets, customFields, details, markets, options,products,channels, units,activityContext);
+        fileParser.loadModels(storeCheckMetaData, outlets, customFields, details, markets, options,products,channels, units,packTypes,activityContext);
     }
 
 

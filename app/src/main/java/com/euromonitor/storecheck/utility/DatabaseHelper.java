@@ -20,6 +20,7 @@ import com.euromonitor.storecheck.model.Market;
 import com.euromonitor.storecheck.model.MetaData;
 import com.euromonitor.storecheck.model.Option;
 import com.euromonitor.storecheck.model.Outlet;
+import com.euromonitor.storecheck.model.PackType;
 import com.euromonitor.storecheck.model.Product;
 import com.euromonitor.storecheck.model.StoreCheckBrand;
 import com.euromonitor.storecheck.model.StoreCheckDetail;
@@ -53,12 +54,13 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
     private static final String TABLE_UNITS = "units";
     private static final String TABLE_BRANDS = "brands";
     private static final String TABLE_BRANDCUSTOMFIELDS = "brandcustomfields";
+    private static final String TABLE_PACKTYPES = "packtypes";
 
 
     private static final String KEY_ID = "id";
     private static final String KEY_BRAND = "brand";
     private static final String KEY_NBO = "nbo";
-    private static final String KEY_PRODUCTCODE = "productcode";
+
     private static final String KEY_PROJECTID = "projectid";
     private static final String KEY_UPDATED = "updated";
     private static final String KEY_NEW = "new";
@@ -155,6 +157,13 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
     private static final String KEY_BRANDID = "brandid";
     private static final String KEY_OPTIONVALUE = "optionvalue";
 
+
+
+    //packtype columns
+
+    private static  final  String KEY_PACKTYPENAME ="packtypename";
+    private static  final  String KEY_PRODUCTCODE ="productcodes";
+
     // Custom Field Control Type
     final String DropDown = "1";
     final String TextBox = "2";
@@ -186,9 +195,10 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         createUnitTable();
         createBrandsTable();
         createBrandCustomFieldsTable();
+        createPacktypeTable();
     }
 
-    public void loadData(MetaData storeCheckMetaData, List<Product> products, List<Outlet> outlets, List<Channel> channels, List<Detail> details, List<Market> markets, List<Option> options, List<CustomField> customFields, List<Unit> units) {
+    public void loadData(MetaData storeCheckMetaData, List<Product> products, List<Outlet> outlets, List<Channel> channels, List<Detail> details, List<Market> markets, List<Option> options, List<CustomField> customFields, List<Unit> units ,List<PackType> packTypes) {
 
         Log.e("load Data is called ::", "load data");
 
@@ -203,11 +213,12 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         loadOptionsTable(options);
         loadCustomFiledsTable(customFields);
         loadUnitsTable(units);
+        loadpacktypeTable( packTypes);
 
     }
 
     private void loadStoreCheckMetaDataTable(MetaData storeCheckMetaData) {
-        Log.e("loadStoreCheckMetaDataTable::", "loadStoreCheckMetaDataTable load data");
+        Log.e("loadStoreCheckMe::", "loadStoreCheckMetaDataTable load data");
         SQLiteDatabase db = this.getWritableDatabase();
 
 
@@ -418,6 +429,42 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         db.close();
     }
 
+
+    private void loadpacktypeTable(List<PackType> packTypes) {
+        Log.e("loadpacktypeTable::", "loadpacktypeTable load data");
+
+        Log.e("Start ::",String.valueOf( System.currentTimeMillis()));
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        Iterator iterator = packTypes.iterator();
+        while (iterator.hasNext()) {
+
+
+
+            PackType packType = (PackType) iterator.next();
+
+            ContentValues values = new ContentValues();
+            values.put(KEY_PACKTYPECODE, packType.get_packtypecode());
+            values.put(KEY_PACKTYPENAME, packType.get_packtypename());
+
+             Iterator produtcodelist =  packType.get_productcodes().iterator();
+
+            while (produtcodelist.hasNext())
+            {
+                String productcode = (String) produtcodelist.next();
+
+                values.put(KEY_PRODUCTCODE, productcode);
+                db.insert(TABLE_PACKTYPES, null, values);
+
+            }
+
+
+
+        }
+        Log.e("End ::",String.valueOf( System.currentTimeMillis()));
+        db.close();
+    }
+
     private void createMetaDataTable() {
         //
         String CREATE_METADAT_TABLE = "CREATE TABLE " + TABLE_METADATA + "("
@@ -571,6 +618,15 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         database.execSQL(CREATE_BRANDCUSTOMFIELD_TABLE);
     }
 
+    private void createPacktypeTable() {
+        String CREATE_PACKTYPE_TABLE = " CREATE TABLE " + TABLE_PACKTYPES + "("
+                + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + KEY_PACKTYPECODE+ " TEXT, "
+                + KEY_PACKTYPENAME + " TEXT, "
+                + KEY_PRODUCTCODE + " TEXT) ";
+        database.execSQL(CREATE_PACKTYPE_TABLE);
+    }
+
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         onCreate(db);
@@ -589,6 +645,8 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         database.execSQL("DROP TABLE IF EXISTS '" + TABLE_UNITS + "'");
         database.execSQL("DROP TABLE IF EXISTS '" + TABLE_BRANDS + "'");
         database.execSQL("DROP TABLE IF EXISTS '" + TABLE_BRANDCUSTOMFIELDS + "'");
+        database.execSQL("DROP TABLE IF EXISTS '" + TABLE_PACKTYPES + "'");
+
     }
 
     // Adding new outlet
@@ -681,6 +739,11 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
             return alc;
         }
     }
+
+//
+//    select * from details  d
+//    inner join    products p on p. product_id =   d.productid   inner join   (select distinct unitid,unitname,unitbase  from units) u
+//    on u.unitid = d.unitcode
 
     public ArrayList<StoreCheckDetail> GetAllProductDetails() {
         SQLiteDatabase database = this.getReadableDatabase();
@@ -992,6 +1055,9 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
             values.put(KEY_OUTLET_CITY,outlet.getOutlet_city());
             values.put(KEY_OUTLET_DATE,outlet.get_outlet_date());
             values.put(KEY_CHANNEL_NAME,outlet.get_channel_name());
+            Log.i("chc name", outlet.get_channel_name());
+            Log.i("chc code", outlet.get_chccode());
+            values.put(KEY_CHCCODE,outlet.get_chccode());
             values.put(KEY_UPDATED, "1");
             // updating row
             return db.update(TABLE_OUTLETS, values, KEY_ID + " = ?",
@@ -1007,20 +1073,60 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         }
     }
 
-    public void insertOutlet(Outlet outlet) {
-        SQLiteDatabase db = this.getWritableDatabase();
+    public void insertOutlet(Outlet outlet)
+    {
 
-        try {
+        SQLiteDatabase dbRead = this.getReadableDatabase();
+        Cursor cursor = null;
+
+        try
+        {
+            String selectQuery = "SELECT  project_id,geo_code,year FROM " + TABLE_OUTLETS +" where outlet_id is not null limit 1";
+            cursor = dbRead.rawQuery(selectQuery, null);
+
+            if (cursor.moveToFirst()) {
+                do {
+
+                    outlet.set_project_id(cursor.getInt(0));
+                    outlet.set_geo_code(cursor.getString(1));
+                    outlet.set_year(cursor.getString(2));
+                    // outlet.set_chccode(cursor.getString(3));
+                } while (cursor.moveToNext());
+            }
+
+
+        }
+        catch (Exception e)
+        {
+            throw e;
+        }
+        finally {
+
+            if (cursor != null)
+                cursor.close();
+            if (dbRead != null)
+                dbRead.close();
+        }
+        SQLiteDatabase db = this.getWritableDatabase();
+        try
+        {
             ContentValues values = new ContentValues();
             values.put(KEY_OUTLET_Name, outlet.get_outlet_Name());
-            values.put(KEY_OUTLET_CITY, outlet.getOutlet_city());
-            values.put(KEY_OUTLET_DATE, outlet.get_outlet_date());
-            values.put(KEY_CHANNEL_NAME, outlet.get_channel_name());
-            values.put(KEY_NEW, 1);
+            values.put(KEY_OUTLET_CITY,outlet.getOutlet_city());
+            values.put(KEY_OUTLET_DATE,outlet.get_outlet_date());
+            values.put(KEY_CHANNEL_NAME,outlet.get_channel_name());
+            values.put(KEY_PROJECT_ID, outlet.get_project_id());
+            values.put(KEY_GEO_CODE, outlet.get_geo_code());
+            values.put(KEY_YEAR, outlet.get_year());
+            values.put(KEY_CHCCODE,outlet.get_chccode());
+            values.put(KEY_NEW,1);
             db.insert(TABLE_OUTLETS, null, values);
-        } catch (Exception ex) {
-            throw ex;
-        } finally {
+        }
+        catch (Exception ex)
+        {
+            throw  ex;
+        }
+        finally {
             db.close(); // Closing database connection
         }
     }
