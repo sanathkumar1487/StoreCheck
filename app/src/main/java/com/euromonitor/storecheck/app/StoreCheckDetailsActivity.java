@@ -38,8 +38,7 @@ import com.euromonitor.storecheck.utility.DatabaseHelper;
 
 import java.util.ArrayList;
 
-public class StoreCheckDetailsActivity extends AppCompatActivity
-{
+public class StoreCheckDetailsActivity extends AppCompatActivity {
     public StoreCheckDetailAdapter adapter;
 
     StorecheckDetailsBinding binding;
@@ -54,23 +53,21 @@ public class StoreCheckDetailsActivity extends AppCompatActivity
 
 
     @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.storecheck_details);
         context = this;
         dbHelper = new DatabaseHelper(context);
-        View view=binding.getRoot();
+        View view = binding.getRoot();
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.details_drawer);
 
         setupToolbar();
         setUpNavigationView();
 
-        if(dbHelper.isDatabaseAvailable())
-        {
+        if (dbHelper.isDatabaseAvailable()) {
             setUpStoreCheckDetails(view);
-        }else {
+        } else {
             Toast.makeText(this.getBaseContext(), "Please import EMMA generated file to proceed!", Toast.LENGTH_LONG).show();
         }
     }
@@ -80,14 +77,14 @@ public class StoreCheckDetailsActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.storecheck_menu, menu);
 
-        SearchManager searchManager = (SearchManager)getSystemService(Context.SEARCH_SERVICE);
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
 
-        SearchView searchView = (SearchView)menu.findItem(R.id.searchItem).getActionView();
+        SearchView searchView = (SearchView) menu.findItem(R.id.searchItem).getActionView();
 
-        if(searchView!=null) {
+        if (searchView != null) {
             searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
 
-            queryTextListener = new SearchView.OnQueryTextListener(){
+            queryTextListener = new SearchView.OnQueryTextListener() {
                 @Override
                 public boolean onQueryTextChange(String newText) {
                     if (newText != null) {
@@ -105,9 +102,10 @@ public class StoreCheckDetailsActivity extends AppCompatActivity
         }
         return true;
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.searchItem:
 
                 break;
@@ -115,7 +113,7 @@ public class StoreCheckDetailsActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    public void setupToolbar(){
+    public void setupToolbar() {
 
         toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.detailsToolbar);
         setSupportActionBar(toolbar);
@@ -141,28 +139,24 @@ public class StoreCheckDetailsActivity extends AppCompatActivity
         }
     }
 
-    public void setUpStoreCheckDetails(View view)
-    {
-        final RecyclerView recyclerView = (RecyclerView)view.findViewById(R.id.storecheckDetailsView);
+    public void setUpStoreCheckDetails(View view) {
+        final RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.storecheckDetailsView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new StoreCheckDetailAdapter(this.getLayoutInflater(),this, dbHelper.GetAllProductDetails());
+        adapter = new StoreCheckDetailAdapter(this.getLayoutInflater(), this, dbHelper.GetAllProductDetails());
         recyclerView.setAdapter(adapter);
-        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(this.getApplicationContext(), recyclerView, new ClickListener()
-        {
+        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(this.getApplicationContext(), recyclerView, new ClickListener() {
             @Override
-            public void onClick(View view,int position) {
+            public void onClick(View view, int position) {
 
                 StorecheckdetailItemBinding binding = DataBindingUtil.getBinding(view);
                 StoreCheckDetail detail = binding.getStoreCheckDetail();
-                if (detail != null)
-                {
+                if (detail != null) {
 
                     StoreCheckAddProductDetailsActivity.priceId = detail.getPriceId();
-
-                    Log.e("PricingId", String.valueOf(StoreCheckAddProductDetailsActivity.priceId));
+                    StoreCheckAddProductDetailsActivity.brandId = detail.getBrandId();
                 }
-                StoreCheckAddProductDetailsActivity  activity=new StoreCheckAddProductDetailsActivity();
-                intent=new Intent(StoreCheckDetailsActivity.this,StoreCheckAddProductDetailsActivity.class);
+                StoreCheckAddProductDetailsActivity activity = new StoreCheckAddProductDetailsActivity();
+                intent = new Intent(StoreCheckDetailsActivity.this, StoreCheckAddProductDetailsActivity.class);
                 startActivity(intent);
             }
 
@@ -171,4 +165,5 @@ public class StoreCheckDetailsActivity extends AppCompatActivity
             }
         }));
     }
+
 }

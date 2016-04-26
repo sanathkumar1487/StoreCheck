@@ -11,6 +11,7 @@
     <string name="gbo">GBO: </string>
     <string name="brand">Brand: </string>
     <string name="packSize">Pack Size: </string>
+    <string name="packType">Pack Type: </string>
     <string name="packUnit">Unit: </string>
     <string name="outlet">Outlet: </string>
     <string name="search_hint">Product Search</string>

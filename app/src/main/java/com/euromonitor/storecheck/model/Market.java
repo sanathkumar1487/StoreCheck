@@ -37,6 +37,18 @@ public class Market {
     @SerializedName("CompanyName")
     private String _company_name;
 
+    public boolean isNew() {
+        return isNew;
+    }
+
+    public void setIsNew(boolean isNew) {
+        this.isNew = isNew;
+    }
+
+    private boolean isNew = false;
+
+    public Market(){}
+
     public Market(String _brand_market_id, String _project_id, String _geography_code, String geography, String _product_code, String _product, String _brand, String _nbo, String _company_name) {
         this._brand_market_id = _brand_market_id;
         this._project_id = _project_id;

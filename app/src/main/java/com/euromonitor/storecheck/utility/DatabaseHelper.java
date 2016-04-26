@@ -20,6 +20,7 @@ import com.euromonitor.storecheck.model.Market;
 import com.euromonitor.storecheck.model.MetaData;
 import com.euromonitor.storecheck.model.Option;
 import com.euromonitor.storecheck.model.Outlet;
+import com.euromonitor.storecheck.model.PricingDetail;
 import com.euromonitor.storecheck.model.Product;
 import com.euromonitor.storecheck.model.StoreCheckBrand;
 import com.euromonitor.storecheck.model.StoreCheckDetail;
@@ -489,9 +490,9 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
                 + KEY_UNITPRICELOCAL + " TEXT,"
                 + KEY_UNITPRICEUS + " TEXT,"
                 + KEY_BRAND + " TEXT,"
+                + KEY_UPDATED + " TEXT,"
                 + KEY_NBO + " TEXT" + ")";
         database.execSQL(CREATE_DETAILS_TABLE);
-
     }
 
     private void createMarketTable() {
@@ -684,7 +685,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
 
     public ArrayList<StoreCheckDetail> GetAllProductDetails() {
         SQLiteDatabase database = this.getReadableDatabase();
-        String query = "select distinct d.pricingId, d.price, d.packSize, d.multipackSize, u.unitname, p.product_Name, m.brand from details d inner join products p on p.product_id = d.productid inner join markets m on m.productcode = d.productid inner join units u on u.unitid = d.unitcode";
+        String query = "select distinct d.pricingId, d.price, d.packSize, d.multipackSize, u.unitname, p.product_Name, m.brand,m.brandmarketid  from details d inner join products p on p.product_id = d.productid inner join markets m on m.productcode = d.productid inner join units u on u.unitid = d.unitcode";
         Cursor cursor = database.rawQuery(query, null);
         ArrayList<StoreCheckDetail> storeCheckDetails = null;
         try {
@@ -726,6 +727,11 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
                     String brand = cursor.getString(6);
                     if (brand != null) {
                         temp.setBrand(brand);
+                    }
+
+                    int brandId = cursor.getInt(7);
+                    if (brand != null) {
+                        temp.setBrandId(brandId);
                     }
 
                     storeCheckDetails.add(temp);
@@ -985,23 +991,19 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
     public int updateOutlet(Outlet outlet) {
 
         SQLiteDatabase db = this.getWritableDatabase();
-        try
-        {
+        try {
             ContentValues values = new ContentValues();
             values.put(KEY_OUTLET_Name, outlet.get_outlet_Name());
-            values.put(KEY_OUTLET_CITY,outlet.getOutlet_city());
-            values.put(KEY_OUTLET_DATE,outlet.get_outlet_date());
-            values.put(KEY_CHANNEL_NAME,outlet.get_channel_name());
+            values.put(KEY_OUTLET_CITY, outlet.getOutlet_city());
+            values.put(KEY_OUTLET_DATE, outlet.get_outlet_date());
+            values.put(KEY_CHANNEL_NAME, outlet.get_channel_name());
             values.put(KEY_UPDATED, "1");
             // updating row
             return db.update(TABLE_OUTLETS, values, KEY_ID + " = ?",
-                    new String[] { String.valueOf(outlet.get_id()) });
-        }
-        catch(Exception ex)
-        {
-            throw  ex;
-        }
-        finally {
+                    new String[]{String.valueOf(outlet.get_id())});
+        } catch (Exception ex) {
+            throw ex;
+        } finally {
             if (db != null)
                 db.close();
         }
@@ -1037,5 +1039,106 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
             database.close();
         }
         return result;
+    }
+
+    public boolean getPricingDetails(int brandId, int pricingId) {
+        return false;
+    }
+
+    public ArrayList<Unit> getUnits() {
+        ArrayList<Unit> my_array = new ArrayList<>();
+        try {
+            String selectQuery = "SELECT id, unitid, unitname, unitbase, unitmultiplier FROM " + TABLE_UNITS;
+
+            SQLiteDatabase db = this.getWritableDatabase();
+            Cursor cursor = db.rawQuery(selectQuery, null);
+
+            if (cursor.moveToFirst()) {
+                do {
+                    Unit unit = new Unit(null, null, null, null);
+                    unit.set_id(cursor.getInt(cursor.getColumnIndex(KEY_ID)));
+                    unit.set_unit_id(cursor.getString(cursor.getColumnIndex(KEY_UNITID)));
+                    unit.set_unit_name(cursor.getString(cursor.getColumnIndex(KEY_UNITNAME)));
+                    unit.set_unit_base(cursor.getString(cursor.getColumnIndex(KEY_UNITBASE)));
+                    unit.set_unit_multiplier(cursor.getString(cursor.getColumnIndex(KEY_UNITMULTIPLIER)));
+                    my_array.add(unit);
+
+                } while (cursor.moveToNext());
+            }
+            cursor.close();
+            db.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return my_array;
+    }
+
+    public ArrayList<Market> getBrands() {
+        ArrayList<Market> my_array = new ArrayList<>();
+        try {
+            String selectQuery = "SELECT id, brandMarketId, brand FROM " + TABLE_MARKETS;
+
+            SQLiteDatabase db = this.getWritableDatabase();
+            Cursor cursor = db.rawQuery(selectQuery, null);
+
+            if (cursor.moveToFirst()) {
+                do {
+                    Market market = new Market();
+                    market.set_id(cursor.getInt(cursor.getColumnIndex(KEY_ID)));
+                    market.set_brand_market_id(cursor.getString(cursor.getColumnIndex(KEY_BRANDMARKETID)));
+                    market.set_brand(cursor.getString(cursor.getColumnIndex(KEY_BRAND)));
+
+                    my_array.add(market);
+
+                } while (cursor.moveToNext());
+            }
+            cursor.close();
+
+            selectQuery = "select id, brand from " + TABLE_BRANDS;
+            cursor = db.rawQuery(selectQuery, null);
+
+            if (cursor.moveToFirst()) {
+                do {
+                    Market market = new Market();
+                    market.set_id(cursor.getInt(cursor.getColumnIndex(KEY_ID)));
+
+                    market.set_brand(cursor.getString(cursor.getColumnIndex(KEY_BRAND)));
+                    market.setIsNew(true);
+
+                    my_array.add(market);
+
+                } while (cursor.moveToNext());
+            }
+            cursor.close();
+
+
+            db.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return my_array;
+    }
+
+    public void savePricingDetails(PricingDetail pricingDetail) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        try {
+            ContentValues values = new ContentValues();
+            values.put(KEY_OUTLETID, pricingDetail.getSelectedOutletId());
+            values.put(KEY_OUTLETNAME, pricingDetail.getSelectedOutletName());
+            values.put(KEY_MULTIPACKSIZE, pricingDetail.getMultiPack());
+            values.put(KEY_PACKSIZE, pricingDetail.getPackSize());
+            values.put(KEY_PACKTYPECODE, pricingDetail.getPackTypeCode());
+            values.put(KEY_PACKTYPE, pricingDetail.getPackTypeName());
+
+            values.put(KEY_UPDATED, "1");
+
+            db.update(TABLE_DETAILS, values, KEY_ID + " = ?", new String[]{pricingDetail.getId()});
+
+        } catch (Exception ex) {
+            throw ex;
+        } finally {
+            if (db != null)
+                db.close();
+        }
     }
 }
