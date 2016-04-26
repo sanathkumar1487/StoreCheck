@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.euromonitor.storecheck.model.MetaData;
+import com.euromonitor.storecheck.model.PackType;
 import com.euromonitor.storecheck.model.Unit;
 import com.google.gson.Gson;
 
@@ -60,7 +61,7 @@ public  class JsonFileParser {
 
     }
 
-    public void loadModels(MetaData storeCheckMetaData, List<Outlet> outlets, List<CustomField> customFields, List<Detail> details, List<Market> markets, List<Option> options, List<Product> products, List<Channel> channels, List<Unit> units, Context context) throws JSONException {
+    public void loadModels(MetaData storeCheckMetaData, List<Outlet> outlets, List<CustomField> customFields, List<Detail> details, List<Market> markets, List<Option> options, List<Product> products, List<Channel> channels, List<Unit> units ,List<PackType> packTypes, Context context) throws JSONException {
 
         JSONObject rootData = new JSONObject(rawJsonData);
 
@@ -99,11 +100,14 @@ public  class JsonFileParser {
         units = Arrays.asList(gsonObject.fromJson(rootData.getJSONArray("Units").toString(), Unit[].class));
         Log.e("Units data Count::", String.valueOf(units.size()));
 
+
+        packTypes = Arrays.asList(gsonObject.fromJson(rootData.getJSONArray("PackTypes").toString(), PackType[].class));
+
         storeCheckMetaData = gsonObject.fromJson(rootData.getJSONObject("StoreCheckMetaData").toString(), MetaData.class);
 
         DatabaseHelper databaseHelper = new DatabaseHelper(context);
         Log.d("Insert :", "Inserting Products... ");
-        databaseHelper.loadData(storeCheckMetaData, products, outlets, channels, details, markets, options, customFields, units);
+        databaseHelper.loadData(storeCheckMetaData, products, outlets, channels, details, markets, options, customFields, units,packTypes);
 
 
     }
