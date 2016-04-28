@@ -1,0 +1,33 @@
+﻿merging bug fixes
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+# On branch master
+# Your branch and 'origin/master' have diverged,
+# and have 1 and 2 different commits each, respectively.
+#   (use "git pull" to merge the remote branch into yours)
+#
+# Changes to be committed:
+#	modified:   .gradle/2.8/taskArtifacts/cache.properties.lock
+#	modified:   .gradle/2.8/taskArtifacts/fileHashes.bin
+#	modified:   .gradle/2.8/taskArtifacts/fileSnapshots.bin
+#	modified:   .gradle/2.8/taskArtifacts/taskArtifacts.bin
+#	modified:   .idea/libraries/FilePickerLibrary_3_5_1.xml
+#	modified:   .idea/libraries/adapters_1_0_rc3.xml
+#	modified:   .idea/libraries/animated_vector_drawable_23_2_1.xml
+#	modified:   .idea/libraries/answers_1_3_6.xml
+#	modified:   .idea/libraries/appcompat_v7_23_2_1.xml
+#	modified:   .idea/libraries/beta_1_1_4.xml
+#	modified:   .idea/libraries/cardview_v7_23_1_1.xml
+#	modified:   .idea/libraries/core_0_8_5_4.xml
+#	modified:   .idea/libraries/design_23_2_1.xml
+#	modified:   .idea/libraries/fabric_1_3_10.xml
+#	modified:   .idea/libraries/library_1_0_rc3.xml
+#	modified:   .idea/libraries/library_1_1_5.xml
+#	modified:   .idea/libraries/recyclerview_v7_23_2_1.xml
+#	modified:   .idea/libraries/support_annotations_23_2_1.xml
+#	modified:   .idea/libraries/support_v4_23_2_1.xml
+#	modified:   .idea/libraries/support_vector_drawable_23_2_1.xml
+#	modified:   .idea/workspace.xml
+#	modified:   app/app.iml
+#
+
