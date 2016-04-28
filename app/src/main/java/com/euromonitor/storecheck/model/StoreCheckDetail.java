@@ -25,6 +25,17 @@ public class StoreCheckDetail extends BaseObservable {
     public String currency;
     public Double multiPackSize;
     public int priceId;
+    private int brandId;
+
+    public int getBrandId() {
+        return brandId;
+    }
+
+    public void setBrandId(int brandId) {
+        this.brandId = brandId;
+    }
+
+
 
     public int getItemId(){
         return itemId;
