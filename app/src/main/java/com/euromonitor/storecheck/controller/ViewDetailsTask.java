@@ -22,6 +22,7 @@ public class ViewDetailsTask extends AsyncTask<Void, Void, ArrayList<StoreCheckD
     Context activityContext;
     StoreCheckDetailsActivity _mactivity;
     Exception backgroundException;
+    public int productId;
 
 
     public AsyncPreExecute preExecute = null;
@@ -30,6 +31,7 @@ public class ViewDetailsTask extends AsyncTask<Void, Void, ArrayList<StoreCheckD
 
     public ViewDetailsTask(Context activityContext) {
         this.activityContext = activityContext;
+
     }
 
     @Override
@@ -59,7 +61,7 @@ public class ViewDetailsTask extends AsyncTask<Void, Void, ArrayList<StoreCheckD
     protected ArrayList<StoreCheckDetail>  doInBackground(Void... params) {
 
         DatabaseHelper databaseHelper = new DatabaseHelper(activityContext);
-        return  databaseHelper.GetAllProductDetails();
+        return  databaseHelper.GetDetailsByProductCode(productId);
 
     }
 }

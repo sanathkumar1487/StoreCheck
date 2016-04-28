@@ -51,6 +51,17 @@ public class Detail {
     @SerializedName("brand")
     private  String _brand;
 
+    public String getBrandMarketId() {
+        return brandMarketId;
+    }
+
+    public void setBrandMarketId(String brandMarketId) {
+        this.brandMarketId = brandMarketId;
+    }
+
+    @SerializedName("brandMarketId")
+    private  String brandMarketId;
+
     @SerializedName("nbo")
     private  String _nbo;
 

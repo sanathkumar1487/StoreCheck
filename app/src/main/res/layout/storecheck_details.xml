@@ -29,18 +29,6 @@
                 android:theme="@style/ToolBarTheme"
                 android:id="@+id/detailsToolbar"/>
 
-<<<<<<< HEAD
-            <Spinner
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_row="6"
-                android:layout_column="1"
-                android:layout_margin="@dimen/material_item_margin"
-                android:drawSelectorOnTop="true"
-                android:theme="@style/MaterialTheme"
-                android:id="@+id/products"/>
-=======
-
             <me.zhanghai.android.materialprogressbar.MaterialProgressBar
                 android:layout_width="match_parent"
                 android:id="@+id/progbar"
@@ -50,7 +38,15 @@
                 android:visibility="gone"
                 style="@style/Widget.MaterialProgressBar.ProgressBar.Horizontal" />
 
->>>>>>> 82cfecd5fdbc575f67847a6f6efd49479f28a6e1
+            <Spinner
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="6"
+                android:layout_column="1"
+                android:layout_margin="@dimen/material_item_margin"
+                android:drawSelectorOnTop="true"
+                android:theme="@style/MaterialTheme"
+                android:id="@+id/products"/>
 
             <android.support.v7.widget.RecyclerView
             android:id="@+id/storecheckDetailsView"

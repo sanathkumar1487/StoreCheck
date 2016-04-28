@@ -53,15 +53,12 @@ import com.euromonitor.storecheck.model.StoreCheckDetail;
 import com.euromonitor.storecheck.utility.DatabaseHelper;
 
 import java.util.ArrayList;
+import java.util.List;
 
-<<<<<<< HEAD
 import me.zhanghai.android.materialprogressbar.MaterialProgressBar;
 
-public class StoreCheckDetailsActivity extends AppCompatActivity implements AsyncPostExceuteDetails,AsyncProgressReport,AsyncPreExecute
+public class StoreCheckDetailsActivity extends AppCompatActivity
 {
-=======
-public class StoreCheckDetailsActivity extends AppCompatActivity {
->>>>>>> origin/master
     public StoreCheckDetailAdapter adapter;
 
     StorecheckDetailsBinding binding;
@@ -95,24 +92,15 @@ public class StoreCheckDetailsActivity extends AppCompatActivity {
         setupToolbar();
         setUpNavigationView();
 
-<<<<<<< HEAD
-        if(dbHelper.isDatabaseAvailable())
-        {
-
-            ViewDetailsTask viewDetailsTask = new ViewDetailsTask(this);
-            viewDetailsTask.preExecute = this;
-            viewDetailsTask.progressReport= this;
-            viewDetailsTask.postExecute = this;
-            viewDetailsTask.execute();
-            //setUpStoreCheckDetails(view);
-        }else {
-=======
         if (dbHelper.isDatabaseAvailable()) {
             setSpinner();
-            //setUpStoreCheckDetails();
+
         } else {
->>>>>>> origin/master
-            Toast.makeText(this.getBaseContext(), "Please import EMMA generated file to proceed!", Toast.LENGTH_LONG).show();
+            if (dbHelper.isDatabaseAvailable()) {
+                setSpinner();
+            } else {
+                Toast.makeText(this.getBaseContext(), "Please import EMMA generated file to proceed!", Toast.LENGTH_LONG).show();
+            }
         }
     }
 
@@ -183,75 +171,43 @@ public class StoreCheckDetailsActivity extends AppCompatActivity {
         }
     }
 
-<<<<<<< HEAD
     private void setSpinner(){
         Spinner packTypeSpinner =  (Spinner)findViewById(R.id.products);
         ArrayList<Product> products = dbHelper.getAllProducts();
         StoreCheckDetailsActivity.ProductAdapter productAdapter = new StoreCheckDetailsActivity.ProductAdapter(products);
         packTypeSpinner.setAdapter(productAdapter);
-        packTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Product selectedProduct = (Product) parent.getItemAtPosition(position);
+        packTypeSpinner.setOnItemSelectedListener(new ProductTouchListener());
+//        packTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                Product selectedProduct = (Product) parent.getItemAtPosition(position);
+//
+//                ViewDetailsTask viewDetailsTask = new ViewDetailsTask(context);
+//                viewDetailsTask.productId = Integer.valueOf(selectedProduct.get_product_id());
+//                viewDetailsTask.preExecute = context;
+//                viewDetailsTask.progressReport = context;
+//                viewDetailsTask.postExecute = context;
+//                viewDetailsTask.execute();
+//
+//                setUpStoreCheckDetails(Integer.valueOf(selectedProduct.get_product_id()));
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//
+//            }
+//        });
 
 
-                setUpStoreCheckDetails(Integer.valueOf(selectedProduct.get_product_id()));
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
     }
 
-    public void setUpStoreCheckDetails(int productCode) {
+    public void setUpStoreCheckDetails(List<StoreCheckDetail> storeCheckItems) {
         final RecyclerView recyclerView = (RecyclerView) findViewById(R.id.storecheckDetailsView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new StoreCheckDetailAdapter(this.getLayoutInflater(), this, dbHelper.GetDetailsByProductCode(productCode));
-=======
-<<<<<<< HEAD
-
-
-
-    public void setUpStoreCheckDetails(ArrayList<StoreCheckDetail> productDetails)
-    {
-        final RecyclerView recyclerView = (RecyclerView)findViewById(R.id.storecheckDetailsView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-
-        adapter = new StoreCheckDetailAdapter(this.getLayoutInflater(),this, productDetails);
-=======
-    public void setUpStoreCheckDetails(View view) {
-        final RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.storecheckDetailsView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new StoreCheckDetailAdapter(this.getLayoutInflater(), this, dbHelper.GetAllProductDetails());
->>>>>>> origin/master
->>>>>>> 82cfecd5fdbc575f67847a6f6efd49479f28a6e1
+        adapter = new StoreCheckDetailAdapter(this.getLayoutInflater(), this, storeCheckItems);
         recyclerView.setAdapter(adapter);
-        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(this.getApplicationContext(), recyclerView, new ClickListener() {
-            @Override
-            public void onClick(View view, int position) {
-
-                StorecheckdetailItemBinding binding = DataBindingUtil.getBinding(view);
-                StoreCheckDetail detail = binding.getStoreCheckDetail();
-                if (detail != null) {
-                    StoreCheckAddProductDetailsActivity.priceId = detail.getPriceId();
-                    StoreCheckAddProductDetailsActivity.brandId = detail.getBrandId();
-                    StoreCheckAddProductDetailsActivity.productCode = detail.getProductCode();
-                }
-                StoreCheckAddProductDetailsActivity activity = new StoreCheckAddProductDetailsActivity();
-                intent = new Intent(StoreCheckDetailsActivity.this, StoreCheckAddProductDetailsActivity.class);
-                startActivity(intent);
-            }
-
-            @Override
-            public void onLongClick(View view, int position) {
-            }
-        }));
     }
 
-<<<<<<< HEAD
     public class ProductAdapter extends BaseAdapter implements SpinnerAdapter {
 
         ArrayList<Product> products;
@@ -290,27 +246,49 @@ public class StoreCheckDetailsActivity extends AppCompatActivity {
             return productView;
         }
     }
-=======
-<<<<<<< HEAD
-    @Override
-    public void preExecute(String message) {
 
-        progressBar.setVisibility(View.VISIBLE);
 
+
+    public  class ProductTouchListener
+            implements
+            AdapterView.OnItemSelectedListener,
+            AsyncPostExceuteDetails,
+            AsyncProgressReport,
+            AsyncPreExecute{
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            Product selectedProduct = (Product) parent.getItemAtPosition(position);
+
+                ViewDetailsTask viewDetailsTask = new ViewDetailsTask(context);
+                viewDetailsTask.productId = Integer.valueOf(selectedProduct.get_product_id());
+                viewDetailsTask.preExecute = this;
+                viewDetailsTask.progressReport = this;
+                viewDetailsTask.postExecute = this;
+                viewDetailsTask.execute();
+
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+
+        }
+
+        @Override
+        public void preExecute(String message) {
+
+            progressBar.setVisibility(View.VISIBLE);
+
+        }
+
+        @Override
+        public void progressReport(String message) {
+
+        }
+
+        @Override
+        public void PostExecute(ArrayList<StoreCheckDetail> data) {
+            setUpStoreCheckDetails(data);
+            progressBar.setVisibility(View.GONE);
+        }
     }
-
-    @Override
-    public void progressReport(String message) {
-
-    }
-
-    @Override
-    public void PostExecute(ArrayList<StoreCheckDetail> data) {
-        setUpStoreCheckDetails(data);
-        progressBar.setVisibility(View.GONE);
-
-    }
-=======
->>>>>>> origin/master
->>>>>>> 82cfecd5fdbc575f67847a6f6efd49479f28a6e1
 }

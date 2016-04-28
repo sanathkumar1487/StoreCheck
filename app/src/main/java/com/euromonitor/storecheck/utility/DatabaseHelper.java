@@ -323,6 +323,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
             values.put(KEY_UNITPRICELOCAL, detail.get_unit_price_local());
             values.put(KEY_UNITPRICEUS, detail.get_unit_price_us());
             values.put(KEY_BRAND, detail.get_brand());
+            values.put(KEY_BRANDMARKETID, detail.getBrandMarketId());
             values.put(KEY_NBO, detail.get_nbo());
             // Inserting Row
             db.insert(TABLE_DETAILS, null, values);
@@ -548,6 +549,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
                 + KEY_UNITPRICELOCAL + " TEXT,"
                 + KEY_UNITPRICEUS + " TEXT,"
                 + KEY_BRAND + " TEXT,"
+                + KEY_BRANDMARKETID + " TEXT,"
                 + KEY_UPDATED + " TEXT,"
                 + KEY_NBO + " TEXT" + ")";
         database.execSQL(CREATE_DETAILS_TABLE);
@@ -760,15 +762,9 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
 
     public ArrayList<StoreCheckDetail> GetAllProductDetails() {
         SQLiteDatabase database = this.getReadableDatabase();
-<<<<<<< HEAD
-        String query = "select distinct d.pricingId, d.price, d.packSize, d.multipackSize, u.unitname, p.product_Name, m.brand,m.brandmarketid, d.productid  from details d inner join products p on p.product_id = d.productid inner join markets m on m.productcodes = d.productid inner join units u on u.unitid = d.unitcode";
-=======
-<<<<<<< HEAD
+
         String query = "select  d.pricingid,d.price,d.packsize,d.multipackSize, u.unitname, p.product_Name, d.brand from details  d inner join    products p on p. product_id =   d.productid   inner join   (select distinct unitid,unitname,unitbase  from units) u on u.unitid = d.unitcode";
-=======
-        String query = "select distinct d.pricingId, d.price, d.packSize, d.multipackSize, u.unitname, p.product_Name, m.brand,m.brandmarketid  from details d inner join products p on p.product_id = d.productid inner join markets m on m.productcode = d.productid inner join units u on u.unitid = d.unitcode";
->>>>>>> origin/master
->>>>>>> 82cfecd5fdbc575f67847a6f6efd49479f28a6e1
+
         Cursor cursor = database.rawQuery(query, null);
         ArrayList<StoreCheckDetail> storeCheckDetails = null;
 
@@ -819,79 +815,8 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
                     }
 
                     int brandId = cursor.getInt(7);
-                    if (brandId>0) {
-                        temp.setBrandId(brandId);
-                    }
-
-                    int productId = cursor.getInt(8);
-                    if (productId > 0) {
-                        temp.setProductCode(productId);
-                    }
-
-                    storeCheckDetails.add(temp);
-                } while ((cursor.moveToNext()));
-            }
-        } catch (Exception e) {
-            Log.e("db-error", e.getMessage());
-        }
-        return storeCheckDetails;
-    }
-
-    public ArrayList<StoreCheckDetail> GetDetailsByProductCode(int productCode) {
-        SQLiteDatabase database = this.getReadableDatabase();
-        String query = "select distinct d.pricingId, d.price, d.packSize, d.multipackSize, u.unitname, p.product_Name, m.brand,m.brandmarketid, d.productid  from details d inner join products p on p.product_id = d.productid inner join markets m on m.productcodes = d.productid inner join units u on u.unitid = d.unitcode"
-                + " where d.productId = " + productCode;
-        Cursor cursor = database.rawQuery(query, null);
-        ArrayList<StoreCheckDetail> storeCheckDetails = null;
-        try {
-            if (cursor.moveToFirst()) {
-                storeCheckDetails = new ArrayList<>();
-                do {
-                    StoreCheckDetail temp = new StoreCheckDetail();
-
-                    String priceId = cursor.getString(0);
-                    if (priceId != null) {
-                        temp.setPriceId(Integer.valueOf(priceId));
-                    }
-
-                    String price = cursor.getString(1);
-                    if (price != null) {
-                        temp.setPrice(Double.valueOf(price));
-                    }
-
-                    String packSize = cursor.getString(2);
-                    if (packSize != null) {
-                        temp.setPackSize(Integer.valueOf(packSize));
-                    }
-
-                    String multiPackSize = cursor.getString(3);
-                    if (packSize != null) {
-                        temp.setMultiPackSize(Integer.valueOf(multiPackSize));
-                    }
-
-                    String packUnit = cursor.getString(4);
-                    if (packUnit != null) {
-                        temp.setPackUnit(packUnit);
-                    }
-
-                    String productName = cursor.getString(5);
-                    if (productName != null) {
-                        temp.setProductName(productName);
-                    }
-
-                    String brand = cursor.getString(6);
                     if (brand != null) {
-                        temp.setBrand(brand);
-                    }
-
-                    int brandId = cursor.getInt(7);
-                    if (brandId>0) {
                         temp.setBrandId(brandId);
-                    }
-
-                    int productId = cursor.getInt(8);
-                    if (productId > 0) {
-                        temp.setProductCode(productId);
                     }
 
                     storeCheckDetails.add(temp);
@@ -1376,4 +1301,71 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         }
         return my_array;
     }
+
+    public ArrayList<StoreCheckDetail> GetDetailsByProductCode(int productCode) {
+        SQLiteDatabase database = this.getReadableDatabase();
+        String query = "select  d.pricingid,d.price,d.packsize,d.multipackSize, u.unitname, p.product_Name, d.brand, d.brandmarketid, p.product_id from details  d inner join    products p on p. product_id =   d.productid   inner join   (select distinct unitid,unitname,unitbase  from units) u on u.unitid = d.unitcode"
+                + " where d.productId = " + productCode;
+        Cursor cursor = database.rawQuery(query, null);
+        ArrayList<StoreCheckDetail> storeCheckDetails = null;
+        try {
+            if (cursor.moveToFirst()) {
+                storeCheckDetails = new ArrayList<>();
+                do {
+                    StoreCheckDetail temp = new StoreCheckDetail();
+
+                    String priceId = cursor.getString(0);
+                    if (priceId != null) {
+                        temp.setPriceId(Integer.valueOf(priceId));
+                    }
+
+                    String price = cursor.getString(1);
+                    if (price != null) {
+                        temp.setPrice(Double.valueOf(price));
+                    }
+
+                    String packSize = cursor.getString(2);
+                    if (packSize != null) {
+                        temp.setPackSize(Double.valueOf(packSize));
+                    }
+
+                    String multiPackSize = cursor.getString(3);
+                    if (packSize != null) {
+                        temp.setMultiPackSize(Double.valueOf(multiPackSize));
+                    }
+
+                    String packUnit = cursor.getString(4);
+                    if (packUnit != null) {
+                        temp.setPackUnit(packUnit);
+                    }
+
+                    String productName = cursor.getString(5);
+                    if (productName != null) {
+                        temp.setProductName(productName);
+                    }
+
+                    String brand = cursor.getString(6);
+                    if (brand != null) {
+                        temp.setBrand(brand);
+                    }
+
+                    int brandId = cursor.getInt(7);
+                    if (brandId>0) {
+                        temp.setBrandId(brandId);
+                    }
+
+                    int productId = cursor.getInt(8);
+                    if (productId > 0) {
+                        temp.setProductCode(productId);
+                    }
+
+                    storeCheckDetails.add(temp);
+                } while ((cursor.moveToNext()));
+            }
+        } catch (Exception e) {
+            Log.e("db-error", e.getMessage());
+        }
+        return storeCheckDetails;
+    }
+
 }
