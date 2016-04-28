@@ -423,8 +423,19 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
             values.put(KEY_UNITBASE, unit.get_unit_base());
             values.put(KEY_UNITMULTIPLIER, unit.get_unit_multiplier());
 
-            // Inserting Row
-            db.insert(TABLE_UNITS, null, values);
+            Iterator produtcodelist =  unit.get_productcodes().iterator();
+
+            while (produtcodelist.hasNext())
+            {
+                String productcode = (String) produtcodelist.next();
+
+                values.put(KEY_PRODUCTCODE, productcode);
+                // Inserting Row
+                db.insert(TABLE_UNITS, null, values);
+
+            }
+
+
         }
 
         db.close();
@@ -597,6 +608,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
                 + KEY_UNITID + " TEXT, "
                 + KEY_UNITNAME + " TEXT, "
                 + KEY_UNITBASE + " TEXT, "
+                + KEY_PRODUCTCODE + " TEXT, "
                 + KEY_UNITMULTIPLIER + " TEXT ) ";
         database.execSQL(CREATE_UNIT_TABLE);
     }
@@ -748,13 +760,27 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
 
     public ArrayList<StoreCheckDetail> GetAllProductDetails() {
         SQLiteDatabase database = this.getReadableDatabase();
+<<<<<<< HEAD
         String query = "select distinct d.pricingId, d.price, d.packSize, d.multipackSize, u.unitname, p.product_Name, m.brand,m.brandmarketid, d.productid  from details d inner join products p on p.product_id = d.productid inner join markets m on m.productcodes = d.productid inner join units u on u.unitid = d.unitcode";
+=======
+<<<<<<< HEAD
+        String query = "select  d.pricingid,d.price,d.packsize,d.multipackSize, u.unitname, p.product_Name, d.brand from details  d inner join    products p on p. product_id =   d.productid   inner join   (select distinct unitid,unitname,unitbase  from units) u on u.unitid = d.unitcode";
+=======
+        String query = "select distinct d.pricingId, d.price, d.packSize, d.multipackSize, u.unitname, p.product_Name, m.brand,m.brandmarketid  from details d inner join products p on p.product_id = d.productid inner join markets m on m.productcode = d.productid inner join units u on u.unitid = d.unitcode";
+>>>>>>> origin/master
+>>>>>>> 82cfecd5fdbc575f67847a6f6efd49479f28a6e1
         Cursor cursor = database.rawQuery(query, null);
         ArrayList<StoreCheckDetail> storeCheckDetails = null;
+
+        int countloop = 0;
         try {
             if (cursor.moveToFirst()) {
+
+
+
                 storeCheckDetails = new ArrayList<>();
                 do {
+
                     StoreCheckDetail temp = new StoreCheckDetail();
 
                     String priceId = cursor.getString(0);
@@ -769,12 +795,12 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
 
                     String packSize = cursor.getString(2);
                     if (packSize != null) {
-                        temp.setPackSize(Integer.valueOf(packSize));
+                        temp.setPackSize(Double.valueOf(packSize));
                     }
 
                     String multiPackSize = cursor.getString(3);
                     if (packSize != null) {
-                        temp.setMultiPackSize(Integer.valueOf(multiPackSize));
+                        temp.setMultiPackSize(Double.valueOf(multiPackSize));
                     }
 
                     String packUnit = cursor.getString(4);
@@ -874,6 +900,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         } catch (Exception e) {
             Log.e("db-error", e.getMessage());
         }
+
         return storeCheckDetails;
     }
 

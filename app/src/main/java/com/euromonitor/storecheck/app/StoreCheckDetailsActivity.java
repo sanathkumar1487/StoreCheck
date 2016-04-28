@@ -11,6 +11,8 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Binder;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
@@ -34,6 +36,12 @@ import android.widget.Toast;
 
 import com.euromonitor.storecheck.R;
 import com.euromonitor.storecheck.adapter.StoreCheckDetailAdapter;
+import com.euromonitor.storecheck.controller.ViewDetailsTask;
+import com.euromonitor.storecheck.controller.interfaces.AsyncPostExceuteDetails;
+import com.euromonitor.storecheck.controller.interfaces.AsyncPostExecute;
+import com.euromonitor.storecheck.controller.interfaces.AsyncPostExceuteDetails;
+import com.euromonitor.storecheck.controller.interfaces.AsyncPreExecute;
+import com.euromonitor.storecheck.controller.interfaces.AsyncProgressReport;
 import com.euromonitor.storecheck.databinding.StorecheckDetailsBinding;
 import com.euromonitor.storecheck.databinding.StorecheckdetailItemBinding;
 import com.euromonitor.storecheck.listener.ClickListener;
@@ -46,7 +54,14 @@ import com.euromonitor.storecheck.utility.DatabaseHelper;
 
 import java.util.ArrayList;
 
+<<<<<<< HEAD
+import me.zhanghai.android.materialprogressbar.MaterialProgressBar;
+
+public class StoreCheckDetailsActivity extends AppCompatActivity implements AsyncPostExceuteDetails,AsyncProgressReport,AsyncPreExecute
+{
+=======
 public class StoreCheckDetailsActivity extends AppCompatActivity {
+>>>>>>> origin/master
     public StoreCheckDetailAdapter adapter;
 
     StorecheckDetailsBinding binding;
@@ -59,6 +74,8 @@ public class StoreCheckDetailsActivity extends AppCompatActivity {
     DrawerLayout mDrawerLayout;
     private SearchView.OnQueryTextListener queryTextListener;
 
+    MaterialProgressBar progressBar;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -70,13 +87,31 @@ public class StoreCheckDetailsActivity extends AppCompatActivity {
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.details_drawer);
 
+        progressBar = (MaterialProgressBar) this.findViewById(R.id.progbar);
+        progressBar.getIndeterminateDrawable().setColorFilter(Color.parseColor("#42A5F5"), PorterDuff.Mode.SRC_IN);
+        progressBar.getProgressDrawable().setColorFilter(Color.parseColor("#42A5F5"), PorterDuff.Mode.SRC_IN);
+
+
         setupToolbar();
         setUpNavigationView();
 
+<<<<<<< HEAD
+        if(dbHelper.isDatabaseAvailable())
+        {
+
+            ViewDetailsTask viewDetailsTask = new ViewDetailsTask(this);
+            viewDetailsTask.preExecute = this;
+            viewDetailsTask.progressReport= this;
+            viewDetailsTask.postExecute = this;
+            viewDetailsTask.execute();
+            //setUpStoreCheckDetails(view);
+        }else {
+=======
         if (dbHelper.isDatabaseAvailable()) {
             setSpinner();
             //setUpStoreCheckDetails();
         } else {
+>>>>>>> origin/master
             Toast.makeText(this.getBaseContext(), "Please import EMMA generated file to proceed!", Toast.LENGTH_LONG).show();
         }
     }
@@ -128,7 +163,7 @@ public class StoreCheckDetailsActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         // actionbar.setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Welcome !");
-        toolbar.setSubtitle("Export Items");
+        toolbar.setSubtitle("Item Details");
 
         toolbar.setTitle("Store-check details");
         toolbar.inflateMenu(R.menu.storecheck_menu);
@@ -148,6 +183,7 @@ public class StoreCheckDetailsActivity extends AppCompatActivity {
         }
     }
 
+<<<<<<< HEAD
     private void setSpinner(){
         Spinner packTypeSpinner =  (Spinner)findViewById(R.id.products);
         ArrayList<Product> products = dbHelper.getAllProducts();
@@ -173,6 +209,25 @@ public class StoreCheckDetailsActivity extends AppCompatActivity {
         final RecyclerView recyclerView = (RecyclerView) findViewById(R.id.storecheckDetailsView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new StoreCheckDetailAdapter(this.getLayoutInflater(), this, dbHelper.GetDetailsByProductCode(productCode));
+=======
+<<<<<<< HEAD
+
+
+
+    public void setUpStoreCheckDetails(ArrayList<StoreCheckDetail> productDetails)
+    {
+        final RecyclerView recyclerView = (RecyclerView)findViewById(R.id.storecheckDetailsView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+
+        adapter = new StoreCheckDetailAdapter(this.getLayoutInflater(),this, productDetails);
+=======
+    public void setUpStoreCheckDetails(View view) {
+        final RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.storecheckDetailsView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new StoreCheckDetailAdapter(this.getLayoutInflater(), this, dbHelper.GetAllProductDetails());
+>>>>>>> origin/master
+>>>>>>> 82cfecd5fdbc575f67847a6f6efd49479f28a6e1
         recyclerView.setAdapter(adapter);
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(this.getApplicationContext(), recyclerView, new ClickListener() {
             @Override
@@ -196,6 +251,7 @@ public class StoreCheckDetailsActivity extends AppCompatActivity {
         }));
     }
 
+<<<<<<< HEAD
     public class ProductAdapter extends BaseAdapter implements SpinnerAdapter {
 
         ArrayList<Product> products;
@@ -234,4 +290,27 @@ public class StoreCheckDetailsActivity extends AppCompatActivity {
             return productView;
         }
     }
+=======
+<<<<<<< HEAD
+    @Override
+    public void preExecute(String message) {
+
+        progressBar.setVisibility(View.VISIBLE);
+
+    }
+
+    @Override
+    public void progressReport(String message) {
+
+    }
+
+    @Override
+    public void PostExecute(ArrayList<StoreCheckDetail> data) {
+        setUpStoreCheckDetails(data);
+        progressBar.setVisibility(View.GONE);
+
+    }
+=======
+>>>>>>> origin/master
+>>>>>>> 82cfecd5fdbc575f67847a6f6efd49479f28a6e1
 }

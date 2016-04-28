@@ -160,7 +160,7 @@ public class OutletDetailsActivity extends MainActivity {
         setSupportActionBar(toolbar);
         // actionbar.setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Welcome !");
-        toolbar.setSubtitle("Export Items");
+        toolbar.setSubtitle("Outlet Details");
 
         toolbar.setTitle("Store-check details");
         toolbar.inflateMenu(R.menu.storecheck_menu);

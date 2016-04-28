@@ -66,23 +66,22 @@ public  class JsonFileParser {
         JSONObject rootData = new JSONObject(rawJsonData);
 
         products = Arrays.asList(gsonObject.fromJson(rootData.getJSONArray("StoreCheckProduct").toString(), Product[].class));
-        Log.e("products data Count::", String.valueOf(products.size()));
+
 
         JSONObject outletJson = rootData.getJSONObject("Outlets");
 
         outlets = Arrays.asList(gsonObject.fromJson(outletJson.getJSONArray("StoreCheckOutlets").toString(), Outlet[].class));
-        Log.e("outlets data Count::", String.valueOf(outlets.size()));
 
         channels = Arrays.asList(gsonObject.fromJson(outletJson.getJSONArray("Channels").toString(), Channel[].class));
-        Log.e("channels data Count::", String.valueOf(channels.size()));
+
 
                  /* Store Check Grid data*/
         details = Arrays.asList(gsonObject.fromJson(rootData.getJSONArray("StoreChecks").toString(), Detail[].class));
-        Log.e("details data Count::", String.valueOf(details.size()));
+
 
                  /* Store Check Market  data*/
         markets = Arrays.asList(gsonObject.fromJson(rootData.getJSONArray("StoreCheckMarkets").toString(), Market[].class));
-        Log.e("markets data Count::", String.valueOf(markets.size()));
+
 
                  /* Store Check Custom Field  data*/
         Log.e("customfield ::", rootData.getJSONArray("CustomFields").toString());
@@ -98,15 +97,10 @@ public  class JsonFileParser {
 
                  /* Store Check Market  data*/
         units = Arrays.asList(gsonObject.fromJson(rootData.getJSONArray("Units").toString(), Unit[].class));
-        Log.e("Units data Count::", String.valueOf(units.size()));
-
-
         packTypes = Arrays.asList(gsonObject.fromJson(rootData.getJSONArray("PackTypes").toString(), PackType[].class));
-
         storeCheckMetaData = gsonObject.fromJson(rootData.getJSONObject("StoreCheckMetaData").toString(), MetaData.class);
 
         DatabaseHelper databaseHelper = new DatabaseHelper(context);
-        Log.d("Insert :", "Inserting Products... ");
         databaseHelper.loadData(storeCheckMetaData, products, outlets, channels, details, markets, options, customFields, units,packTypes);
 
 

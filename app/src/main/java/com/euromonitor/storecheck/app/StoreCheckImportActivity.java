@@ -55,9 +55,10 @@ public class StoreCheckImportActivity extends MainActivity implements AsyncPostE
         setUpNavigationView();
 
 
-        progressBar = (MaterialProgressBar) this.findViewById(R.id.progbar);
 
-        int color = 0xFF00FF00;
+
+
+        progressBar = (MaterialProgressBar) this.findViewById(R.id.progbar);
         progressBar.getIndeterminateDrawable().setColorFilter(Color.parseColor("#42A5F5"), PorterDuff.Mode.SRC_IN);
         progressBar.getProgressDrawable().setColorFilter(Color.parseColor("#42A5F5"), PorterDuff.Mode.SRC_IN);
 

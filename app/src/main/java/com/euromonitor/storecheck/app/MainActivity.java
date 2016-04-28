@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.storecheck_menu, menu);
+        getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
@@ -77,10 +77,10 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setTitle("Welcome !");
-        toolbar.setSubtitle("View Products");
+        toolbar.setSubtitle("");
 
         toolbar.setTitle("Store-check details");
-        toolbar.inflateMenu(R.menu.storecheck_menu);
+        toolbar.inflateMenu(R.menu.menu_main);
 
     }
 

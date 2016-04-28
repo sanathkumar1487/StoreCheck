@@ -119,7 +119,7 @@ public class StoreCheckExportActivity extends AppCompatActivity implements Async
         toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.exportToolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Welcome !");
-        toolbar.setSubtitle("Export Items");
+        toolbar.setSubtitle("Export file");
 
         toolbar.setTitle("Store-check details");
         toolbar.inflateMenu(R.menu.storecheck_menu);

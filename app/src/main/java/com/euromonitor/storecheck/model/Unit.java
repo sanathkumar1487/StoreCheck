@@ -2,6 +2,8 @@ package com.euromonitor.storecheck.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
+
 /**
  * Created by Noora.Akhtar on 08/04/2016.
  */
@@ -19,6 +21,12 @@ public class Unit {
 
     @SerializedName("UnitMultiplier")
     private String _unit_multiplier;
+
+
+
+    @SerializedName("ProductCodes")
+    private ArrayList<String> _productcodes;
+
 
 
     public Unit(String _unit_id, String _unit_name, String _unit_base, String _unit_multiplier) {
@@ -66,5 +74,14 @@ public class Unit {
     public void set_unit_multiplier(String _unit_multiplier) {
         this._unit_multiplier = _unit_multiplier;
     }
+
+    public ArrayList<String> get_productcodes() {
+        return _productcodes;
+    }
+
+    public void set_productcodes(ArrayList<String> _productcodes) {
+        this._productcodes = _productcodes;
+    }
+
 
 }

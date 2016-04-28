@@ -16,14 +16,14 @@ public class StoreCheckDetail extends BaseObservable {
 
     public String productName;
     public Double price;
-    public int packSize;
+    public Double packSize;
     public String packUnit;
     public String outletName;
     public String nbo;
     public String gbo;
     public String brand;
     public String currency;
-    public int multiPackSize;
+    public Double multiPackSize;
     public int priceId;
     private int brandId;
 
@@ -82,7 +82,7 @@ public class StoreCheckDetail extends BaseObservable {
         return  String.valueOf(packSize) + " " + packUnit;
     }
 
-    public void setPackSize(int packSize){
+    public void setPackSize(Double packSize){
         this.packSize = packSize;
     }
 
@@ -124,7 +124,7 @@ public class StoreCheckDetail extends BaseObservable {
 
     public String getMultiPackSize(){return String.valueOf(packSize) + "X" + String.valueOf(multiPackSize) ;}
 
-    public void setMultiPackSize(int itemsPerPack){this.multiPackSize = itemsPerPack;}
+    public void setMultiPackSize(Double itemsPerPack){this.multiPackSize = itemsPerPack;}
 
     public int getProductCode() {
         return productCode;
