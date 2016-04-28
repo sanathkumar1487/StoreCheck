@@ -1,6 +1,7 @@
 package com.euromonitor.storecheck.controller;
 
 import android.content.Context;
+import android.media.MediaScannerConnection;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.util.Log;
@@ -94,7 +95,10 @@ public class ExportDataTask extends AsyncTask<Void, Void, Void> {
 
     public void write(String data) {
         File root = Environment.getExternalStorageDirectory();
-        File outDir = new File(root.getAbsolutePath() + File.separator + "StoreCheck");
+        File root1 = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+        root = root1;
+        File outDir = root1; // new File(root.getAbsolutePath() + File.separator + "StoreCheck");
+
         if (!outDir.isDirectory()) {
             outDir.mkdir();
         }
@@ -112,6 +116,7 @@ public class ExportDataTask extends AsyncTask<Void, Void, Void> {
             absolutePath = outputFile.getAbsolutePath();
 
             writer.close();
+            MediaScannerConnection.scanFile(context, new String[]{outDir.toString()}, null, null);
         } catch (IOException e) {
             Log.w("IOException", e.getMessage(), e);
             status = false;

@@ -92,7 +92,7 @@ public class AddOutletActivity extends MainActivity
             loadOutletui();
 
             etDate = (EditText) view.findViewById(R.id.etDate);
-            dateFormatter = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
+            dateFormatter = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
             etDate.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -204,7 +204,7 @@ public class AddOutletActivity extends MainActivity
         setSupportActionBar(toolbar);
         // actionbar.setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Welcome !");
-        toolbar.setSubtitle("Export Items");
+        toolbar.setSubtitle("Add Outlet");
 
         toolbar.setTitle("Store-check details");
         toolbar.inflateMenu(R.menu.storecheck_menu);

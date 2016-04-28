@@ -1,11 +1,16 @@
 package com.euromonitor.storecheck.adapter;
 
 import android.content.Context;
+import android.graphics.AvoidXfermode;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.media.Image;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.euromonitor.storecheck.R;
@@ -39,7 +44,36 @@ public class StoreCheckNavigationAdapter extends RecyclerView.Adapter<StoreCheck
         StoreCheckNavigationDrawerItem current = drawerItems.get(position);
 
         holder.title.setText(current.getTitle());
-        Log.e("Menu item", current.getTitle());
+        if (position == 0)
+        {
+            holder.imgIcon.setBackgroundResource(R.mipmap.ic_pageview_black_24dp);
+
+        }
+        else if (position == 1)
+        {
+            holder.imgIcon.setBackgroundResource(R.mipmap.ic_mode_edit_black_24dp);
+        }
+        else if (position == 2)
+        {
+            holder.imgIcon.setBackgroundResource(R.mipmap.ic_library_add_black_24dp);
+        }
+        else if  (position == 3)
+        {
+            holder.imgIcon.setBackgroundResource(R.mipmap.ic_store_black_24dp);
+        }
+        else if (position == 4)
+        {
+            holder.imgIcon.setBackgroundResource(R.mipmap.ic_file_download_black_24dp);
+        }
+        else if (position == 5)
+        {
+            holder.imgIcon.setBackgroundResource(R.mipmap.ic_file_upload_black_24dp);
+        }
+
+        holder.imgIcon.setColorFilter(Color.RED, PorterDuff.Mode.SRC_ATOP);
+
+
+
     }
 
     @Override
@@ -49,13 +83,13 @@ public class StoreCheckNavigationAdapter extends RecyclerView.Adapter<StoreCheck
 
     class ItemsViewHolder extends RecyclerView.ViewHolder {
         TextView title;
-        // ImageView imgIcon;
+
+         ImageView imgIcon;
 
         public ItemsViewHolder(View itemView) {
             super(itemView);
             title = (TextView) itemView.findViewById(R.id.title);
-            //imgIcon = (ImageView) itemView.findViewById(R.id.imgIcon);
-
+            imgIcon = (ImageView) itemView.findViewById(R.id.imgIcon);
         }
     }
 }

@@ -11,6 +11,8 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Binder;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
@@ -29,6 +31,12 @@ import android.widget.Toast;
 
 import com.euromonitor.storecheck.R;
 import com.euromonitor.storecheck.adapter.StoreCheckDetailAdapter;
+import com.euromonitor.storecheck.controller.ViewDetailsTask;
+import com.euromonitor.storecheck.controller.interfaces.AsyncPostExceuteDetails;
+import com.euromonitor.storecheck.controller.interfaces.AsyncPostExecute;
+import com.euromonitor.storecheck.controller.interfaces.AsyncPostExceuteDetails;
+import com.euromonitor.storecheck.controller.interfaces.AsyncPreExecute;
+import com.euromonitor.storecheck.controller.interfaces.AsyncProgressReport;
 import com.euromonitor.storecheck.databinding.StorecheckDetailsBinding;
 import com.euromonitor.storecheck.databinding.StorecheckdetailItemBinding;
 import com.euromonitor.storecheck.listener.ClickListener;
@@ -38,7 +46,9 @@ import com.euromonitor.storecheck.utility.DatabaseHelper;
 
 import java.util.ArrayList;
 
-public class StoreCheckDetailsActivity extends AppCompatActivity
+import me.zhanghai.android.materialprogressbar.MaterialProgressBar;
+
+public class StoreCheckDetailsActivity extends AppCompatActivity implements AsyncPostExceuteDetails,AsyncProgressReport,AsyncPreExecute
 {
     public StoreCheckDetailAdapter adapter;
 
@@ -52,6 +62,8 @@ public class StoreCheckDetailsActivity extends AppCompatActivity
     DrawerLayout mDrawerLayout;
     private SearchView.OnQueryTextListener queryTextListener;
 
+    MaterialProgressBar progressBar;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -64,12 +76,23 @@ public class StoreCheckDetailsActivity extends AppCompatActivity
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.details_drawer);
 
+        progressBar = (MaterialProgressBar) this.findViewById(R.id.progbar);
+        progressBar.getIndeterminateDrawable().setColorFilter(Color.parseColor("#42A5F5"), PorterDuff.Mode.SRC_IN);
+        progressBar.getProgressDrawable().setColorFilter(Color.parseColor("#42A5F5"), PorterDuff.Mode.SRC_IN);
+
+
         setupToolbar();
         setUpNavigationView();
 
         if(dbHelper.isDatabaseAvailable())
         {
-            setUpStoreCheckDetails(view);
+
+            ViewDetailsTask viewDetailsTask = new ViewDetailsTask(this);
+            viewDetailsTask.preExecute = this;
+            viewDetailsTask.progressReport= this;
+            viewDetailsTask.postExecute = this;
+            viewDetailsTask.execute();
+            //setUpStoreCheckDetails(view);
         }else {
             Toast.makeText(this.getBaseContext(), "Please import EMMA generated file to proceed!", Toast.LENGTH_LONG).show();
         }
@@ -121,7 +144,7 @@ public class StoreCheckDetailsActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
         // actionbar.setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Welcome !");
-        toolbar.setSubtitle("Export Items");
+        toolbar.setSubtitle("Item Details");
 
         toolbar.setTitle("Store-check details");
         toolbar.inflateMenu(R.menu.storecheck_menu);
@@ -141,11 +164,16 @@ public class StoreCheckDetailsActivity extends AppCompatActivity
         }
     }
 
-    public void setUpStoreCheckDetails(View view)
+
+
+
+    public void setUpStoreCheckDetails(ArrayList<StoreCheckDetail> productDetails)
     {
-        final RecyclerView recyclerView = (RecyclerView)view.findViewById(R.id.storecheckDetailsView);
+        final RecyclerView recyclerView = (RecyclerView)findViewById(R.id.storecheckDetailsView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new StoreCheckDetailAdapter(this.getLayoutInflater(),this, dbHelper.GetAllProductDetails());
+
+
+        adapter = new StoreCheckDetailAdapter(this.getLayoutInflater(),this, productDetails);
         recyclerView.setAdapter(adapter);
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(this.getApplicationContext(), recyclerView, new ClickListener()
         {
@@ -170,5 +198,24 @@ public class StoreCheckDetailsActivity extends AppCompatActivity
             public void onLongClick(View view, int position) {
             }
         }));
+    }
+
+    @Override
+    public void preExecute(String message) {
+
+        progressBar.setVisibility(View.VISIBLE);
+
+    }
+
+    @Override
+    public void progressReport(String message) {
+
+    }
+
+    @Override
+    public void PostExecute(ArrayList<StoreCheckDetail> data) {
+        setUpStoreCheckDetails(data);
+        progressBar.setVisibility(View.GONE);
+
     }
 }

@@ -29,10 +29,21 @@
                 android:theme="@style/ToolBarTheme"
                 android:id="@+id/detailsToolbar"/>
 
+
+            <me.zhanghai.android.materialprogressbar.MaterialProgressBar
+                android:layout_width="match_parent"
+                android:id="@+id/progbar"
+                android:layout_height="wrap_content"
+                android:indeterminate="true"
+                app:mpb_progressStyle="horizontal"
+                android:visibility="gone"
+                style="@style/Widget.MaterialProgressBar.ProgressBar.Horizontal" />
+
+
             <android.support.v7.widget.RecyclerView
             android:id="@+id/storecheckDetailsView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             />
         </LinearLayout>
         <FrameLayout
