@@ -78,7 +78,8 @@
                 android:drawSelectorOnTop="true"
                 android:theme="@style/MaterialTheme"
                 android:id="@+id/multiPacks"
-                android:text="@{pricingDetail.multiPack}"/>
+                android:text="@{pricingDetail.multiPack}"
+                android:inputType="number"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -95,7 +96,8 @@
                 android:layout_column="0"
                 android:layout_margin="@dimen/material_item_margin"
                 android:id="@+id/packSize"
-                android:text="@{pricingDetail.packSize}"/>
+                android:text="@{pricingDetail.packSize}"
+                android:inputType="number"/>
 
             <Spinner
                 android:layout_width="wrap_content"
@@ -124,6 +126,7 @@
                 android:layout_column="1"
                 android:id="@+id/price"
                 android:text="@{pricingDetail.price}"
+                android:inputType="numberDecimal"
                 />
 
             <TextView

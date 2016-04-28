@@ -22,6 +22,10 @@ public class PackType {
     @SerializedName("ProductCodes")
     private ArrayList<String> _productcodes;
 
+    public PackType(){
+
+    }
+
     public PackType(int _id, String _packtypecode, String _packtypename, ArrayList<String> _productcodes) {
         this._id = _id;
         this._packtypecode = _packtypecode;

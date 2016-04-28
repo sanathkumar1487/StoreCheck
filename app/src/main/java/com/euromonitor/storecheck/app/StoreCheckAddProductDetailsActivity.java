@@ -25,6 +25,7 @@ import com.euromonitor.storecheck.R;
 import com.euromonitor.storecheck.databinding.StorecheckProductdetailsBinding;
 import com.euromonitor.storecheck.model.Market;
 import com.euromonitor.storecheck.model.Outlet;
+import com.euromonitor.storecheck.model.PackType;
 import com.euromonitor.storecheck.model.PricingDetail;
 import com.euromonitor.storecheck.model.Product;
 import com.euromonitor.storecheck.model.ProductDetail;
@@ -42,6 +43,7 @@ public class StoreCheckAddProductDetailsActivity extends MainActivity
 
     public static int brandId;
     public static boolean brandIsNew;
+    public  static  int productCode;
 
 
     ArrayList<Market> markets;
@@ -194,6 +196,7 @@ public class StoreCheckAddProductDetailsActivity extends MainActivity
         setOutletSpinner();
         setUnitSpinner();
         setMarketSpinner();
+        setPackTypeSpinner();
     }
 
     private void setOutletSpinner(){
@@ -231,10 +234,17 @@ public class StoreCheckAddProductDetailsActivity extends MainActivity
 
     private void setMarketSpinner(){
         brandSpinner =  (Spinner)findViewById(R.id.brands);
-
         markets = databaseHelper.getBrands();
         StoreCheckAddProductDetailsActivity.BrandAdapter brandAdapter = new StoreCheckAddProductDetailsActivity.BrandAdapter(markets);
         brandSpinner.setAdapter(brandAdapter);
+    }
+
+    private void setPackTypeSpinner(){
+        Spinner packTypeSpinner =  (Spinner)findViewById(R.id.packType);
+        ArrayList<PackType> packTypes = databaseHelper.getPackTypeByProduct(productCode);
+        StoreCheckAddProductDetailsActivity.PackTypeAdapter packTypeAdapter = new StoreCheckAddProductDetailsActivity.PackTypeAdapter(packTypes);
+        packTypeSpinner.setAdapter(packTypeAdapter);
+
     }
 
     private void loadPricingDetails(){
@@ -355,6 +365,45 @@ public class StoreCheckAddProductDetailsActivity extends MainActivity
             outletItem.setTextColor(Color.parseColor("#42A5F5"));
 
             return brandView;
+        }
+    }
+
+    public class PackTypeAdapter extends BaseAdapter implements SpinnerAdapter{
+
+        ArrayList<PackType> packTypes;
+
+        public PackTypeAdapter(ArrayList<PackType> packTypes) {
+            this.packTypes = packTypes;
+        }
+
+        @Override
+        public int getCount() {
+            return packTypes.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return packTypes.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return Long.valueOf(position);
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            View packTypeView;
+            if(convertView!=null){
+                packTypeView = convertView;
+            }else {
+                packTypeView = getLayoutInflater().inflate(R.layout.storecheck_productitem, parent, false);
+            }
+
+            TextView outletItem = (TextView) packTypeView.findViewById(R.id.productItem);
+            outletItem.setText(packTypes.get(position).get_packtypename());
+
+            return packTypeView;
         }
     }
 }

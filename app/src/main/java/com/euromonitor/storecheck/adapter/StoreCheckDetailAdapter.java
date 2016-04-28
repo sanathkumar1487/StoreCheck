@@ -34,17 +34,19 @@ public class StoreCheckDetailAdapter extends RecyclerView.Adapter<StoreCheckDeta
         allStoreCheckItems.addAll(storeCheckItems);
     }
 
-    public StoreCheckDetailAdapter(LayoutInflater layoutInflater, Context context, List<StoreCheckDetail> storeCheckItems){
+    public StoreCheckDetailAdapter(LayoutInflater layoutInflater, Context context, List<StoreCheckDetail> storeCheckItems) {
         this.layoutInflater = layoutInflater;
         this.storeCheckItems = storeCheckItems;
         allStoreCheckItems = new ArrayList<>();
-        allStoreCheckItems.addAll(storeCheckItems);
+        if (storeCheckItems != null) {
+            allStoreCheckItems.addAll(storeCheckItems);
+        }
     }
 
     @Override
     public BindingHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        StorecheckdetailItemBinding binding = StorecheckdetailItemBinding.inflate(layoutInflater, parent,false);
+        StorecheckdetailItemBinding binding = StorecheckdetailItemBinding.inflate(layoutInflater, parent, false);
 
         return new BindingHolder(binding.getRoot());
     }
@@ -59,7 +61,7 @@ public class StoreCheckDetailAdapter extends RecyclerView.Adapter<StoreCheckDeta
 
     @Override
     public int getItemCount() {
-        return storeCheckItems.size();
+        return storeCheckItems == null ? 0 : storeCheckItems.size();
     }
 
     public void filterByProduct(String productName) {

@@ -20,11 +20,8 @@ import com.euromonitor.storecheck.model.Market;
 import com.euromonitor.storecheck.model.MetaData;
 import com.euromonitor.storecheck.model.Option;
 import com.euromonitor.storecheck.model.Outlet;
-<<<<<<< HEAD
 import com.euromonitor.storecheck.model.PricingDetail;
-=======
 import com.euromonitor.storecheck.model.PackType;
->>>>>>> a3f7317c72546b592b69cd069c4d23b22c6f04c9
 import com.euromonitor.storecheck.model.Product;
 import com.euromonitor.storecheck.model.StoreCheckBrand;
 import com.euromonitor.storecheck.model.StoreCheckDetail;
@@ -751,7 +748,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
 
     public ArrayList<StoreCheckDetail> GetAllProductDetails() {
         SQLiteDatabase database = this.getReadableDatabase();
-        String query = "select distinct d.pricingId, d.price, d.packSize, d.multipackSize, u.unitname, p.product_Name, m.brand,m.brandmarketid  from details d inner join products p on p.product_id = d.productid inner join markets m on m.productcode = d.productid inner join units u on u.unitid = d.unitcode";
+        String query = "select distinct d.pricingId, d.price, d.packSize, d.multipackSize, u.unitname, p.product_Name, m.brand,m.brandmarketid, d.productid  from details d inner join products p on p.product_id = d.productid inner join markets m on m.productcodes = d.productid inner join units u on u.unitid = d.unitcode";
         Cursor cursor = database.rawQuery(query, null);
         ArrayList<StoreCheckDetail> storeCheckDetails = null;
         try {
@@ -796,8 +793,79 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
                     }
 
                     int brandId = cursor.getInt(7);
-                    if (brand != null) {
+                    if (brandId>0) {
                         temp.setBrandId(brandId);
+                    }
+
+                    int productId = cursor.getInt(8);
+                    if (productId > 0) {
+                        temp.setProductCode(productId);
+                    }
+
+                    storeCheckDetails.add(temp);
+                } while ((cursor.moveToNext()));
+            }
+        } catch (Exception e) {
+            Log.e("db-error", e.getMessage());
+        }
+        return storeCheckDetails;
+    }
+
+    public ArrayList<StoreCheckDetail> GetDetailsByProductCode(int productCode) {
+        SQLiteDatabase database = this.getReadableDatabase();
+        String query = "select distinct d.pricingId, d.price, d.packSize, d.multipackSize, u.unitname, p.product_Name, m.brand,m.brandmarketid, d.productid  from details d inner join products p on p.product_id = d.productid inner join markets m on m.productcodes = d.productid inner join units u on u.unitid = d.unitcode"
+                + " where d.productId = " + productCode;
+        Cursor cursor = database.rawQuery(query, null);
+        ArrayList<StoreCheckDetail> storeCheckDetails = null;
+        try {
+            if (cursor.moveToFirst()) {
+                storeCheckDetails = new ArrayList<>();
+                do {
+                    StoreCheckDetail temp = new StoreCheckDetail();
+
+                    String priceId = cursor.getString(0);
+                    if (priceId != null) {
+                        temp.setPriceId(Integer.valueOf(priceId));
+                    }
+
+                    String price = cursor.getString(1);
+                    if (price != null) {
+                        temp.setPrice(Double.valueOf(price));
+                    }
+
+                    String packSize = cursor.getString(2);
+                    if (packSize != null) {
+                        temp.setPackSize(Integer.valueOf(packSize));
+                    }
+
+                    String multiPackSize = cursor.getString(3);
+                    if (packSize != null) {
+                        temp.setMultiPackSize(Integer.valueOf(multiPackSize));
+                    }
+
+                    String packUnit = cursor.getString(4);
+                    if (packUnit != null) {
+                        temp.setPackUnit(packUnit);
+                    }
+
+                    String productName = cursor.getString(5);
+                    if (productName != null) {
+                        temp.setProductName(productName);
+                    }
+
+                    String brand = cursor.getString(6);
+                    if (brand != null) {
+                        temp.setBrand(brand);
+                    }
+
+                    int brandId = cursor.getInt(7);
+                    if (brandId>0) {
+                        temp.setBrandId(brandId);
+                    }
+
+                    int productId = cursor.getInt(8);
+                    if (productId > 0) {
+                        temp.setProductCode(productId);
                     }
 
                     storeCheckDetails.add(temp);
@@ -872,7 +940,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         try {
 
             database = this.getReadableDatabase();
-            String query = "select label,uniqueid,objectid, frameGroupId, groupid  from customfields where productcode=" + "" + productCode + "";
+            String query = "select label,uniqueid,objectid, frameGroupId, groupid  from customfields where productcodes=" + "" + productCode + "";
             Log.i("query is ::", query);
             cursor = database.rawQuery(query, null);
             customFields = new ArrayList<CustomField>();
@@ -1060,18 +1128,15 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         try {
             ContentValues values = new ContentValues();
             values.put(KEY_OUTLET_Name, outlet.get_outlet_Name());
-<<<<<<< HEAD
             values.put(KEY_OUTLET_CITY, outlet.getOutlet_city());
             values.put(KEY_OUTLET_DATE, outlet.get_outlet_date());
             values.put(KEY_CHANNEL_NAME, outlet.get_channel_name());
-=======
             values.put(KEY_OUTLET_CITY,outlet.getOutlet_city());
             values.put(KEY_OUTLET_DATE,outlet.get_outlet_date());
             values.put(KEY_CHANNEL_NAME,outlet.get_channel_name());
             Log.i("chc name", outlet.get_channel_name());
             Log.i("chc code", outlet.get_chccode());
             values.put(KEY_CHCCODE,outlet.get_chccode());
->>>>>>> a3f7317c72546b592b69cd069c4d23b22c6f04c9
             values.put(KEY_UPDATED, "1");
             // updating row
             return db.update(TABLE_OUTLETS, values, KEY_ID + " = ?",
@@ -1129,8 +1194,8 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
             values.put(KEY_PROJECT_ID, outlet.get_project_id());
             values.put(KEY_GEO_CODE, outlet.get_geo_code());
             values.put(KEY_YEAR, outlet.get_year());
-            values.put(KEY_CHCCODE,outlet.get_chccode());
-            values.put(KEY_NEW,1);
+            values.put(KEY_CHCCODE, outlet.get_chccode());
+            values.put(KEY_NEW, 1);
             db.insert(TABLE_OUTLETS, null, values);
         }
         catch (Exception ex)
@@ -1255,5 +1320,33 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
             if (db != null)
                 db.close();
         }
+    }
+
+    public ArrayList<PackType> getPackTypeByProduct(int productCode){
+        ArrayList<PackType> my_array = new ArrayList<>();
+        try {
+            String selectQuery = "SELECT id, packTypeCode, packTypeName, productCodes FROM " + TABLE_PACKTYPES
+                    + " where productCodes = " + productCode;
+
+            SQLiteDatabase db = this.getWritableDatabase();
+            Cursor cursor = db.rawQuery(selectQuery, null);
+
+            if (cursor.moveToFirst()) {
+                do {
+                    PackType packType = new PackType();
+                    packType.set_id(cursor.getInt(cursor.getColumnIndex(KEY_ID)));
+                    packType.set_packtypecode(cursor.getString(cursor.getColumnIndex(KEY_PACKTYPECODE)));
+                    packType.set_packtypename(cursor.getString(cursor.getColumnIndex(KEY_PACKTYPENAME)));
+
+                    my_array.add(packType);
+
+                } while (cursor.moveToNext());
+            }
+            cursor.close();
+            db.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return my_array;
     }
 }

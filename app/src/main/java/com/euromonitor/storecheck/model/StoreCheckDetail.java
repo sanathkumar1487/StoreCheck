@@ -126,4 +126,14 @@ public class StoreCheckDetail extends BaseObservable {
 
     public void setMultiPackSize(int itemsPerPack){this.multiPackSize = itemsPerPack;}
 
+    public int getProductCode() {
+        return productCode;
+    }
+
+    public void setProductCode(int productCode) {
+        this.productCode = productCode;
+    }
+
+    private int productCode;
+
 }

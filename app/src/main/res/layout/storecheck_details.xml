@@ -29,6 +29,16 @@
                 android:theme="@style/ToolBarTheme"
                 android:id="@+id/detailsToolbar"/>
 
+            <Spinner
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="6"
+                android:layout_column="1"
+                android:layout_margin="@dimen/material_item_margin"
+                android:drawSelectorOnTop="true"
+                android:theme="@style/MaterialTheme"
+                android:id="@+id/products"/>
+
             <android.support.v7.widget.RecyclerView
             android:id="@+id/storecheckDetailsView"
             android:layout_width="match_parent"

@@ -25,6 +25,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.BaseAdapter;
+import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.euromonitor.storecheck.R;
@@ -33,6 +38,9 @@ import com.euromonitor.storecheck.databinding.StorecheckDetailsBinding;
 import com.euromonitor.storecheck.databinding.StorecheckdetailItemBinding;
 import com.euromonitor.storecheck.listener.ClickListener;
 import com.euromonitor.storecheck.listener.RecyclerTouchListener;
+import com.euromonitor.storecheck.model.Outlet;
+import com.euromonitor.storecheck.model.PackType;
+import com.euromonitor.storecheck.model.Product;
 import com.euromonitor.storecheck.model.StoreCheckDetail;
 import com.euromonitor.storecheck.utility.DatabaseHelper;
 
@@ -66,7 +74,8 @@ public class StoreCheckDetailsActivity extends AppCompatActivity {
         setUpNavigationView();
 
         if (dbHelper.isDatabaseAvailable()) {
-            setUpStoreCheckDetails(view);
+            setSpinner();
+            //setUpStoreCheckDetails();
         } else {
             Toast.makeText(this.getBaseContext(), "Please import EMMA generated file to proceed!", Toast.LENGTH_LONG).show();
         }
@@ -139,10 +148,31 @@ public class StoreCheckDetailsActivity extends AppCompatActivity {
         }
     }
 
-    public void setUpStoreCheckDetails(View view) {
-        final RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.storecheckDetailsView);
+    private void setSpinner(){
+        Spinner packTypeSpinner =  (Spinner)findViewById(R.id.products);
+        ArrayList<Product> products = dbHelper.getAllProducts();
+        StoreCheckDetailsActivity.ProductAdapter productAdapter = new StoreCheckDetailsActivity.ProductAdapter(products);
+        packTypeSpinner.setAdapter(productAdapter);
+        packTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Product selectedProduct = (Product) parent.getItemAtPosition(position);
+
+
+                setUpStoreCheckDetails(Integer.valueOf(selectedProduct.get_product_id()));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+
+    public void setUpStoreCheckDetails(int productCode) {
+        final RecyclerView recyclerView = (RecyclerView) findViewById(R.id.storecheckDetailsView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new StoreCheckDetailAdapter(this.getLayoutInflater(), this, dbHelper.GetAllProductDetails());
+        adapter = new StoreCheckDetailAdapter(this.getLayoutInflater(), this, dbHelper.GetDetailsByProductCode(productCode));
         recyclerView.setAdapter(adapter);
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(this.getApplicationContext(), recyclerView, new ClickListener() {
             @Override
@@ -151,9 +181,9 @@ public class StoreCheckDetailsActivity extends AppCompatActivity {
                 StorecheckdetailItemBinding binding = DataBindingUtil.getBinding(view);
                 StoreCheckDetail detail = binding.getStoreCheckDetail();
                 if (detail != null) {
-
                     StoreCheckAddProductDetailsActivity.priceId = detail.getPriceId();
                     StoreCheckAddProductDetailsActivity.brandId = detail.getBrandId();
+                    StoreCheckAddProductDetailsActivity.productCode = detail.getProductCode();
                 }
                 StoreCheckAddProductDetailsActivity activity = new StoreCheckAddProductDetailsActivity();
                 intent = new Intent(StoreCheckDetailsActivity.this, StoreCheckAddProductDetailsActivity.class);
@@ -166,4 +196,42 @@ public class StoreCheckDetailsActivity extends AppCompatActivity {
         }));
     }
 
+    public class ProductAdapter extends BaseAdapter implements SpinnerAdapter {
+
+        ArrayList<Product> products;
+
+        public ProductAdapter(ArrayList<Product> products) {
+            this.products = products;
+        }
+
+        @Override
+        public int getCount() {
+            return products.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return products.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return Long.valueOf(position);
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            View productView;
+            if(convertView!=null){
+                productView = convertView;
+            }else {
+                productView = getLayoutInflater().inflate(R.layout.storecheck_productitem, parent, false);
+            }
+
+            TextView outletItem = (TextView) productView.findViewById(R.id.productItem);
+            outletItem.setText(products.get(position).get_product_name());
+
+            return productView;
+        }
+    }
 }
