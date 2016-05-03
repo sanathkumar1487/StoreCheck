@@ -66,8 +66,8 @@ public class StoreCheckAddBrandActivity extends AppCompatActivity
     final static String CustomCompanyID="4";
     StorecheckAddbrandBinding binding;
     StoreCheckBrand storeCheckBrand;
-    DatabaseHelper databaseHelper;
     RecyclerView customFieldRecyclerView;
+    DatabaseHelper databaseHelper;
     ArrayList<CustomField> customFields = new ArrayList<CustomField>() ;
     // Navigation
     DrawerLayout mDrawerLayout;
@@ -86,15 +86,22 @@ public class StoreCheckAddBrandActivity extends AppCompatActivity
         mDrawerLayout = (DrawerLayout) findViewById(R.id.addBrand_Drawer);
         setupToolbar();
         setUpNavigationView();
-        setBinding();
-        View view = binding.getRoot();
-        customFieldRecyclerView = (RecyclerView) view.findViewById(R.id.customFields);
-        item=databaseHelper.getNboName();
-        nbo_name=(AutoCompleteTextView)findViewById(R.id.nboName);
-        adapter=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,item);
-        nbo_name.setAdapter(adapter);
-    }
+        if(databaseHelper.isDatabaseAvailable())
+        {
+            setBinding();
+            View view = binding.getRoot();
+            customFieldRecyclerView = (RecyclerView) view.findViewById(R.id.customFields);
+            item=databaseHelper.getNboName();
+            nbo_name=(AutoCompleteTextView)findViewById(R.id.nboName);
+            adapter=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,item);
+            nbo_name.setAdapter(adapter);
+        }
+        else
+        {
+            Toast.makeText(this,"Please import EMMA generated file to proceed!",Toast.LENGTH_LONG).show();
+        }
 
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -108,10 +115,22 @@ public class StoreCheckAddBrandActivity extends AppCompatActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.Save:
-                validateData();
-                return true;
+                if(databaseHelper.isDatabaseAvailable()) {
+                    validateData();
+                    return true;
+                }
+                else
+                {
+                    Toast.makeText(this,"Please import EMMA generated file to proceed!",Toast.LENGTH_LONG).show();
+                }
             case R.id.Clear:
-                resetData();
+                if(databaseHelper.isDatabaseAvailable()) {
+                    resetData();
+                }
+                else
+                {
+                    Toast.makeText(this,"Please import EMMA generated file to proceed!",Toast.LENGTH_LONG).show();
+                }
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -154,10 +173,8 @@ public class StoreCheckAddBrandActivity extends AppCompatActivity
 
         setBindingProperties();
     }
-
     private void validateData() {
         setBindingProperties();
-
         StoreCheckBrand data = binding.getStoreCheckBrand();
         boolean isValid = true;
         String errors = "Please correct the following errors: ";
@@ -165,16 +182,13 @@ public class StoreCheckAddBrandActivity extends AppCompatActivity
             errors += "\n Brand is required";
             isValid = false;
         }
-
         if (data.getNBO() == null || data.getNBO().equals("")) {
             errors += "\n NBO is required";
             isValid = false;
         }
-
         ArrayList<CustomField> customFields = data.getCustomFields();
         if (customFields != null) {
             for (CustomField cf : customFields) {
-
                 Option selectedOption = cf.getSelectedOption();
                 if (selectedOption != null) {
                     if (selectedOption.getMinimumAllowed().equals("0") && selectedOption.getMaximumAllowed().equals("0")) {
@@ -314,14 +328,12 @@ public class StoreCheckAddBrandActivity extends AppCompatActivity
         customFields = databaseHelper.updateCustomFieldOptions(customFields);
     }
 
-    public class ProductAdapter extends BaseAdapter implements SpinnerAdapter {
-
+    public class ProductAdapter extends BaseAdapter implements SpinnerAdapter
+    {
         private ArrayList<Product> products;
-
         public  ProductAdapter(ArrayList<Product> products){
             this.products = products;
         }
-
         @Override
         public int getCount() {
             return products.size();

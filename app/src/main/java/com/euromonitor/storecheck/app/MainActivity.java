@@ -49,19 +49,19 @@ public class MainActivity extends AppCompatActivity {
             setUpNavigationView();
             db=new DatabaseHelper(this);
 
-           if(db.isDatabaseAvailable())
-            {
-             // storeCheckNavigationFragment.loadView(NavigationConstants.IMPORT_STORECHECK_DETAILS);
-               Intent  intent = new Intent(this, StoreCheckDetailsActivity.class);
-                startActivity(intent);
-
-                //finish();
-            }
-           else
-            {
-               Intent   intent = new Intent(this, StoreCheckImportActivity.class);
-                startActivity(intent);
-            }
+//           if(db.isDatabaseAvailable())
+//            {
+//             // storeCheckNavigationFragment.loadView(NavigationConstants.IMPORT_STORECHECK_DETAILS);
+//               Intent  intent = new Intent(this, StoreCheckDetailsActivity.class);
+//                startActivity(intent);
+//
+//                //finish();
+//            }
+//           else
+//            {
+//               Intent   intent = new Intent(this, StoreCheckImportActivity.class);
+//                startActivity(intent);
+//            }
         } catch (Exception e) {
             Log.i("Main Activity Exception", e.getMessage());
             //  messageBox(e);

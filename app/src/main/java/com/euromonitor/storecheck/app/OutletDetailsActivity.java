@@ -17,6 +17,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.euromonitor.storecheck.R;
 import com.euromonitor.storecheck.adapter.StoreCheckDetailAdapter;
@@ -29,6 +30,7 @@ import com.euromonitor.storecheck.listener.ClickListener;
 import com.euromonitor.storecheck.listener.RecyclerTouchListener;
 import com.euromonitor.storecheck.model.Outlet;
 import com.euromonitor.storecheck.model.StoreCheckDetail;
+import com.euromonitor.storecheck.utility.DatabaseHelper;
 
 /**
  * Created by Sanath.Kumar on 4/20/2016.
@@ -41,71 +43,98 @@ public class OutletDetailsActivity extends AppCompatActivity {
     private SearchView.OnQueryTextListener queryTextListener;
     DrawerLayout mDrawerLayout;
     android.support.v7.widget.Toolbar toolbar;
+    DatabaseHelper db;
+
     @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.storecheckoutlet_details);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.manageOutlet_Drawer);
+        db = new DatabaseHelper(this);
         setupToolbar();
         setUpNavigationView();
-        View view = binding.getRoot();
-        setUpStoreCheckDetails(view);
+        if (db.isDatabaseAvailable())
+        {
+
+            View view = binding.getRoot();
+            setUpStoreCheckDetails(view);
+        } else
+        {
+
+            Toast.makeText(this, "Please import EMMA generated file to proceed!", Toast.LENGTH_LONG).show();
+        }
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.storecheck_menu, menu);
-        SearchManager searchManager = (SearchManager)getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView = (SearchView)menu.findItem(R.id.searchItem).getActionView();
-        if(searchView!=null) {
-            searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-            queryTextListener = new SearchView.OnQueryTextListener(){
-                @Override
-                public boolean onQueryTextChange(String newText) {
-                    if (newText != null) {
-                        adapter.filterByOutLet(newText);
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView) menu.findItem(R.id.searchItem).getActionView();
+        if (searchView != null) {
+            if (db.isDatabaseAvailable()) {
+                searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+                queryTextListener = new SearchView.OnQueryTextListener() {
+                    @Override
+                    public boolean onQueryTextChange(String newText) {
+                        if (newText != null) {
+                            adapter.filterByOutLet(newText);
+                        }
+                        return true;
                     }
-                    return true;
-                }
 
-                @Override
-                public boolean onQueryTextSubmit(String query) {
-                    return true;
-                }
-            };
-            searchView.setOnQueryTextListener(queryTextListener);
+                    @Override
+                    public boolean onQueryTextSubmit(String query) {
+                        return true;
+                    }
+                };
+                searchView.setOnQueryTextListener(queryTextListener);
+            } else {
+              //  Toast.makeText(this, "Please import EMMA generated file to proceed!", Toast.LENGTH_LONG).show();
+
+            }
         }
         return true;
-    }
+      }
+
     RecyclerView recyclerView ;
     public void setUpStoreCheckDetails(View view)
     {
-        recyclerView = (RecyclerView) view.findViewById(R.id.storecheckOutletDetailsView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new StoreCheckOutletDetailAdapter(this.getLayoutInflater(), this);
-        recyclerView.setAdapter(adapter);
-        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(this.getApplicationContext(), recyclerView, new ClickListener() {
-            @Override
-            public void onClick(View view, int position) {
-                StorecheckoutletItemBinding binding = DataBindingUtil.getBinding(view);
-                Outlet detail = binding.getStoreCheckOutlet();
-                intent = new Intent(OutletDetailsActivity.this, AddOutletActivity.class);
-                intent.putExtra("outlet", detail);
-                intent.putExtra("isnew", false);
-                startActivity(intent);
-            }
-            @Override
-            public void onLongClick(View view, int position) {
-            }
-        }));
+            recyclerView = (RecyclerView) view.findViewById(R.id.storecheckOutletDetailsView);
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+            adapter = new StoreCheckOutletDetailAdapter(this.getLayoutInflater(), this);
+            recyclerView.setAdapter(adapter);
+            recyclerView.addOnItemTouchListener(new RecyclerTouchListener(this.getApplicationContext(), recyclerView, new ClickListener() {
+                @Override
+                public void onClick(View view, int position) {
+                    StorecheckoutletItemBinding binding = DataBindingUtil.getBinding(view);
+                    Outlet detail = binding.getStoreCheckOutlet();
+                    intent = new Intent(OutletDetailsActivity.this, AddOutletActivity.class);
+                    intent.putExtra("outlet", detail);
+                    intent.putExtra("isnew", false);
+                    startActivity(intent);
+                }
 
+                @Override
+                public void onLongClick(View view, int position) {
+                }
+            }));
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
+        switch (item.getItemId())
+        {
+
             case R.id.AddNew:
-                loadAddOutletScreen();
-                return true;
+                if (db.isDatabaseAvailable())
+                {
+                    loadAddOutletScreen();
+                    return true;
+                }
+                else
+                {
+                    Toast.makeText(this, "Please import EMMA generated file to proceed!", Toast.LENGTH_LONG).show();
+
+                }
             case  R.id.Refresh:
                  refreshData();
                   return  true;
@@ -120,11 +149,18 @@ public class OutletDetailsActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void refreshData() {
-
-        adapter = new StoreCheckOutletDetailAdapter(this.getLayoutInflater(), this);
-        recyclerView.setAdapter(adapter);
-        recyclerView.invalidate();
+    private void refreshData()
+    {
+        db=new DatabaseHelper(this);
+        if(db.isDatabaseAvailable()) {
+            adapter = new StoreCheckOutletDetailAdapter(this.getLayoutInflater(), this);
+            recyclerView.setAdapter(adapter);
+            recyclerView.invalidate();
+        }
+        else
+        {
+            //Toast.makeText(this,"ssss",Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override

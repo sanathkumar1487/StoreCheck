@@ -15,6 +15,7 @@ import com.euromonitor.storecheck.databinding.StorecheckoutletDetailsBinding;
 import com.euromonitor.storecheck.databinding.StorecheckoutletItemBinding;
 import com.euromonitor.storecheck.model.Outlet;
 import com.euromonitor.storecheck.model.StoreCheckDetail;
+import com.euromonitor.storecheck.utility.DatabaseHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,11 +36,14 @@ public class StoreCheckOutletDetailAdapter extends RecyclerView.Adapter<StoreChe
         allOutletItems.addAll(outletItems);
     }
 
-    public StoreCheckOutletDetailAdapter(LayoutInflater layoutInflater, Context context){
+    public StoreCheckOutletDetailAdapter(LayoutInflater layoutInflater, Context context)
+    {
+
         this.layoutInflater = layoutInflater;
         this.outletItems = Outlet.getData(context);
         allOutletItems = new ArrayList<>();
         allOutletItems.addAll(outletItems);
+
     }
 
     @Override
