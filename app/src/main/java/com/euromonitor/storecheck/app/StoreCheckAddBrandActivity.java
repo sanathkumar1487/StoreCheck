@@ -22,6 +22,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -63,45 +64,35 @@ public class StoreCheckAddBrandActivity extends AppCompatActivity
     final static String TextBox ="2";
     final static String CustomDropDown="3";
     final static String CustomCompanyID="4";
-
     StorecheckAddbrandBinding binding;
     StoreCheckBrand storeCheckBrand;
     DatabaseHelper databaseHelper;
     RecyclerView customFieldRecyclerView;
     ArrayList<CustomField> customFields = new ArrayList<CustomField>() ;
-
-
-
     // Navigation
-
     DrawerLayout mDrawerLayout;
-
     Context context;
-
+    ArrayAdapter<String> adapter;
     android.support.v7.widget.Toolbar toolbar;
-
-
+    AutoCompleteTextView nbo_name;
+    String[] item=new String[]{"Please search here"};
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-
+    public void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
-
         binding = DataBindingUtil.setContentView(this, R.layout.storecheck_addbrand);
-
         context = this;
         databaseHelper = new DatabaseHelper(this);
-
         mDrawerLayout = (DrawerLayout) findViewById(R.id.addBrand_Drawer);
-
         setupToolbar();
         setUpNavigationView();
-
-
         setBinding();
-
         View view = binding.getRoot();
         customFieldRecyclerView = (RecyclerView) view.findViewById(R.id.customFields);
-
+        item=databaseHelper.getNboName();
+        nbo_name=(AutoCompleteTextView)findViewById(R.id.nboName);
+        adapter=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,item);
+        nbo_name.setAdapter(adapter);
     }
 
 

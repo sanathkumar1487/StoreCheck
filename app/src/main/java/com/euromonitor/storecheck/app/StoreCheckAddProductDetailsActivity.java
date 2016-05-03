@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -37,7 +38,7 @@ import java.util.ArrayList;
 /**
  * Created by Shashwat.Bajpai on 19/04/2016.
  */
-public class StoreCheckAddProductDetailsActivity extends MainActivity
+public class StoreCheckAddProductDetailsActivity extends AppCompatActivity
 {
     public static int priceId;
 
@@ -54,7 +55,7 @@ public class StoreCheckAddProductDetailsActivity extends MainActivity
 
     DatabaseHelper databaseHelper;
     DrawerLayout drawerLayout;
-
+    android.support.v7.widget.Toolbar toolbar;
     Spinner brandSpinner;
 
     @Override
@@ -78,15 +79,18 @@ public class StoreCheckAddProductDetailsActivity extends MainActivity
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
         menu.clear();
         getMenuInflater().inflate(R.menu.addoutlet_menu, menu);
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId())
+        {
             case R.id.Save:
                 SavePricing();
                 return true;
@@ -107,6 +111,7 @@ public class StoreCheckAddProductDetailsActivity extends MainActivity
 
     private boolean validateData() {
         boolean isValid=true;
+
         errors = "Please correct the following errors!";
         PricingDetail detail = binding.getPricingDetail();
         // Multipack Size

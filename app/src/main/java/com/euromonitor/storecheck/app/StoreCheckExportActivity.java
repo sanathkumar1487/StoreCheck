@@ -41,10 +41,7 @@ public class StoreCheckExportActivity extends AppCompatActivity implements Async
     EditText fileName;
     MaterialProgressBar progressBar;
     Button export;
-
     DrawerLayout mDrawerLayout;
-
-
     android.support.v7.widget.Toolbar toolbar;
 
 

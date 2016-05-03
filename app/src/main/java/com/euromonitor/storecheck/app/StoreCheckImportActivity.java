@@ -16,6 +16,7 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -34,34 +35,26 @@ import com.github.developerpaul123.filepickerlibrary.enums.Request;
 import com.github.developerpaul123.filepickerlibrary.enums.Scope;
 
 import me.zhanghai.android.materialprogressbar.MaterialProgressBar;
-public class StoreCheckImportActivity extends MainActivity implements AsyncPostExecute,AsyncProgressReport,AsyncPreExecute {
+public class StoreCheckImportActivity extends AppCompatActivity implements AsyncPostExecute,AsyncProgressReport,AsyncPreExecute {
 
     ImportDataTask importDataController;
     Button browseFile;
     Button sqlLiteMonitor;
     MaterialProgressBar progressBar;
     DrawerLayout mDrawerLayout;
-
+    android.support.v7.widget.Toolbar toolbar;
     private static final int REQUEST_PICK_FILE = 1;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.storecheck_import);
-
         mDrawerLayout = (DrawerLayout) findViewById(R.id.import_Drawer);
-
         setupToolbar();
         setUpNavigationView();
-
-
-
-
-
         progressBar = (MaterialProgressBar) this.findViewById(R.id.progbar);
         progressBar.getIndeterminateDrawable().setColorFilter(Color.parseColor("#42A5F5"), PorterDuff.Mode.SRC_IN);
         progressBar.getProgressDrawable().setColorFilter(Color.parseColor("#42A5F5"), PorterDuff.Mode.SRC_IN);
-
         browseFile = (Button) this.findViewById(R.id.browseFile);
         browseFile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,7 +62,6 @@ public class StoreCheckImportActivity extends MainActivity implements AsyncPostE
                 selectFile(v);
             }
         });
-
         sqlLiteMonitor = (Button) this.findViewById(R.id.sqlMonitor);
         sqlLiteMonitor.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,7 +69,6 @@ public class StoreCheckImportActivity extends MainActivity implements AsyncPostE
                 loaddbmanager(v);
             }
         });
-
     }
 
     @Override
@@ -109,7 +100,8 @@ public class StoreCheckImportActivity extends MainActivity implements AsyncPostE
     }
 
     @Override
-    public void progressReport(String message) {
+    public void progressReport(String message)
+    {
 
         // Toast.makeText(this, "progressReport  :: " + message, Toast.LENGTH_LONG).show();
 
@@ -141,14 +133,12 @@ public class StoreCheckImportActivity extends MainActivity implements AsyncPostE
         }
     }
 
-    public void setupToolbar(){
-
+    public void setupToolbar()
+    {
         toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.importToolbar);
         setSupportActionBar(toolbar);
-        // actionbar.setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Welcome !");
-        toolbar.setSubtitle("Import");
-
+        toolbar.setSubtitle("Import File");
         toolbar.setTitle("Store-check details");
         toolbar.inflateMenu(R.menu.storecheck_menu);
     }

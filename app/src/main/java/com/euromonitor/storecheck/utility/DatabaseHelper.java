@@ -1367,5 +1367,66 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         }
         return storeCheckDetails;
     }
+    //AutoSuggestion for outlet Name
+    public String[] getOutletName()
+    {
+        SQLiteDatabase database = this.getReadableDatabase();
+        String query = "select outlet_name from outlets";
+        Cursor cursor = database.rawQuery(query, null);
+        String[]  outlets = new String[cursor.getCount()];
+        try {
+            if (cursor.moveToFirst())
+            {
+                int i=0;
+                do {
+                    outlets[i]=cursor.getString(cursor.getColumnIndex(KEY_OUTLET_Name));
+                    i++;
 
+                } while ((cursor.moveToNext()));
+            }
+            return outlets;
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+        finally
+        {
+            if (cursor != null)
+                cursor.close();
+            if (database != null)
+                database.close();
+        }
+    }
+    //AutoSuggestion for nbo name
+    public String[] getNboName()
+    {
+        SQLiteDatabase database = this.getReadableDatabase();
+        String query = "select nbo from details";
+        Cursor cursor = database.rawQuery(query, null);
+        String[] nbo_s = new String[cursor.getCount()];
+        try {
+            if (cursor.moveToFirst())
+            {
+                int i=0;
+                do {
+                    nbo_s[i]=cursor.getString(cursor.getColumnIndex(KEY_NBO));
+                    i++;
+
+                } while ((cursor.moveToNext()));
+            }
+            return nbo_s ;
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+        finally
+        {
+            if (cursor != null)
+                cursor.close();
+            if (database != null)
+                database.close();
+        }
+    }
 }

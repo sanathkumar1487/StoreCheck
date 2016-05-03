@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -20,6 +21,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -47,8 +49,9 @@ import java.util.Locale;
 /**
  * Created by Sanath.Kumar on 4/20/2016.
  */
-public class AddOutletActivity extends MainActivity
+public class AddOutletActivity extends AppCompatActivity
 {
+    String[] item = new String[] {"Please search..."};
     int Count;
     Spinner spinner;
     TextView textView;
@@ -56,15 +59,15 @@ public class AddOutletActivity extends MainActivity
     private DatePickerDialog datePickerDialog;
     private SimpleDateFormat dateFormatter;
     ImageButton imageButton;
-    EditText outLet_Name;
+    AutoCompleteTextView outLet_Name;
     EditText city;
     ArrayList<Channel> labels;
     boolean isvalueChanged = false;
     boolean isNew = false;
     DatabaseHelper db;
-
+    ArrayAdapter<String> adapter;
     DrawerLayout mDrawerLayout;
-
+    android.support.v7.widget.Toolbar toolbar;
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
@@ -80,10 +83,14 @@ public class AddOutletActivity extends MainActivity
 
         db = new DatabaseHelper(this);
 
-        if(db.isDatabaseAvailable()) {
+        if(db.isDatabaseAvailable())
+        {
+            item=db.getOutletName();
             spinner = (Spinner) view.findViewById(R.id.spinner);
             textView = (TextView) view.findViewById(R.id.header);
-            outLet_Name = (EditText) view.findViewById(R.id.outlet_Name);
+            outLet_Name = (AutoCompleteTextView) view.findViewById(R.id.outlet_Name);
+            adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, item);
+            outLet_Name.setAdapter(adapter);
             city = (EditText) view.findViewById(R.id.city);
             setOutlet((Outlet) getIntent().getSerializableExtra("outlet"));
 
@@ -145,6 +152,15 @@ public class AddOutletActivity extends MainActivity
                     isvalueChanged = true;
                 }
             });
+
+            outLet_Name.setOnItemClickListener(new AdapterView.OnItemClickListener()
+            {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Toast.makeText(getBaseContext(), "This outlet is already existed", Toast.LENGTH_LONG).show();
+                }
+            }) ;
+
 
 
             city.addTextChangedListener(new TextWatcher() {

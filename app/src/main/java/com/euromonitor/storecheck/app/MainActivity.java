@@ -19,35 +19,49 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 import com.crashlytics.android.Crashlytics;
+import com.euromonitor.storecheck.Constants.NavigationConstants;
 import com.euromonitor.storecheck.R;
 import com.euromonitor.storecheck.listener.ClickListener;
 import com.euromonitor.storecheck.listener.RecyclerTouchListener;
+import com.euromonitor.storecheck.utility.DatabaseHelper;
+
 import io.fabric.sdk.android.Fabric;
 
 public class MainActivity extends AppCompatActivity {
 
     Toolbar toolbar;
     DrawerLayout drawerLayout;
-
+    DatabaseHelper db;
     boolean isLaunch = true;
+    StoreCheckNavigationFragment storeCheckNavigationFragment;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         try {
             super.onCreate(savedInstanceState);
-            Fabric.with(this, new Crashlytics());
+          //  Fabric.with(this, new Crashlytics());
             setContentView(R.layout.activity_main);
 
             drawerLayout=(DrawerLayout)findViewById(R.id.drawer_layout);
 
             setupToolbar();
             setUpNavigationView();
+            db=new DatabaseHelper(this);
 
-            if (isLaunch) {
-                isLaunch = false;
-                // loadView(IMPORT_STORECHECK_DETAILS);
+           if(db.isDatabaseAvailable())
+            {
+             // storeCheckNavigationFragment.loadView(NavigationConstants.IMPORT_STORECHECK_DETAILS);
+               Intent  intent = new Intent(this, StoreCheckDetailsActivity.class);
+                startActivity(intent);
+
+                //finish();
             }
-
+           else
+            {
+               Intent   intent = new Intent(this, StoreCheckImportActivity.class);
+                startActivity(intent);
+            }
         } catch (Exception e) {
             Log.i("Main Activity Exception", e.getMessage());
             //  messageBox(e);

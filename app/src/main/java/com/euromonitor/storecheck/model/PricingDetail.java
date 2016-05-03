@@ -30,7 +30,8 @@ public class PricingDetail {
 
     int selectedOutletId;
 
-    public String getPackSize() {
+    public String getPackSize()
+    {
         return String.valueOf(packSize);
     }
 

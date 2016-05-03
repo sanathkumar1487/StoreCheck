@@ -49,11 +49,11 @@ public  class StoreCheckNavigationFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        if (view != null) {
-            ViewGroup parent = (ViewGroup) view.getParent();
-            if (parent != null)
-                parent.removeView(view);
-        }
+      //  if (view != null) {
+          //  ViewGroup parent = (ViewGroup) view.getParent();
+          //  if (parent != null)
+           //     parent.removeView(view);
+       // }
         try {
             view = inflater.inflate(R.layout.storecheck_navigation_drawer, container, false);
         } catch (InflateException e) {
@@ -92,7 +92,7 @@ public  class StoreCheckNavigationFragment extends Fragment {
         ));
     }
 
-    private void loadView(int position) {
+    public void loadView(int position) {
         activeView = position;
         this.closeDrawer();
         Context context = getActivity();

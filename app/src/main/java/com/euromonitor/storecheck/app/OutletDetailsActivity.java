@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -32,45 +33,32 @@ import com.euromonitor.storecheck.model.StoreCheckDetail;
 /**
  * Created by Sanath.Kumar on 4/20/2016.
  */
-public class OutletDetailsActivity extends MainActivity {
+public class OutletDetailsActivity extends AppCompatActivity {
     public StoreCheckOutletDetailAdapter adapter;
     private StoreCheckDetail detail = new StoreCheckDetail();
-    private int position;
     StorecheckoutletDetailsBinding binding;
-    Context context;
     Intent intent;
     private SearchView.OnQueryTextListener queryTextListener;
-
     DrawerLayout mDrawerLayout;
-
+    android.support.v7.widget.Toolbar toolbar;
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.storecheckoutlet_details);
-
         mDrawerLayout = (DrawerLayout) findViewById(R.id.manageOutlet_Drawer);
-
         setupToolbar();
         setUpNavigationView();
-
         View view = binding.getRoot();
         setUpStoreCheckDetails(view);
-
     }
-
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.storecheck_menu, menu);
-
         SearchManager searchManager = (SearchManager)getSystemService(Context.SEARCH_SERVICE);
-
         SearchView searchView = (SearchView)menu.findItem(R.id.searchItem).getActionView();
-
         if(searchView!=null) {
             searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-
             queryTextListener = new SearchView.OnQueryTextListener(){
                 @Override
                 public boolean onQueryTextChange(String newText) {
@@ -89,11 +77,9 @@ public class OutletDetailsActivity extends MainActivity {
         }
         return true;
     }
-
-
     RecyclerView recyclerView ;
-    public void setUpStoreCheckDetails(View view) {
-
+    public void setUpStoreCheckDetails(View view)
+    {
         recyclerView = (RecyclerView) view.findViewById(R.id.storecheckOutletDetailsView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new StoreCheckOutletDetailAdapter(this.getLayoutInflater(), this);
@@ -101,25 +87,19 @@ public class OutletDetailsActivity extends MainActivity {
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(this.getApplicationContext(), recyclerView, new ClickListener() {
             @Override
             public void onClick(View view, int position) {
-
                 StorecheckoutletItemBinding binding = DataBindingUtil.getBinding(view);
                 Outlet detail = binding.getStoreCheckOutlet();
-
                 intent = new Intent(OutletDetailsActivity.this, AddOutletActivity.class);
                 intent.putExtra("outlet", detail);
                 intent.putExtra("isnew", false);
                 startActivity(intent);
-
             }
-
             @Override
             public void onLongClick(View view, int position) {
             }
         }));
 
     }
-
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -133,7 +113,6 @@ public class OutletDetailsActivity extends MainActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
-
     private void loadAddOutletScreen() {
         AddOutletActivity activity = new AddOutletActivity();
         intent = new Intent(OutletDetailsActivity.this, AddOutletActivity.class);
@@ -161,7 +140,6 @@ public class OutletDetailsActivity extends MainActivity {
         // actionbar.setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Welcome !");
         toolbar.setSubtitle("Outlet Details");
-
         toolbar.setTitle("Store-check details");
         toolbar.inflateMenu(R.menu.storecheck_menu);
     }

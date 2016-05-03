@@ -212,17 +212,20 @@ public class StoreCheckDetailsActivity extends AppCompatActivity
 
         ArrayList<Product> products;
 
-        public ProductAdapter(ArrayList<Product> products) {
+        public ProductAdapter(ArrayList<Product> products)
+        {
             this.products = products;
         }
 
         @Override
-        public int getCount() {
+        public int getCount()
+        {
             return products.size();
         }
 
         @Override
-        public Object getItem(int position) {
+        public Object getItem(int position)
+        {
             return products.get(position);
         }
 
