@@ -59,16 +59,11 @@ public class SearchableSpinner extends Spinner implements View.OnTouchListener,
 
             if (null != adapter) {
 
-                // Refresh content #6
-                // Change Start
-                // Description: The items were only set initially, not reloading the data in the
-                // spinner every time it is loaded with items in the adapter.
+
                 _items.clear();
                 for (int i = 0; i < adapter.getCount(); i++) {
                     _items.add(((Product)adapter.getItem(i)).get_product_name());
                 }
-                // Change end.
-
                 _searchableListDialog.show(scanForActivity(_context).getFragmentManager(),"TAG");
             }
         }

@@ -60,19 +60,14 @@ import me.zhanghai.android.materialprogressbar.MaterialProgressBar;
 public class StoreCheckDetailsActivity extends AppCompatActivity
 {
     public StoreCheckDetailAdapter adapter;
-
     StorecheckDetailsBinding binding;
     Context context;
     Intent intent;
-
     DatabaseHelper dbHelper;
     android.support.v7.widget.Toolbar toolbar;
-
     DrawerLayout mDrawerLayout;
     private SearchView.OnQueryTextListener queryTextListener;
-
     MaterialProgressBar progressBar;
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

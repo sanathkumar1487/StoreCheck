@@ -1242,8 +1242,6 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
                 } while (cursor.moveToNext());
             }
             cursor.close();
-
-
             db.close();
         } catch (Exception e) {
             e.printStackTrace();
@@ -1289,9 +1287,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
                     packType.set_id(cursor.getInt(cursor.getColumnIndex(KEY_ID)));
                     packType.set_packtypecode(cursor.getString(cursor.getColumnIndex(KEY_PACKTYPECODE)));
                     packType.set_packtypename(cursor.getString(cursor.getColumnIndex(KEY_PACKTYPENAME)));
-
                     my_array.add(packType);
-
                 } while (cursor.moveToNext());
             }
             cursor.close();
@@ -1429,34 +1425,5 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
                 database.close();
         }
     }
-    public String[] getProductName()
-    {
-        SQLiteDatabase database = this.getReadableDatabase();
-        String query = "select product_name from products";
-        Cursor cursor = database.rawQuery(query, null);
-        String[] product_s = new String[cursor.getCount()];
-        try {
-            if (cursor.moveToFirst())
-            {
-                int i=0;
-                do {
-                    product_s[i]=cursor.getString(cursor.getColumnIndex(KEY_Product_Name));
-                    i++;
 
-                } while ((cursor.moveToNext()));
-            }
-            return product_s ;
-        }
-        catch (Exception ex)
-        {
-            throw ex;
-        }
-        finally
-        {
-            if (cursor != null)
-                cursor.close();
-            if (database != null)
-                database.close();
-        }
-    }
 }

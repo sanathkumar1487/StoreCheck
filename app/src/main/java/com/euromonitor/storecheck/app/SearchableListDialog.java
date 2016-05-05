@@ -39,7 +39,6 @@ public class SearchableListDialog extends DialogFragment implements
     private String _strTitle;
     private String _strPositiveButtonText;
     private DialogInterface.OnClickListener _onClickListener;
-    private DatabaseHelper dbhepler;
     public SearchableListDialog() {
 
     }
@@ -69,17 +68,14 @@ public class SearchableListDialog extends DialogFragment implements
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
-        // Getting the layout inflater to inflate the view in an alert dialog.
+
         LayoutInflater inflater = LayoutInflater.from(getActivity());
 
-        // Crash on orientation change #7
-        // Change Start
-        // Description: As the instance was re initializing to null on rotating the device,
-        // getting the instance from the saved instance
+
         if (null != savedInstanceState) {
             _searchableItem = (SearchableItem) savedInstanceState.getSerializable("item");
         }
-        // Change End
+
 
         View rootView = inflater.inflate(R.layout.searchable_list_dialog, null);
         setData(rootView);
@@ -95,15 +91,12 @@ public class SearchableListDialog extends DialogFragment implements
         return dialog;
     }
 
-    // Crash on orientation change #7
-    // Change Start
-    // Description: Saving the instance of searchable item instance.
+
     @Override
     public void onSaveInstanceState(Bundle outState) {
         outState.putSerializable("item", _searchableItem);
         super.onSaveInstanceState(outState);
     }
-    // Change End
 
     public void setTitle(String strTitle) {
         _strTitle = strTitle;
@@ -135,8 +128,7 @@ public class SearchableListDialog extends DialogFragment implements
         mgr.hideSoftInputFromWindow(_searchView.getWindowToken(), 0);
 
      List items = (List) getArguments().getSerializable(ITEMS);
-         // dbhepler=new DatabaseHelper(getContext());
-         //String[] items=dbhepler.getProductName();
+
          _listViewItems = (ListView) rootView.findViewById(R.id.listItems);
 
         //create the adapter by passing your ArrayList data
