@@ -83,12 +83,13 @@ public class AddOutletActivity extends AppCompatActivity
         db = new DatabaseHelper(this);
 
 
-        item=db.getOutletName();
+            item=db.getOutletName();
             spinner = (Spinner) view.findViewById(R.id.spinner);
             textView = (TextView) view.findViewById(R.id.header);
             outLet_Name = (AutoCompleteTextView) view.findViewById(R.id.outlet_Name);
             adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, item);
             outLet_Name.setAdapter(adapter);
+            outLet_Name.setThreshold(1);
             city = (EditText) view.findViewById(R.id.city);
             setOutlet((Outlet) getIntent().getSerializableExtra("outlet"));
             isNew = (boolean) getIntent().getSerializableExtra("isnew");

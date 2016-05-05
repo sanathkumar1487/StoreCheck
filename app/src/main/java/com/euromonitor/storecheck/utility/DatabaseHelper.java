@@ -1429,4 +1429,34 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
                 database.close();
         }
     }
+    public String[] getProductName()
+    {
+        SQLiteDatabase database = this.getReadableDatabase();
+        String query = "select product_name from products";
+        Cursor cursor = database.rawQuery(query, null);
+        String[] product_s = new String[cursor.getCount()];
+        try {
+            if (cursor.moveToFirst())
+            {
+                int i=0;
+                do {
+                    product_s[i]=cursor.getString(cursor.getColumnIndex(KEY_Product_Name));
+                    i++;
+
+                } while ((cursor.moveToNext()));
+            }
+            return product_s ;
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+        finally
+        {
+            if (cursor != null)
+                cursor.close();
+            if (database != null)
+                database.close();
+        }
+    }
 }

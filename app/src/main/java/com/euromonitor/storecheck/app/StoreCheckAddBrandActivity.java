@@ -95,6 +95,7 @@ public class StoreCheckAddBrandActivity extends AppCompatActivity
             nbo_name=(AutoCompleteTextView)findViewById(R.id.nboName);
             adapter=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,item);
             nbo_name.setAdapter(adapter);
+            nbo_name.setThreshold(1);
         }
         else
         {

@@ -87,8 +87,8 @@ public class StoreCheckDetailsActivity extends AppCompatActivity
         progressBar.getProgressDrawable().setColorFilter(Color.parseColor("#42A5F5"), PorterDuff.Mode.SRC_IN);
         setupToolbar();
         setUpNavigationView();
-
-        if (dbHelper.isDatabaseAvailable()) {
+        if (dbHelper.isDatabaseAvailable())
+        {
             setSpinner();
 
         } else
@@ -167,7 +167,7 @@ public class StoreCheckDetailsActivity extends AppCompatActivity
     }
 
     private void setSpinner(){
-        Spinner packTypeSpinner =  (Spinner)findViewById(R.id.products);
+        SearchableSpinner packTypeSpinner =  (SearchableSpinner)findViewById(R.id.products);
         ArrayList<Product> products = dbHelper.getAllProducts();
         StoreCheckDetailsActivity.ProductAdapter productAdapter = new StoreCheckDetailsActivity.ProductAdapter(products);
         packTypeSpinner.setAdapter(productAdapter);
