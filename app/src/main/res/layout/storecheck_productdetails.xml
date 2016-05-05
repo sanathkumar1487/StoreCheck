@@ -1,7 +1,8 @@
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
     <data>
         <variable
             name="pricingDetail"
@@ -11,163 +12,174 @@
         android:id="@+id/addProductDetails_Drawer"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <android.support.v7.widget.Toolbar
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
-            android:minHeight="?attr/actionBarSize"
-            app:popupTheme="@style/PopupTheme"
-            android:theme="@style/ToolBarTheme"
-            android:id="@+id/productDetailsToolbar"/>
-        <GridLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:rowCount="9"
-            android:columnCount="2">
-            <Spinner
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/default_font_size"
-                android:textColor="@color/blue_600"
-                android:id="@+id/brands"
-                android:layout_row="0"
-                android:layout_column="0"
-                android:layout_columnSpan="2"
-                android:layout_margin="@dimen/material_item_margin"/>
+            android:layout_height="match_parent">
 
-            <TextView
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:text="@string/outlet"
-                android:layout_row="1"
-                android:layout_column="0"
-                android:layout_margin="@dimen/default_margin"
-                android:textColor="@color/grey_700"/>
-
-            <Spinner
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_row="1"
-                android:layout_column="1"
-                android:layout_margin="@dimen/material_item_margin"
-                android:drawSelectorOnTop="true"
-                android:theme="@style/MaterialTheme"
-                android:id="@+id/outlets"/>
-
-            <TextView
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:text="@string/multipack"
-                android:layout_row="2"
-                android:layout_column="0"
-                android:layout_margin="@dimen/default_margin"
-                android:textColor="@color/grey_700"/>
-
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_row="2"
-                android:layout_column="1"
-                android:layout_margin="@dimen/material_item_margin"
-                android:drawSelectorOnTop="true"
-                android:theme="@style/MaterialTheme"
-                android:id="@+id/multiPacks"
-                android:text="@{pricingDetail.multiPack}"
-                android:inputType="number"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/packSize"
-                android:layout_row="3"
-                android:layout_column="0"
-                android:layout_margin="@dimen/material_item_margin"/>
-
-            <EditText
-                android:layout_width="@dimen/maximum_item_width"
-                android:layout_height="wrap_content"
-                android:layout_row="4"
-                android:layout_column="0"
-                android:layout_margin="@dimen/material_item_margin"
-                android:id="@+id/packSize"
-                android:text="@{pricingDetail.packSize}"
-                android:inputType="number"/>
-
-            <Spinner
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_row="4"
-                android:layout_column="1"
-                android:layout_margin="@dimen/material_item_margin"
-                android:drawSelectorOnTop="true"
-                android:theme="@style/MaterialTheme"
-                android:id="@+id/units"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/product_price"
-                android:layout_margin="@dimen/material_item_margin"
-                android:layout_row="5"
-                android:layout_column="0"
-                />
-
-            <EditText
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/material_item_margin"
-                android:layout_row="5"
-                android:layout_column="1"
-                android:id="@+id/price"
-                android:text="@{pricingDetail.price}"
-                android:inputType="numberDecimal"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/packType"
-                android:layout_margin="@dimen/material_item_margin"
-                android:layout_row="6"
-                android:layout_column="0"
-                />
-            <Spinner
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_row="6"
-                android:layout_column="1"
-                android:layout_margin="@dimen/material_item_margin"
-                android:drawSelectorOnTop="true"
-                android:theme="@style/MaterialTheme"
-                android:id="@+id/packType"/>
-
-            <LinearLayout
+            <android.support.v7.widget.Toolbar
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_row="7"
-                android:layout_columnSpan="2"
-                android:layout_column="0"
-                android:orientation="vertical"
-                android:layout_margin="@dimen/default_margin">
+                android:background="@color/colorPrimary"
+                android:minHeight="?attr/actionBarSize"
+                app:popupTheme="@style/PopupTheme"
+                android:theme="@style/ToolBarTheme"
+                android:id="@+id/productDetailsToolbar"/>
+
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:rowCount="9"
+                android:columnCount="2">
+
+                <TextView
+                    android:id="@+id/productName"
+                    android:layout_row="0"
+                    android:layout_column="0"
+                    android:textSize="@dimen/default_font_size"
+                    android:layout_margin="@dimen/material_item_margin"
+                    android:textColor="@color/blue_300"
+                    android:text="@{pricingDetail.productName}"/>
+
+                <TextView
+                    android:id="@+id/brandName"
+                    android:layout_row="0"
+                    android:layout_column="1"
+                    android:textSize="@dimen/default_font_size"
+                    android:layout_margin="@dimen/material_item_margin"
+                    android:text="@{pricingDetail.brandName}"
+                    android:textColor="@color/blue_300"/>
+
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:text="@string/outlet"
+                    android:layout_row="1"
+                    android:layout_column="0"
+                    android:layout_margin="@dimen/default_margin"
+                    android:textColor="@color/grey_700"/>
+
+                <Spinner
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_row="1"
+                    android:layout_column="1"
+                    android:layout_margin="@dimen/material_item_margin"
+                    android:drawSelectorOnTop="true"
+                    android:theme="@style/MaterialTheme"
+                    android:id="@+id/outlets"/>
+
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:text="@string/multipack"
+                    android:layout_row="2"
+                    android:layout_column="0"
+                    android:layout_margin="@dimen/default_margin"
+                    android:textColor="@color/grey_700"/>
+
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_row="2"
+                    android:layout_column="1"
+                    android:layout_margin="@dimen/material_item_margin"
+                    android:drawSelectorOnTop="true"
+                    android:theme="@style/MaterialTheme"
+                    android:id="@+id/multiPacks"
+                    android:text="@{pricingDetail.multiPack}"
+                    android:inputType="number"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/customFields"/>
+                    android:text="@string/packSize"
+                    android:layout_row="3"
+                    android:layout_column="0"
+                    android:layout_margin="@dimen/material_item_margin"/>
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/customFields"
+                <EditText
+                    android:layout_width="@dimen/maximum_item_width"
+                    android:layout_height="wrap_content"
+                    android:layout_row="4"
+                    android:layout_column="0"
+                    android:layout_margin="@dimen/material_item_margin"
+                    android:id="@+id/packSize"
+                    android:text="@{pricingDetail.packSize}"
+                    android:inputType="number"/>
+
+                <Spinner
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_row="4"
+                    android:layout_column="1"
+                    android:layout_margin="@dimen/material_item_margin"
+                    android:drawSelectorOnTop="true"
+                    android:theme="@style/MaterialTheme"
+                    android:id="@+id/units"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/product_price"
+                    android:layout_margin="@dimen/material_item_margin"
+                    android:layout_row="5"
+                    android:layout_column="0"
+                    />
+
+                <EditText
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/material_item_margin"
+                    android:layout_row="5"
+                    android:layout_column="1"
+                    android:id="@+id/price"
+                    android:text="@{pricingDetail.price}"
+                    android:inputType="numberDecimal"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/packType"
+                    android:layout_margin="@dimen/material_item_margin"
+                    android:layout_row="6"
+                    android:layout_column="0"
+                    />
+
+                <Spinner
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_row="6"
+                    android:layout_column="1"
+                    android:layout_margin="@dimen/material_item_margin"
+                    android:drawSelectorOnTop="true"
+                    android:theme="@style/MaterialTheme"
+                    android:id="@+id/packType"/>
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"/>
+                    android:layout_row="7"
+                    android:layout_columnSpan="2"
+                    android:layout_column="0"
+                    android:orientation="vertical"
+                    android:layout_margin="@dimen/default_margin">
 
-            </LinearLayout>
-        </GridLayout>
-    </LinearLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/customFields"/>
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/customFields"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"/>
+
+                </LinearLayout>
+            </GridLayout>
+        </LinearLayout>
         <FrameLayout
             android:id="@+id/navDrawerFrame"
             android:name="com.euromonitor.storecheck.app.StoreCheckNavigationFragment"

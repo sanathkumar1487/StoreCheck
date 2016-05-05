@@ -5,6 +5,7 @@ package com.euromonitor.storecheck.model;
  */
 public class Option {
 
+    private int id;
     private boolean _is_dropdown;
     private String OptionId;
     private String OptionName;
@@ -49,6 +50,14 @@ public class Option {
         this._is_dropdown = _is_dropdown;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getOptionId() {
         return OptionId;
     }
@@ -64,6 +73,16 @@ public class Option {
     public void setOptionName(String optionName) {
         OptionName = optionName;
     }
+
+    public String getOptionValue() {
+        return optionValue;
+    }
+
+    public void setOptionValue(String optionValue) {
+        this.optionValue = optionValue;
+    }
+
+    private String optionValue;
 
     public String getMinimumAllowed() {
         return MinimumAllowed;

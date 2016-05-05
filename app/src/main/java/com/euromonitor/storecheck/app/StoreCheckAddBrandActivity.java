@@ -66,9 +66,11 @@ public class StoreCheckAddBrandActivity extends AppCompatActivity
     final static String CustomCompanyID="4";
     StorecheckAddbrandBinding binding;
     StoreCheckBrand storeCheckBrand;
-    RecyclerView customFieldRecyclerView;
     DatabaseHelper databaseHelper;
+    RecyclerView customFieldRecyclerView;
     ArrayList<CustomField> customFields = new ArrayList<CustomField>() ;
+    boolean isUpdated = false;
+
     // Navigation
     DrawerLayout mDrawerLayout;
     Context context;
@@ -76,48 +78,31 @@ public class StoreCheckAddBrandActivity extends AppCompatActivity
     android.support.v7.widget.Toolbar toolbar;
     AutoCompleteTextView nbo_name;
     String[] item=new String[]{"Please search here"};
+
+
     @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.storecheck_addbrand);
         context = this;
+
         databaseHelper = new DatabaseHelper(this);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.addBrand_Drawer);
+
         setupToolbar();
         setUpNavigationView();
-<<<<<<< HEAD
-<<<<<<< HEAD
 
-=======
->>>>>>> parent of 3981de9... Pricing screen
         setBinding();
+
         View view = binding.getRoot();
+
         customFieldRecyclerView = (RecyclerView) view.findViewById(R.id.customFields);
-        item=databaseHelper.getNboName();
-        nbo_name=(AutoCompleteTextView)findViewById(R.id.nboName);
-        adapter=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,item);
+        item = databaseHelper.getNboName();
+        nbo_name = (AutoCompleteTextView) findViewById(R.id.nboName);
+        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, item);
         nbo_name.setAdapter(adapter);
     }
-=======
-        if(databaseHelper.isDatabaseAvailable())
-        {
-            setBinding();
-            View view = binding.getRoot();
-            customFieldRecyclerView = (RecyclerView) view.findViewById(R.id.customFields);
-            item=databaseHelper.getNboName();
-            nbo_name=(AutoCompleteTextView)findViewById(R.id.nboName);
-            adapter=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,item);
-            nbo_name.setAdapter(adapter);
-            nbo_name.setThreshold(1);
-        }
-        else
-        {
-            Toast.makeText(this,"Please import EMMA generated file to proceed!",Toast.LENGTH_LONG).show();
-        }
->>>>>>> c6a452318bb6df254bd2303f424664fe7be132b5
 
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -126,27 +111,14 @@ public class StoreCheckAddBrandActivity extends AppCompatActivity
         return true;
     }
 
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.Save:
-                if(databaseHelper.isDatabaseAvailable()) {
-                    validateData();
-                    return true;
-                }
-                else
-                {
-                    Toast.makeText(this,"Please import EMMA generated file to proceed!",Toast.LENGTH_LONG).show();
-                }
+                validateData();
+                return true;
             case R.id.Clear:
-                if(databaseHelper.isDatabaseAvailable()) {
-                    resetData();
-                }
-                else
-                {
-                    Toast.makeText(this,"Please import EMMA generated file to proceed!",Toast.LENGTH_LONG).show();
-                }
+                resetData();
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -189,8 +161,10 @@ public class StoreCheckAddBrandActivity extends AppCompatActivity
 
         setBindingProperties();
     }
+
     private void validateData() {
         setBindingProperties();
+
         StoreCheckBrand data = binding.getStoreCheckBrand();
         boolean isValid = true;
         String errors = "Please correct the following errors: ";
@@ -198,13 +172,16 @@ public class StoreCheckAddBrandActivity extends AppCompatActivity
             errors += "\n Brand is required";
             isValid = false;
         }
+
         if (data.getNBO() == null || data.getNBO().equals("")) {
             errors += "\n NBO is required";
             isValid = false;
         }
+
         ArrayList<CustomField> customFields = data.getCustomFields();
         if (customFields != null) {
             for (CustomField cf : customFields) {
+
                 Option selectedOption = cf.getSelectedOption();
                 if (selectedOption != null) {
                     if (selectedOption.getMinimumAllowed().equals("0") && selectedOption.getMaximumAllowed().equals("0")) {
@@ -254,7 +231,7 @@ public class StoreCheckAddBrandActivity extends AppCompatActivity
         }
 
         if (isValid) {
-            if(databaseHelper.saveBrand(data)){
+            if(databaseHelper.saveBrand(data, isUpdated)){
                 binding.brandName.setText(null);
                 binding.nboName.setText(null);
                 Spinner productSpinner = (Spinner) ((View) (binding.getRoot()).findViewById(R.id.products));
@@ -340,16 +317,18 @@ public class StoreCheckAddBrandActivity extends AppCompatActivity
     }
 
     private void setCustomFieldByProductCode(int productCode) {
-        customFields = databaseHelper.getCustomFieldByProductCode(productCode, customFields);
+        customFields = databaseHelper.getCustomFieldByProductCode(productCode, 1, customFields);
         customFields = databaseHelper.updateCustomFieldOptions(customFields);
     }
 
-    public class ProductAdapter extends BaseAdapter implements SpinnerAdapter
-    {
+    public class ProductAdapter extends BaseAdapter implements SpinnerAdapter {
+
         private ArrayList<Product> products;
+
         public  ProductAdapter(ArrayList<Product> products){
             this.products = products;
         }
+
         @Override
         public int getCount() {
             return products.size();
@@ -383,7 +362,4 @@ public class StoreCheckAddBrandActivity extends AppCompatActivity
             return productItemView;
         }
     }
-
-
-
 }

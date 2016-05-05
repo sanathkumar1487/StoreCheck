@@ -4,13 +4,17 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,8 +27,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.euromonitor.storecheck.R;
+import com.euromonitor.storecheck.adapter.StoreCheckCustomFieldsAdapter;
 import com.euromonitor.storecheck.databinding.StorecheckProductdetailsBinding;
+import com.euromonitor.storecheck.model.CustomField;
 import com.euromonitor.storecheck.model.Market;
+import com.euromonitor.storecheck.model.Option;
 import com.euromonitor.storecheck.model.Outlet;
 import com.euromonitor.storecheck.model.PackType;
 import com.euromonitor.storecheck.model.PricingDetail;
@@ -34,72 +41,66 @@ import com.euromonitor.storecheck.model.Unit;
 import com.euromonitor.storecheck.utility.DatabaseHelper;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * Created by Shashwat.Bajpai on 19/04/2016.
  */
-public class StoreCheckAddProductDetailsActivity extends AppCompatActivity
-{
+public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
     public static int priceId;
+
     public static int brandId;
     public static boolean brandIsNew;
-<<<<<<< HEAD
-<<<<<<< HEAD
     public static int productCode;
     public static String productName;
     public static String brandName;
-=======
-    public  static  int productCode;
->>>>>>> parent of 3981de9... Pricing screen
 
 
-=======
-    public  static  int productCode;
->>>>>>> c6a452318bb6df254bd2303f424664fe7be132b5
     ArrayList<Market> markets;
+    ArrayList<CustomField> customFields = new ArrayList<CustomField>();
     String errors;
+
     PricingDetail pricingDetail;
     StorecheckProductdetailsBinding binding;
+
     DatabaseHelper databaseHelper;
     DrawerLayout drawerLayout;
     android.support.v7.widget.Toolbar toolbar;
-<<<<<<< HEAD
-<<<<<<< HEAD
     RecyclerView customFieldRecyclerView;
 
     boolean isUpdate = true;
 
     Context context;
-=======
-    Spinner brandSpinner;
->>>>>>> parent of 3981de9... Pricing screen
 
-=======
-    Spinner brandSpinner;
->>>>>>> c6a452318bb6df254bd2303f424664fe7be132b5
     @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.storecheck_productdetails);
-<<<<<<< HEAD
+
+        context = this;
 
         drawerLayout = (DrawerLayout) findViewById(R.id.addProductDetails_Drawer);
+        customFieldRecyclerView = (RecyclerView) findViewById(R.id.customFields);
 
         databaseHelper = new DatabaseHelper(this);
 
         setupToolbar();
         setUpNavigationView();
 
+        if(databaseHelper.isDatabaseAvailable()) {
+            setSpinners();
 
-        setSpinners();
+            setBinding();
 
-        setBinding();
+            setCustomFields(productCode, 2);
 
-        binding.setPricingDetail(pricingDetail);
+            binding.setPricingDetail(pricingDetail);
+        }
+        else {
+            Toast.makeText(this,"Please import EMMA generated file to proceed!",Toast.LENGTH_LONG).show();
+        }
     }
 
-<<<<<<< HEAD
     private void setCustomFields(int productCode, int typeId) {
         setCustomFieldByProductCode(productCode, typeId);
         pricingDetail.setCustomFields(customFields);
@@ -114,64 +115,19 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity
         }
     }
 
-=======
-        drawerLayout = (DrawerLayout) findViewById(R.id.addProductDetails_Drawer);
-        databaseHelper = new DatabaseHelper(this);
-        if(databaseHelper.isDatabaseAvailable())
-        {
-            setupToolbar();
-            setUpNavigationView();
-            setSpinners();
-            setBinding();
-            binding.setPricingDetail(pricingDetail);
-        }
-        else
-        {
-            setupToolbar();
-            setUpNavigationView();
-            Toast.makeText(this,"Please import EMMA generated file to proceed!",Toast.LENGTH_LONG).show();
-        }
-    }
->>>>>>> c6a452318bb6df254bd2303f424664fe7be132b5
-=======
->>>>>>> parent of 3981de9... Pricing screen
     @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
+    public boolean onCreateOptionsMenu(Menu menu) {
         menu.clear();
         getMenuInflater().inflate(R.menu.addoutlet_menu, menu);
         return true;
     }
 
     @Override
-<<<<<<< HEAD
-<<<<<<< HEAD
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-=======
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-
-
-        switch (item.getItemId())
-        {
->>>>>>> c6a452318bb6df254bd2303f424664fe7be132b5
-=======
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        switch (item.getItemId())
-        {
->>>>>>> parent of 3981de9... Pricing screen
             case R.id.Save:
-                if(databaseHelper.isDatabaseAvailable())
-                {
-                    SavePricing();
-                    return true;
-                }
-                else
-                {
-                    Toast.makeText(this,"Please import EMMA generated file to proceed!",Toast.LENGTH_LONG).show();
-                }
+                SavePricing();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -179,76 +135,132 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity
 
     private void SavePricing() {
         setBindingProperties();
-        if(validateData()){
-            databaseHelper.savePricingDetails(binding.getPricingDetail());
-        }
-        else {
+        if (validateData()) {
+            if (databaseHelper.savePricingDetails(binding.getPricingDetail(), isUpdate)) {
+                Toast.makeText(this.getBaseContext(), "Saved successfully!", Toast.LENGTH_LONG).show();
+            }else {
+                Toast.makeText(this.getBaseContext(), "Unable to save!", Toast.LENGTH_LONG).show();
+            }
+
+        } else {
             Toast.makeText(this.getBaseContext(), errors, Toast.LENGTH_LONG).show();
         }
     }
 
     private boolean validateData() {
-        boolean isValid=true;
+        boolean isValid = true;
 
         errors = "Please correct the following errors!";
         PricingDetail detail = binding.getPricingDetail();
         // Multipack Size
-        if(detail.getMultiPack()==null || detail.getMultiPack().equals("0")){
+        if (detail.getMultiPack() == null || detail.getMultiPack().equals("0")) {
             errors = errors + "\nMultipack field value is invalid";
             isValid = false;
         }
 
         // Pack Size
-        if(detail.getPackSize()==null || detail.getPackSize().equals("0")){
+        if (detail.getPackSize() == null || detail.getPackSize().equals("0")) {
             errors = errors + "\nPack-size field value is invalid";
             isValid = false;
         }
 
         // Price
-        if(detail.getPrice()==null || detail.getPrice().equals("0")){
+        if (detail.getPrice() == null || detail.getPrice().equals("0")) {
             errors = errors + "\nPrice field value is invalid";
             isValid = false;
+        }
+
+        ArrayList<CustomField> customFields = detail.getCustomFields();
+        if (customFields != null) {
+            for (CustomField cf : customFields) {
+
+                Option selectedOption = cf.getSelectedOption();
+                if (selectedOption != null) {
+                    if (selectedOption.getMinimumAllowed().equals("0") && selectedOption.getMaximumAllowed().equals("0")) {
+                        if (isValid) {
+                            isValid = true;
+                        }
+                    } else if (cf.get_object_id().equals(StoreCheckAddBrandActivity.TextBox)) {
+                        double minimum = 0;
+                        if (selectedOption.getMinimumAllowed() != null) {
+                            minimum = Double.parseDouble(selectedOption.getMinimumAllowed());
+                        }
+
+                        double maximum = 0;
+                        boolean noMaximum = true;
+                        if (selectedOption.getMaximumAllowed() != null) {
+                            maximum = Double.parseDouble(selectedOption.getMaximumAllowed());
+                            noMaximum = false;
+                        }
+                        double cfValue = 0;
+
+                        try {
+
+                            if (cf.getCustomFieldTextValue() != null) {
+                                cfValue = Double.parseDouble(cf.getCustomFieldTextValue());
+                            }
+
+                            if (!cf.getIsNumeric()) {
+                                if (cf.getCustomFieldTextValue() != null) {
+                                    cfValue = cf.getCustomFieldTextValue().trim().length();
+                                }
+                            }
+
+                            if (!validateValue(cfValue, minimum, maximum, noMaximum, cf.getIsZeroAllowed())) {
+                                errors += "\n" + cf.get_label() + " value should be between " + minimum + " and " + maximum;
+                                isValid = false;
+                            }
+                        } catch (NumberFormatException e) {
+                            cfValue = cf.getCustomFieldTextValue().length();
+                            if (!validateValue(cfValue, minimum, maximum, noMaximum, cf.getIsZeroAllowed())) {
+                                errors += "\n" + cf.get_label() + " text should be between " + minimum + " and " + maximum;
+                                isValid = false;
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         return isValid;
     }
 
-    private void setBindingProperties(){
+    private boolean validateValue(double value, double minimumAllowed, double maximumAllowed, boolean noMaximum, boolean isZeroAllowed) {
+        return value >= minimumAllowed && (value <= maximumAllowed || noMaximum || maximumAllowed == 0) || (isZeroAllowed && value == 0);
+    }
+
+    private void setBindingProperties() {
         String newValue = null;
-        if(binding.multiPacks.getText()!=null){
+        if (binding.multiPacks.getText() != null) {
             newValue = binding.multiPacks.getText().toString();
         }
-        binding.getPricingDetail().setMultiPack(newValue!=null?Integer.valueOf(newValue):0);
+        binding.getPricingDetail().setMultiPack(newValue != null ? Integer.valueOf(newValue) : 0);
 
         newValue = null;
-        if(binding.packSize.getText()!=null){
+        if (binding.packSize.getText() != null) {
             newValue = binding.packSize.getText().toString();
         }
         binding.getPricingDetail().setPackSize(newValue != null ? Integer.valueOf(newValue) : 0);
 
         newValue = null;
-        if(binding.price.getText()!=null){
+        if (binding.price.getText() != null) {
             newValue = binding.price.getText().toString();
         }
         binding.getPricingDetail().setPrice(newValue != null ? Double.valueOf(newValue) : 0.0);
     }
-<<<<<<< HEAD
 
-    public void setupToolbar(){
+    public void setupToolbar() {
 
-=======
-       public void setupToolbar(){
->>>>>>> c6a452318bb6df254bd2303f424664fe7be132b5
         toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.productDetailsToolbar);
         setSupportActionBar(toolbar);
         // actionbar.setDisplayHomeAsUpEnabled(true);
         toolbar.setSubtitle("Add/Edit Price Details");
+
         toolbar.setTitle("Store-Check");
         toolbar.inflateMenu(R.menu.addoutlet_menu);
     }
+
     private void setUpNavigationView() {
-<<<<<<< HEAD
-<<<<<<< HEAD
         Fragment navFragment = StoreCheckNavigationFragment.newInstance(drawerLayout.getId(), toolbar.getId());
         FragmentManager fragmentManager = this.getFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
@@ -263,68 +275,23 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity
             pricingDetail = new PricingDetail();
             pricingDetail.setPricingId(priceId);
             pricingDetail.setBrandName(brandName);
-=======
-        try {
-            Fragment navFragment = StoreCheckNavigationFragment.newInstance(drawerLayout.getId(), toolbar.getId());
-=======
-        try {
-            Fragment navFragment = StoreCheckNavigationFragment.newInstance(drawerLayout.getId(), toolbar.getId());
 
->>>>>>> parent of 3981de9... Pricing screen
-            FragmentManager fragmentManager = this.getFragmentManager();
-            FragmentTransaction ft = fragmentManager.beginTransaction();
-            ft.replace(R.id.navDrawerFrame, navFragment, "Nav");
-            ft.commit();
-<<<<<<< HEAD
->>>>>>> c6a452318bb6df254bd2303f424664fe7be132b5
-=======
->>>>>>> parent of 3981de9... Pricing screen
-
-        } catch (Exception e) {
-            Log.e("Setup Drawer", e.getMessage());
         }
-<<<<<<< HEAD
-<<<<<<< HEAD
         pricingDetail.setProductName(productName.trim());
 
         if (brandId > 0) {
             binding.setPricingDetail(pricingDetail);
-=======
-    }
-=======
-    }
-
->>>>>>> parent of 3981de9... Pricing screen
-    private void setBinding(){
-        pricingDetail = new PricingDetail();
-        if(brandId>0) {
-            for (int index=0;index<markets.size();index++) {
-                if(brandIsNew){
-                    if(markets.get(index).get_id() == brandId){
-                        brandSpinner.setSelection(index);
-                    }
-                }else{
-                    if(markets.get(index).get_brand_market_id().equals(String .valueOf(brandId))){
-                        brandSpinner.setSelection(index);
-                    }
-                }
-            }
-<<<<<<< HEAD
->>>>>>> c6a452318bb6df254bd2303f424664fe7be132b5
-=======
->>>>>>> parent of 3981de9... Pricing screen
         }
     }
 
-    private void setSpinners(){
+    private void setSpinners() {
         setOutletSpinner();
         setUnitSpinner();
-        setMarketSpinner();
         setPackTypeSpinner();
     }
 
-    private void setOutletSpinner(){
-        Spinner outletSpinner = (Spinner)findViewById(R.id.outlets);
+    private void setOutletSpinner() {
+        Spinner outletSpinner = (Spinner) findViewById(R.id.outlets);
 
         ArrayList<Outlet> outlets = databaseHelper.getOutlets();
 
@@ -347,8 +314,8 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity
 
     }
 
-    private void setUnitSpinner(){
-        Spinner unitSpinner = (Spinner)findViewById(R.id.units);
+    private void setUnitSpinner() {
+        Spinner unitSpinner = (Spinner) findViewById(R.id.units);
         ArrayList<Unit> units = databaseHelper.getUnits();
 
         StoreCheckAddProductDetailsActivity.UnitAdapter unitAdapter = new StoreCheckAddProductDetailsActivity.UnitAdapter(units);
@@ -356,26 +323,34 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity
 
     }
 
-    private void setMarketSpinner(){
-        brandSpinner =  (Spinner)findViewById(R.id.brands);
-        markets = databaseHelper.getBrands();
-        StoreCheckAddProductDetailsActivity.BrandAdapter brandAdapter = new StoreCheckAddProductDetailsActivity.BrandAdapter(markets);
-        brandSpinner.setAdapter(brandAdapter);
+    private void setCustomFieldByProductCode(int productCode, int typeId) {
+
+        customFields = databaseHelper.getCustomFieldByProductCode(productCode, typeId, customFields);
+        customFields = databaseHelper.updateCustomFieldOptions(customFields);
+
+        if (isUpdate) {
+            for (CustomField preCustomFields : pricingDetail.getCustomFields()) {
+                for (CustomField cf : customFields) {
+                    if (cf.getUniqueID().equals(preCustomFields.getUniqueID())) {
+                        cf.setSelectedOption(preCustomFields.getSelectedOption());
+                        if(cf.get_object_id().equals("1")) {
+                            cf.setCustomFieldTextValue(preCustomFields.getCustomFieldTextValue());
+                        }
+                        break;
+                    }
+                }
+            }
+        }
     }
 
-    private void setPackTypeSpinner(){
-        Spinner packTypeSpinner =  (Spinner)findViewById(R.id.packType);
+    private void setPackTypeSpinner() {
+        Spinner packTypeSpinner = (Spinner) findViewById(R.id.packType);
         ArrayList<PackType> packTypes = databaseHelper.getPackTypeByProduct(productCode);
         StoreCheckAddProductDetailsActivity.PackTypeAdapter packTypeAdapter = new StoreCheckAddProductDetailsActivity.PackTypeAdapter(packTypes);
         packTypeSpinner.setAdapter(packTypeAdapter);
-
     }
 
-    private void loadPricingDetails(){
-        databaseHelper.getPricingDetails(brandId, priceId);
-    }
-
-    public class OutletAdapter extends BaseAdapter implements SpinnerAdapter{
+    public class OutletAdapter extends BaseAdapter implements SpinnerAdapter {
 
         ArrayList<Outlet> outlets = new ArrayList<>();
 
@@ -401,9 +376,9 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             View outletView;
-            if(convertView!=null){
+            if (convertView != null) {
                 outletView = convertView;
-            }else {
+            } else {
                 outletView = getLayoutInflater().inflate(R.layout.storecheck_productitem, parent, false);
             }
 
@@ -414,7 +389,7 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity
         }
     }
 
-    public class UnitAdapter extends BaseAdapter implements SpinnerAdapter{
+    public class UnitAdapter extends BaseAdapter implements SpinnerAdapter {
         ArrayList<Unit> units = new ArrayList<>();
 
         public UnitAdapter(ArrayList<Unit> units) {
@@ -439,9 +414,9 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             View unitView;
-            if(convertView!=null){
+            if (convertView != null) {
                 unitView = convertView;
-            }else {
+            } else {
                 unitView = getLayoutInflater().inflate(R.layout.storecheck_productitem, parent, false);
             }
 
@@ -452,47 +427,7 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity
         }
     }
 
-    public class BrandAdapter extends BaseAdapter implements SpinnerAdapter{
-
-        ArrayList<Market> brands;
-
-        public BrandAdapter(ArrayList<Market> brands) {
-            this.brands = brands;
-        }
-
-        @Override
-        public int getCount() {
-            return brands.size();
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return brands.get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return Long.valueOf(position);
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            View brandView;
-            if(convertView!=null){
-                brandView = convertView;
-            }else {
-                brandView = getLayoutInflater().inflate(R.layout.storecheck_productitem, parent, false);
-            }
-
-            TextView outletItem = (TextView) brandView.findViewById(R.id.productItem);
-            outletItem.setText(brands.get(position).get_brand());
-            outletItem.setTextColor(Color.parseColor("#42A5F5"));
-
-            return brandView;
-        }
-    }
-
-    public class PackTypeAdapter extends BaseAdapter implements SpinnerAdapter{
+    public class PackTypeAdapter extends BaseAdapter implements SpinnerAdapter {
 
         ArrayList<PackType> packTypes;
 
@@ -518,9 +453,9 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             View packTypeView;
-            if(convertView!=null){
+            if (convertView != null) {
                 packTypeView = convertView;
-            }else {
+            } else {
                 packTypeView = getLayoutInflater().inflate(R.layout.storecheck_productitem, parent, false);
             }
 

@@ -129,4 +129,16 @@ public class PricingDetail {
     }
 
     private String id;
+
+    public boolean isUpdated;
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    private String productName;
 }

@@ -248,4 +248,16 @@ public class CustomField  extends BaseObservable {
     public String getCustomFieldTextValue() {
         return this.customFieldTextValue;
     }
+
+    public int getTypeId() {
+        return typeId;
+    }
+
+    public void setTypeId(int typeId) {
+        this.typeId = typeId;
+    }
+
+    @SerializedName("TypeId")
+    private int typeId;
+
 }
