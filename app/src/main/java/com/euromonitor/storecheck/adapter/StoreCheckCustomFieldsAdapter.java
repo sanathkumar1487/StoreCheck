@@ -52,9 +52,14 @@ public class StoreCheckCustomFieldsAdapter extends RecyclerView.Adapter<StoreChe
         StorecheckCustomfieldItemBinding binding = DataBindingUtil.getBinding(holder.itemView);
         binding.setVariable(BR.customField, current);
 
-        OptionsAdapter optionsAdapter = new OptionsAdapter(current.get_options(),layoutInflater);
+        OptionsAdapter optionsAdapter = new OptionsAdapter(current.get_options(), layoutInflater);
 
         holder.optionsSpinner.setAdapter(optionsAdapter);
+        if ((current.get_object_id().equals("1") || current.get_object_id().equals("3"))
+                && current.get_options().size() > 0) {
+            current.setSelectedOption(current.get_options().get(0));
+        }
+
         holder.optionsSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -147,7 +152,7 @@ public class StoreCheckCustomFieldsAdapter extends RecyclerView.Adapter<StoreChe
 
         @Override
         public long getItemId(int position) {
-            return Long.valueOf(options.get(position).getOptionId());
+            return Long.valueOf(options.get(position).getId());
         }
 
         @Override

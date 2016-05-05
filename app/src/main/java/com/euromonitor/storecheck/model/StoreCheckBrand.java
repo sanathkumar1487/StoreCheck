@@ -14,7 +14,7 @@ public class StoreCheckBrand extends BaseObservable {
 
     private ArrayList<Product> products;
 
-    private int selectedProductId;
+    //private int selectedProductId;
 
     private String brand;
 
@@ -42,9 +42,25 @@ public class StoreCheckBrand extends BaseObservable {
         this.customFields = customFields;
     }
 
-    public void setSelectedProductId(int selectedProductId){
-        this.selectedProductId = selectedProductId;
+//    public void setSelectedProductId(int selectedProductId){
+//        this.selectedProductId = selectedProductId;
+//    }
+//
+//    public int getSelectedProductId(){
+//        return this.selectedProductId;
+//    }
+
+
+    public Product getSelectedProduct() {
+        return selectedProduct;
     }
+
+    public void setSelectedProduct(Product selectedProduct) {
+        this.selectedProduct = selectedProduct;
+    }
+
+    private Product selectedProduct;
+
 
     @Bindable
     public Geography getGeography(){
@@ -68,4 +84,15 @@ public class StoreCheckBrand extends BaseObservable {
     public ArrayList<CustomField> getCustomFields(){
         return  customFields;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    private int id;
+
 }

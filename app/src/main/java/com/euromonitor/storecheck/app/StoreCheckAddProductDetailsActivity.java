@@ -49,8 +49,7 @@ import java.util.Objects;
 public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
     public static int priceId;
 
-    public static int brandId;
-    public static boolean brandIsNew;
+    public static long brandId;
     public static int productCode;
     public static String productName;
     public static String brandName;
@@ -273,8 +272,10 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
         if (pricingDetail == null) {
             isUpdate = false;
             pricingDetail = new PricingDetail();
+            pricingDetail.setBrandId(brandId);
             pricingDetail.setPricingId(priceId);
             pricingDetail.setBrandName(brandName);
+            pricingDetail.setProductId(productCode);
 
         }
         pricingDetail.setProductName(productName == null ? "" : productName.trim());
@@ -304,6 +305,8 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
 
                 pricingDetail.setSelectedOutletId(Integer.valueOf(selectedOutlet.get_outlet_id()));
                 pricingDetail.setSelectedOutletName(selectedOutlet.get_outlet_Name());
+                binding.getPricingDetail().setSelectedOutletId(Integer.valueOf(selectedOutlet.get_outlet_id()));
+                binding.getPricingDetail().setSelectedOutletName(selectedOutlet.get_outlet_Name());
             }
 
             @Override
@@ -320,6 +323,19 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
 
         StoreCheckAddProductDetailsActivity.UnitAdapter unitAdapter = new StoreCheckAddProductDetailsActivity.UnitAdapter(units);
         unitSpinner.setAdapter(unitAdapter);
+        unitSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Unit unit = (Unit)parent.getItemAtPosition(position);
+
+                binding.getPricingDetail().setUnitId (Integer.valueOf(unit.get_unit_id()));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
     }
 
@@ -348,6 +364,20 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
         ArrayList<PackType> packTypes = databaseHelper.getPackTypeByProduct(productCode);
         StoreCheckAddProductDetailsActivity.PackTypeAdapter packTypeAdapter = new StoreCheckAddProductDetailsActivity.PackTypeAdapter(packTypes);
         packTypeSpinner.setAdapter(packTypeAdapter);
+        packTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                PackType packType = (PackType)parent.getItemAtPosition(position);
+                binding.getPricingDetail().setPackTypeCode(Integer.valueOf(packType.get_packtypecode()));
+                binding.getPricingDetail().setPackTypeName(packType.get_packtypename());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
     }
 
     public class OutletAdapter extends BaseAdapter implements SpinnerAdapter {

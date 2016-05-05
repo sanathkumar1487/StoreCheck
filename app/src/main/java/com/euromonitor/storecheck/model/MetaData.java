@@ -49,4 +49,15 @@ public class MetaData {
     public int getYear() {
         return year;
     }
+
+    public int getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(int projectId) {
+        this.projectId = projectId;
+    }
+
+    @SerializedName("ProjectId")
+    private int projectId;
 }

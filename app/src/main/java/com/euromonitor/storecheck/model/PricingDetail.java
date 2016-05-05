@@ -141,4 +141,45 @@ public class PricingDetail {
     }
 
     private String productName;
+
+    public int getProductId() {
+        return productId;
+    }
+
+    public void setProductId(int productId) {
+        this.productId = productId;
+    }
+
+    private int productId;
+
+    public int getBrandMarketId() {
+        return brandMarketId;
+    }
+
+    public void setBrandMarketId(int brandMarketId) {
+        this.brandMarketId = brandMarketId;
+    }
+
+    private int brandMarketId;
+
+    public String getNbo() {
+        return nbo;
+    }
+
+    public void setNbo(String nbo) {
+        this.nbo = nbo;
+    }
+
+    private String nbo;
+
+    public long getBrandId() {
+        return brandId;
+    }
+
+    public void setBrandId(long brandId) {
+        this.brandId = brandId;
+    }
+
+    private long brandId;
+
 }

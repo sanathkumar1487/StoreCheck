@@ -230,6 +230,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         values.put(KEY_GEOGRAPHY, storeCheckMetaData.getGeographyName());
         values.put(KEY_INDUSTRY_NAME, storeCheckMetaData.getIndustryName());
         values.put(KEY_YEAR, storeCheckMetaData.getYear());
+        values.put(KEY_PROJECTID, storeCheckMetaData.getProjectId());
         db.insert(TABLE_METADATA, null, values);
         db.close();
     }
@@ -484,6 +485,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
                 + KEY_GEOGRAPHYCODE + " TEXT,"
                 + KEY_GEOGRAPHY + " TEXT, "
                 + KEY_INDUSTRY_NAME + " INT, "
+                + KEY_PROJECTID + " INT, "
                 + KEY_YEAR + " TEXT"
                 + ")";
 
@@ -547,6 +549,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
                 + KEY_UNITCODE + " TEXT,"
                 + KEY_UNITPRICELOCAL + " TEXT,"
                 + KEY_UNITPRICEUS + " TEXT,"
+                + KEY_BRANDID + " TEXT,"
                 + KEY_BRAND + " TEXT,"
                 + KEY_BRANDMARKETID + " TEXT,"
                 + KEY_UPDATED + " TEXT,"
@@ -685,22 +688,6 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         db.close(); // Closing database connection
     }
 
-    // Getting single outlet
-//    Outlet getOutlet(int id) {
-//        SQLiteDatabase db = this.getReadableDatabase();
-//
-//        Cursor cursor = db.query(TABLE_OUTLETS, new String[] { KEY_ID,
-//                        KEY_NAME, KEY_PH_NO }, KEY_ID + "=?",
-//                new String[] { String.valueOf(id) }, null, null, null, null);
-//        if (cursor != null)
-//            cursor.moveToFirst();
-//
-//        Outlet outlet = new Outlet(Integer.parseInt(cursor.getString(0)),
-//                cursor.getString(1), cursor.getString(2));
-//        // return outlet
-//        return outlet;
-//    }
-
     // Getting All Outlets
     public List<Outlet> getAllOutlets() {
         List<Outlet> outletList = new ArrayList<Outlet>();
@@ -756,11 +743,6 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
             return alc;
         }
     }
-
-//
-//    select * from details  d
-//    inner join    products p on p. product_id =   d.productid   inner join   (select distinct unitid,unitname,unitbase  from units) u
-//    on u.unitid = d.unitcode
 
     public ArrayList<StoreCheckDetail> GetAllProductDetails() {
         SQLiteDatabase database = this.getReadableDatabase();
@@ -1012,19 +994,33 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         return products;
     }
 
-    public boolean saveBrand(StoreCheckBrand brand, boolean isUpdate) {
+    public long saveBrand(StoreCheckBrand brand, boolean isUpdate) {
         boolean result = true;
+        long brandId = 0;
+
+        MetaData metaData = getMetadata();
+
         SQLiteDatabase db = this.getWritableDatabase();
         try {
 
             ContentValues contentValues = new ContentValues();
+            contentValues.put(KEY_BRANDMARKETID, "-1 ");
+            contentValues.put(KEY_PROJECTID, String.valueOf(metaData.getProjectId() ));
+            contentValues.put(KEY_GEOGRAPHYCODE, metaData.getGeographyCode() );
+            contentValues.put(KEY_GEOGRAPHY, metaData.getGeographyName() );
+            contentValues.put(KEY_PRODUCTCODE,String.valueOf(brand.getSelectedProduct().get_product_id()));
+            contentValues.put(KEY_PRODUCT, brand.getSelectedProduct().get_product_name());
             contentValues.put(KEY_BRAND, brand.getBrand());
-            contentValues.put(KEY_NBO, brand.getBrand());
+            contentValues.put(KEY_NBO, brand.getNBO());
+            contentValues.put(KEY_COMPANYNAME, "");
 
-            long brandId = db.insert(TABLE_BRANDS, "", contentValues);
-
+            if (isUpdate) {
+                brandId = db.update(TABLE_MARKETS, contentValues, KEY_ID + " = ?",
+                        new String[]{String.valueOf(brand.getId())});
+            } else {
+                brandId = db.insert(TABLE_MARKETS, "", contentValues);
+            }
             if (brandId > 0) {
-
                 for (CustomField cf : brand.getCustomFields()) {
                     if (result) {
                         contentValues = new ContentValues();
@@ -1034,7 +1030,8 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
                         contentValues.put(KEY_OPTIONID, cf.getSelectedOption().getOptionId());
                         if (cf.get_object_id().equals("2")) {
                             contentValues.put(KEY_OPTIONVALUE, cf.getCustomFieldTextValue());
-                        } else if ((cf.get_object_id().equals("2") || cf.get_object_id().equals("3")) && cf.getSelectedOption() != null) {
+                        } else if ((cf.get_object_id().equals("1") || cf.get_object_id().equals("3"))
+                                && cf.getSelectedOption() != null) {
                             contentValues.put(KEY_OPTIONVALUE, cf.getSelectedOption().getOptionName());
                         }
                         if (isUpdate) {
@@ -1054,7 +1051,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         } finally {
             db.close();
         }
-        return result;
+        return result ? brandId : 0;
     }
 
     public ArrayList<Channel> getAllChannels() {
@@ -1172,6 +1169,35 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
             database.close();
         }
         return result;
+    }
+
+    public MetaData getMetadata() {
+        MetaData data = null;
+        SQLiteDatabase database = this.getReadableDatabase();
+        try {
+            String query = "select "
+                    + KEY_GEOGRAPHYCODE + ", "
+                    + KEY_GEOGRAPHY + ", "
+                    + KEY_INDUSTRY_NAME + ", "
+                    + KEY_PROJECTID + ", "
+                    + KEY_YEAR
+                    + " from " + TABLE_METADATA;
+            Cursor cursor = database.rawQuery(query, null);
+            if (cursor.moveToFirst()) {
+                data = new MetaData();
+                data.setGeographyCode(cursor.getString(cursor.getColumnIndex(KEY_GEOGRAPHYCODE)));
+                data.setGeographyName(cursor.getString(cursor.getColumnIndex(KEY_GEOGRAPHY)));
+                data.setIndustryName(cursor.getString(cursor.getColumnIndex(KEY_INDUSTRY_NAME)));
+                data.setYear(cursor.getInt(cursor.getColumnIndex(KEY_YEAR)));
+                data.setProjectId(cursor.getInt(cursor.getColumnIndex(KEY_PROJECTID)));
+            }
+
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            database.close();
+        }
+        return data;
     }
 
     public PricingDetail getPricingDetails(int pricingId) {
@@ -1338,16 +1364,46 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         try {
             ContentValues values = new ContentValues();
-            values.put(KEY_OUTLETID, pricingDetail.getSelectedOutletId());
-            values.put(KEY_OUTLETNAME, pricingDetail.getSelectedOutletName());
-            values.put(KEY_MULTIPACKSIZE, pricingDetail.getMultiPack());
-            values.put(KEY_PACKSIZE, pricingDetail.getPackSize());
-            values.put(KEY_PACKTYPECODE, pricingDetail.getPackTypeCode());
-            values.put(KEY_PACKTYPE, pricingDetail.getPackTypeName());
-            values.put(KEY_UPDATED, "1");
 
-            int result = db.update(TABLE_DETAILS, values, KEY_PRICINGID + " = ?", new String[]{String.valueOf(pricingDetail.getPricingId())});
 
+            long result = 0;
+            if(pricingDetail.getPricingId()>0) {
+                values.put(KEY_MULTIPACKSIZE, pricingDetail.getMultiPack());
+                values.put(KEY_OUTLETID, pricingDetail.getSelectedOutletId());
+                values.put(KEY_PRODUCTID, pricingDetail.getProductId());
+                values.put(KEY_OUTLETNAME, pricingDetail.getSelectedOutletName());
+                values.put(KEY_PACKSIZE, pricingDetail.getPackSize());
+                values.put(KEY_PACKTYPE, pricingDetail.getPackTypeName());
+                values.put(KEY_PACKTYPECODE, pricingDetail.getPackTypeCode());
+                values.put(KEY_PRICE, pricingDetail.getPrice());
+                values.put(KEY_PRICINGID, pricingDetail.getPricingId());
+                values.put(KEY_UNITCODE, pricingDetail.getUnitId());
+                values.put(KEY_BRANDID, pricingDetail.getBrandId());
+                values.put(KEY_BRAND, pricingDetail.getBrandName());
+                values.put(KEY_BRANDMARKETID, pricingDetail.getBrandMarketId());
+                values.put(KEY_NBO, pricingDetail.getNbo());
+                values.put(KEY_UPDATED, "1");
+
+                result = db.update(TABLE_DETAILS, values, KEY_ID + " = ?", new String[]{String.valueOf(pricingDetail.getId())});
+            }
+            else {
+                values.put(KEY_MULTIPACKSIZE, pricingDetail.getMultiPack());
+                values.put(KEY_OUTLETID, pricingDetail.getSelectedOutletId());
+                values.put(KEY_PRODUCTID, pricingDetail.getProductId());
+                values.put(KEY_OUTLETNAME, pricingDetail.getSelectedOutletName());
+                values.put(KEY_PACKSIZE, pricingDetail.getPackSize());
+                values.put(KEY_PACKTYPE, pricingDetail.getPackTypeName());
+                values.put(KEY_PACKTYPECODE, pricingDetail.getPackTypeCode());
+                values.put(KEY_PRICE, pricingDetail.getPrice());
+                values.put(KEY_PRICINGID, pricingDetail.getPricingId());
+                values.put(KEY_UNITCODE, pricingDetail.getUnitId());
+                values.put(KEY_BRANDID, pricingDetail.getBrandId());
+                values.put(KEY_BRAND, pricingDetail.getBrandName());
+                values.put(KEY_NBO, pricingDetail.getNbo());
+
+                result = db.insert(TABLE_DETAILS, null, values);
+
+            }
             if (result > 0) {
                 status = saveCustomFields(pricingDetail.getPricingId(), pricingDetail.getCustomFields(), db, isUpdate);
             }

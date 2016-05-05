@@ -235,24 +235,33 @@ public class StoreCheckAddBrandActivity extends AppCompatActivity
         }
 
         if (isValid) {
-            if(databaseHelper.saveBrand(data, isUpdated)){
+            long brandId = databaseHelper.saveBrand(data, isUpdated);
+            if( brandId >0){
+                StoreCheckAddProductDetailsActivity.brandName = binding.getStoreCheckBrand().getBrand();
+                StoreCheckAddProductDetailsActivity.brandId = brandId;
+                StoreCheckAddProductDetailsActivity.productCode = Integer.valueOf(binding.getStoreCheckBrand().getSelectedProduct().get_product_id());
+                StoreCheckAddProductDetailsActivity.productName = binding.getStoreCheckBrand().getSelectedProduct().get_product_name();
+
                 binding.brandName.setText(null);
                 binding.nboName.setText(null);
+
                 Spinner productSpinner = (Spinner) ((View) (binding.getRoot()).findViewById(R.id.products));
                 if(productSpinner.getCount()>0) {
                     productSpinner.setSelection(0);
                 }
                 setBindingProperties();
 
-
                 Toast.makeText(this.getBaseContext(), "Saved successfully!", Toast.LENGTH_SHORT).show();
 
                 Intent intent = new Intent(context,StoreCheckAddProductDetailsActivity.class);
                 context.startActivity(intent);
             }
+            else{
+                Toast.makeText(this.getBaseContext(), "Unable to save record!", Toast.LENGTH_LONG).show();
+            }
         }
         else{
-            Toast.makeText(this.getBaseContext(), errors, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this.getBaseContext(), errors, Toast.LENGTH_LONG).show();
         }
     }
 
@@ -297,10 +306,13 @@ public class StoreCheckAddBrandActivity extends AppCompatActivity
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                     Product selectedProduct = (Product)parent.getItemAtPosition(position);
                     int productID = Integer.valueOf(selectedProduct.get_product_id());
-                    storeCheckBrand.setSelectedProductId(productID);
-                    setCustomFieldByProductCode(productID);
-                    storeCheckBrand.setCustomFields(customFields);
 
+                    storeCheckBrand.setSelectedProduct(selectedProduct);
+                    binding.getStoreCheckBrand().setSelectedProduct(selectedProduct);
+
+                    setCustomFieldByProductCode(productID);
+
+                    storeCheckBrand.setCustomFields(customFields);
 
                     if(customFieldRecyclerView!=null) {
 
@@ -313,7 +325,7 @@ public class StoreCheckAddBrandActivity extends AppCompatActivity
 
                 @Override
                 public void onNothingSelected(AdapterView<?> parent) {
-                    storeCheckBrand.setSelectedProductId(0);
+
                 }
             });
         }
