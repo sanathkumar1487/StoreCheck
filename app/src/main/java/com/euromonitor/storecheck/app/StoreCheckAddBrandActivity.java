@@ -92,15 +92,19 @@ public class StoreCheckAddBrandActivity extends AppCompatActivity
         setupToolbar();
         setUpNavigationView();
 
-        setBinding();
+        if (databaseHelper.isDatabaseAvailable()) {
+            setBinding();
 
-        View view = binding.getRoot();
+            View view = binding.getRoot();
 
-        customFieldRecyclerView = (RecyclerView) view.findViewById(R.id.customFields);
-        item = databaseHelper.getNboName();
-        nbo_name = (AutoCompleteTextView) findViewById(R.id.nboName);
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, item);
-        nbo_name.setAdapter(adapter);
+            customFieldRecyclerView = (RecyclerView) view.findViewById(R.id.customFields);
+            item = databaseHelper.getNboName();
+            nbo_name = (AutoCompleteTextView) findViewById(R.id.nboName);
+            adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, item);
+            nbo_name.setAdapter(adapter);
+        }else {
+            Toast.makeText(this,"Please import EMMA generated file to proceed!",Toast.LENGTH_LONG).show();
+        }
     }
 
 
