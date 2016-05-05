@@ -33,12 +33,14 @@ import java.util.ArrayList;
 public class StoreCheckCustomFieldsAdapter extends RecyclerView.Adapter<StoreCheckCustomFieldsAdapter.BindingHolder> {
     private LayoutInflater layoutInflater;
     private ArrayList<CustomField> customFields;
+
     CustomField current;
 
     public StoreCheckCustomFieldsAdapter(LayoutInflater layoutInflater, Context context, ArrayList<CustomField> customFields) {
         this.layoutInflater = layoutInflater;
         this.customFields = customFields;
     }
+
 
     @Override
     public BindingHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -52,9 +54,10 @@ public class StoreCheckCustomFieldsAdapter extends RecyclerView.Adapter<StoreChe
         StorecheckCustomfieldItemBinding binding = DataBindingUtil.getBinding(holder.itemView);
         binding.setVariable(BR.customField, current);
 
-        OptionsAdapter optionsAdapter = new OptionsAdapter(current.get_options(),layoutInflater);
+        OptionsAdapter optionsAdapter = new OptionsAdapter(current.get_options(), layoutInflater);
 
         holder.optionsSpinner.setAdapter(optionsAdapter);
+
         holder.optionsSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -63,6 +66,7 @@ public class StoreCheckCustomFieldsAdapter extends RecyclerView.Adapter<StoreChe
                 for (CustomField cf : customFields) {
                     if (cf.getUniqueID().equals(selectedOption.getUniqueID())) {
                         currentCustomField = cf;
+                        cf.setSelectedOption(selectedOption);
                         break;
                     }
                 }
@@ -71,7 +75,9 @@ public class StoreCheckCustomFieldsAdapter extends RecyclerView.Adapter<StoreChe
                     String frameGroupId = String.valueOf(currentCustomField.getFrameGroupID());
                     for (int index = 0; index < customFields.size(); index++) {
                         if (customFields.get(index).get_group_id().equals((frameGroupId))) {
-                            customFields.get(index).setIsEnabled(!(selectedOption.getMinimumAllowed().equals("0") && selectedOption.getMaximumAllowed().equals("0")));
+
+                            customFields.get(index).setIsEnabled(!(selectedOption.getMinimumAllowed().equals("0")
+                                    && selectedOption.getMaximumAllowed().equals("0")));
                             customFields.get(index).setSelectedOption(selectedOption);
                             String isNumeric = selectedOption.getIsNumeric();
 
@@ -94,6 +100,18 @@ public class StoreCheckCustomFieldsAdapter extends RecyclerView.Adapter<StoreChe
             }
         });
         holder.optionName.addTextChangedListener(new EditTextWatcher(current));
+
+        if (current.getSelectedOption() != null) {
+            if (current.get_object_id().equals("1")
+                    || current.get_object_id().equals("3")) {
+                holder.optionsSpinner.setSelection(optionsAdapter.getPositionById(current.getSelectedOption().getUniqueID()));
+            } else if (current.get_object_id().equals("2")
+                    && current.getSelectedOption().getOptionValue() != null) {
+                Log.e("TextValue", current.getSelectedOption().getOptionValue());
+
+                holder.optionName.setText(current.getSelectedOption().getOptionValue());
+            }
+        }
     }
 
     private void notifyItemChangedAtPosition(int position){
@@ -121,7 +139,6 @@ public class StoreCheckCustomFieldsAdapter extends RecyclerView.Adapter<StoreChe
         }
 
         public ViewDataBinding getBinding(){
-            //return binding;
             return DataBindingUtil.getBinding(itemView);
         }
     }
@@ -147,7 +164,11 @@ public class StoreCheckCustomFieldsAdapter extends RecyclerView.Adapter<StoreChe
 
         @Override
         public long getItemId(int position) {
-            return Long.valueOf(options.get(position).getOptionId());
+            if(position<options.size()) {
+                return Long.valueOf(options.get(position).getOptionId());
+            }else {
+                return 0;
+            }
         }
 
         @Override
@@ -163,5 +184,17 @@ public class StoreCheckCustomFieldsAdapter extends RecyclerView.Adapter<StoreChe
             productItem.setText(options.get(position).getOptionName());
             return optionItemView;
         }
+
+        public int getPositionById(String id) {
+            int index = 0;
+            for (Option op : options) {
+                if (op.getUniqueID().equals(id)) {
+                    break;
+                }
+                index++;
+            }
+            return index;
+        }
+
     }
 }

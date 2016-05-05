@@ -6,6 +6,10 @@ package com.euromonitor.storecheck.model;
 public class Option {
 
     private boolean _is_dropdown;
+
+
+
+    private int id;
     private String OptionId;
     private String OptionName;
     private String MinimumAllowed;
@@ -13,6 +17,24 @@ public class Option {
     private String customFieldID;
     private String IsNumeric;
     private String IsZeroAllowed;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getOptionValue() {
+        return optionValue;
+    }
+
+    public void setOptionValue(String optionValue) {
+        this.optionValue = optionValue;
+    }
+
+    private String optionValue;
 
     public String getUniqueID() {
         return customFieldID;

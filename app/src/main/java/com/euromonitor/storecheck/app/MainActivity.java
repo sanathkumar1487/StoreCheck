@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
     {
         try {
             super.onCreate(savedInstanceState);
-          //  Fabric.with(this, new Crashlytics());
+            Fabric.with(this, new Crashlytics());
             setContentView(R.layout.activity_main);
 
             drawerLayout=(DrawerLayout)findViewById(R.id.drawer_layout);

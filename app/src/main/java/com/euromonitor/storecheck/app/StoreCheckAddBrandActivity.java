@@ -69,6 +69,8 @@ public class StoreCheckAddBrandActivity extends AppCompatActivity
     DatabaseHelper databaseHelper;
     RecyclerView customFieldRecyclerView;
     ArrayList<CustomField> customFields = new ArrayList<CustomField>() ;
+    boolean isUpdated = false;
+
     // Navigation
     DrawerLayout mDrawerLayout;
     Context context;
@@ -76,22 +78,28 @@ public class StoreCheckAddBrandActivity extends AppCompatActivity
     android.support.v7.widget.Toolbar toolbar;
     AutoCompleteTextView nbo_name;
     String[] item=new String[]{"Please search here"};
+
+
     @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.storecheck_addbrand);
         context = this;
+
         databaseHelper = new DatabaseHelper(this);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.addBrand_Drawer);
+
         setupToolbar();
         setUpNavigationView();
+
         setBinding();
+
         View view = binding.getRoot();
+
         customFieldRecyclerView = (RecyclerView) view.findViewById(R.id.customFields);
-        item=databaseHelper.getNboName();
-        nbo_name=(AutoCompleteTextView)findViewById(R.id.nboName);
-        adapter=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,item);
+        item = databaseHelper.getNboName();
+        nbo_name = (AutoCompleteTextView) findViewById(R.id.nboName);
+        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, item);
         nbo_name.setAdapter(adapter);
     }
 
@@ -102,7 +110,6 @@ public class StoreCheckAddBrandActivity extends AppCompatActivity
         getMenuInflater().inflate(R.menu.addbrand_menu, menu);
         return true;
     }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -224,7 +231,7 @@ public class StoreCheckAddBrandActivity extends AppCompatActivity
         }
 
         if (isValid) {
-            if(databaseHelper.saveBrand(data)){
+            if(databaseHelper.saveBrand(data, isUpdated)){
                 binding.brandName.setText(null);
                 binding.nboName.setText(null);
                 Spinner productSpinner = (Spinner) ((View) (binding.getRoot()).findViewById(R.id.products));
@@ -310,7 +317,7 @@ public class StoreCheckAddBrandActivity extends AppCompatActivity
     }
 
     private void setCustomFieldByProductCode(int productCode) {
-        customFields = databaseHelper.getCustomFieldByProductCode(productCode, customFields);
+        customFields = databaseHelper.getCustomFieldByProductCode(productCode, 1, customFields);
         customFields = databaseHelper.updateCustomFieldOptions(customFields);
     }
 
