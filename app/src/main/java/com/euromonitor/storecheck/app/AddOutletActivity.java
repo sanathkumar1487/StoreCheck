@@ -80,24 +80,21 @@ public class AddOutletActivity extends AppCompatActivity
 
         setupToolbar();
         setUpNavigationView();
-
         db = new DatabaseHelper(this);
 
-        if(db.isDatabaseAvailable())
-        {
+
             item=db.getOutletName();
             spinner = (Spinner) view.findViewById(R.id.spinner);
             textView = (TextView) view.findViewById(R.id.header);
             outLet_Name = (AutoCompleteTextView) view.findViewById(R.id.outlet_Name);
             adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, item);
             outLet_Name.setAdapter(adapter);
+            outLet_Name.setThreshold(1);
             city = (EditText) view.findViewById(R.id.city);
             setOutlet((Outlet) getIntent().getSerializableExtra("outlet"));
-
             isNew = (boolean) getIntent().getSerializableExtra("isnew");
             loadSpinnerData();
             loadOutletui();
-
             etDate = (EditText) view.findViewById(R.id.etDate);
             dateFormatter = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
             etDate.setOnClickListener(new View.OnClickListener() {
@@ -108,7 +105,6 @@ public class AddOutletActivity extends AppCompatActivity
 
 
             });
-
             Calendar newCalendar = Calendar.getInstance();
             datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
                 public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
@@ -209,10 +205,9 @@ public class AddOutletActivity extends AppCompatActivity
                 }
 
             });
-        }else {
-            Toast.makeText(this.getBaseContext(),"Please import EMMA generated file to proceed!", Toast.LENGTH_LONG).show();
         }
-    }
+
+
 
     public void setupToolbar(){
 

@@ -25,7 +25,6 @@
             app:popupTheme="@style/PopupTheme"
             android:theme="@style/ToolBarTheme"
             android:id="@+id/productDetailsToolbar"/>
-
         <GridLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -137,7 +136,6 @@
                 android:text="@{pricingDetail.price}"
                 android:inputType="numberDecimal"
                 />
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -146,7 +144,6 @@
                 android:layout_row="6"
                 android:layout_column="0"
                 />
-
             <Spinner
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

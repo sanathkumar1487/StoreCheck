@@ -60,19 +60,14 @@ import me.zhanghai.android.materialprogressbar.MaterialProgressBar;
 public class StoreCheckDetailsActivity extends AppCompatActivity
 {
     public StoreCheckDetailAdapter adapter;
-
     StorecheckDetailsBinding binding;
     Context context;
     Intent intent;
-
     DatabaseHelper dbHelper;
     android.support.v7.widget.Toolbar toolbar;
-
     DrawerLayout mDrawerLayout;
     private SearchView.OnQueryTextListener queryTextListener;
-
     MaterialProgressBar progressBar;
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -81,21 +76,18 @@ public class StoreCheckDetailsActivity extends AppCompatActivity
         context = this;
         dbHelper = new DatabaseHelper(context);
         View view = binding.getRoot();
-
         mDrawerLayout = (DrawerLayout) findViewById(R.id.details_drawer);
-
         progressBar = (MaterialProgressBar) this.findViewById(R.id.progbar);
         progressBar.getIndeterminateDrawable().setColorFilter(Color.parseColor("#42A5F5"), PorterDuff.Mode.SRC_IN);
         progressBar.getProgressDrawable().setColorFilter(Color.parseColor("#42A5F5"), PorterDuff.Mode.SRC_IN);
-
-
         setupToolbar();
         setUpNavigationView();
-
-        if (dbHelper.isDatabaseAvailable()) {
+        if (dbHelper.isDatabaseAvailable())
+        {
             setSpinner();
 
-        } else {
+        } else
+        {
             Toast.makeText(this.getBaseContext(), "Please import EMMA generated file to proceed!", Toast.LENGTH_LONG).show();
         }
     }
@@ -104,29 +96,33 @@ public class StoreCheckDetailsActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.storecheck_menu, menu);
-
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-
         SearchView searchView = (SearchView) menu.findItem(R.id.searchItem).getActionView();
 
-        if (searchView != null) {
-            searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-
-            queryTextListener = new SearchView.OnQueryTextListener() {
-                @Override
-                public boolean onQueryTextChange(String newText) {
-                    if (newText != null) {
-                        adapter.filterByProduct(newText);
+        if (searchView != null)
+        {
+            if (dbHelper.isDatabaseAvailable()) {
+                searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+                queryTextListener = new SearchView.OnQueryTextListener() {
+                    @Override
+                    public boolean onQueryTextChange(String newText) {
+                        if (newText != null) {
+                            adapter.filterByProduct(newText);
+                        }
+                        return true;
                     }
-                    return true;
-                }
 
-                @Override
-                public boolean onQueryTextSubmit(String query) {
-                    return true;
-                }
-            };
-            searchView.setOnQueryTextListener(queryTextListener);
+                    @Override
+                    public boolean onQueryTextSubmit(String query) {
+                        return true;
+                    }
+                };
+                searchView.setOnQueryTextListener(queryTextListener);
+            }
+            else
+            {
+
+            }
         }
         return true;
     }
@@ -142,13 +138,11 @@ public class StoreCheckDetailsActivity extends AppCompatActivity
     }
 
     public void setupToolbar() {
-
         toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.detailsToolbar);
         setSupportActionBar(toolbar);
         // actionbar.setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Welcome !");
         toolbar.setSubtitle("Item Details");
-
         toolbar.setTitle("Store-check details");
         toolbar.inflateMenu(R.menu.storecheck_menu);
     }
@@ -168,7 +162,7 @@ public class StoreCheckDetailsActivity extends AppCompatActivity
     }
 
     private void setSpinner(){
-        Spinner packTypeSpinner =  (Spinner)findViewById(R.id.products);
+        SearchableSpinner packTypeSpinner =  (SearchableSpinner)findViewById(R.id.products);
         ArrayList<Product> products = dbHelper.getAllProducts();
         StoreCheckDetailsActivity.ProductAdapter productAdapter = new StoreCheckDetailsActivity.ProductAdapter(products);
         packTypeSpinner.setAdapter(productAdapter);

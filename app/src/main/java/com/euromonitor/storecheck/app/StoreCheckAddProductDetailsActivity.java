@@ -48,34 +48,41 @@ import java.util.Objects;
  */
 public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
     public static int priceId;
-
     public static int brandId;
     public static boolean brandIsNew;
+<<<<<<< HEAD
     public static int productCode;
     public static String productName;
     public static String brandName;
 
 
+=======
+    public  static  int productCode;
+>>>>>>> c6a452318bb6df254bd2303f424664fe7be132b5
     ArrayList<Market> markets;
     ArrayList<CustomField> customFields = new ArrayList<CustomField>();
     String errors;
-
     PricingDetail pricingDetail;
     StorecheckProductdetailsBinding binding;
-
     DatabaseHelper databaseHelper;
     DrawerLayout drawerLayout;
     android.support.v7.widget.Toolbar toolbar;
+<<<<<<< HEAD
     RecyclerView customFieldRecyclerView;
 
     boolean isUpdate = true;
 
     Context context;
 
+=======
+    Spinner brandSpinner;
+>>>>>>> c6a452318bb6df254bd2303f424664fe7be132b5
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.storecheck_productdetails);
+<<<<<<< HEAD
 
         context = this;
 
@@ -110,6 +117,25 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
         }
     }
 
+=======
+        drawerLayout = (DrawerLayout) findViewById(R.id.addProductDetails_Drawer);
+        databaseHelper = new DatabaseHelper(this);
+        if(databaseHelper.isDatabaseAvailable())
+        {
+            setupToolbar();
+            setUpNavigationView();
+            setSpinners();
+            setBinding();
+            binding.setPricingDetail(pricingDetail);
+        }
+        else
+        {
+            setupToolbar();
+            setUpNavigationView();
+            Toast.makeText(this,"Please import EMMA generated file to proceed!",Toast.LENGTH_LONG).show();
+        }
+    }
+>>>>>>> c6a452318bb6df254bd2303f424664fe7be132b5
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         menu.clear();
@@ -118,11 +144,27 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
     }
 
     @Override
+<<<<<<< HEAD
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+=======
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+
+
+        switch (item.getItemId())
+        {
+>>>>>>> c6a452318bb6df254bd2303f424664fe7be132b5
             case R.id.Save:
-                SavePricing();
-                return true;
+                if(databaseHelper.isDatabaseAvailable())
+                {
+                    SavePricing();
+                    return true;
+                }
+                else
+                {
+                    Toast.makeText(this,"Please import EMMA generated file to proceed!",Toast.LENGTH_LONG).show();
+                }
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -243,19 +285,22 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
         }
         binding.getPricingDetail().setPrice(newValue != null ? Double.valueOf(newValue) : 0.0);
     }
+<<<<<<< HEAD
 
     public void setupToolbar() {
 
+=======
+       public void setupToolbar(){
+>>>>>>> c6a452318bb6df254bd2303f424664fe7be132b5
         toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.productDetailsToolbar);
         setSupportActionBar(toolbar);
         // actionbar.setDisplayHomeAsUpEnabled(true);
         toolbar.setSubtitle("Add/Edit Price Details");
-
         toolbar.setTitle("Store-Check");
         toolbar.inflateMenu(R.menu.addoutlet_menu);
     }
-
     private void setUpNavigationView() {
+<<<<<<< HEAD
         Fragment navFragment = StoreCheckNavigationFragment.newInstance(drawerLayout.getId(), toolbar.getId());
         FragmentManager fragmentManager = this.getFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
@@ -270,12 +315,38 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
             pricingDetail = new PricingDetail();
             pricingDetail.setPricingId(priceId);
             pricingDetail.setBrandName(brandName);
+=======
+        try {
+            Fragment navFragment = StoreCheckNavigationFragment.newInstance(drawerLayout.getId(), toolbar.getId());
+            FragmentManager fragmentManager = this.getFragmentManager();
+            FragmentTransaction ft = fragmentManager.beginTransaction();
+            ft.replace(R.id.navDrawerFrame, navFragment, "Nav");
+            ft.commit();
+>>>>>>> c6a452318bb6df254bd2303f424664fe7be132b5
 
         }
+<<<<<<< HEAD
         pricingDetail.setProductName(productName.trim());
 
         if (brandId > 0) {
             binding.setPricingDetail(pricingDetail);
+=======
+    }
+    private void setBinding(){
+        pricingDetail = new PricingDetail();
+        if(brandId>0) {
+            for (int index=0;index<markets.size();index++) {
+                if(brandIsNew){
+                    if(markets.get(index).get_id() == brandId){
+                        brandSpinner.setSelection(index);
+                    }
+                }else{
+                    if(markets.get(index).get_brand_market_id().equals(String .valueOf(brandId))){
+                        brandSpinner.setSelection(index);
+                    }
+                }
+            }
+>>>>>>> c6a452318bb6df254bd2303f424664fe7be132b5
         }
     }
 

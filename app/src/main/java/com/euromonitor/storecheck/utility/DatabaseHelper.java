@@ -1341,8 +1341,6 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
                 } while (cursor.moveToNext());
             }
             cursor.close();
-
-
             db.close();
         } catch (Exception e) {
             e.printStackTrace();
@@ -1420,9 +1418,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
                     packType.set_id(cursor.getInt(cursor.getColumnIndex(KEY_ID)));
                     packType.set_packtypecode(cursor.getString(cursor.getColumnIndex(KEY_PACKTYPECODE)));
                     packType.set_packtypename(cursor.getString(cursor.getColumnIndex(KEY_PACKTYPENAME)));
-
                     my_array.add(packType);
-
                 } while (cursor.moveToNext());
             }
             cursor.close();
@@ -1560,4 +1556,5 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
                 database.close();
         }
     }
+
 }
