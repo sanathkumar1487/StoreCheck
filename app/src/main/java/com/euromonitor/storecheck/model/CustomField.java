@@ -66,17 +66,6 @@ public class CustomField  extends BaseObservable {
         return uniqueID;
     }
 
-    public int getTypeId() {
-        return typeId;
-    }
-
-    public void setTypeId(int typeId) {
-        this.typeId = typeId;
-    }
-
-    @SerializedName("TypeId")
-    private int typeId;
-
     public void setUniqueID(String uniqueID) {
         this.uniqueID = uniqueID;
     }
@@ -216,7 +205,7 @@ public class CustomField  extends BaseObservable {
 
     @Bindable
     public boolean getIsOptionVisible() {
-        return this._object_id.equals(DropDown) || this._object_id.equals(CustomDropDown);
+        return this._object_id.equals(DropDown);
     }
 
     public void set_label(String _label) {

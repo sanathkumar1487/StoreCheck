@@ -41,10 +41,14 @@ public class MainActivity extends AppCompatActivity {
         try {
             super.onCreate(savedInstanceState);
 <<<<<<< HEAD
+<<<<<<< HEAD
             Fabric.with(this, new Crashlytics());
 =======
           Fabric.with(this, new Crashlytics());
 >>>>>>> c6a452318bb6df254bd2303f424664fe7be132b5
+=======
+          //  Fabric.with(this, new Crashlytics());
+>>>>>>> parent of 3981de9... Pricing screen
             setContentView(R.layout.activity_main);
 
             drawerLayout=(DrawerLayout)findViewById(R.id.drawer_layout);

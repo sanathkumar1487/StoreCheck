@@ -76,3 +76,9 @@ app/app.iml
 .idea/libraries/FilePickerLibrary_3_5_1.xml
 .idea/libraries/cardview_v7_23_1_1.xml
 .gradle/2.8/taskArtifacts/outputFileStates.bin
+*.lock
+*.bin
+.idea/libraries/adapters_1_0_rc3.xml
+.idea/libraries/cardview_v7_23_1_1.xml
+.idea/libraries/design_23_2_1.xml
+.idea/libraries/support_annotations_23_2_1.xml

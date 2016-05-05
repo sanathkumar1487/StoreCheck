@@ -10,8 +10,6 @@ import java.util.ArrayList;
 public class PricingDetail {
 
 
-    private String updated;
-
     public String getPrice() {
         return String.valueOf(price);
     }
@@ -131,21 +129,4 @@ public class PricingDetail {
     }
 
     private String id;
-
-    public void setUpdated(String updated) {
-        this.updated = updated;
-    }
-
-    public boolean isUpdated;
-
-    public String getProductName() {
-        return productName;
-    }
-
-    public void setProductName(String productName) {
-        this.productName = productName;
-    }
-
-    private String productName;
-
 }

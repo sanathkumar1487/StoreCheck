@@ -56,7 +56,6 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
     private static final String TABLE_BRANDS = "brands";
     private static final String TABLE_BRANDCUSTOMFIELDS = "brandcustomfields";
     private static final String TABLE_PACKTYPES = "packtypes";
-    ;
 
 
     private static final String KEY_ID = "id";
@@ -147,7 +146,6 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
     private static final String KEY_TOOLTIP = "tooltip";
     private static final String KEY_UNIQUEID = "uniqueid";
     private static final String KEY_FRAMEGROUPID = "frameGroupId";
-    private static final String KEY_TYPEID = "typeId";
 
 
     // Units Table Column Names
@@ -169,7 +167,6 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
 
     // Custom Field Control Type
     final String DropDown = "1";
-    final String CustomDropDown = "3";
     final String TextBox = "2";
 
     public DatabaseHelper(Context context) {
@@ -404,7 +401,6 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
                 values.put(KEY_TOOLTIP, customField.get_tooltip());
                 values.put(KEY_UNIQUEID, customField.getUniqueID());
                 values.put(KEY_FRAMEGROUPID, customField.getFrameGroupID());
-                values.put(KEY_TYPEID, customField.getTypeId());
 
 
                 db.insert(TABLE_CUSTOMFIELDS, null, values);
@@ -603,9 +599,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
                 + KEY_OPTIONS + " TEXT,"
                 + KEY_TOOLTIP + " TEXT,"
                 + KEY_FRAMEGROUPID + " TEXT,"
-                + KEY_UNIQUEID + " TEXT,"
-                + KEY_TYPEID + " INT"
-                + ")";
+                + KEY_UNIQUEID + " TEXT" + ")";
         database.execSQL(CREATE_CUSTOMFIELDS_TABLE);
 
     }
@@ -633,7 +627,6 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         String CREATE_BRANDCUSTOMFIELD_TABLE = " CREATE TABLE " + TABLE_BRANDCUSTOMFIELDS + "("
                 + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + KEY_BRANDID + " TEXT, "
-                + KEY_PRICINGID + " TEXT, "
                 + KEY_CUSTOMFIELDID + " TEXT, "
                 + KEY_OPTIONID + " TEXT, "
                 + KEY_OPTIONVALUE + " TEXT) ";
@@ -892,15 +885,14 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         return geography;
     }
 
-    public ArrayList<CustomField> getCustomFieldByProductCode(int productCode, int typeId, ArrayList<CustomField> customFields) {
+    public ArrayList<CustomField> getCustomFieldByProductCode(int productCode, ArrayList<CustomField> customFields) {
 
         SQLiteDatabase database = null;
         Cursor cursor = null;
         try {
 
             database = this.getReadableDatabase();
-            String query = "select label,uniqueid,objectid, frameGroupId, groupid  from customfields where productcodes=" + "" + productCode + ""
-                    + " and typeId = " + typeId ;
+            String query = "select label,uniqueid,objectid, frameGroupId, groupid  from customfields where productcodes=" + "" + productCode + "";
             Log.i("query is ::", query);
             cursor = database.rawQuery(query, null);
             customFields = new ArrayList<CustomField>();
@@ -948,17 +940,15 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
                 ArrayList<Option> options = new ArrayList<Option>();
                 if (cursor.moveToFirst()) {
                     do {
-                        if(!(cursor.getInt(1) == 1 && cursor.getInt(2) == 0)) {
-                            Option option = new Option();
-                            option.setOptionName(cursor.getString(0));
-                            option.setMinimumAllowed(cursor.getString((1)));
-                            option.setMaximumAllowed(cursor.getString((2)));
-                            option.setOptionId(cursor.getString(3));
-                            option.setIsNumeric(cursor.getString(4));
-                            option.setIsZeroAllowed(cursor.getString(5));
-                            option.setUniqueID(customField.getUniqueID());
-                            options.add(option);
-                        }
+                        Option option = new Option();
+                        option.setOptionName(cursor.getString(0));
+                        option.setMinimumAllowed(cursor.getString((1)));
+                        option.setMaximumAllowed(cursor.getString((2)));
+                        option.setOptionId(cursor.getString(3));
+                        option.setIsNumeric(cursor.getString(4));
+                        option.setIsZeroAllowed(cursor.getString(5));
+                        option.setUniqueID(customField.getUniqueID());
+                        options.add(option);
                     } while ((cursor.moveToNext()));
 
                 }
@@ -971,7 +961,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
                             customField.setIsNumeric(false);
                         }
                         customField.setSelectedOption(options.get(0));
-                    } else if (customField.get_object_id().equals(DropDown) && customField.get_object_id().equals(CustomDropDown)) {
+                    } else if (customField.get_object_id().equals(DropDown)) {
                         customField.setSelectedOption(options.get(0));
                     }
                 }
@@ -981,8 +971,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
 
 
         } catch (Exception ex) {
-            Log.e("Update CF", ex.getMessage());
-            //throw ex;
+            throw ex;
         } finally {
             if (cursor != null)
                 cursor.close();
@@ -1018,7 +1007,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         return products;
     }
 
-    public boolean saveBrand(StoreCheckBrand brand, boolean isUpdate) {
+    public boolean saveBrand(StoreCheckBrand brand) {
         boolean result = true;
         SQLiteDatabase db = this.getWritableDatabase();
         try {
@@ -1040,16 +1029,10 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
                         contentValues.put(KEY_OPTIONID, cf.getSelectedOption().getOptionId());
                         if (cf.get_object_id().equals("2")) {
                             contentValues.put(KEY_OPTIONVALUE, cf.getCustomFieldTextValue());
-                        } else if((cf.get_object_id().equals("2") || cf.get_object_id().equals("3")) && cf.getSelectedOption()!=null) {
+                        } else {
                             contentValues.put(KEY_OPTIONVALUE, cf.getSelectedOption().getOptionName());
                         }
-                        if(isUpdate){
-                            result = db.update(TABLE_BRANDCUSTOMFIELDS, contentValues, KEY_ID + " = ?",
-                                    new String[]{String.valueOf(cf.get_id())}) > 0;
-                        }
-                        else {
-                            result = db.insert(TABLE_BRANDCUSTOMFIELDS, "", contentValues) > 0;
-                        }
+                        result = db.insert(TABLE_BRANDCUSTOMFIELDS, "", contentValues) > 0;
                     }
                 }
             } else {
@@ -1190,89 +1173,8 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         return result;
     }
 
-    public PricingDetail getPricingDetails(int pricingId) {
-
-        PricingDetail pricingDetails = null;
-        try {
-            String selectQuery = "SELECT id, "
-                    + KEY_BRAND + ", "
-                    + KEY_OUTLETID + ", "
-                    + KEY_PACKSIZE + ", "
-                    + KEY_MULTIPACKSIZE + ", "
-                    + KEY_PACKTYPECODE + ", "
-                    + KEY_UNITCODE + ", "
-                    + KEY_PRICE + ", "
-                    + KEY_PRICINGID  + ", "
-                    + KEY_UPDATED
-                    + " FROM " + TABLE_DETAILS
-                    + " where " + KEY_PRICINGID + " = " + pricingId
-                    + " and " + KEY_UPDATED + " = " + 1;
-
-            SQLiteDatabase db = this.getWritableDatabase();
-            Cursor cursor = db.rawQuery(selectQuery, null);
-
-            if (cursor.moveToFirst()) {
-                do {
-                    pricingDetails = new PricingDetail();
-                    pricingDetails.setId(cursor.getString(cursor.getColumnIndex(KEY_ID)));
-                    pricingDetails.setBrandName(cursor.getString(cursor.getColumnIndex(KEY_BRAND)));
-                    pricingDetails.setSelectedOutletId(cursor.getInt(cursor.getColumnIndex(KEY_OUTLETID)));
-                    pricingDetails.setPackSize(cursor.getInt(cursor.getColumnIndex(KEY_PACKSIZE)));
-                    pricingDetails.setMultiPack(cursor.getInt(cursor.getColumnIndex(KEY_MULTIPACKSIZE)));
-                    pricingDetails.setPackTypeCode(cursor.getInt(cursor.getColumnIndex(KEY_PACKTYPECODE)));
-                    pricingDetails.setUnitId(cursor.getInt(cursor.getColumnIndex(KEY_UNITCODE)));
-                    pricingDetails.setPrice(cursor.getDouble(cursor.getColumnIndex(KEY_PRICE)));
-                    pricingDetails.setPricingId(cursor.getInt(cursor.getColumnIndex(KEY_PRICINGID)));
-
-                    pricingDetails.isUpdated = cursor.getInt(cursor.getColumnIndex(KEY_UPDATED)) == 1 ? true: false;
-
-
-
-                } while (cursor.moveToNext());
-
-                cursor.close();
-            }
-
-            if(pricingDetails!=null && pricingDetails.isUpdated) {
-                selectQuery = "select "
-                        + KEY_ID + ", "
-                        + KEY_CUSTOMFIELDID + ", "
-                        + KEY_OPTIONID + ", "
-                        + KEY_OPTIONVALUE
-                        + " from " + TABLE_BRANDCUSTOMFIELDS
-                        + " where " + KEY_PRICINGID + " = " + pricingId;
-
-                cursor = db.rawQuery(selectQuery, null);
-
-                if (cursor.moveToFirst()) {
-                    ArrayList<CustomField> customFields = new ArrayList<CustomField>();
-
-                    do {
-                        CustomField customField = new CustomField();
-                        customField.setUniqueID(cursor.getString(cursor.getColumnIndex(KEY_CUSTOMFIELDID)));
-
-                        Option option = new Option();
-                        option.setId(cursor.getInt(cursor.getColumnIndex(KEY_ID)));
-                        option.setUniqueID(customField.getUniqueID());
-                        option.setOptionId(cursor.getString(cursor.getColumnIndex(KEY_OPTIONID)));
-                        option.setOptionValue(cursor.getString(cursor.getColumnIndex(KEY_OPTIONVALUE)));
-                        customField.setSelectedOption(option);
-
-                        customFields.add(customField);
-
-                    } while (cursor.moveToNext());
-
-                    pricingDetails.setCustomFields(customFields);
-                }
-                cursor.close();
-            }
-
-
-            db.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return pricingDetails;
+    public boolean getPricingDetails(int brandId, int pricingId) {
+        return false;
     }
 
     public ArrayList<Unit> getUnits() {
@@ -1303,11 +1205,10 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         return my_array;
     }
 
-    public ArrayList<Market> getBrands(int productCode) {
+    public ArrayList<Market> getBrands() {
         ArrayList<Market> my_array = new ArrayList<>();
         try {
-            String selectQuery = "SELECT id, brandMarketId, brand FROM " + TABLE_MARKETS
-                    + " where "+ KEY_PRODUCTCODE + " = " + productCode ;
+            String selectQuery = "SELECT id, brandMarketId, brand FROM " + TABLE_MARKETS;
 
             SQLiteDatabase db = this.getWritableDatabase();
             Cursor cursor = db.rawQuery(selectQuery, null);
@@ -1348,8 +1249,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         return my_array;
     }
 
-    public boolean savePricingDetails(PricingDetail pricingDetail, boolean isUpdate) {
-        boolean status = false;
+    public void savePricingDetails(PricingDetail pricingDetail) {
         SQLiteDatabase db = this.getWritableDatabase();
         try {
             ContentValues values = new ContentValues();
@@ -1359,48 +1259,17 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
             values.put(KEY_PACKSIZE, pricingDetail.getPackSize());
             values.put(KEY_PACKTYPECODE, pricingDetail.getPackTypeCode());
             values.put(KEY_PACKTYPE, pricingDetail.getPackTypeName());
+
             values.put(KEY_UPDATED, "1");
 
-            int result = db.update(TABLE_DETAILS, values, KEY_PRICINGID + " = ?", new String[]{String.valueOf(pricingDetail.getPricingId())});
-
-            if(result>0){
-                status = saveCustomFields(pricingDetail.getPricingId(), pricingDetail.getCustomFields(), db, isUpdate);
-            }
+            db.update(TABLE_DETAILS, values, KEY_ID + " = ?", new String[]{pricingDetail.getId()});
 
         } catch (Exception ex) {
-            status = false;
             throw ex;
         } finally {
             if (db != null)
                 db.close();
         }
-        return status;
-    }
-
-    private boolean saveCustomFields(int pricingId, ArrayList<CustomField> customFields, SQLiteDatabase db, boolean isUpdate) {
-        boolean result = true;
-        if (isUpdate) {
-            result = db.delete(TABLE_BRANDCUSTOMFIELDS, KEY_PRICINGID + " = ? ", new String[]{String.valueOf(pricingId)}) > 0;
-        }
-        if (result) {
-            for (CustomField cf : customFields) {
-                ContentValues contentValues = new ContentValues();
-                if (result) {
-                    contentValues = new ContentValues();
-                    contentValues.put(KEY_PRICINGID, pricingId);
-                    contentValues.put(KEY_CUSTOMFIELDID, cf.getUniqueID());
-                    contentValues.put(KEY_OPTIONID, cf.getSelectedOption().getOptionId());
-                    if (cf.get_object_id().equals("2")) {
-                        contentValues.put(KEY_OPTIONVALUE, cf.getCustomFieldTextValue());
-                    } else {
-                        contentValues.put(KEY_OPTIONVALUE, cf.getSelectedOption().getOptionName());
-                    }
-                    result = db.insert(TABLE_BRANDCUSTOMFIELDS, "", contentValues) > 0;
-
-                }
-            }
-        }
-        return result;
     }
 
     public ArrayList<PackType> getPackTypeByProduct(int productCode){
@@ -1431,7 +1300,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
 
     public ArrayList<StoreCheckDetail> GetDetailsByProductCode(int productCode) {
         SQLiteDatabase database = this.getReadableDatabase();
-        String query = "select  d.pricingid, d.price,d.packsize,d.multipackSize, u.unitname, p.product_Name, d.brand, d.brandmarketid, p.product_id from details  d inner join    products p on p. product_id =   d.productid   inner join   (select distinct unitid,unitname,unitbase  from units) u on u.unitid = d.unitcode"
+        String query = "select  d.pricingid,d.price,d.packsize,d.multipackSize, u.unitname, p.product_Name, d.brand, d.brandmarketid, p.product_id from details  d inner join    products p on p. product_id =   d.productid   inner join   (select distinct unitid,unitname,unitbase  from units) u on u.unitid = d.unitcode"
                 + " where d.productId = " + productCode;
         Cursor cursor = database.rawQuery(query, null);
         ArrayList<StoreCheckDetail> storeCheckDetails = null;
@@ -1471,7 +1340,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
                         temp.setProductName(productName);
                     }
 
-                    String brand = cursor.getString(cursor.getColumnIndex(KEY_BRAND));
+                    String brand = cursor.getString(6);
                     if (brand != null) {
                         temp.setBrand(brand);
                     }

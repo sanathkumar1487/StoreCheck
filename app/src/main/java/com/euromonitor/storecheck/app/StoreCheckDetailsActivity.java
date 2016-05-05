@@ -183,9 +183,7 @@ public class StoreCheckDetailsActivity extends AppCompatActivity
                 if (detail != null) {
                     StoreCheckAddProductDetailsActivity.priceId = detail.getPriceId();
                     StoreCheckAddProductDetailsActivity.brandId = detail.getBrandId();
-                    StoreCheckAddProductDetailsActivity.brandName = detail.getBrand();
                     StoreCheckAddProductDetailsActivity.productCode = detail.getProductCode();
-                    StoreCheckAddProductDetailsActivity.productName = detail.getProductName();
                 }
                 StoreCheckAddProductDetailsActivity activity = new StoreCheckAddProductDetailsActivity();
                 intent = new Intent(StoreCheckDetailsActivity.this, StoreCheckAddProductDetailsActivity.class);
