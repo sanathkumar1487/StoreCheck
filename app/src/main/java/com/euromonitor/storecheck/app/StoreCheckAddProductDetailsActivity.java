@@ -277,7 +277,7 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
             pricingDetail.setBrandName(brandName);
 
         }
-        pricingDetail.setProductName(productName.trim());
+        pricingDetail.setProductName(productName == null ? "" : productName.trim());
 
         if (brandId > 0) {
             binding.setPricingDetail(pricingDetail);

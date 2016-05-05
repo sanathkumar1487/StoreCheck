@@ -5,9 +5,8 @@ package com.euromonitor.storecheck.Constants;
  */
 public class NavigationConstants {
     public final static int VIEW_DETAILS = 0;
-    public final static int VIEW_PRODUCT_DETAILS = 1;
-    public final static int ADD_BRAND = 2;
-    public final static int ADD_OUTLET = 3;
-    public final static int IMPORT_STORECHECK_DETAILS = 4;
-    public final static int EXPORT_STORECHECK_DETAILS = 5;
+    public final static int ADD_BRAND = 1;
+    public final static int ADD_OUTLET = 2;
+    public final static int IMPORT_STORECHECK_DETAILS = 3;
+    public final static int EXPORT_STORECHECK_DETAILS = 4;
 }

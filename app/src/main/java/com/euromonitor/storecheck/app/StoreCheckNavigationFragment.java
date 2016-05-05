@@ -102,28 +102,19 @@ public  class StoreCheckNavigationFragment extends Fragment {
                 intent = new Intent(context, StoreCheckDetailsActivity.class);
                 startActivity(intent);
                 break;
-            case NavigationConstants.VIEW_PRODUCT_DETAILS:
-
-                intent = new Intent(context, StoreCheckAddProductDetailsActivity.class);
-                startActivity(intent);
-                break;
             case NavigationConstants.ADD_BRAND:
-
                 intent = new Intent(context, StoreCheckAddBrandActivity.class);
                 startActivity(intent);
                 break;
             case NavigationConstants.ADD_OUTLET:
-
                 intent = new Intent(context, OutletDetailsActivity.class);
                 startActivity(intent);
                 break;
             case NavigationConstants.IMPORT_STORECHECK_DETAILS:
-
                 intent = new Intent(context, StoreCheckImportActivity.class);
                 startActivity(intent);
                 break;
             case NavigationConstants.EXPORT_STORECHECK_DETAILS:
-
                 intent = new Intent(context, StoreCheckExportActivity.class);
                 startActivity(intent);
                 break;
