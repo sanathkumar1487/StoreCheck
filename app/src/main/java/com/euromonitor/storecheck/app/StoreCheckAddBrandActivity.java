@@ -70,6 +70,7 @@ public class StoreCheckAddBrandActivity extends AppCompatActivity
     RecyclerView customFieldRecyclerView;
     ArrayList<CustomField> customFields = new ArrayList<CustomField>() ;
     boolean isUpdated = false;
+    String[] brand_item=new String[]{"Please search here"};
 
     // Navigation
     DrawerLayout mDrawerLayout;
@@ -77,6 +78,7 @@ public class StoreCheckAddBrandActivity extends AppCompatActivity
     ArrayAdapter<String> adapter;
     android.support.v7.widget.Toolbar toolbar;
     AutoCompleteTextView nbo_name;
+    AutoCompleteTextView brand_name;
     String[] item=new String[]{"Please search here"};
 
 
@@ -303,7 +305,8 @@ public class StoreCheckAddBrandActivity extends AppCompatActivity
 
             productSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
-                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+                {  ArrayAdapter<String> brandAdapter;
                     Product selectedProduct = (Product)parent.getItemAtPosition(position);
                     int productID = Integer.valueOf(selectedProduct.get_product_id());
 
@@ -313,7 +316,11 @@ public class StoreCheckAddBrandActivity extends AppCompatActivity
                     setCustomFieldByProductCode(productID);
 
                     storeCheckBrand.setCustomFields(customFields);
-
+                    brand_item=databaseHelper.brandName(productID);
+                    brand_name=(AutoCompleteTextView)findViewById(R.id.brandName);
+                    brandAdapter=new ArrayAdapter<String>(context,android.R.layout.simple_list_item_1, brand_item);
+                    brand_name.setAdapter(brandAdapter);
+                    brand_name.setThreshold(1);
                     if(customFieldRecyclerView!=null) {
 
                         customFieldRecyclerView.setLayoutManager(new LinearLayoutManager(context));

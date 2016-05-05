@@ -1589,4 +1589,33 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
                 database.close();
         }
     }
+    public String[] brandName(int productCode)
+    {
+        SQLiteDatabase database = this.getReadableDatabase();
+        String  selectQuery = "SELECT brand FROM " + TABLE_MARKETS
+                + " where " + KEY_PRODUCTCODE + " = " + productCode;
+        Cursor cursor = database.rawQuery(selectQuery, null);
+        String[] brand_s = new String[cursor.getCount()];
+        try {
+            if (cursor.moveToFirst()) {
+                int i = 0;
+                do {
+                    brand_s[i] = cursor.getString(cursor.getColumnIndex(KEY_BRAND));
+                    i++;
+
+                } while ((cursor.moveToNext()));
+            }
+            return brand_s;
+        } catch (Exception ex)
+        {
+            throw ex;
+        }
+        finally
+        {
+            if (cursor != null)
+                cursor.close();
+            if (database != null)
+                database.close();
+        }
+}
 }
