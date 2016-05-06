@@ -1400,6 +1400,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
                 values.put(KEY_BRANDID, pricingDetail.getBrandId());
                 values.put(KEY_BRAND, pricingDetail.getBrandName());
                 values.put(KEY_NBO, pricingDetail.getNbo());
+                values.put(KEY_UPDATED, "1");
 
                 result = db.insert(TABLE_DETAILS, null, values);
 

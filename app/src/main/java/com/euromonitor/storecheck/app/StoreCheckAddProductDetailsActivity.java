@@ -268,16 +268,18 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
     }
 
     private void setBinding() {
-        pricingDetail = databaseHelper.getPricingDetails(priceId);
+        if (priceId > 0) {
+            pricingDetail = databaseHelper.getPricingDetails(priceId);
+        }
         if (pricingDetail == null) {
             isUpdate = false;
             pricingDetail = new PricingDetail();
-            pricingDetail.setBrandId(brandId);
-            pricingDetail.setPricingId(priceId);
-            pricingDetail.setBrandName(brandName);
-            pricingDetail.setProductId(productCode);
-
         }
+
+        pricingDetail.setBrandId(brandId);
+        pricingDetail.setPricingId(priceId);
+        pricingDetail.setBrandName(brandName);
+        pricingDetail.setProductId(productCode);
         pricingDetail.setProductName(productName == null ? "" : productName.trim());
 
         if (brandId > 0) {
@@ -344,12 +346,13 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
         customFields = databaseHelper.getCustomFieldByProductCode(productCode, typeId, customFields);
         customFields = databaseHelper.updateCustomFieldOptions(customFields);
 
-        if (isUpdate) {
+        if (isUpdate && pricingDetail != null && pricingDetail.getCustomFields() != null
+                && pricingDetail.getCustomFields().size() > 0) {
             for (CustomField preCustomFields : pricingDetail.getCustomFields()) {
                 for (CustomField cf : customFields) {
                     if (cf.getUniqueID().equals(preCustomFields.getUniqueID())) {
                         cf.setSelectedOption(preCustomFields.getSelectedOption());
-                        if(cf.get_object_id().equals("1")) {
+                        if (cf.get_object_id().equals("1")) {
                             cf.setCustomFieldTextValue(preCustomFields.getCustomFieldTextValue());
                         }
                         break;
