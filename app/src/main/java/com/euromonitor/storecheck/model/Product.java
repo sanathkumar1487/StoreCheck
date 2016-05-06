@@ -15,6 +15,10 @@ public class Product {
     @SerializedName("ProductName")
     private  String _product_name;
 
+    public  Product(){
+
+    }
+
     public Product(String _product_id, String _product_name) {
         this._product_id = _product_id;
         this._product_name = _product_name;
@@ -44,4 +48,15 @@ public class Product {
     public void set_product_name(String _product_name) {
         this._product_name = _product_name;
     }
+
+    public int getResearched() {
+        return researched;
+    }
+
+    public void setResearched(int researched) {
+        this.researched = researched;
+    }
+
+    @SerializedName("Researched")
+    public int researched;
 }

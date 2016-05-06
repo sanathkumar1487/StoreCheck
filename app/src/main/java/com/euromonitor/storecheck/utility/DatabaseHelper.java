@@ -90,7 +90,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
 
     private static final String KEY_PRODUCT_ID = "product_id";
     private static final String KEY_Product_Name = "product_name";
-    private static final String KEY_PRODUCTNAME = "productName";
+    private static final String KEY_Researched = "researched";
 
     //Channels Table Column Names
 
@@ -245,6 +245,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
 
             ContentValues values = new ContentValues();
             values.put(KEY_PRODUCT_ID, product.get_product_id());
+            values.put(KEY_Researched, product.getResearched());
             values.put(KEY_Product_Name, product.get_product_name());
             db.insert(TABLE_PRODUCTS, null, values);
 
@@ -273,7 +274,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
     }
 
     private void loadOutletsTable(List<Outlet> outlets) {
-        Log.e("loadProdcutsTable::", "loadProdcutsTable load data");
+        Log.e("loadOutletsTable::", "loadOutletsTable load data");
         SQLiteDatabase db = this.getWritableDatabase();
 
         Iterator iterator = outlets.iterator();
@@ -304,7 +305,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
     }
 
     private void loadDetailsTable(List<Detail> details) {
-        Log.e("loadProdcutsTable::", "loadProdcutsTable load data");
+        Log.e("loadDetailsTable::", "loadDetailsTable load data");
         SQLiteDatabase db = this.getWritableDatabase();
 
         Iterator iterator = details.iterator();
@@ -336,7 +337,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
     }
 
     private void loadMarketTable(List<Market> markets) {
-        Log.e("loadProdcutsTable::", "loadProdcutsTable load data");
+        Log.e("loadMarketTable::", "loadMarketTable load data");
         SQLiteDatabase db = this.getWritableDatabase();
 
         Iterator iterator = markets.iterator();
@@ -363,7 +364,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
     }
 
     private void loadOptionsTable(List<Option> options) {
-        Log.e("loadProdcutsTable::", "loadProdcutsTable load data");
+        Log.e("loadOptionsTable::", "loadOptionsTable load data");
         SQLiteDatabase db = this.getWritableDatabase();
 
         Iterator iterator = options.iterator();
@@ -387,7 +388,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
     }
 
     private void loadCustomFiledsTable(List<CustomField> customFields) {
-        Log.e("loadProdcutsTable::", "loadProdcutsTable load data");
+        Log.e("loadCustomFiledsTable::", "loadCustomFiledsTable load data");
         SQLiteDatabase db = this.getWritableDatabase();
 
         Iterator iterator = customFields.iterator();
@@ -415,7 +416,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
     }
 
     private void loadUnitsTable(List<Unit> units) {
-        Log.e("loadProdcutsTable::", "loadProdcutsTable load data");
+        Log.e("loadUnitsTable::", "loadUnitsTable load data");
         SQLiteDatabase db = this.getWritableDatabase();
 
         Iterator iterator = units.iterator();
@@ -515,8 +516,9 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
 
     private void createProductTable() {
         String CREATE_PRODUCTS_TABLE = "CREATE TABLE " + TABLE_PRODUCTS + "("
-                + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + KEY_PRODUCT_ID + " TEXT,"
+                + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + KEY_PRODUCT_ID + " TEXT, "
+                + KEY_Researched + " INT, "
                 + KEY_Product_Name + " TEXT" + ")";
         database.execSQL(CREATE_PRODUCTS_TABLE);
 
@@ -970,21 +972,23 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
 
     public ArrayList<Product> getAllProducts() {
         SQLiteDatabase database = this.getReadableDatabase();
-        String query = "select id, product_id, product_name from products";
+        String query = "select "
+                + KEY_ID + ", "
+                + KEY_PRODUCT_ID + ", "
+                + KEY_Product_Name + ", "
+                + KEY_Researched + " from products";
         Cursor cursor = database.rawQuery(query, null);
         ArrayList<Product> products = null;
         try {
             if (cursor.moveToFirst()) {
                 products = new ArrayList<>();
                 do {
-                    String productId = cursor.getString(1);
-                    String productName = cursor.getString(2);
+                    Product temp = new Product();
+                    temp.set_id(cursor.getInt(cursor.getColumnIndex(KEY_ID)));
+                    temp.set_product_id(cursor.getString(cursor.getColumnIndex(KEY_PRODUCT_ID)));
+                    temp.set_product_name(cursor.getString(cursor.getColumnIndex(KEY_Product_Name)));
+                    temp.setResearched(cursor.getInt(cursor.getColumnIndex(KEY_Researched)));
 
-                    Product temp = new Product(productId, productName);
-                    String id = cursor.getString(0);
-                    if (id != null) {
-                        temp.set_id(Integer.valueOf(id));
-                    }
                     products.add(temp);
                 } while ((cursor.moveToNext()));
             }

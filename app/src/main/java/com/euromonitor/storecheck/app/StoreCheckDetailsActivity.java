@@ -68,6 +68,7 @@ public class StoreCheckDetailsActivity extends AppCompatActivity
     DrawerLayout mDrawerLayout;
     private SearchView.OnQueryTextListener queryTextListener;
     MaterialProgressBar progressBar;
+    Product selectedProduct;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -150,12 +151,10 @@ public class StoreCheckDetailsActivity extends AppCompatActivity
     private void setUpNavigationView() {
         try {
             Fragment navFragment = StoreCheckNavigationFragment.newInstance(mDrawerLayout.getId(), toolbar.getId());
-
             FragmentManager fragmentManager = this.getFragmentManager();
             FragmentTransaction ft = fragmentManager.beginTransaction();
             ft.replace(R.id.navDrawerFrame, navFragment, "Nav");
             ft.commit();
-
         } catch (Exception e) {
             Log.e("Setup Drawer", e.getMessage());
         }
@@ -177,19 +176,25 @@ public class StoreCheckDetailsActivity extends AppCompatActivity
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(this.getApplicationContext(), recyclerView, new ClickListener() {
             @Override
             public void onClick(View view, int position) {
-
-                StorecheckdetailItemBinding binding = DataBindingUtil.getBinding(view);
-                StoreCheckDetail detail = binding.getStoreCheckDetail();
-                if (detail != null) {
-                    StoreCheckAddProductDetailsActivity.priceId = detail.getPriceId();
-                    StoreCheckAddProductDetailsActivity.brandId = detail.getBrandId();
-                    StoreCheckAddProductDetailsActivity.brandName = detail.getBrand();
-                    StoreCheckAddProductDetailsActivity.productCode = detail.getProductCode();
-                    StoreCheckAddProductDetailsActivity.productName = detail.getProductName();
+                if (selectedProduct != null) {
+                    if (selectedProduct.getResearched() == 1) {
+                        StorecheckdetailItemBinding binding = DataBindingUtil.getBinding(view);
+                        StoreCheckDetail detail = binding.getStoreCheckDetail();
+                        if (detail != null) {
+                            StoreCheckAddProductDetailsActivity.priceId = detail.getPriceId();
+                            StoreCheckAddProductDetailsActivity.brandId = detail.getBrandId();
+                            StoreCheckAddProductDetailsActivity.brandName = detail.getBrand();
+                            StoreCheckAddProductDetailsActivity.productCode = detail.getProductCode();
+                            StoreCheckAddProductDetailsActivity.productName = detail.getProductName();
+                        }
+                        StoreCheckAddProductDetailsActivity activity = new StoreCheckAddProductDetailsActivity();
+                        intent = new Intent(StoreCheckDetailsActivity.this, StoreCheckAddProductDetailsActivity.class);
+                        startActivity(intent);
+                    } else {
+                        Toast.makeText(context, selectedProduct.get_product_name() + " is not researched!",
+                                Toast.LENGTH_LONG).show();
+                    }
                 }
-                StoreCheckAddProductDetailsActivity activity = new StoreCheckAddProductDetailsActivity();
-                intent = new Intent(StoreCheckDetailsActivity.this, StoreCheckAddProductDetailsActivity.class);
-                startActivity(intent);
             }
 
             @Override
@@ -248,17 +253,19 @@ public class StoreCheckDetailsActivity extends AppCompatActivity
             AsyncPostExceuteDetails,
             AsyncProgressReport,
             AsyncPreExecute{
+
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            Product selectedProduct = (Product) parent.getItemAtPosition(position);
+            Product product = (Product) parent.getItemAtPosition(position);
 
-                ViewDetailsTask viewDetailsTask = new ViewDetailsTask(context);
-                viewDetailsTask.productId = Integer.valueOf(selectedProduct.get_product_id());
-                viewDetailsTask.preExecute = this;
-                viewDetailsTask.progressReport = this;
-                viewDetailsTask.postExecute = this;
-                viewDetailsTask.execute();
+            selectedProduct = product;
 
+            ViewDetailsTask viewDetailsTask = new ViewDetailsTask(context);
+            viewDetailsTask.productId = Integer.valueOf(product.get_product_id());
+            viewDetailsTask.preExecute = this;
+            viewDetailsTask.progressReport = this;
+            viewDetailsTask.postExecute = this;
+            viewDetailsTask.execute();
         }
 
         @Override
@@ -268,9 +275,7 @@ public class StoreCheckDetailsActivity extends AppCompatActivity
 
         @Override
         public void preExecute(String message) {
-
             progressBar.setVisibility(View.VISIBLE);
-
         }
 
         @Override
