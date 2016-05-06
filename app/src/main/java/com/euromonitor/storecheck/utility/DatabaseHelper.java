@@ -1619,4 +1619,43 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
                 database.close();
         }
 }
+    public ArrayList<Market> getBrandsByProductId(int productCode) {
+        SQLiteDatabase database = this.getReadableDatabase();
+        String selectQuery = "SELECT "
+                + KEY_ID + ", "
+                //+ KEY_BRANDID + ", "
+                + KEY_BRANDMARKETID + ", "
+                + KEY_BRAND
+                + " FROM " + TABLE_MARKETS
+                + " where " + KEY_PRODUCTCODE + " = " + productCode;
+        Cursor cursor = database.rawQuery(selectQuery, null);
+        ArrayList<Market> brands = new ArrayList<>();
+        try {
+            if (cursor.moveToFirst()) {
+
+                do {
+                    Market market = new Market();
+                    market.set_id(cursor.getInt(cursor.getColumnIndex(KEY_ID)));
+                    market.set_brand_market_id(cursor.getString(cursor.getColumnIndex(KEY_BRANDMARKETID)));
+                    //market.setBrandId(cursor.getInt(cursor.getColumnIndex(KEY_BRANDID)));
+                    market.set_brand(cursor.getString(cursor.getColumnIndex(KEY_BRAND)));
+                    brands.add(market);
+
+                } while ((cursor.moveToNext()));
+            }
+
+        } catch (Exception ex) {
+            throw ex;
+        } finally {
+            if (cursor != null)
+                cursor.close();
+            if (database != null)
+                database.close();
+        }
+        return brands;
+    }
+
+    public StoreCheckBrand getBrandDetaildById(int brandId) {
+        return null;
+    }
 }
