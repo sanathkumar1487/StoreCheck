@@ -17,6 +17,7 @@ import com.euromonitor.storecheck.model.Outlet;
 import com.euromonitor.storecheck.model.PackType;
 import com.euromonitor.storecheck.model.Product;
 import com.euromonitor.storecheck.model.Unit;
+import com.euromonitor.storecheck.model.Validation;
 import com.euromonitor.storecheck.utility.JsonFileParser;
 
 import org.json.JSONException;
@@ -50,7 +51,7 @@ public class ImportDataTask extends AsyncTask<Void,Void,Void> {
     List<PackType> packTypes = new ArrayList<PackType>();
     List<CustomField> customFields = new ArrayList<CustomField>();
     MetaData storeCheckMetaData = new MetaData();
-
+    List<Validation> validations = new ArrayList<Validation>();
 
     public AsyncPreExecute preExecute = null;
     public AsyncProgressReport progressReport = null;
@@ -58,7 +59,6 @@ public class ImportDataTask extends AsyncTask<Void,Void,Void> {
 
     @Override
     protected void onPreExecute() {
-
         preExecute.preExecute("you just called preExecute Async Task in the UI Thread");
     }
 
@@ -106,7 +106,8 @@ public class ImportDataTask extends AsyncTask<Void,Void,Void> {
 
 
     private void loadModels() throws JSONException {
-        fileParser.loadModels(storeCheckMetaData, outlets, customFields, details, markets, options,products,channels, units,packTypes,activityContext);
+        fileParser.loadModels(storeCheckMetaData, outlets, customFields, details, markets, options, products, channels, units,
+                packTypes, validations, activityContext);
     }
 
 

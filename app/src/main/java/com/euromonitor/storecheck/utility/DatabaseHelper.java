@@ -26,6 +26,7 @@ import com.euromonitor.storecheck.model.Product;
 import com.euromonitor.storecheck.model.StoreCheckBrand;
 import com.euromonitor.storecheck.model.StoreCheckDetail;
 import com.euromonitor.storecheck.model.Unit;
+import com.euromonitor.storecheck.model.Validation;
 
 
 /**
@@ -36,6 +37,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
     // All Static variables
     // Database Version
     private static final int DATABASE_VERSION = 1;
+    private static final String TABLE_VALIDATION = "validations";
 
     SQLiteDatabase database;
 
@@ -171,6 +173,12 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
     final String CustomDropDown = "3";
     final String TextBox = "2";
 
+    // Validation Table
+    private static final String KEY_IndustryCode = "industryCode";
+    private static final String KEY_ColumnName = "columnName";
+    private static final String KEY_DecimalPlaces = "decimalPlace";
+
+
     public DatabaseHelper(Context context) {
 
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -199,9 +207,12 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         createBrandsTable();
         createBrandCustomFieldsTable();
         createPacktypeTable();
+        createValidationTable();
     }
 
-    public void loadData(MetaData storeCheckMetaData, List<Product> products, List<Outlet> outlets, List<Channel> channels, List<Detail> details, List<Market> markets, List<Option> options, List<CustomField> customFields, List<Unit> units, List<PackType> packTypes) {
+    public void loadData(MetaData storeCheckMetaData, List<Product> products, List<Outlet> outlets, List<Channel> channels,
+                         List<Detail> details, List<Market> markets, List<Option> options, List<CustomField> customFields,
+                         List<Unit> units, List<PackType> packTypes, List<Validation> validations) {
 
         Log.e("load Data is called ::", "load data");
 
@@ -217,7 +228,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         loadCustomFiledsTable(customFields);
         loadUnitsTable(units);
         loadpacktypeTable(packTypes);
-
+        loadValidationTable(validations);
     }
 
     private void loadStoreCheckMetaDataTable(MetaData storeCheckMetaData) {
@@ -446,7 +457,6 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         db.close();
     }
 
-
     private void loadpacktypeTable(List<PackType> packTypes) {
         Log.e("loadpacktypeTable::", "loadpacktypeTable load data");
 
@@ -476,6 +486,28 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
 
         }
         Log.e("End ::", String.valueOf(System.currentTimeMillis()));
+        db.close();
+    }
+
+    private void loadValidationTable(List<Validation> validations) {
+        Log.e("loadValidationTable::", "loadValidationTable load data");
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        Iterator iterator = validations.iterator();
+        while (iterator.hasNext()) {
+            Validation validation = (Validation) iterator.next();
+
+            ContentValues values = new ContentValues();
+            values.put(KEY_IndustryCode, validation.getIndustryCode());
+            values.put(KEY_ColumnName, validation.getColumnName());
+            values.put(KEY_MINIMUMALLOWED, validation.getMinimumAllowed());
+            values.put(KEY_MAXIMUMALLOWED, validation.getMaximumAllowed());
+            values.put(KEY_DecimalPlaces, validation.getDecimalPlace());
+            values.put(KEY_ISNUMERIC, validation.getIsNumeric());
+
+            db.insert(TABLE_VALIDATION, null, values);
+        }
         db.close();
     }
 
@@ -649,6 +681,19 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         database.execSQL(CREATE_PACKTYPE_TABLE);
     }
 
+    private void createValidationTable() {
+        String CREATE_VALIDATION_TABLE = " CREATE TABLE " + TABLE_VALIDATION + "("
+                + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + KEY_IndustryCode + " TEXT, "
+                + KEY_ColumnName + " TEXT, "
+                + KEY_MINIMUMALLOWED + " TEXT, "
+                + KEY_MAXIMUMALLOWED + " TEXT, "
+                + KEY_ISNUMERIC + " INT, "
+                + KEY_DecimalPlaces + " INT "
+                + ") ";
+        database.execSQL(CREATE_VALIDATION_TABLE);
+    }
+
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         onCreate(db);
@@ -668,7 +713,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         database.execSQL("DROP TABLE IF EXISTS '" + TABLE_BRANDS + "'");
         database.execSQL("DROP TABLE IF EXISTS '" + TABLE_BRANDCUSTOMFIELDS + "'");
         database.execSQL("DROP TABLE IF EXISTS '" + TABLE_PACKTYPES + "'");
-
+        database.execSQL("DROP TABLE IF EXISTS '" + TABLE_VALIDATION + "'");
     }
 
     // Adding new outlet

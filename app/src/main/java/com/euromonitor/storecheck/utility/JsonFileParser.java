@@ -6,6 +6,7 @@ import android.util.Log;
 import com.euromonitor.storecheck.model.MetaData;
 import com.euromonitor.storecheck.model.PackType;
 import com.euromonitor.storecheck.model.Unit;
+import com.euromonitor.storecheck.model.Validation;
 import com.google.gson.Gson;
 
 import org.json.JSONException;
@@ -61,7 +62,9 @@ public  class JsonFileParser {
 
     }
 
-    public void loadModels(MetaData storeCheckMetaData, List<Outlet> outlets, List<CustomField> customFields, List<Detail> details, List<Market> markets, List<Option> options, List<Product> products, List<Channel> channels, List<Unit> units ,List<PackType> packTypes, Context context) throws JSONException {
+    public void loadModels(MetaData storeCheckMetaData, List<Outlet> outlets, List<CustomField> customFields, List<Detail> details,
+                           List<Market> markets, List<Option> options, List<Product> products, List<Channel> channels,
+                           List<Unit> units ,List<PackType> packTypes, List<Validation> validations, Context context) throws JSONException {
 
         JSONObject rootData = new JSONObject(rawJsonData);
 
@@ -100,8 +103,11 @@ public  class JsonFileParser {
         packTypes = Arrays.asList(gsonObject.fromJson(rootData.getJSONArray("PackTypes").toString(), PackType[].class));
         storeCheckMetaData = gsonObject.fromJson(rootData.getJSONObject("StoreCheckMetaData").toString(), MetaData.class);
 
+        validations = Arrays.asList(gsonObject.fromJson(rootData.getJSONArray("Validations").toString(), Validation[].class));
+
         DatabaseHelper databaseHelper = new DatabaseHelper(context);
-        databaseHelper.loadData(storeCheckMetaData, products, outlets, channels, details, markets, options, customFields, units,packTypes);
+        databaseHelper.loadData(storeCheckMetaData, products, outlets, channels, details, markets, options, customFields,
+                units,packTypes, validations);
 
 
     }
