@@ -160,20 +160,25 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
             errors = errors + "\nMultipack field cannot be blank";
         }
 
-        validation = getValidationByColumn("");
-        if(validation!=null
-                && (Integer.valueOf(detail.getMultiPack()) < validation.getMinimumAllowed()
-                ||Integer.valueOf(detail.getMultiPack()) > validation.getMaximumAllowed() ))
-        {
-            errors = errors + "\nMultipack field value should be between " + validation.getMinimumAllowed()
-                    + " and " + validation.getMaximumAllowed();
-            isValid = false;
-        }
+        validation = getMultipackMax(productCode);
+        if(validation!=null) {
+            if (Integer.valueOf(detail.getMultiPack()) <= 0
+                    || Integer.valueOf(detail.getMultiPack()) > validation.getMultiPackMaximum()) {
+                errors = errors + "\nMultipack field value should be between " + 1
+                        + " and " + validation.getMultiPackMaximum();
+                isValid = false;
+            }
 
-        // Pack Size
-        if (detail.getPackSize() == null || detail.getPackSize().equals("0")) {
-            errors = errors + "\nPack-size field value is invalid";
-            isValid = false;
+            // Pack Size
+            if (detail.getPackSize() == null || detail.getPackSize().equals("0")) {
+                errors = errors + "\nPack-size field value is invalid";
+                isValid = false;
+            }
+
+            if(Integer.valueOf(detail.getPackSize()) < validation.getUnitMin() || Integer.valueOf(detail.getPackSize()) >validation.getUnitMax()){
+                errors = errors + "\nPack-size field value should be between " + validation.getUnitMin() + " and " + validation.getUnitMax() ;
+                isValid = false;
+            }
         }
 
         // Price
@@ -181,6 +186,31 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
             errors = errors + "\nPrice field value is invalid";
             isValid = false;
         }
+
+        validation = getValidationByColumn("scrPrice");
+
+        if(validation!=null && (Double.valueOf(detail.getPrice()) < validation.getMinimumAllowed()
+                ||Double.valueOf(detail.getPrice()) > validation.getMaximumAllowed() ) ){
+            errors = errors + "\nPrice field value should be between " + validation.getMinimumAllowed() + " and " + validation.getMaximumAllowed();
+            isValid = false;
+        }
+
+        // Brand
+        validation = getValidationByColumn("scmBrand");
+        if(validation!=null && detail.getBrandName()!=null
+                && (detail.getBrandName().length() < validation.getMinimumAllowed() ||detail.getBrandName().length() > validation.getMaximumAllowed()){
+            errors = errors + "\nBrand text length should be between " + validation.getMinimumAllowed() + " and " + validation.getMaximumAllowed();
+            isValid = false;
+        }
+
+        // NBO
+        validation = getValidationByColumn("scmNBO");
+        if(validation!=null && detail.getNbo()!=null
+                && (detail.getNbo().length() < validation.getMinimumAllowed() ||detail.getNbo().length() > validation.getMaximumAllowed()){
+            errors = errors + "\nNBO text length should be between " + validation.getMinimumAllowed() + " and " + validation.getMaximumAllowed();
+            isValid = false;
+        }
+
 
         ArrayList<CustomField> customFields = detail.getCustomFields();
         if (customFields != null) {
@@ -281,7 +311,7 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
     }
 
     private void setBinding() {
-        validations = databaseHelper.getValidations();
+        validations = databaseHelper.getValidations(productCode);
 
         if (priceId > 0) {
             pricingDetail = databaseHelper.getPricingDetails(priceId);
@@ -514,11 +544,21 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
         }
     }
 
-    private Validation getValidationByColumn(String columnName){
-        for(Validation validation: validations){
-            if(validation.getColumnName().equals(columnName)){
-                return validation;
+    private Validation getValidationByColumn(String columnName) {
+        if (validations != null) {
+            for (Validation validation : validations) {
+                if (validation.getColumnName().equals(columnName)) {
+                    return validation;
+                }
             }
+        }
+        return null;
+    }
+
+    private Validation getMultipackMax(int productCode){
+        for(Validation validation: validations){
+            if(validation.getProductCode() == productCode)
+                return validation;
         }
         return null;
     }

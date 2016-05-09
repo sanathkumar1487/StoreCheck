@@ -38,7 +38,7 @@
                     android:layout_column="0"
                     android:textSize="@dimen/default_font_size"
                     android:layout_margin="@dimen/material_item_margin"
-                    android:textColor="@color/blue_300"
+                    android:textColor="@color/grey_700"
                     android:text="@{pricingDetail.productName}"/>
 
                 <TextView

@@ -697,7 +697,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
                 + KEY_DecimalPlaces + " INT, "
                 + KEY_ProductCode + " INT, "
                 + KEY_UNITCODE + " INT, "
-                + KEY_MultiPackMax + "INT "
+                + KEY_MultiPackMax + " INT "
                 + ") ";
         database.execSQL(CREATE_VALIDATION_TABLE);
     }
@@ -1712,11 +1712,11 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         return null;
     }
 
-    public ArrayList<Validation> getValidations() {
+    public ArrayList<Validation> getValidations(int  productCode) {
         SQLiteDatabase database = this.getReadableDatabase();
         String selectQuery = "SELECT "
                 + KEY_ID + ", "
-                + KEY_IndustryCode
+                + KEY_IndustryCode  + ", "
                 + KEY_ColumnName + ", "
                 + KEY_MINIMUMALLOWED + ", "
                 + KEY_MAXIMUMALLOWED + ", "
@@ -1725,7 +1725,9 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
                 + KEY_ProductCode + ", "
                 + KEY_MultiPackMax + ", "
                 + KEY_UNITCODE
-                + " FROM " + TABLE_VALIDATION;
+                + " FROM " + TABLE_VALIDATION
+                + " WHERE " + KEY_IndustryCode + " IS NOT NULL"
+                + " OR " + KEY_ProductCode + " = " + productCode ;
 
         Cursor cursor = database.rawQuery(selectQuery, null);
         ArrayList<Validation> validations = new ArrayList<>();
