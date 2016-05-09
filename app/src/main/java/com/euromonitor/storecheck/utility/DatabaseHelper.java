@@ -1271,8 +1271,8 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
                     + KEY_PRICINGID + ", "
                     + KEY_UPDATED
                     + " FROM " + TABLE_DETAILS
-                    + " where " + KEY_PRICINGID + " = " + pricingId
-                    + " and " + KEY_UPDATED + " = " + 1;
+                    + " where " + KEY_PRICINGID + " = " + pricingId;
+//                    + " and " + KEY_UPDATED + " = " + 1;
 
             SQLiteDatabase db = this.getWritableDatabase();
             Cursor cursor = db.rawQuery(selectQuery, null);
@@ -1477,7 +1477,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
     private boolean saveCustomFields(int pricingId, ArrayList<CustomField> customFields, SQLiteDatabase db, boolean isUpdate) {
         boolean result = true;
         if (isUpdate) {
-            result = db.delete(TABLE_BRANDCUSTOMFIELDS, KEY_PRICINGID + " = ? ", new String[]{String.valueOf(pricingId)}) > 0;
+            db.delete(TABLE_BRANDCUSTOMFIELDS, KEY_PRICINGID + " = ? ", new String[]{String.valueOf(pricingId)});
         }
         if (result) {
             for (CustomField cf : customFields) {

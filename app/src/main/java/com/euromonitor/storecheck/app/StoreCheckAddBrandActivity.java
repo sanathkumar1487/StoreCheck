@@ -253,6 +253,8 @@ public class StoreCheckAddBrandActivity extends AppCompatActivity
                         StoreCheckAddProductDetailsActivity.brandId = brandId;
                         StoreCheckAddProductDetailsActivity.productCode = Integer.valueOf(binding.getStoreCheckBrand().getSelectedProduct().get_product_id());
                         StoreCheckAddProductDetailsActivity.productName = binding.getStoreCheckBrand().getSelectedProduct().get_product_name();
+                        StoreCheckAddProductDetailsActivity.priceId = 0;
+
 
                         binding.brandName.setText(null);
                         binding.nboName.setText(null);
