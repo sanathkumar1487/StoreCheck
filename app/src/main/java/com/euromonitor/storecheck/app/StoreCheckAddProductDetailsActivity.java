@@ -198,7 +198,7 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
         // Brand
         validation = getValidationByColumn("scmBrand");
         if(validation!=null && detail.getBrandName()!=null
-                && (detail.getBrandName().length() < validation.getMinimumAllowed() ||detail.getBrandName().length() > validation.getMaximumAllowed()){
+                && (detail.getBrandName().length() < validation.getMinimumAllowed() ||detail.getBrandName().length() > validation.getMaximumAllowed())){
             errors = errors + "\nBrand text length should be between " + validation.getMinimumAllowed() + " and " + validation.getMaximumAllowed();
             isValid = false;
         }
@@ -206,7 +206,7 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
         // NBO
         validation = getValidationByColumn("scmNBO");
         if(validation!=null && detail.getNbo()!=null
-                && (detail.getNbo().length() < validation.getMinimumAllowed() ||detail.getNbo().length() > validation.getMaximumAllowed()){
+                && (detail.getNbo().length() < validation.getMinimumAllowed() ||detail.getNbo().length() > validation.getMaximumAllowed())){
             errors = errors + "\nNBO text length should be between " + validation.getMinimumAllowed() + " and " + validation.getMaximumAllowed();
             isValid = false;
         }
