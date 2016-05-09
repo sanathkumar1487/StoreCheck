@@ -38,6 +38,7 @@ import com.euromonitor.storecheck.model.PricingDetail;
 import com.euromonitor.storecheck.model.Product;
 import com.euromonitor.storecheck.model.ProductDetail;
 import com.euromonitor.storecheck.model.Unit;
+import com.euromonitor.storecheck.model.Validation;
 import com.euromonitor.storecheck.utility.DatabaseHelper;
 
 import java.util.ArrayList;
@@ -57,6 +58,7 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
 
     ArrayList<Market> markets;
     ArrayList<CustomField> customFields = new ArrayList<CustomField>();
+    ArrayList<Validation> validations;
     String errors;
 
     PricingDetail pricingDetail;
@@ -100,20 +102,6 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
         }
     }
 
-    private void setCustomFields(int productCode, int typeId) {
-        setCustomFieldByProductCode(productCode, typeId);
-        pricingDetail.setCustomFields(customFields);
-
-        if (customFieldRecyclerView != null) {
-
-            customFieldRecyclerView.setLayoutManager(new LinearLayoutManager(context));
-
-            StoreCheckCustomFieldsAdapter adapter = new StoreCheckCustomFieldsAdapter(LayoutInflater.from(context), context, customFields);
-
-            customFieldRecyclerView.setAdapter(adapter);
-        }
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         menu.clear();
@@ -129,6 +117,20 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void setCustomFields(int productCode, int typeId) {
+        setCustomFieldByProductCode(productCode, typeId);
+        pricingDetail.setCustomFields(customFields);
+
+        if (customFieldRecyclerView != null) {
+
+            customFieldRecyclerView.setLayoutManager(new LinearLayoutManager(context));
+
+            StoreCheckCustomFieldsAdapter adapter = new StoreCheckCustomFieldsAdapter(LayoutInflater.from(context), context, customFields);
+
+            customFieldRecyclerView.setAdapter(adapter);
         }
     }
 
@@ -151,9 +153,20 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
 
         errors = "Please correct the following errors!";
         PricingDetail detail = binding.getPricingDetail();
+        Validation validation ;
+
         // Multipack Size
-        if (detail.getMultiPack() == null || detail.getMultiPack().equals("0")) {
-            errors = errors + "\nMultipack field value is invalid";
+        if (detail.getMultiPack() == null){
+            errors = errors + "\nMultipack field cannot be blank";
+        }
+
+        validation = getValidationByColumn("");
+        if(validation!=null
+                && (Integer.valueOf(detail.getMultiPack()) < validation.getMinimumAllowed()
+                ||Integer.valueOf(detail.getMultiPack()) > validation.getMaximumAllowed() ))
+        {
+            errors = errors + "\nMultipack field value should be between " + validation.getMinimumAllowed()
+                    + " and " + validation.getMaximumAllowed();
             isValid = false;
         }
 
@@ -268,6 +281,8 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
     }
 
     private void setBinding() {
+        validations = databaseHelper.getValidations();
+
         if (priceId > 0) {
             pricingDetail = databaseHelper.getPricingDetails(priceId);
         }
@@ -497,5 +512,14 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
 
             return packTypeView;
         }
+    }
+
+    private Validation getValidationByColumn(String columnName){
+        for(Validation validation: validations){
+            if(validation.getColumnName().equals(columnName)){
+                return validation;
+            }
+        }
+        return null;
     }
 }

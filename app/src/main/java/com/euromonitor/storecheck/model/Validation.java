@@ -72,4 +72,57 @@ public class Validation {
 
     @SerializedName("IsNumeric")
     private int isNumeric;
+
+    public int getProductCode() {
+        return productCode;
+    }
+
+    public void setProductCode(int productCode) {
+        this.productCode = productCode;
+    }
+
+    @SerializedName("ProductCode")
+    private int productCode;
+
+    public int getUnitCode() {
+        return unitCode;
+    }
+
+    public void setUnitCode(int unitCode) {
+        this.unitCode = unitCode;
+    }
+
+    @SerializedName("UnitCode")
+    private int unitCode;
+
+    public double getUnitMin() {
+        return unitMin;
+    }
+
+    public void setUnitMin(double unitMin) {
+        this.unitMin = unitMin;
+    }
+
+    private double unitMin;
+
+    public double getUnitMax() {
+        return unitMax;
+    }
+
+    public void setUnitMax(double unitMax) {
+        this.unitMax = unitMax;
+    }
+
+    private double unitMax;
+
+    public int getMultiPackMaximum() {
+        return multiPackMaximum;
+    }
+
+    public void setMultiPackMaximum(int multiPackMaximum) {
+        this.multiPackMaximum = multiPackMaximum;
+    }
+
+    @SerializedName("MultiPackMax")
+    private int multiPackMaximum;
 }

@@ -177,6 +177,8 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
     private static final String KEY_IndustryCode = "industryCode";
     private static final String KEY_ColumnName = "columnName";
     private static final String KEY_DecimalPlaces = "decimalPlace";
+    private static final String KEY_MultiPackMax = "multiPackMax";
+    private static final String KEY_ProductCode = "productcode";
 
 
     public DatabaseHelper(Context context) {
@@ -505,6 +507,9 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
             values.put(KEY_MAXIMUMALLOWED, validation.getMaximumAllowed());
             values.put(KEY_DecimalPlaces, validation.getDecimalPlace());
             values.put(KEY_ISNUMERIC, validation.getIsNumeric());
+            values.put(KEY_ProductCode, validation.getProductCode());
+            values.put(KEY_UNITCODE, validation.getUnitCode());
+            values.put(KEY_MultiPackMax, validation.getMultiPackMaximum());
 
             db.insert(TABLE_VALIDATION, null, values);
         }
@@ -689,7 +694,10 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
                 + KEY_MINIMUMALLOWED + " TEXT, "
                 + KEY_MAXIMUMALLOWED + " TEXT, "
                 + KEY_ISNUMERIC + " INT, "
-                + KEY_DecimalPlaces + " INT "
+                + KEY_DecimalPlaces + " INT, "
+                + KEY_ProductCode + " INT, "
+                + KEY_UNITCODE + " INT, "
+                + KEY_MultiPackMax + "INT "
                 + ") ";
         database.execSQL(CREATE_VALIDATION_TABLE);
     }
@@ -759,7 +767,6 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         // return outlet list
         return outletList;
     }
-
 
     public ArrayList<Cursor> getData(String Query) {
         SQLiteDatabase sqlDB = this.getWritableDatabase();
@@ -1054,10 +1061,10 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
 
             ContentValues contentValues = new ContentValues();
             contentValues.put(KEY_BRANDMARKETID, "-1 ");
-            contentValues.put(KEY_PROJECTID, String.valueOf(metaData.getProjectId() ));
-            contentValues.put(KEY_GEOGRAPHYCODE, metaData.getGeographyCode() );
-            contentValues.put(KEY_GEOGRAPHY, metaData.getGeographyName() );
-            contentValues.put(KEY_PRODUCTCODE,String.valueOf(brand.getSelectedProduct().get_product_id()));
+            contentValues.put(KEY_PROJECTID, String.valueOf(metaData.getProjectId()));
+            contentValues.put(KEY_GEOGRAPHYCODE, metaData.getGeographyCode());
+            contentValues.put(KEY_GEOGRAPHY, metaData.getGeographyName());
+            contentValues.put(KEY_PRODUCTCODE, String.valueOf(brand.getSelectedProduct().get_product_id()));
             contentValues.put(KEY_PRODUCT, brand.getSelectedProduct().get_product_name());
             contentValues.put(KEY_BRAND, brand.getBrand());
             contentValues.put(KEY_NBO, brand.getNBO());
@@ -1416,7 +1423,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
 
 
             long result = 0;
-            if(pricingDetail.getPricingId()>0) {
+            if (pricingDetail.getPricingId() > 0) {
                 values.put(KEY_MULTIPACKSIZE, pricingDetail.getMultiPack());
                 values.put(KEY_OUTLETID, pricingDetail.getSelectedOutletId());
                 values.put(KEY_PRODUCTID, pricingDetail.getProductId());
@@ -1434,8 +1441,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
                 values.put(KEY_UPDATED, "1");
 
                 result = db.update(TABLE_DETAILS, values, KEY_ID + " = ?", new String[]{String.valueOf(pricingDetail.getId())});
-            }
-            else {
+            } else {
                 values.put(KEY_MULTIPACKSIZE, pricingDetail.getMultiPack());
                 values.put(KEY_OUTLETID, pricingDetail.getSelectedOutletId());
                 values.put(KEY_PRODUCTID, pricingDetail.getProductId());
@@ -1639,10 +1645,10 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
                 database.close();
         }
     }
-    public String[] brandName(int productCode)
-    {
+
+    public String[] brandName(int productCode) {
         SQLiteDatabase database = this.getReadableDatabase();
-        String  selectQuery = "SELECT brand FROM " + TABLE_MARKETS
+        String selectQuery = "SELECT brand FROM " + TABLE_MARKETS
                 + " where " + KEY_PRODUCTCODE + " = " + productCode;
         Cursor cursor = database.rawQuery(selectQuery, null);
         String[] brand_s = new String[cursor.getCount()];
@@ -1656,18 +1662,16 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
                 } while ((cursor.moveToNext()));
             }
             return brand_s;
-        } catch (Exception ex)
-        {
+        } catch (Exception ex) {
             throw ex;
-        }
-        finally
-        {
+        } finally {
             if (cursor != null)
                 cursor.close();
             if (database != null)
                 database.close();
         }
-}
+    }
+
     public ArrayList<Market> getBrandsByProductId(int productCode) {
         SQLiteDatabase database = this.getReadableDatabase();
         String selectQuery = "SELECT "
@@ -1707,4 +1711,62 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
     public StoreCheckBrand getBrandDetaildById(int brandId) {
         return null;
     }
+
+    public ArrayList<Validation> getValidations() {
+        SQLiteDatabase database = this.getReadableDatabase();
+        String selectQuery = "SELECT "
+                + KEY_ID + ", "
+                + KEY_IndustryCode
+                + KEY_ColumnName + ", "
+                + KEY_MINIMUMALLOWED + ", "
+                + KEY_MAXIMUMALLOWED + ", "
+                + KEY_DecimalPlaces + ", "
+                + KEY_ISNUMERIC + ", "
+                + KEY_ProductCode + ", "
+                + KEY_MultiPackMax + ", "
+                + KEY_UNITCODE
+                + " FROM " + TABLE_VALIDATION;
+
+        Cursor cursor = database.rawQuery(selectQuery, null);
+        ArrayList<Validation> validations = new ArrayList<>();
+        try {
+            if (cursor.moveToFirst()) {
+
+                do {
+                    Validation validation = new Validation();
+
+                    String industryCode = cursor.getString(cursor.getColumnIndex(KEY_IndustryCode));
+                    String columnName = cursor.getString(cursor.getColumnIndex(KEY_ColumnName));
+
+                    if (industryCode != null && columnName != null) {
+                        validation.setIndustryCode(industryCode);
+                        validation.setColumnName(columnName);
+                        validation.setMinimumAllowed(cursor.getDouble(cursor.getColumnIndex(KEY_MINIMUMALLOWED)));
+                        validation.setMaximumAllowed(cursor.getDouble(cursor.getColumnIndex(KEY_MAXIMUMALLOWED)));
+                        validation.setDecimalPlace(cursor.getInt(cursor.getColumnIndex(KEY_DecimalPlaces)));
+                        validation.setIsNumeric(cursor.getInt(cursor.getColumnIndex(KEY_ISNUMERIC)));
+                    } else {
+                        validation.setProductCode(cursor.getInt(cursor.getColumnIndex(KEY_ProductCode)));
+                        validation.setMultiPackMaximum(cursor.getInt(cursor.getColumnIndex(KEY_MultiPackMax)));
+                        validation.setUnitMin(cursor.getInt(cursor.getColumnIndex(KEY_MINIMUMALLOWED)));
+                        validation.setUnitMax(cursor.getInt(cursor.getColumnIndex(KEY_MAXIMUMALLOWED)));
+                        validation.setUnitCode(cursor.getInt(cursor.getColumnIndex(KEY_UNITCODE)));
+                    }
+
+                    validations.add(validation);
+
+                } while ((cursor.moveToNext()));
+            }
+
+        } catch (Exception ex) {
+            throw ex;
+        } finally {
+            if (cursor != null)
+                cursor.close();
+            if (database != null)
+                database.close();
+        }
+        return validations;
+    }
+
 }
