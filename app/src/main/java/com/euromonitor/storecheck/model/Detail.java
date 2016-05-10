@@ -82,6 +82,8 @@ public class Detail {
         this.set_nbo(nbo);
     }
 
+    public Detail() {
+    }
 
     public int get_id() {
         return _id;
