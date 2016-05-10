@@ -1844,11 +1844,6 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         return validations;
     }
 
-<<<<<<< HEAD
- 
-
-
-=======
     public ArrayList<BrandCustomField> getBrandCustomFieldsByBrand(Market selectMarket) {
         SQLiteDatabase database = this.getReadableDatabase();
 
@@ -1940,5 +1935,4 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         return nbo;
 
     }
->>>>>>> 5dfe93ec48dd97d10bc16a0ad7918a41b11b47f0
 }
