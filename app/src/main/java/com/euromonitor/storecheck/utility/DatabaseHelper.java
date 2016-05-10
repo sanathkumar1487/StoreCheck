@@ -1131,6 +1131,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
             contentValues.put(KEY_BRAND, brand.getBrand());
             contentValues.put(KEY_NBO, brand.getNbo());
             contentValues.put(KEY_COMPANYNAME, "");
+            contentValues.put(KEY_UPDATED, 1);
 
             if (isUpdate) {
                 result = db.update(TABLE_MARKETS, contentValues, KEY_ID + " = ?",

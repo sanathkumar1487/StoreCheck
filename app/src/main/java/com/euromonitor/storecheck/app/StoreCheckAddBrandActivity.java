@@ -14,6 +14,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -87,6 +89,9 @@ public class StoreCheckAddBrandActivity extends AppCompatActivity
     AutoCompleteTextView brand_name;
     String[] item = new String[]{"Please search here"};
     StoreCheckCustomFieldsAdapter customFieldsAdapter;
+    ArrayList<CustomField> productCustomFields ;
+
+    boolean isExistingBrand=false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -314,14 +319,40 @@ public class StoreCheckAddBrandActivity extends AppCompatActivity
                     binding.getStoreCheckBrand().setSelectedProduct(selectedProduct);
                     setCustomFieldByProductCode(productID);
                     storeCheckBrand.setCustomFields(customFields);
+
+                    productCustomFields = customFields;
+
                     brand_item = databaseHelper.getBrandsByProductId(productID);
                     brand_name = (AutoCompleteTextView) findViewById(R.id.brandName);
                     brandAdapter = new StoreCheckBrandAdapter(context, android.R.layout.simple_dropdown_item_1line, R.id.brand_name, brand_item);
                     brand_name.setAdapter(brandAdapter);
                     brand_name.setThreshold(1);
+
+//                    brand_name.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+//                        @Override
+//                        public void onFocusChange(View v, boolean hasFocus) {
+//
+//                            if(!hasFocus && ((AutoCompleteTextView)v).getText()!=null){
+//                               String newValue = ((AutoCompleteTextView)v).getText().toString();
+//
+//                                if(binding.getStoreCheckBrand().getSelectedMarket()!=null
+//                                        && newValue !=  binding.getStoreCheckBrand().getSelectedMarket().get_brand()){
+//                                    binding.getStoreCheckBrand().setSelectMarket(null);
+//                                    binding.getStoreCheckBrand().setCustomFields(productCustomFields);
+//                                    customFieldsAdapter = new StoreCheckCustomFieldsAdapter(LayoutInflater.from(context),
+//                                            context, productCustomFields);
+//                                    customFieldRecyclerView.setAdapter(customFieldsAdapter);
+//
+//                                    binding.getStoreCheckBrand().setNbo("");
+//                                    binding.nbo.setText("");
+//                                }
+//                            }
+//                        }
+//                    });
                     brand_name.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            isExistingBrand = true;
                             Market selectMarket = (Market) parent.getItemAtPosition(position);
 
                             storeCheckBrand.setSelectMarket(selectMarket);
@@ -354,10 +385,7 @@ public class StoreCheckAddBrandActivity extends AppCompatActivity
 
                         }
 
-//                        @Override
-//                        public void onNothingSelected(AdapterView<?> parent) {
 
-                        //}
                     });
                     if (customFieldRecyclerView != null) {
                         customFieldRecyclerView.setLayoutManager(new LinearLayoutManager(context));
