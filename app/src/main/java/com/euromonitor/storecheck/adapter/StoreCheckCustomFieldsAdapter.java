@@ -3,6 +3,7 @@ package com.euromonitor.storecheck.adapter;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -55,9 +56,14 @@ public class StoreCheckCustomFieldsAdapter extends RecyclerView.Adapter<StoreChe
         OptionsAdapter optionsAdapter = new OptionsAdapter(current.get_options(), layoutInflater);
 
         holder.optionsSpinner.setAdapter(optionsAdapter);
-        if ((current.get_object_id().equals("1") || current.get_object_id().equals("3"))
-                && current.get_options().size() > 0) {
-            current.setSelectedOption(current.get_options().get(0));
+
+
+        if(current.get_object_id().equals("1") || current.get_object_id().equals("3")) {
+            if (current.getSelectedOption() == null && current.get_options().size() > 0) {
+                current.setSelectedOption(current.get_options().get(0));
+            }
+
+            holder.optionsSpinner.setSelection(optionsAdapter.getPositionById(current.getSelectedOption().getOptionId()));
         }
 
         holder.optionsSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -77,6 +83,11 @@ public class StoreCheckCustomFieldsAdapter extends RecyclerView.Adapter<StoreChe
                     for (int index = 0; index < customFields.size(); index++) {
                         if (customFields.get(index).get_group_id().equals((frameGroupId))) {
                             customFields.get(index).setIsEnabled(!(selectedOption.getMinimumAllowed().equals("0") && selectedOption.getMaximumAllowed().equals("0")));
+
+                            if(!customFields.get(index).getIsEnabled()){
+                                customFields.get(index).setCustomFieldTextValue("");
+                            }
+
                             customFields.get(index).setSelectedOption(selectedOption);
                             String isNumeric = selectedOption.getIsNumeric();
 
@@ -123,6 +134,7 @@ public class StoreCheckCustomFieldsAdapter extends RecyclerView.Adapter<StoreChe
             binding = DataBindingUtil.bind(v);
             optionsSpinner = (Spinner)v.findViewById(R.id.options);
             optionName = (EditText)v.findViewById(R.id.optionName);
+            optionName.setTextColor(Color.parseColor("#424242"));
         }
 
         public ViewDataBinding getBinding(){
@@ -167,6 +179,17 @@ public class StoreCheckCustomFieldsAdapter extends RecyclerView.Adapter<StoreChe
 
             productItem.setText(options.get(position).getOptionName());
             return optionItemView;
+        }
+
+        public int getPositionById(String optionId){
+            int position = 0;
+            for(int index =0; index<options.size();index++){
+                if(options.get(index).getOptionId().equals(optionId)){
+                    position  = index;
+                    break;
+                }
+            }
+            return position;
         }
     }
 }

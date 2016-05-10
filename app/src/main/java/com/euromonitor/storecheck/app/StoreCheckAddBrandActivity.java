@@ -44,6 +44,7 @@ import com.euromonitor.storecheck.databinding.StorecheckAddbrandBinding;
 import com.euromonitor.storecheck.databinding.StorecheckProductdetailsBinding;
 import com.euromonitor.storecheck.listener.ClickListener;
 import com.euromonitor.storecheck.listener.RecyclerTouchListener;
+import com.euromonitor.storecheck.model.BrandCustomField;
 import com.euromonitor.storecheck.model.CustomField;
 import com.euromonitor.storecheck.model.Market;
 import com.euromonitor.storecheck.model.Option;
@@ -85,6 +86,7 @@ public class StoreCheckAddBrandActivity extends AppCompatActivity
     AutoCompleteTextView nbo_name;
     AutoCompleteTextView brand_name;
     String[] item = new String[]{"Please search here"};
+    StoreCheckCustomFieldsAdapter customFieldsAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -101,7 +103,7 @@ public class StoreCheckAddBrandActivity extends AppCompatActivity
             View view = binding.getRoot();
             customFieldRecyclerView = (RecyclerView) view.findViewById(R.id.customFields);
             item = databaseHelper.getNboName();
-            nbo_name = (AutoCompleteTextView) findViewById(R.id.nboName);
+            nbo_name = (AutoCompleteTextView) findViewById(R.id.nbo);
             adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, item);
             nbo_name.setAdapter(adapter);
             nbo_name.setThreshold(1);
@@ -159,7 +161,7 @@ public class StoreCheckAddBrandActivity extends AppCompatActivity
 
     private void resetData() {
         binding.brandName.setText("");
-        binding.nboName.setText("");
+        binding.nbo.setText("");
 
         Spinner productSpinner = (Spinner) ((View) (binding.getRoot()).findViewById(R.id.products));
         if (productSpinner.getCount() > 0) {
@@ -179,7 +181,7 @@ public class StoreCheckAddBrandActivity extends AppCompatActivity
             isValid = false;
         }
 
-        if (data.getNBO() == null || data.getNBO().equals("")) {
+        if (data.getNbo() == null || data.getNbo().equals("")) {
             errors += "\n NBO is required";
             isValid = false;
         }
@@ -234,6 +236,9 @@ public class StoreCheckAddBrandActivity extends AppCompatActivity
             }
         }
         if (isValid) {
+
+            isUpdated = data.getSelectedMarket()!=null && data.getSelectedMarket().get_id()>0;
+
             long brandId = databaseHelper.saveBrand(data, isUpdated);
             if (brandId > 0) {
                 StoreCheckAddProductDetailsActivity.brandName = binding.getStoreCheckBrand().getBrand();
@@ -244,7 +249,7 @@ public class StoreCheckAddBrandActivity extends AppCompatActivity
 
 
                 binding.brandName.setText(null);
-                binding.nboName.setText(null);
+                binding.nbo.setText(null);
 
                 Spinner productSpinner = (Spinner) ((View) (binding.getRoot()).findViewById(R.id.products));
                 if (productSpinner.getCount() > 0) {
@@ -253,8 +258,7 @@ public class StoreCheckAddBrandActivity extends AppCompatActivity
                 setBindingProperties();
 
                 binding.brandName.setText(null);
-                binding.nboName.setText(null);
-
+                binding.nbo.setText(null);
 
                 Toast.makeText(this.getBaseContext(), "Saved successfully!", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(context, StoreCheckAddProductDetailsActivity.class);
@@ -279,8 +283,8 @@ public class StoreCheckAddBrandActivity extends AppCompatActivity
         binding.getStoreCheckBrand().setBrand(newValue);
 
         newValue = null;
-        if (binding.nboName.getText() != null) {
-            newValue = binding.nboName.getText().toString();
+        if (binding.nbo.getText() != null) {
+            newValue = binding.nbo.getText().toString();
         }
         binding.getStoreCheckBrand().setNbo(newValue);
     }
@@ -319,8 +323,35 @@ public class StoreCheckAddBrandActivity extends AppCompatActivity
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                             Market selectMarket = (Market) parent.getItemAtPosition(position);
-                            int brandid = Integer.valueOf(selectMarket.get_id());
+
                             storeCheckBrand.setSelectMarket(selectMarket);
+
+                            binding.getStoreCheckBrand().setNbo(databaseHelper.getNboByBrand(selectMarket));
+                            binding.nbo.setText(binding.getStoreCheckBrand().getNbo());
+
+                            ArrayList<BrandCustomField> brandCustomFields = databaseHelper.getBrandCustomFieldsByBrand(selectMarket);
+
+                            if(brandCustomFields!=null){
+                                ArrayList<CustomField> customFields =  binding.getStoreCheckBrand().getCustomFields();
+                                for (BrandCustomField preCustomFields : brandCustomFields) {
+                                    for (CustomField cf :customFields) {
+                                        if (Integer.valueOf(cf.get_group_id()) == (preCustomFields.getGroupId())) {
+                                            cf.setSelectedOptionById(preCustomFields.getOptionId());
+                                            if (cf.get_object_id().equals(TextBox)) {
+                                                cf.setCustomFieldTextValue(preCustomFields.getOptionText());
+                                            }
+
+                                            break;
+                                        }
+                                    }
+                                }
+
+                                customFieldsAdapter = new StoreCheckCustomFieldsAdapter(LayoutInflater.from(context), context, customFields);
+                                customFieldRecyclerView.setAdapter(customFieldsAdapter);
+                            }
+
+                            binding.getStoreCheckBrand().setSelectMarket(selectMarket);
+
                         }
 
 //                        @Override
@@ -330,8 +361,8 @@ public class StoreCheckAddBrandActivity extends AppCompatActivity
                     });
                     if (customFieldRecyclerView != null) {
                         customFieldRecyclerView.setLayoutManager(new LinearLayoutManager(context));
-                        StoreCheckCustomFieldsAdapter adapter = new StoreCheckCustomFieldsAdapter(LayoutInflater.from(context), context, customFields);
-                        customFieldRecyclerView.setAdapter(adapter);
+                        customFieldsAdapter = new StoreCheckCustomFieldsAdapter(LayoutInflater.from(context), context, customFields);
+                        customFieldRecyclerView.setAdapter(customFieldsAdapter);
 
                     }
                 }

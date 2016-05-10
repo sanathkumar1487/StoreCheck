@@ -55,6 +55,10 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
     public static String productName;
     public static String brandName;
 
+    final static String DropDown = "1";
+    final static String TextBox = "2";
+    final static String CustomDropDown = "3";
+    final static String CustomCompanyID = "4";
 
     ArrayList<Market> markets;
     ArrayList<CustomField> customFields = new ArrayList<CustomField>();
@@ -397,7 +401,7 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
                 for (CustomField cf : customFields) {
                     if (cf.getUniqueID().equals(preCustomFields.getUniqueID())) {
                         cf.setSelectedOption(preCustomFields.getSelectedOption());
-                        if (cf.get_object_id().equals("1")) {
+                        if (cf.get_object_id().equals(TextBox)) {
                             cf.setCustomFieldTextValue(preCustomFields.getCustomFieldTextValue());
                         }
                         break;

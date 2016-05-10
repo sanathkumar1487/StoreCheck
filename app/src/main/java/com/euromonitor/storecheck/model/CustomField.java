@@ -261,4 +261,13 @@ public class CustomField  extends BaseObservable
     @SerializedName("TypeId")
     private int typeId;
 
+    public void setSelectedOptionById(int optionId){
+        for(Option option: this._options){
+            if(option.getOptionId().equals(String.valueOf(optionId))){
+                this.setSelectedOption(option);
+                break;
+            }
+        }
+    }
+
 }

@@ -90,12 +90,12 @@
                 <AutoCompleteTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@{storeCheckBrand.NBO}"
+                    android:text="@{storeCheckBrand.nbo}"
                     android:layout_row="3"
                     android:layout_column="1"
                     android:layout_margin="@dimen/material_item_margin"
                     android:textSize="@dimen/detailfont_size"
-                    android:id="@+id/nboName"/>
+                    android:id="@+id/nbo"/>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
