@@ -52,6 +52,16 @@ public class Market  {
 
     private boolean isNew = false;
 
+    public int getUpdated() {
+        return updated;
+    }
+
+    public void setUpdated(int updated) {
+        this.updated = updated;
+    }
+
+    private int updated;
+
     public Market(){}
 
     public Market(int _id,String _brand_market_id, String _project_id, String _geography_code, String geography, String _product_code, String _product, String _brand, String _nbo, String _company_name) {

@@ -3,6 +3,7 @@ package com.euromonitor.storecheck.utility;
 import android.content.Context;
 import android.util.Log;
 
+import com.euromonitor.storecheck.model.BrandCustomField;
 import com.euromonitor.storecheck.model.MetaData;
 import com.euromonitor.storecheck.model.PackType;
 import com.euromonitor.storecheck.model.Unit;
@@ -64,7 +65,8 @@ public  class JsonFileParser {
 
     public void loadModels(MetaData storeCheckMetaData, List<Outlet> outlets, List<CustomField> customFields, List<Detail> details,
                            List<Market> markets, List<Option> options, List<Product> products, List<Channel> channels,
-                           List<Unit> units ,List<PackType> packTypes, List<Validation> validations, Context context) throws JSONException {
+                           List<Unit> units ,List<PackType> packTypes, List<Validation> validations,
+                           List<BrandCustomField> brandCustomFields, Context context) throws JSONException {
 
         JSONObject rootData = new JSONObject(rawJsonData);
 
@@ -105,9 +107,11 @@ public  class JsonFileParser {
 
         validations = Arrays.asList(gsonObject.fromJson(rootData.getJSONArray("Validations").toString(), Validation[].class));
 
+        brandCustomFields =  Arrays.asList(gsonObject.fromJson(rootData.getJSONArray("BrandSelectedCustomFields").toString(), BrandCustomField[].class));
+
         DatabaseHelper databaseHelper = new DatabaseHelper(context);
         databaseHelper.loadData(storeCheckMetaData, products, outlets, channels, details, markets, options, customFields,
-                units,packTypes, validations);
+                units,packTypes, validations, brandCustomFields);
 
 
     }

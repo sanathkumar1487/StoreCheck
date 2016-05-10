@@ -3,10 +3,12 @@ package com.euromonitor.storecheck.controller;
 import android.content.Context;
 import android.os.AsyncTask;
 
+import com.euromonitor.storecheck.BR;
 import com.euromonitor.storecheck.app.StoreCheckImportActivity;
 import com.euromonitor.storecheck.controller.interfaces.AsyncPostExecute;
 import com.euromonitor.storecheck.controller.interfaces.AsyncPreExecute;
 import com.euromonitor.storecheck.controller.interfaces.AsyncProgressReport;
+import com.euromonitor.storecheck.model.BrandCustomField;
 import com.euromonitor.storecheck.model.Channel;
 import com.euromonitor.storecheck.model.CustomField;
 import com.euromonitor.storecheck.model.Detail;
@@ -52,6 +54,7 @@ public class ImportDataTask extends AsyncTask<Void,Void,Void> {
     List<CustomField> customFields = new ArrayList<CustomField>();
     MetaData storeCheckMetaData = new MetaData();
     List<Validation> validations = new ArrayList<Validation>();
+    List<BrandCustomField> brandCustomFields = new ArrayList<BrandCustomField>();
 
     public AsyncPreExecute preExecute = null;
     public AsyncProgressReport progressReport = null;
@@ -107,7 +110,7 @@ public class ImportDataTask extends AsyncTask<Void,Void,Void> {
 
     private void loadModels() throws JSONException {
         fileParser.loadModels(storeCheckMetaData, outlets, customFields, details, markets, options, products, channels, units,
-                packTypes, validations, activityContext);
+                packTypes, validations, brandCustomFields, activityContext);
     }
 
 

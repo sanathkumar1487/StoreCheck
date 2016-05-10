@@ -3,6 +3,8 @@ package com.euromonitor.storecheck.model;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 
+import com.euromonitor.storecheck.app.StoreCheckAddProductDetailsActivity;
+
 import java.util.ArrayList;
 
 /**
@@ -19,7 +21,7 @@ public class StoreCheckBrand extends BaseObservable {
 
     private String brand;
 
-    private String nbo;
+
 
     private Market selectMarket;
 
@@ -42,24 +44,21 @@ public class StoreCheckBrand extends BaseObservable {
         this.brand = brand;
     }
 
-    public void setNbo(String nbo){
+    @Bindable
+    public String getNbo() {
+        return nbo;
+    }
+
+    public void setNbo(String nbo) {
         this.nbo = nbo;
     }
+
+    private String nbo;
 
     public void setCustomFields(ArrayList<CustomField> customFields)
     {
         this.customFields = customFields;
     }
-
-//    public void setSelectedProductId(int selectedProductId){
-//        this.selectedProductId = selectedProductId;
-//    }
-//
-//    public int getSelectedProductId(){
-//        return this.selectedProductId;
-//    }
-
-
 
     public Product getSelectedProduct()
     {
@@ -101,10 +100,7 @@ public class StoreCheckBrand extends BaseObservable {
         return  brand;
     }
 
-    @Bindable
-    public String getNBO(){
-        return  nbo;
-    }
+
 
     public ArrayList<CustomField> getCustomFields(){
         return  customFields;
