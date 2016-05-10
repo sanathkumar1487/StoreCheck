@@ -1,13 +1,18 @@
 package com.euromonitor.storecheck.model;
 
+import android.widget.Adapter;
+
 import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by Sanath.Kumar on 3/31/2016.
  */
-public class Market {
+public class Market  {
 
 
+
+
+    @SerializedName("Id")
     private int _id;
 
     @SerializedName("BrandMarketId")
@@ -49,7 +54,8 @@ public class Market {
 
     public Market(){}
 
-    public Market(String _brand_market_id, String _project_id, String _geography_code, String geography, String _product_code, String _product, String _brand, String _nbo, String _company_name) {
+    public Market(int _id,String _brand_market_id, String _project_id, String _geography_code, String geography, String _product_code, String _product, String _brand, String _nbo, String _company_name) {
+        this._id=_id;
         this._brand_market_id = _brand_market_id;
         this._project_id = _project_id;
         this._geography_code = _geography_code;

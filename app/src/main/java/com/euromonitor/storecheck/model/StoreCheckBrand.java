@@ -14,11 +14,14 @@ public class StoreCheckBrand extends BaseObservable {
 
     private ArrayList<Product> products;
 
+    private ArrayList<Market> markets;
     //private int selectedProductId;
 
     private String brand;
 
     private String nbo;
+
+    private Market selectMarket;
 
     private ArrayList<CustomField> customFields;
 
@@ -26,11 +29,16 @@ public class StoreCheckBrand extends BaseObservable {
         this.geography = geography;
     }
 
-    public void setProducts(ArrayList<Product> products){
+    public void setProducts(ArrayList<Product> products)
+    {
         this.products = products;
     }
-
-    public void setBrand(String brand){
+    public void setMarket(ArrayList<Market> markets)
+    {
+        this.markets=markets;
+    }
+    public void setBrand(String brand)
+    {
         this.brand = brand;
     }
 
@@ -38,7 +46,8 @@ public class StoreCheckBrand extends BaseObservable {
         this.nbo = nbo;
     }
 
-    public void setCustomFields(ArrayList<CustomField> customFields){
+    public void setCustomFields(ArrayList<CustomField> customFields)
+    {
         this.customFields = customFields;
     }
 
@@ -51,16 +60,32 @@ public class StoreCheckBrand extends BaseObservable {
 //    }
 
 
-    public Product getSelectedProduct() {
+
+    public Product getSelectedProduct()
+    {
         return selectedProduct;
     }
 
-    public void setSelectedProduct(Product selectedProduct) {
+    public void setSelectedProduct(Product selectedProduct)
+    {
         this.selectedProduct = selectedProduct;
     }
 
     private Product selectedProduct;
 
+    public Market getSelectMarket()
+    {
+        return  selectMarket;
+    }
+
+    public Market getSelectedMarket()
+    {
+        return selectMarket;
+    }
+    public void setSelectMarket(Market selectMarket)
+    {
+        this.selectMarket=selectMarket;
+    }
 
     @Bindable
     public Geography getGeography(){

@@ -16,15 +16,14 @@ import java.util.UUID;
 /**
  * Created by Sanath.Kumar on 3/31/2016.
  */
-public class CustomField  extends BaseObservable {
+public class CustomField  extends BaseObservable
+{
 
     final String DropDown = "1";
     final String TextBox = "2";
     final String CustomDropDown = "3";
     final String CustomCompanyID = "4";
-
     private int _id;
-
     @SerializedName("ProjectId")
     private String _project_id;
 
@@ -121,7 +120,8 @@ public class CustomField  extends BaseObservable {
     }
 
     public CustomField(String _project_id, String _product_code, String _ctt_code, String _group_id, String _label, String _object_id,
-                       ArrayList<Option> _options, String _tooltip, int frameGroupID) {
+                       ArrayList<Option> _options, String _tooltip, int frameGroupID)
+    {
         this._project_id = _project_id;
         this._product_code = _product_code;
         this._ctt_code = _ctt_code;
@@ -161,7 +161,8 @@ public class CustomField  extends BaseObservable {
         }
     }
 
-    public void set_project_id(String _project_id) {
+    public void set_project_id(String _project_id)
+    {
         this._project_id = _project_id;
     }
 

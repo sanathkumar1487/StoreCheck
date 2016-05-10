@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import com.euromonitor.storecheck.model.BrandCustomField;
 import com.euromonitor.storecheck.model.Channel;
 import com.euromonitor.storecheck.model.CustomField;
 import com.euromonitor.storecheck.model.Detail;
@@ -923,7 +924,6 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
     }
 
     public ArrayList<CustomField> getCustomFieldByProductCode(int productCode, int typeId, ArrayList<CustomField> customFields) {
-
         SQLiteDatabase database = null;
         Cursor cursor = null;
         try {
@@ -934,7 +934,8 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
             Log.i("query is ::", query);
             cursor = database.rawQuery(query, null);
             customFields = new ArrayList<CustomField>();
-            if (cursor.moveToFirst()) {
+            if (cursor.moveToFirst())
+            {
 
                 do {
                     CustomField customField = new CustomField();
@@ -958,6 +959,34 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         }
         return customFields;
     }
+//    public ArrayList<BrandCustomField> getCustomFieldByBrandId(int brandId,ArrayList<BrandCustomField> brandCustomFields)
+//    {
+//        SQLiteDatabase database=null;
+//        Cursor cursor = null;
+//
+//        try
+//        {
+//            database=this.getReadableDatabase();
+//            String query="select brandid,pricingid,customfieldid, optionId, groupid  from brandcustomfields where brandid=" + "" + brandId ;
+//            Log.i("query is ::", query);
+//            cursor = database.rawQuery(query, null);
+//            brandCustomFields = new ArrayList<BrandCustomField>();
+//            if (cursor.moveToFirst())
+//            {
+//
+//                do {
+//                    CustomField customField = new CustomField();
+//                    customField.set_label(cursor.getString(0));
+//                    customField.setUniqueID(cursor.getString((1)));
+//                    customField.set_object_id(cursor.getString((2)));
+//                    customField.setFrameGroupID(Integer.valueOf(cursor.getString((3))));
+//                    customField.set_group_id(cursor.getString(4));
+//                    customFields.add(customField);
+//                } while ((cursor.moveToNext()));
+//
+//            }
+//        }
+//    }
 
     public ArrayList<CustomField> updateCustomFieldOptions(ArrayList<CustomField> customFields) {
 

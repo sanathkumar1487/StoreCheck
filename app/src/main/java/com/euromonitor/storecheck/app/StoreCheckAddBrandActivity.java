@@ -77,7 +77,6 @@ public class StoreCheckAddBrandActivity extends AppCompatActivity
     ArrayList<CustomField> customFields = new ArrayList<CustomField>();
     boolean isUpdated = false;
     ArrayList<Market> brand_item = new ArrayList<Market>();
-
     // Navigation
     DrawerLayout mDrawerLayout;
     Context context;
@@ -87,31 +86,28 @@ public class StoreCheckAddBrandActivity extends AppCompatActivity
     AutoCompleteTextView brand_name;
     String[] item = new String[]{"Please search here"};
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.storecheck_addbrand);
         context = this;
-
         databaseHelper = new DatabaseHelper(this);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.addBrand_Drawer);
-
         setupToolbar();
         setUpNavigationView();
 
-        if (databaseHelper.isDatabaseAvailable()) {
+        if (databaseHelper.isDatabaseAvailable())
+        {
             setBinding();
-
             View view = binding.getRoot();
-
             customFieldRecyclerView = (RecyclerView) view.findViewById(R.id.customFields);
             item = databaseHelper.getNboName();
             nbo_name = (AutoCompleteTextView) findViewById(R.id.nboName);
             adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, item);
             nbo_name.setAdapter(adapter);
             nbo_name.setThreshold(1);
-        } else {
+        }
+        else {
             Toast.makeText(this, "Please import EMMA generated file to proceed!", Toast.LENGTH_LONG).show();
         }
     }
@@ -123,7 +119,6 @@ public class StoreCheckAddBrandActivity extends AppCompatActivity
         getMenuInflater().inflate(R.menu.addbrand_menu, menu);
         return true;
     }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -162,7 +157,6 @@ public class StoreCheckAddBrandActivity extends AppCompatActivity
             Log.e("Setup Drawer", e.getMessage());
         }
     }
-
     private void resetData() {
         binding.brandName.setText("");
         binding.nboName.setText("");
@@ -174,116 +168,102 @@ public class StoreCheckAddBrandActivity extends AppCompatActivity
 
         setBindingProperties();
     }
-
     private void validateData() {
-
         setBindingProperties();
-
         StoreCheckBrand data = binding.getStoreCheckBrand();
-        if (data.getSelectedProduct()!=null ) {
-            if (data.getSelectedProduct().getResearched() == 1) {
-                boolean isValid = true;
-                String errors = "Please correct the following errors: ";
-                if (data.getBrand() == null || data.getBrand().equals("")) {
-                    errors += "\n Brand is required";
-                    isValid = false;
-                }
+        boolean isValid = true;
+        String errors = "Please correct the following errors: ";
+        if (data.getBrand() == null || data.getBrand().equals("")) {
+            errors += "\n Brand is required";
+            isValid = false;
+        }
 
-                if (data.getNBO() == null || data.getNBO().equals("")) {
-                    errors += "\n NBO is required";
-                    isValid = false;
-                }
+        if (data.getNBO() == null || data.getNBO().equals("")) {
+            errors += "\n NBO is required";
+            isValid = false;
+        }
+        ArrayList<CustomField> customFields = data.getCustomFields();
+        if (customFields != null) {
+            for (CustomField cf : customFields) {
 
-                ArrayList<CustomField> customFields = data.getCustomFields();
-                if (customFields != null) {
-                    for (CustomField cf : customFields) {
+                Option selectedOption = cf.getSelectedOption();
+                if (selectedOption != null) {
+                    if (selectedOption.getMinimumAllowed().equals("0") && selectedOption.getMaximumAllowed().equals("0")) {
+                        if (isValid) {
+                            isValid = true;
+                        }
+                    } else if (cf.get_object_id().equals(StoreCheckAddBrandActivity.TextBox)) {
+                        double minimum = 0;
+                        if (selectedOption.getMinimumAllowed() != null) {
+                            minimum = Double.parseDouble(selectedOption.getMinimumAllowed());
+                        }
 
-                        Option selectedOption = cf.getSelectedOption();
-                        if (selectedOption != null) {
-                            if (selectedOption.getMinimumAllowed().equals("0") && selectedOption.getMaximumAllowed().equals("0")) {
-                                if (isValid) {
-                                    isValid = true;
+                        double maximum = 0;
+                        boolean noMaximum = true;
+                        if (selectedOption.getMaximumAllowed() != null) {
+                            maximum = Double.parseDouble(selectedOption.getMaximumAllowed());
+                            noMaximum = false;
+                        }
+                        double cfValue = 0;
+                        try {
+
+                            if (cf.getCustomFieldTextValue() != null) {
+                                cfValue = Double.parseDouble(cf.getCustomFieldTextValue());
+                            }
+
+                            if (!cf.getIsNumeric()) {
+                                if (cf.getCustomFieldTextValue() != null) {
+                                    cfValue = cf.getCustomFieldTextValue().trim().length();
                                 }
-                            } else if (cf.get_object_id().equals(StoreCheckAddBrandActivity.TextBox)) {
-                                double minimum = 0;
-                                if (selectedOption.getMinimumAllowed() != null) {
-                                    minimum = Double.parseDouble(selectedOption.getMinimumAllowed());
-                                }
+                            }
 
-                                double maximum = 0;
-                                boolean noMaximum = true;
-                                if (selectedOption.getMaximumAllowed() != null) {
-                                    maximum = Double.parseDouble(selectedOption.getMaximumAllowed());
-                                    noMaximum = false;
-                                }
-                                double cfValue = 0;
-
-                                try {
-
-                                    if (cf.getCustomFieldTextValue() != null) {
-                                        cfValue = Double.parseDouble(cf.getCustomFieldTextValue());
-                                    }
-
-                                    if (!cf.getIsNumeric()) {
-                                        if (cf.getCustomFieldTextValue() != null) {
-                                            cfValue = cf.getCustomFieldTextValue().trim().length();
-                                        }
-                                    }
-
-                                    if (!validateValue(cfValue, minimum, maximum, noMaximum, cf.getIsZeroAllowed())) {
-                                        errors += "\n" + cf.get_label() + " value should be between " + minimum + " and " + maximum;
-                                        isValid = false;
-                                    }
-                                } catch (NumberFormatException e) {
-                                    cfValue = cf.getCustomFieldTextValue().length();
-                                    if (!validateValue(cfValue, minimum, maximum, noMaximum, cf.getIsZeroAllowed())) {
-                                        errors += "\n" + cf.get_label() + " value should be between " + minimum + " and " + maximum;
-                                        isValid = false;
-                                    }
-                                }
+                            if (!validateValue(cfValue, minimum, maximum, noMaximum, cf.getIsZeroAllowed())) {
+                                errors += "\n" + cf.get_label() + " value should be between " + minimum + " and " + maximum;
+                                isValid = false;
+                            }
+                        } catch (NumberFormatException e) {
+                            cfValue = cf.getCustomFieldTextValue().length();
+                            if (!validateValue(cfValue, minimum, maximum, noMaximum, cf.getIsZeroAllowed())) {
+                                errors += "\n" + cf.get_label() + " value should be between " + minimum + " and " + maximum;
+                                isValid = false;
                             }
                         }
                     }
                 }
-
-                if (isValid) {
-                    long brandId = databaseHelper.saveBrand(data, isUpdated);
-                    if (brandId > 0) {
-                        StoreCheckAddProductDetailsActivity.brandName = binding.getStoreCheckBrand().getBrand();
-                        StoreCheckAddProductDetailsActivity.brandId = brandId;
-                        StoreCheckAddProductDetailsActivity.productCode = Integer.valueOf(binding.getStoreCheckBrand().getSelectedProduct().get_product_id());
-                        StoreCheckAddProductDetailsActivity.productName = binding.getStoreCheckBrand().getSelectedProduct().get_product_name();
-
-                        binding.brandName.setText(null);
-                        binding.nboName.setText(null);
-
-                        Spinner productSpinner = (Spinner) ((View) (binding.getRoot()).findViewById(R.id.products));
-                        if (productSpinner.getCount() > 0) {
-                            productSpinner.setSelection(0);
-                        }
-                        setBindingProperties();
-
-                        Toast.makeText(this.getBaseContext(), "Saved successfully!", Toast.LENGTH_SHORT).show();
-
-                        Intent intent = new Intent(context, StoreCheckAddProductDetailsActivity.class);
-                        context.startActivity(intent);
-                    } else {
-                        Toast.makeText(this.getBaseContext(), "Unable to save record!", Toast.LENGTH_LONG).show();
-                    }
-                } else {
-                    Toast.makeText(this.getBaseContext(), errors, Toast.LENGTH_LONG).show();
-                }
-            } else if (data.getSelectedProduct().getResearched() == 0) {
-                Toast.makeText(this.getBaseContext(), data.getSelectedProduct().get_product_name() + " is not researched!",
-                        Toast.LENGTH_LONG).show();
             }
         }
-    }
 
+        if (isValid) {
+            long brandId = databaseHelper.saveBrand(data, isUpdated);
+            if (brandId > 0) {
+                StoreCheckAddProductDetailsActivity.brandName = binding.getStoreCheckBrand().getBrand();
+                StoreCheckAddProductDetailsActivity.brandId = brandId;
+                StoreCheckAddProductDetailsActivity.productCode = Integer.valueOf(binding.getStoreCheckBrand().getSelectedProduct().get_product_id());
+                StoreCheckAddProductDetailsActivity.productName = binding.getStoreCheckBrand().getSelectedProduct().get_product_name();
+
+                binding.brandName.setText(null);
+                binding.nboName.setText(null);
+
+                Spinner productSpinner = (Spinner) ((View) (binding.getRoot()).findViewById(R.id.products));
+                if (productSpinner.getCount() > 0) {
+                    productSpinner.setSelection(0);
+                }
+                setBindingProperties();
+                Toast.makeText(this.getBaseContext(), "Saved successfully!", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(context, StoreCheckAddProductDetailsActivity.class);
+                context.startActivity(intent);
+            }
+            else
+            {
+                Toast.makeText(this.getBaseContext(), "Unable to save record!", Toast.LENGTH_LONG).show();
+            }
+        } else {
+            Toast.makeText(this.getBaseContext(), errors, Toast.LENGTH_LONG).show();
+        }
+    }
     private boolean validateValue(double value, double minimumAllowed, double maximumAllowed, boolean noMaximum, boolean isZeroAllowed) {
         return value >= minimumAllowed && (value <= maximumAllowed || noMaximum || maximumAllowed == 0) || (isZeroAllowed && value == 0);
     }
-
     private void setBindingProperties() {
         String newValue = null;
         if (binding.brandName.getText() != null) {
@@ -298,15 +278,13 @@ public class StoreCheckAddBrandActivity extends AppCompatActivity
         binding.getStoreCheckBrand().setNbo(newValue);
     }
 
-    private void setBinding() {
+    private void setBinding()
+    {
         storeCheckBrand = new StoreCheckBrand();
-
         storeCheckBrand.setProducts(setProducts());
-
         storeCheckBrand.setGeography(databaseHelper.getGeography());
         binding.setStoreCheckBrand(storeCheckBrand);
     }
-
 
     private ArrayList<Product> setProducts()
     {
@@ -320,36 +298,37 @@ public class StoreCheckAddBrandActivity extends AppCompatActivity
 
             productSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
-                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    StoreCheckBrandAdapter brandAdapter;
+                public void onItemSelected(final AdapterView<?> parent, View view, final int position, long id) {
+                    final StoreCheckBrandAdapter brandAdapter;
                     Product selectedProduct = (Product) parent.getItemAtPosition(position);
-                    if(selectedProduct.getResearched() == 1) {
-                        int productID = Integer.valueOf(selectedProduct.get_product_id());
-
-                        storeCheckBrand.setSelectedProduct(selectedProduct);
-                        binding.getStoreCheckBrand().setSelectedProduct(selectedProduct);
-
-                        setCustomFieldByProductCode(productID);
-
-                        storeCheckBrand.setCustomFields(customFields);
-                        brand_item = databaseHelper.getBrandsByProductId(productID);
-                        brand_name = (AutoCompleteTextView) findViewById(R.id.brandName);
-                        brandAdapter = new StoreCheckBrandAdapter(context, android.R.layout.simple_dropdown_item_1line, R.id.brand_name, brand_item);
-                        brand_name.setAdapter(brandAdapter);
-
-
-                        brand_name.setThreshold(1);
-                        if (customFieldRecyclerView != null) {
-                            customFieldRecyclerView.setLayoutManager(new LinearLayoutManager(context));
-
-                            StoreCheckCustomFieldsAdapter adapter = new StoreCheckCustomFieldsAdapter(LayoutInflater.from(context), context, customFields);
-                            customFieldRecyclerView.setAdapter(adapter);
-
-
+                    int productID = Integer.valueOf(selectedProduct.get_product_id());
+                    storeCheckBrand.setSelectedProduct(selectedProduct);
+                    binding.getStoreCheckBrand().setSelectedProduct(selectedProduct);
+                    setCustomFieldByProductCode(productID);
+                    storeCheckBrand.setCustomFields(customFields);
+                    brand_item = databaseHelper.getBrandsByProductId(productID);
+                    brand_name = (AutoCompleteTextView) findViewById(R.id.brandName);
+                    brandAdapter = new StoreCheckBrandAdapter(context, android.R.layout.simple_dropdown_item_1line,R.id.brand_name, brand_item);
+                    brand_name.setAdapter(brandAdapter);
+                    brand_name.setThreshold(1);
+                    brand_name.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            Market selectMarket = (Market) parent.getItemAtPosition(position);
+                            int brandid = Integer.valueOf(selectMarket.get_id());
+                            storeCheckBrand.setSelectMarket(selectMarket);
                         }
-                    } else if(selectedProduct.getResearched() == 0) {
-                        Toast.makeText(context, selectedProduct.get_product_name() + " is not researched!",
-                                Toast.LENGTH_LONG).show();
+
+//                        @Override
+//                        public void onNothingSelected(AdapterView<?> parent) {
+
+                        //}
+                    });
+                    if (customFieldRecyclerView != null) {
+                        customFieldRecyclerView.setLayoutManager(new LinearLayoutManager(context));
+                        StoreCheckCustomFieldsAdapter adapter = new StoreCheckCustomFieldsAdapter(LayoutInflater.from(context), context, customFields);
+                        customFieldRecyclerView.setAdapter(adapter);
+
                     }
                 }
 
@@ -362,11 +341,15 @@ public class StoreCheckAddBrandActivity extends AppCompatActivity
         return products;
     }
 
-    private void setCustomFieldByProductCode(int productCode) {
+    private void setCustomFieldByProductCode(int productCode)
+    {
         customFields = databaseHelper.getCustomFieldByProductCode(productCode, 1, customFields);
         customFields = databaseHelper.updateCustomFieldOptions(customFields);
     }
-
+    private void setCustomDieldByBrand(int brandId)
+    {
+        //custom
+    }
     public class ProductAdapter extends BaseAdapter implements SpinnerAdapter {
 
         private ArrayList<Product> products;
