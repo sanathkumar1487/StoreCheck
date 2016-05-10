@@ -9,8 +9,7 @@
         <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-       >
+        android:layout_height="match_parent">
 
         <android.support.v7.widget.Toolbar
             android:layout_width="match_parent"
@@ -22,41 +21,56 @@
             android:id="@+id/exportToolbar"/>
 
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/filename"
-            android:layout_margin="@dimen/material_item_margin"
-            />
+            <Button
+                android:layout_row="0"
+                android:layout_column="1"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="BRowse"
+                android:layout_margin="@dimen/material_item_margin"
+                android:background="@color/blue_300"
+                android:id="@+id/browseFolder"
+                />
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="50sp"
-            android:layout_marginRight="50sp"
-            android:layout_marginLeft="50sp"
-            android:layout_margin="@dimen/material_item_margin"
-            android:id="@+id/fileName"/>
-        <me.zhanghai.android.materialprogressbar.MaterialProgressBar
-            android:layout_width="match_parent"
-            android:id="@+id/exportProgress"
-            android:layout_height="20dp"
-            android:indeterminate="true"
-            app:mpb_progressStyle="horizontal"
-            android:visibility="gone"
-            style="@style/Widget.MaterialProgressBar.ProgressBar.Horizontal" />
-        <Button
-            android:layout_width="match_parent"
-            android:background="@color/blue_300"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="150sp"
-            android:layout_marginRight="50sp"
-            android:layout_marginLeft="50sp"
-            android:text="@string/export"
-            android:layout_margin="@dimen/material_item_margin"
-            android:id="@+id/exportFile"
-            />
-        <Button
+            <me.zhanghai.android.materialprogressbar.MaterialProgressBar
+                android:layout_width="match_parent"
+                android:id="@+id/exportProgress"
+                android:layout_height="20dp"
+                android:indeterminate="true"
+                app:mpb_progressStyle="horizontal"
+                android:visibility="gone"
+                android:layout_row="1"
+                android:layout_column="0"
+                android:layout_columnSpan="2"
+                style="@style/Widget.MaterialProgressBar.ProgressBar.Horizontal" />
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_margin="@dimen/material_item_margin"
+                android:id="@+id/selectedFile"
+                android:layout_row="2"
+                android:layout_column="0"
+                />
+
+
+
+            <Button
+                android:layout_width="match_parent"
+                android:background="@color/blue_300"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="150sp"
+                android:layout_marginRight="50sp"
+                android:layout_marginLeft="50sp"
+                android:enabled="false"
+                android:text="@string/export"
+                android:layout_margin="@dimen/material_item_margin"
+                android:id="@+id/exportFile"
+                android:layout_row="2"
+                android:layout_column="1"
+                />
+
+            <Button
             android:layout_width="match_parent"
             android:background="@color/blue_300"
             android:layout_height="wrap_content"

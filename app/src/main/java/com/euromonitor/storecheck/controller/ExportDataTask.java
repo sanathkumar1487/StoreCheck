@@ -93,33 +93,26 @@ public class ExportDataTask extends AsyncTask<Void, Void, Void> {
         postExecute.PostExecute("Store check data export to file: "+ absolutePath );
     }
 
-    public void write(String data) {
-        File root = Environment.getExternalStorageDirectory();
-        File root1 = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-        root = root1;
-        File outDir = root1; // new File(root.getAbsolutePath() + File.separator + "StoreCheck");
+    public void write(String data) throws IOException {
 
-        if (!outDir.isDirectory()) {
-            outDir.mkdir();
-        }
         try {
-            if (!outDir.isDirectory()) {
-                status = false;
-                throw new IOException(
-                        "Unable to create directory StoreCheck. Maybe the SD card is mounted?");
-            }
-            File outputFile = new File(outDir, fileName);
+
+            File outputFile = new File(fileName);
             writer = new BufferedWriter(new FileWriter(outputFile));
             writer.write(data);
 
             status = true;
             absolutePath = outputFile.getAbsolutePath();
-
-            writer.close();
-            MediaScannerConnection.scanFile(context, new String[]{outDir.toString()}, null, null);
-        } catch (IOException e) {
+            MediaScannerConnection.scanFile(context, new String[]{absolutePath.toString()}, null, null);
+        }
+        catch (IOException e) {
             Log.w("IOException", e.getMessage(), e);
             status = false;
+        }
+
+        finally {
+            if (writer != null)
+            writer.close();
         }
     }
 }
