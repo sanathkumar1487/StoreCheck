@@ -16,14 +16,14 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent" >
-        <android.support.v7.widget.Toolbar
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
-            android:minHeight="?attr/actionBarSize"
-            app:popupTheme="@style/PopupTheme"
-            android:theme="@style/ToolBarTheme"
-            android:id="@+id/detailsToolbar"/>
+            <android.support.v7.widget.Toolbar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+                android:minHeight="?attr/actionBarSize"
+                app:popupTheme="@style/PopupTheme"
+                android:theme="@style/ToolBarTheme"
+                android:id="@+id/detailsToolbar"/>
             <me.zhanghai.android.materialprogressbar.MaterialProgressBar
                 android:layout_width="match_parent"
                 android:id="@+id/progbar"
@@ -37,26 +37,37 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="8dp">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+
+
+                <GridLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    android:columnCount="1"
+                    android:rowCount="1"
+                    android:orientation="horizontal"
                     <TextView
                         android:text="Products"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/grey_700"
-                        android:layout_margin="8dp"
+                        android:layout_row="0"
+                        android:layout_column="0"
+                        android:layout_gravity="left|top"
+                        android:layout_marginTop="15sp"
                         android:textSize="@dimen/detailfont_size"/>
                     <com.euromonitor.storecheck.app.SearchableSpinner
                         android:spinnerMode="dropdown"
                         android:drawSelectorOnTop="true"
                         android:theme="@style/MaterialTheme"
                         android:id="@+id/products"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/default_margin"/>
-                </LinearLayout>
+                        android:layout_row="0"
+                        android:layout_column="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                    </com.euromonitor.storecheck.app.SearchableSpinner>
+
+                </GridLayout>
+
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/storecheckDetailsView"
                     android:layout_width="match_parent"
