@@ -65,6 +65,16 @@ public class Detail {
     @SerializedName("nbo")
     private  String _nbo;
 
+    public int getUpdated() {
+        return updated;
+    }
+
+    public void setUpdated(int updated) {
+        this.updated = updated;
+    }
+
+    private int updated;
+
     public Detail(String _channel_name, String _multipack_size, String _outlet_id, String _outlet_name, String _pack_size, String _pack_type, String _packtype_code, String _price, String _pricing_id, String _unit_code, String _unit_price_local, String unitPriceUS, String _brand, String nbo) {
         this.set_channel_name(_channel_name);
         this.set_multipack_size(_multipack_size);

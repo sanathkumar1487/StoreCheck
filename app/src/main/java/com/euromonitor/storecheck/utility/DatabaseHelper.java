@@ -162,6 +162,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
     // Brands Column Names
     private static final String KEY_BRANDID = "brandid";
     private static final String KEY_OPTIONVALUE = "optionvalue";
+    private static final String KEY_OPTIONTEXT = "optiontext";
 
 
     //packtype columns
@@ -215,7 +216,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
 
     public void loadData(MetaData storeCheckMetaData, List<Product> products, List<Outlet> outlets, List<Channel> channels,
                          List<Detail> details, List<Market> markets, List<Option> options, List<CustomField> customFields,
-                         List<Unit> units, List<PackType> packTypes, List<Validation> validations) {
+                         List<Unit> units, List<PackType> packTypes, List<Validation> validations, List<BrandCustomField> brandCustomFields) {
 
         Log.e("load Data is called ::", "load data");
 
@@ -232,6 +233,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         loadUnitsTable(units);
         loadpacktypeTable(packTypes);
         loadValidationTable(validations);
+        loadBrandCustomFields(brandCustomFields);
     }
 
     private void loadStoreCheckMetaDataTable(MetaData storeCheckMetaData) {
@@ -517,6 +519,25 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         db.close();
     }
 
+    private void loadBrandCustomFields(List<BrandCustomField> brandCustomFields){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        Iterator iterator = brandCustomFields.iterator();
+        while (iterator.hasNext()) {
+            BrandCustomField brandCustomField = (BrandCustomField) iterator.next();
+
+            ContentValues values = new ContentValues();
+            values.put(KEY_BRANDMARKETID , brandCustomField.getBrandMarketId());
+            values.put(KEY_LABEL, brandCustomField.getLabel());
+            values.put(KEY_GROUPID, brandCustomField.getGroupId());
+            values.put(KEY_OPTIONID , brandCustomField.getOptionId());
+            values.put(KEY_OPTIONTEXT, brandCustomField.getOptionText());
+
+            db.insert(TABLE_BRANDCUSTOMFIELDS, null, values);
+        }
+        db.close();
+    }
+
     private void createMetaDataTable() {
         //
         String CREATE_METADAT_TABLE = "CREATE TABLE " + TABLE_METADATA + "("
@@ -609,6 +630,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
                 + KEY_PRODUCT + " TEXT,"
                 + KEY_BRAND + " TEXT,"
                 + KEY_NBO + " TEXT,"
+                + KEY_UPDATED + " INT,"
                 + KEY_COMPANYNAME + " TEXT" + ")";
         database.execSQL(CREATE_MARKETS_TABLE);
 
@@ -671,9 +693,14 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         String CREATE_BRANDCUSTOMFIELD_TABLE = " CREATE TABLE " + TABLE_BRANDCUSTOMFIELDS + "("
                 + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + KEY_BRANDID + " TEXT, "
+                + KEY_BRANDMARKETID + " TEXT, "
+                + KEY_LABEL + " TEXT, "
                 + KEY_PRICINGID + " TEXT, "
                 + KEY_CUSTOMFIELDID + " TEXT, "
+                + KEY_GROUPID + " TEXT,"
                 + KEY_OPTIONID + " TEXT, "
+                + KEY_OPTIONTEXT + " TEXT, "
+                + KEY_UPDATED + " INT, "
                 + KEY_OPTIONVALUE + " TEXT) ";
         database.execSQL(CREATE_BRANDCUSTOMFIELD_TABLE);
     }
