@@ -1,0 +1,40 @@
+﻿Merge branch 'master' of https://github.com/sanathkumar1487/StoreCheck
+
+# Conflicts:
+#	app/src/main/java/com/euromonitor/storecheck/utility/DatabaseHelper.java
+#
+# It looks like you may be committing a merge.
+# If this is not correct, please remove the file
+#	.git/MERGE_HEAD
+# and try again.
+
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+# On branch master
+# Your branch and 'origin/master' have diverged,
+# and have 1 and 3 different commits each, respectively.
+#   (use "git pull" to merge the remote branch into yours)
+#
+# All conflicts fixed but you are still merging.
+#
+# Changes to be committed:
+#	modified:   .gradle/2.8/taskArtifacts/cache.properties.lock
+#	modified:   .gradle/2.8/taskArtifacts/fileHashes.bin
+#	modified:   .gradle/2.8/taskArtifacts/fileSnapshots.bin
+#	modified:   .gradle/2.8/taskArtifacts/taskArtifacts.bin
+#	modified:   app/src/main/java/com/euromonitor/storecheck/adapter/StoreCheckCustomFieldsAdapter.java
+#	modified:   app/src/main/java/com/euromonitor/storecheck/app/StoreCheckAddBrandActivity.java
+#	modified:   app/src/main/java/com/euromonitor/storecheck/app/StoreCheckAddProductDetailsActivity.java
+#	modified:   app/src/main/java/com/euromonitor/storecheck/controller/ImportDataTask.java
+#	modified:   app/src/main/java/com/euromonitor/storecheck/model/BrandCustomField.java
+#	modified:   app/src/main/java/com/euromonitor/storecheck/model/CustomField.java
+#	modified:   app/src/main/java/com/euromonitor/storecheck/model/Detail.java
+#	modified:   app/src/main/java/com/euromonitor/storecheck/model/Market.java
+#	modified:   app/src/main/java/com/euromonitor/storecheck/model/StoreCheckBrand.java
+#	modified:   app/src/main/java/com/euromonitor/storecheck/utility/DatabaseHelper.java
+#	modified:   app/src/main/java/com/euromonitor/storecheck/utility/JsonFileParser.java
+#	modified:   app/src/main/res/layout/storecheck_addbrand.xml
+#	modified:   build/intermediates/dex-cache/cache.xml
+#
+
