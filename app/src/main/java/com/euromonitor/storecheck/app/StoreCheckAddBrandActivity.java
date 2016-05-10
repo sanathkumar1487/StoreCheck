@@ -233,6 +233,7 @@ public class StoreCheckAddBrandActivity extends AppCompatActivity
             }
         }
 
+<<<<<<< HEAD
         if (isValid) {
             long brandId = databaseHelper.saveBrand(data, isUpdated);
             if (brandId > 0) {
@@ -240,6 +241,26 @@ public class StoreCheckAddBrandActivity extends AppCompatActivity
                 StoreCheckAddProductDetailsActivity.brandId = brandId;
                 StoreCheckAddProductDetailsActivity.productCode = Integer.valueOf(binding.getStoreCheckBrand().getSelectedProduct().get_product_id());
                 StoreCheckAddProductDetailsActivity.productName = binding.getStoreCheckBrand().getSelectedProduct().get_product_name();
+=======
+                if (isValid) {
+                    long brandId = databaseHelper.saveBrand(data, isUpdated);
+                    if (brandId > 0) {
+                        StoreCheckAddProductDetailsActivity.brandName = binding.getStoreCheckBrand().getBrand();
+                        StoreCheckAddProductDetailsActivity.brandId = brandId;
+                        StoreCheckAddProductDetailsActivity.productCode = Integer.valueOf(binding.getStoreCheckBrand().getSelectedProduct().get_product_id());
+                        StoreCheckAddProductDetailsActivity.productName = binding.getStoreCheckBrand().getSelectedProduct().get_product_name();
+                        StoreCheckAddProductDetailsActivity.priceId = 0;
+
+
+                        binding.brandName.setText(null);
+                        binding.nboName.setText(null);
+
+                        Spinner productSpinner = (Spinner) ((View) (binding.getRoot()).findViewById(R.id.products));
+                        if (productSpinner.getCount() > 0) {
+                            productSpinner.setSelection(0);
+                        }
+                        setBindingProperties();
+>>>>>>> f0714ad3321488f9186b030fab5c0afd4ecd3f6a
 
                 binding.brandName.setText(null);
                 binding.nboName.setText(null);
