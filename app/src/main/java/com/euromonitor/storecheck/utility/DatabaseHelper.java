@@ -1097,6 +1097,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
                     temp.set_product_name(cursor.getString(cursor.getColumnIndex(KEY_Product_Name)));
                     temp.setResearched(cursor.getInt(cursor.getColumnIndex(KEY_Researched)));
 
+
                     products.add(temp);
                 } while ((cursor.moveToNext()));
             }
@@ -1413,10 +1414,12 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         return pricingDetails;
     }
 
-    public ArrayList<Unit> getUnits() {
+    public ArrayList<Unit> getUnits(int productCode) {
         ArrayList<Unit> my_array = new ArrayList<>();
         try {
-            String selectQuery = "SELECT id, unitid, unitname, unitbase, unitmultiplier FROM " + TABLE_UNITS;
+            String selectQuery = "SELECT id, unitid, unitname, unitbase, unitmultiplier FROM "
+                    + TABLE_UNITS
+                    + " where " + KEY_PRODUCTCODE + " = " + productCode ;
 
             SQLiteDatabase db = this.getWritableDatabase();
             Cursor cursor = db.rawQuery(selectQuery, null);

@@ -370,7 +370,7 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
 
     private void setUnitSpinner() {
         Spinner unitSpinner = (Spinner) findViewById(R.id.units);
-        ArrayList<Unit> units = databaseHelper.getUnits();
+        ArrayList<Unit> units = databaseHelper.getUnits(productCode);
 
         StoreCheckAddProductDetailsActivity.UnitAdapter unitAdapter = new StoreCheckAddProductDetailsActivity.UnitAdapter(units);
         unitSpinner.setAdapter(unitAdapter);
