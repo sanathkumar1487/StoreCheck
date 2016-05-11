@@ -168,7 +168,7 @@ public class StoreCheckAddBrandActivity extends AppCompatActivity
         binding.brandName.setText("");
         binding.nbo.setText("");
 
-        Spinner productSpinner = (Spinner) ((View) (binding.getRoot()).findViewById(R.id.products));
+        SearchableSpinnerForAddBrand productSpinner = (SearchableSpinnerForAddBrand) ((View) (binding.getRoot()).findViewById(R.id.products));
         if (productSpinner.getCount() > 0) {
             productSpinner.setSelection(0);
         }
@@ -261,7 +261,7 @@ public class StoreCheckAddBrandActivity extends AppCompatActivity
                     binding.brandName.setText(null);
                     binding.nbo.setText(null);
 
-                    Spinner productSpinner = (Spinner) ((View) (binding.getRoot()).findViewById(R.id.products));
+                    SearchableSpinnerForAddBrand productSpinner = (SearchableSpinnerForAddBrand) ((View) (binding.getRoot()).findViewById(R.id.products));
                     if (productSpinner.getCount() > 0) {
                         productSpinner.setSelection(0);
                     }
