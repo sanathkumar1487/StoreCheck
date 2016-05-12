@@ -356,6 +356,7 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
 
                 pricingDetail.setSelectedOutletId(Integer.valueOf(selectedOutlet.get_outlet_id()));
                 pricingDetail.setSelectedOutletName(selectedOutlet.get_outlet_Name());
+                pricingDetail.setChannelName(selectedOutlet.get_channel_name());
                 binding.getPricingDetail().setSelectedOutletId(Integer.valueOf(selectedOutlet.get_outlet_id()));
                 binding.getPricingDetail().setSelectedOutletName(selectedOutlet.get_outlet_Name());
             }

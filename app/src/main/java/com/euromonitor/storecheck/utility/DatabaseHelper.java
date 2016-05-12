@@ -24,6 +24,7 @@ import com.euromonitor.storecheck.model.Outlet;
 import com.euromonitor.storecheck.model.PricingDetail;
 import com.euromonitor.storecheck.model.PackType;
 import com.euromonitor.storecheck.model.Product;
+import com.euromonitor.storecheck.model.ProductDetail;
 import com.euromonitor.storecheck.model.StoreCheckBrand;
 import com.euromonitor.storecheck.model.StoreCheckDetail;
 import com.euromonitor.storecheck.model.Unit;
@@ -128,6 +129,9 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
 
     private static final String KEY_PRODUCT = "product";
     private static final String KEY_COMPANYNAME = "companyname";
+
+    private  static  final  String KEY_ESCI ="esci";
+    private  static  final  String KEY_ESBI="esbi";
 
     //Options Table Column Names
     private static final String KEY_ISDROPDOWN = "isdropdown";
@@ -370,6 +374,8 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
             values.put(KEY_BRAND, market.get_brand());
             values.put(KEY_NBO, market.get_nbo());
             values.put(KEY_COMPANYNAME, market.get_company_name());
+            values.put(KEY_ESCI,market.getEsci());
+            values.put(KEY_ESBI,market.getEsbi());
 
 
             // Inserting Row
@@ -631,7 +637,9 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
                 + KEY_BRAND + " TEXT,"
                 + KEY_NBO + " TEXT,"
                 + KEY_UPDATED + " INT,"
-                + KEY_COMPANYNAME + " TEXT" + ")";
+                + KEY_COMPANYNAME + " TEXT,"
+                + KEY_ESCI + " TEXT,"
+                + KEY_ESBI + " TEXT"  + ")";
         database.execSQL(CREATE_MARKETS_TABLE);
 
     }
@@ -1514,6 +1522,8 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
                 values.put(KEY_BRAND, pricingDetail.getBrandName());
                 values.put(KEY_BRANDMARKETID, pricingDetail.getBrandMarketId());
                 values.put(KEY_NBO, pricingDetail.getNbo());
+                values.put(KEY_CHANNELNAME, pricingDetail.getChannelName());
+
                 values.put(KEY_UPDATED, "1");
 
                 result = db.update(TABLE_DETAILS, values, KEY_ID + " = ?", new String[]{String.valueOf(pricingDetail.getId())});
@@ -1531,6 +1541,8 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
                 values.put(KEY_BRANDID, pricingDetail.getBrandId());
                 values.put(KEY_BRAND, pricingDetail.getBrandName());
                 values.put(KEY_NBO, pricingDetail.getNbo());
+                values.put(KEY_CHANNELNAME, pricingDetail.getChannelName());
+
                 values.put(KEY_UPDATED, "1");
 
                 result = db.insert(TABLE_DETAILS, null, values);
@@ -1885,7 +1897,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
                 do {
                     BrandCustomField brandCustomField = new BrandCustomField();
                     brandCustomField.setBrandId(cursor.getInt(cursor.getColumnIndex(KEY_BRANDID)));
-                    brandCustomField.setBrandMarketId(cursor.getInt(cursor.getColumnIndex(KEY_BRANDMARKETID)));
+                    brandCustomField.setBrandMarketId(cursor.getString(cursor.getColumnIndex(KEY_BRANDMARKETID)));
                     brandCustomField.setLabel(cursor.getString(cursor.getColumnIndex(KEY_LABEL)));
                     brandCustomField.setCustomFieldId(cursor.getString(cursor.getColumnIndex(KEY_CUSTOMFIELDID)));
                     brandCustomField.setGroupId(cursor.getInt(cursor.getColumnIndex(KEY_GROUPID)));
@@ -1940,5 +1952,131 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
 
     }
 
-   
+    public ArrayList<PricingDetail> getAllUpdatedDetails() {
+
+        ArrayList<PricingDetail> detailList = new ArrayList<PricingDetail>();
+        // Select All Query
+        String selectQuery = "SELECT  * FROM " + TABLE_DETAILS + " where updated ='1' ";
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                PricingDetail detail = new PricingDetail();
+                detail.setId(cursor.getString(cursor.getColumnIndex(KEY_ID)));
+                detail.setChannelName(cursor.getString(cursor.getColumnIndex(KEY_CHANNELNAME)));
+                detail.setPackSize(cursor.getInt(cursor.getColumnIndex(KEY_PACKSIZE)));
+                detail.setSelectedOutletId(cursor.getInt(cursor.getColumnIndex(KEY_OUTLETID)));
+                detail.setProductId(cursor.getInt(cursor.getColumnIndex(KEY_PRODUCTID)));
+                detail.setSelectedOutletName(cursor.getString(cursor.getColumnIndex(KEY_OUTLETNAME)));
+                detail.setMultiPack(cursor.getInt(cursor.getColumnIndex(KEY_MULTIPACKSIZE)));
+                detail.setPackTypeName(cursor.getString(cursor.getColumnIndex(KEY_PACKTYPE)));
+                detail.setPackTypeCode(cursor.getInt(cursor.getColumnIndex(KEY_PACKTYPECODE)));
+                detail.setPrice(cursor.getDouble(cursor.getColumnIndex(KEY_PRICE)));
+                detail.setPricingId(cursor.getInt(cursor.getColumnIndex(KEY_PRICINGID)));
+                detail.setUnitId(cursor.getInt(cursor.getColumnIndex(KEY_UNITCODE)));
+                detail.setBrandId(cursor.getLong(cursor.getColumnIndex(KEY_BRANDID)));
+                detail.setBrandName(cursor.getString(cursor.getColumnIndex(KEY_BRAND)));
+                detail.setBrandMarketId(cursor.getInt(cursor.getColumnIndex(KEY_BRANDMARKETID)));
+
+                detail.setNbo(cursor.getString(cursor.getColumnIndex(KEY_NBO)));
+
+                detail.isUpdated = true;
+
+                detailList.add(detail);
+            } while (cursor.moveToNext());
+        }
+
+        // return outlet list
+        return detailList;
+    }
+
+     public  ArrayList<Market> getAllUpdatedMarkets()
+    {
+
+        ArrayList<Market> marketList = new ArrayList<Market>();
+        // Select All Query
+        String selectQuery = "SELECT  * FROM " + TABLE_MARKETS +" where updated = 1 ";
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                Market market = new Market();
+                market.set_id(Integer.parseInt(cursor.getString(0)));
+                market.set_brand_market_id(cursor.getString(1));
+                market.set_project_id(cursor.getString(2));
+                market.set_geography_code(cursor.getString(3));
+                market.setGeography(cursor.getString(4));
+                market.set_product_code(cursor.getString(5));
+                market.set_product(cursor.getString(6));
+                market.set_brand(cursor.getString(7));
+                market.set_nbo(cursor.getColumnName(8));
+                market.set_company_name(cursor.getString(9));
+                market.setEsci(cursor.getString(10));
+                market.setEsbi(cursor.getString(11));
+                marketList.add(market);
+            } while (cursor.moveToNext());
+        }
+
+        // return outlet list
+        return marketList;
+
+    }
+
+
+    public  ArrayList<BrandCustomField> getAllUpdatedCustomFields()
+    {
+
+
+        try
+        {
+            ArrayList<BrandCustomField> customFieldList = new ArrayList<BrandCustomField>();
+            // Select All Query
+            String selectQuery = "SELECT  * FROM " + TABLE_BRANDCUSTOMFIELDS +" where updated = 1 ";
+
+            SQLiteDatabase db = this.getReadableDatabase();
+            Cursor cursor = db.rawQuery(selectQuery, null);
+
+            // looping through all rows and adding to list
+            if (cursor.moveToFirst()) {
+                do {
+                    BrandCustomField brandmarketField = new BrandCustomField();
+                    brandmarketField.setId(Integer.parseInt(cursor.getString(0)));
+                    brandmarketField.setBrandId(Integer.parseInt(cursor.getString(1)));
+                    brandmarketField.setBrandMarketId(cursor.getString(2));
+                    brandmarketField.setLabel(cursor.getString(3));
+                    brandmarketField.setPricingId(cursor.getString(4));
+                    brandmarketField.setCustomFieldId(cursor.getString(5));
+                    brandmarketField.setGroupId(Integer.parseInt(cursor.getString(6)));
+                    brandmarketField.setOptionId(Integer.parseInt(cursor.getString(7)));
+                    brandmarketField.setOptionText(cursor.getString(8));
+                    brandmarketField.setUpdated(Integer.parseInt(cursor.getString(9)));
+                    brandmarketField.setOptionValue(cursor.getString(10));
+                    customFieldList.add(brandmarketField);
+                } while (cursor.moveToNext());
+            }
+
+
+            return customFieldList;
+
+        }
+        catch  (Exception e)
+
+        {
+            return  null;
+        }
+
+        // return outlet list
+
+
+    }
+
+
+
+
 }

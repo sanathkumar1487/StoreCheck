@@ -9,12 +9,23 @@ import com.google.gson.annotations.SerializedName;
  */
 public class BrandCustomField extends BaseObservable
 {
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    @SerializedName("Id")
+    private int id;
+
     private int brandId;
 
     @SerializedName("BrandMarketId")
-    private int brandMarketId;
+    private String brandMarketId;
 
-    private int pricingId;
+    private String pricingId;
 
     private String customFieldId;
 
@@ -71,11 +82,11 @@ public class BrandCustomField extends BaseObservable
         return brandId;
     }
 
-    public int getBrandMarketId() {
+    public String getBrandMarketId() {
         return brandMarketId;
     }
 
-    public void setBrandMarketId(int brandMarketId) {
+    public void setBrandMarketId(String brandMarketId) {
         this.brandMarketId = brandMarketId;
     }
 
@@ -84,11 +95,11 @@ public class BrandCustomField extends BaseObservable
         this.brandId = brandId;
     }
 
-    public int getPricingId() {
+    public String getPricingId() {
         return pricingId;
     }
 
-    public void setPricingId(int pricingId) {
+    public void setPricingId(String pricingId) {
         this.pricingId = pricingId;
     }
 
@@ -117,7 +128,7 @@ public class BrandCustomField extends BaseObservable
     public String getOptionValue() {
         return optionValue;
     }
-    public BrandCustomField(int brandId,int pricingId, String customFieldId,int optionId,String optionValue)
+    public BrandCustomField(int brandId,String pricingId, String customFieldId,int optionId,String optionValue)
     {
         this.brandId=brandId;
         this.pricingId=pricingId;

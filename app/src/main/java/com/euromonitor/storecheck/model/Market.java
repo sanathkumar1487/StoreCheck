@@ -42,6 +42,32 @@ public class Market  {
     @SerializedName("CompanyName")
     private String _company_name;
 
+
+    public String getEsci() {
+        return esci;
+    }
+
+    public void setEsci(String esci) {
+        this.esci = esci;
+    }
+
+    public String getEsbi() {
+        return esbi;
+    }
+
+    public void setEsbi(String esbi) {
+        this.esbi = esbi;
+    }
+
+    @SerializedName("ESCI")
+    private String esci;
+
+    @SerializedName("ESBI")
+    private  String esbi;
+
+
+
+
     public boolean isNew() {
         return isNew;
     }

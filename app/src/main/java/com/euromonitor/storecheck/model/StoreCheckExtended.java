@@ -7,7 +7,8 @@ import java.util.ArrayList;
  */
 public class StoreCheckExtended {
     public ArrayList<Outlet> Outlets;
-    public  ArrayList<Detail> details;
+    public  ArrayList<PricingDetail> details;
     public  ArrayList<Market> markets;
     public  ArrayList<BrandCustomField> brandCustomFields;
+    
 }

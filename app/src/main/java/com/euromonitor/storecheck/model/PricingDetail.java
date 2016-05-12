@@ -182,4 +182,14 @@ public class PricingDetail {
 
     private long brandId;
 
+    public String getChannelName() {
+        return channelName;
+    }
+
+    public void setChannelName(String channelName) {
+        this.channelName = channelName;
+    }
+
+    private String channelName;
+
 }
