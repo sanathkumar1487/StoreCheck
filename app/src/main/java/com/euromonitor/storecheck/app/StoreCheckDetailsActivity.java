@@ -190,6 +190,7 @@ public class StoreCheckDetailsActivity extends AppCompatActivity
                         }
                         StoreCheckAddProductDetailsActivity activity = new StoreCheckAddProductDetailsActivity();
                         intent = new Intent(StoreCheckDetailsActivity.this, StoreCheckAddProductDetailsActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
                     } else {
                         Toast.makeText(context, selectedProduct.get_product_name() + " is not researched!",
