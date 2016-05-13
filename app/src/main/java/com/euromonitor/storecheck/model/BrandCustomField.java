@@ -40,6 +40,17 @@ public class BrandCustomField extends BaseObservable
     @SerializedName("GroupId")
     private int groupId;
 
+    public boolean isPricingCustomField() {
+        return IsPricingCustomField;
+    }
+
+    public void setIsPricingCustomField(boolean isPricingCustomField) {
+        IsPricingCustomField = isPricingCustomField;
+    }
+
+    @SerializedName("IsPricingCustomField")
+    private  boolean IsPricingCustomField;
+
     public int getUpdated() {
         return updated;
     }

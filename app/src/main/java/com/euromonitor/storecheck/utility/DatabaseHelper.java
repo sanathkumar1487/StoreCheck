@@ -155,7 +155,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
     private static final String KEY_UNIQUEID = "uniqueid";
     private static final String KEY_FRAMEGROUPID = "frameGroupId";
     private static final String KEY_TYPEID = "typeId";
-
+    private static final  String KEY_ISPRICING ="pricing";
 
     // Units Table Column Names
     private static final String KEY_UNITID = "unitid";
@@ -538,7 +538,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
             values.put(KEY_GROUPID, brandCustomField.getGroupId());
             values.put(KEY_OPTIONID , brandCustomField.getOptionId());
             values.put(KEY_OPTIONTEXT, brandCustomField.getOptionText());
-
+             values.put(KEY_ISPRICING,0);
             db.insert(TABLE_BRANDCUSTOMFIELDS, null, values);
         }
         db.close();
@@ -672,7 +672,8 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
                 + KEY_TOOLTIP + " TEXT,"
                 + KEY_FRAMEGROUPID + " TEXT,"
                 + KEY_UNIQUEID + " TEXT,"
-                + KEY_TYPEID + " INT"
+                + KEY_TYPEID + " INT "
+
                 + ")";
         database.execSQL(CREATE_CUSTOMFIELDS_TABLE);
 
@@ -709,7 +710,8 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
                 + KEY_OPTIONID + " TEXT, "
                 + KEY_OPTIONTEXT + " TEXT, "
                 + KEY_UPDATED + " INT, "
-                + KEY_OPTIONVALUE + " TEXT) ";
+                + KEY_OPTIONVALUE + " TEXT,"
+                +  KEY_ISPRICING+ " INT" +") ";
         database.execSQL(CREATE_BRANDCUSTOMFIELD_TABLE);
     }
 
@@ -1140,6 +1142,8 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
             contentValues.put(KEY_BRAND, brand.getBrand());
             contentValues.put(KEY_NBO, brand.getNbo());
             contentValues.put(KEY_COMPANYNAME, "");
+            contentValues.put(KEY_ESCI, brand.getSelectMarket().getEsci());
+            contentValues.put(KEY_ESBI, brand.getSelectMarket().getEsbi());
             contentValues.put(KEY_UPDATED, 1);
 
             if (isUpdate) {
@@ -1581,6 +1585,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
                         contentValues.put(KEY_OPTIONVALUE, cf.getSelectedOption().getOptionName());
                     }
                     contentValues.put(KEY_UPDATED, 1);
+                    contentValues.put(KEY_ISPRICING,1);
                     result = db.insert(TABLE_BRANDCUSTOMFIELDS, "", contentValues) > 0;
 
                 }
@@ -2057,6 +2062,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
                     brandmarketField.setOptionText(cursor.getString(8));
                     brandmarketField.setUpdated(Integer.parseInt(cursor.getString(9)));
                     brandmarketField.setOptionValue(cursor.getString(10));
+                    brandmarketField.setIsPricingCustomField(Boolean.parseBoolean(cursor.getString(11)));
                     customFieldList.add(brandmarketField);
                 } while (cursor.moveToNext());
             }
