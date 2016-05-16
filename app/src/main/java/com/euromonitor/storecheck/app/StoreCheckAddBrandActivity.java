@@ -270,6 +270,7 @@ public class StoreCheckAddBrandActivity extends AppCompatActivity
                     StoreCheckAddProductDetailsActivity.productCode = Integer.valueOf(binding.getStoreCheckBrand().getSelectedProduct().get_product_id());
                     StoreCheckAddProductDetailsActivity.productName = binding.getStoreCheckBrand().getSelectedProduct().get_product_name();
                     StoreCheckAddProductDetailsActivity.priceId = 0;
+                    StoreCheckAddProductDetailsActivity.itemId = 0;
 
                     Toast.makeText(this.getBaseContext(), "Saved successfully!", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(context, StoreCheckAddProductDetailsActivity.class);

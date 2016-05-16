@@ -1499,8 +1499,9 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
             if (result) {
 
                 db.delete(TABLE_BRANDCUSTOMFIELDS, KEY_BRANDID + " = ? ", new String[]{String.valueOf(brandId)});
-                db.delete(TABLE_BRANDCUSTOMFIELDS, KEY_BRANDMARKETID + " = ? ", new String[]{String.valueOf(brandMarketId)});
-
+                if(brandMarketId>0) {
+                    db.delete(TABLE_BRANDCUSTOMFIELDS, KEY_BRANDMARKETID + " = ? ", new String[]{String.valueOf(brandMarketId)});
+                }
                 for (CustomField cf : brand.getCustomFields()) {
                     if (result) {
                         contentValues = new ContentValues();
