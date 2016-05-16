@@ -258,19 +258,18 @@ public class StoreCheckAddBrandActivity extends AppCompatActivity
                 long brandId = databaseHelper.saveBrand(data, isUpdated);
                 if (brandId > 0) {
                     StoreCheckAddProductDetailsActivity.brandName = binding.getStoreCheckBrand().getBrand();
+
+                    if(data.getSelectedMarket() == null){
+                        Market market = new Market();
+                        market.set_id(Integer.valueOf(String.valueOf(brandId)));
+                        market.set_brand(data.getBrand());
+                        data.setSelectMarket(market);
+                    }
+
                     StoreCheckAddProductDetailsActivity.brandId = brandId;
                     StoreCheckAddProductDetailsActivity.productCode = Integer.valueOf(binding.getStoreCheckBrand().getSelectedProduct().get_product_id());
                     StoreCheckAddProductDetailsActivity.productName = binding.getStoreCheckBrand().getSelectedProduct().get_product_name();
                     StoreCheckAddProductDetailsActivity.priceId = 0;
-                    binding.brandName.setText(null);
-                    binding.nbo.setText(null);
-                    SearchableSpinnerForAddBrand productSpinner = (SearchableSpinnerForAddBrand) ((View) (binding.getRoot()).findViewById(R.id.products));
-                    if (productSpinner.getCount() > 0) {
-                        productSpinner.setSelection(0);
-                    }
-                    setBindingProperties();
-                    binding.brandName.setText(null);
-                    binding.nbo.setText(null);
 
                     Toast.makeText(this.getBaseContext(), "Saved successfully!", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(context, StoreCheckAddProductDetailsActivity.class);

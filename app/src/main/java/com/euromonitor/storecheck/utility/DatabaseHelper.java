@@ -622,7 +622,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
                 + KEY_BRAND + " TEXT,"
                 + KEY_BRANDMARKETID + " TEXT,"
                 + KEY_UPDATED + " TEXT,"
-                + KEY_NEWOUTLETID + "INT,"
+                + KEY_NEWOUTLETID + " INT,"
                 + KEY_NBO + " TEXT" + ")";
         database.execSQL(CREATE_DETAILS_TABLE);
     }
@@ -907,9 +907,16 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         return storeCheckDetails;
     }
 
-    public ArrayList<Outlet> getOutlets() {
+    public ArrayList<Outlet> getOutlets(boolean isExport) {
         SQLiteDatabase database = this.getReadableDatabase();
-        String query = "select id, outlet_id,outlet_city,outlet_date,chccode,outlet_name,channel_name,project_id,geo_code,geo_name,year from outlets";
+        String query;
+        if(isExport){
+            query = "select id , outlet_id,outlet_city,outlet_date,chccode,outlet_name,channel_name,project_id,geo_code,geo_name,year from outlets where "
+            + KEY_UPDATED + "=1"  ;
+        }
+        else {
+            query = "select id, outlet_id,outlet_city,outlet_date,chccode,outlet_name,channel_name,project_id,geo_code,geo_name,year from outlets order by + " + KEY_OUTLET_Name;
+        }
         Cursor cursor = database.rawQuery(query, null);
         ArrayList<Outlet> outlets = null;
         try {
@@ -1439,7 +1446,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
             ContentValues contentValues = new ContentValues();
             int brandMarketId = -1;
 
-            if(isUpdate){
+            if(isUpdate && brand.getSelectedMarket().get_brand_market_id()!=null) {
                 brandMarketId = Integer.valueOf(brand.getSelectedMarket().get_brand_market_id());
             }
 
@@ -1508,15 +1515,13 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         return result ? brandId : 0;
     }
 
-    public boolean savePricingDetails(PricingDetail pricingDetail, boolean isUpdate) {
+    public long savePricingDetails(PricingDetail pricingDetail, boolean isUpdate) {
         boolean status = false;
+        long result = 0;
         SQLiteDatabase db = this.getWritableDatabase();
         try {
             ContentValues values = new ContentValues();
-
-
-            long result = 0;
-            if (pricingDetail.getPricingId() > 0) {
+            if (pricingDetail.getId()!=null && Integer.valueOf(pricingDetail.getId()) > 0) {
                 values.put(KEY_MULTIPACKSIZE, pricingDetail.getMultiPack());
                 values.put(KEY_OUTLETID, pricingDetail.getSelectedOutletId());
                 values.put(KEY_NEWOUTLETID, pricingDetail.getNewOutletId());
@@ -1540,6 +1545,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
             } else {
                 values.put(KEY_MULTIPACKSIZE, pricingDetail.getMultiPack());
                 values.put(KEY_OUTLETID, pricingDetail.getSelectedOutletId());
+                values.put(KEY_NEWOUTLETID, pricingDetail.getNewOutletId());
                 values.put(KEY_PRODUCTID, pricingDetail.getProductId());
                 values.put(KEY_OUTLETNAME, pricingDetail.getSelectedOutletName());
                 values.put(KEY_PACKSIZE, pricingDetail.getPackSize());
@@ -1569,7 +1575,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
             if (db != null)
                 db.close();
         }
-        return status;
+        return status ? result : -1;
     }
 
     private boolean saveCustomFields(int pricingId, ArrayList<CustomField> customFields, SQLiteDatabase db, boolean isUpdate) {
@@ -2030,7 +2036,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
                 market.set_product_code(cursor.getString(5));
                 market.set_product(cursor.getString(6));
                 market.set_brand(cursor.getString(7));
-                market.set_nbo(cursor.getColumnName(8));
+                market.set_nbo(cursor.getString(8));
                 market.set_company_name(cursor.getString(9));
                 market.setEsci(cursor.getString(10));
                 market.setEsbi(cursor.getString(11));

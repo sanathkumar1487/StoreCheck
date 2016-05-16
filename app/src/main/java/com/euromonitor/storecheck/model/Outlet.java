@@ -177,7 +177,7 @@ public class Outlet extends BaseObservable implements Serializable {
 
     public  static ArrayList<Outlet> getData(Context context){
         DatabaseHelper dbHelper = new DatabaseHelper(context);
-        return dbHelper.getOutlets();
+        return dbHelper.getOutlets(false);
     }
 
     public  int get_updated()

@@ -139,8 +139,11 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
         if (validateData()) {
             PricingDetail pricingDetail = binding.getPricingDetail();
             pricingDetail.setBrandMarketId((Integer.valueOf(String.valueOf(brandId))));
-            if (databaseHelper.savePricingDetails(pricingDetail, isUpdate)) {
+
+            long pricingId = databaseHelper.savePricingDetails(pricingDetail, isUpdate);
+            if (pricingId > 0 ) {
                 Toast.makeText(this.getBaseContext(), "Saved successfully!", Toast.LENGTH_LONG).show();
+                pricingDetail.setId(String.valueOf(pricingId));
             }else {
                 Toast.makeText(this.getBaseContext(), "Unable to save!", Toast.LENGTH_LONG).show();
             }
@@ -343,18 +346,23 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
 
     private void setOutletSpinner() {
         Spinner outletSpinner = (Spinner) findViewById(R.id.outlets);
-        ArrayList<Outlet> outlets = databaseHelper.getOutlets();
+        ArrayList<Outlet> outlets = databaseHelper.getOutlets(false);
         StoreCheckAddProductDetailsActivity.OutletAdapter outletAdapter = new StoreCheckAddProductDetailsActivity.OutletAdapter(outlets);
         outletSpinner.setAdapter(outletAdapter);
         outletSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Outlet selectedOutlet = (Outlet) parent.getItemAtPosition(position);
-                pricingDetail.setNewOutletId(Integer.valueOf(selectedOutlet.get_id()));
-                pricingDetail.setSelectedOutletId(Integer.valueOf(selectedOutlet.get_outlet_id()));
+                pricingDetail.setNewOutletId(selectedOutlet.get_id());
+
+                if (selectedOutlet.get_outlet_id() != null) {
+                    pricingDetail.setSelectedOutletId(Integer.valueOf(selectedOutlet.get_outlet_id()));
+                }
                 pricingDetail.setSelectedOutletName(selectedOutlet.get_outlet_Name());
                 pricingDetail.setChannelName(selectedOutlet.get_channel_name());
-                binding.getPricingDetail().setSelectedOutletId(Integer.valueOf(selectedOutlet.get_outlet_id()));
+                if (selectedOutlet.get_outlet_id() != null) {
+                    binding.getPricingDetail().setSelectedOutletId(Integer.valueOf(selectedOutlet.get_outlet_id()));
+                }
                 binding.getPricingDetail().setSelectedOutletName(selectedOutlet.get_outlet_Name());
             }
 
@@ -449,7 +457,7 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
 
         @Override
         public long getItemId(int position) {
-            return Long.valueOf(outlets.get(position).get_outlet_id());
+            return Long.valueOf(outlets.get(position).get_id());
         }
 
         @Override

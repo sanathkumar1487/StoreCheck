@@ -28,10 +28,9 @@ public class PricingDetail {
         this.selectedOutletId = selectedOutletId;
     }
 
-    int selectedOutletId;
+    int selectedOutletId = -1;
 
-    public String getPackSize()
-    {
+    public String getPackSize() {
         return String.valueOf(packSize);
     }
 
@@ -68,6 +67,7 @@ public class PricingDetail {
     }
 
     int pricingId;
+
     public void setPricingId(int pricingId) {
         this.pricingId = pricingId;
     }
@@ -191,13 +191,14 @@ public class PricingDetail {
     }
 
     private String channelName;
-    private int newOutletId;
-    public void setNewOutletId(int newOutletId)
-    {
-        this.newOutletId=newOutletId;
+
+    public void setNewOutletId(int newOutletId) {
+        this.newOutletId = newOutletId;
     }
-    public int getNewOutletId()
-    {
+
+    public int getNewOutletId() {
         return newOutletId;
     }
+
+    private int newOutletId;
 }

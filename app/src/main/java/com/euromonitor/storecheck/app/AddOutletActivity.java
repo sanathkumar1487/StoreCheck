@@ -4,43 +4,33 @@ import android.app.DatePickerDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.Context;
-import android.content.Intent;
-import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.BaseAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.euromonitor.storecheck.R;
-import com.euromonitor.storecheck.adapter.StoreCheckOutletDetailAdapter;
-import com.euromonitor.storecheck.databinding.StorecheckoutletDetailsBinding;
-import com.euromonitor.storecheck.databinding.StorecheckoutletItemBinding;
-import com.euromonitor.storecheck.listener.ClickListener;
-import com.euromonitor.storecheck.listener.RecyclerTouchListener;
 import com.euromonitor.storecheck.model.Channel;
 import com.euromonitor.storecheck.model.Outlet;
-import com.euromonitor.storecheck.model.StoreCheckDetail;
 import com.euromonitor.storecheck.utility.DatabaseHelper;
 
-import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -68,6 +58,7 @@ public class AddOutletActivity extends AppCompatActivity
     ArrayAdapter<String> adapter;
     DrawerLayout mDrawerLayout;
     android.support.v7.widget.Toolbar toolbar;
+
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
@@ -245,25 +236,26 @@ public class AddOutletActivity extends AppCompatActivity
         {
             outLet_Name.setText(outlet.get_outlet_Name());
             city.setText(outlet.get_outlet_city());
-            int index = -1;
+
             for (int i = 0; i < labels.size(); i++) {
                 Channel channel = labels.get(i);
-                if (channel.get_chc_name() != null && outlet.get_channel_name()!= null  && channel.get_chc_name().toString().trim().equals(outlet.get_channel_name().toString().trim())) {
-                    index = i;
+                if (channel.get_chc_name() != null
+                        && outlet.get_channel_name()!= null
+                        && channel.get_chc_name().toString().trim().equals(outlet.get_channel_name().toString().trim())) {
+
+                    spinner.setSelection(i);
+                    break;
                 }
             }
-            spinner.setSelection(index);
+
         }
         else outlet = new Outlet();
     }
 
     private void loadSpinnerData() {
         labels = db.getAllChannels();
-        ArrayAdapter<Channel> dataAdapter = new ArrayAdapter<Channel>(this, android.R.layout.simple_spinner_item, labels);
-        // Drop down layout style - list view with radio button
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // attaching data adapter to spinner
-        spinner.setAdapter(dataAdapter);
+        ChannelAdapter channelAdapter = new ChannelAdapter( labels);
+        spinner.setAdapter(channelAdapter);
     }
 
 
@@ -301,7 +293,14 @@ public class AddOutletActivity extends AppCompatActivity
                 outlet.set_outlet_Name(outLet_Name.getText().toString());
                 outlet.set_outlet_city(city.getText().toString());
                 outlet.set_outlet_date(etDate.getText().toString());
-                outlet.set_channel_name(spinner.getSelectedItem().toString());
+
+                if(spinner.getSelectedItem()!=null){
+                    Channel selectedChannel = (Channel)spinner.getSelectedItem();
+                    outlet.set_channel_name(selectedChannel.get_chc_name());
+                    outlet.set_chccode(selectedChannel.get_chc_code());
+                }
+
+
                 outlet.set_updated(1);
                 if (isNew)
                 {
@@ -328,4 +327,44 @@ public class AddOutletActivity extends AppCompatActivity
             Toast.makeText(this.getBaseContext(), "No changes to save", Toast.LENGTH_LONG).show();
         }
     }
+
+    public class ChannelAdapter extends BaseAdapter implements SpinnerAdapter{
+
+        public ChannelAdapter(ArrayList<Channel> channels) {
+            this.channels = channels;
+        }
+
+        ArrayList<Channel> channels;
+
+        @Override
+        public int getCount() {
+            return channels.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return channels.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return channels.get(position).get_id();
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            View channelView;
+            if (convertView != null) {
+                channelView = convertView;
+            } else {
+                channelView = getLayoutInflater().inflate(R.layout.storecheck_productitem, parent, false);
+            }
+
+            TextView outletItem = (TextView) channelView.findViewById(R.id.productItem);
+            outletItem.setText(channels.get(position).get_chc_name());
+
+            return channelView;
+        }
+    }
+
 }

@@ -58,7 +58,7 @@ public class ExportDataTask extends AsyncTask<Void, Void, Void> {
             Gson gsonObject = new Gson();
 
             StoreCheckExtended storeCheckExtended = new StoreCheckExtended();
-            storeCheckExtended.Outlets = databaseHelper.getOutlets();
+            storeCheckExtended.Outlets = databaseHelper.getOutlets(true);
             storeCheckExtended.details = databaseHelper.getAllUpdatedDetails();
             storeCheckExtended.markets = databaseHelper.getAllUpdatedMarkets();
             storeCheckExtended.brandCustomFields = databaseHelper.getAllUpdatedCustomFields();
