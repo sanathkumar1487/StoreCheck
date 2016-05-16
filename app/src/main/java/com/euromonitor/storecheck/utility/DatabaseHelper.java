@@ -1270,16 +1270,15 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
             String selectQuery = "SELECT id, "
                     + KEY_BRAND + ", "
                     + KEY_OUTLETID + ", "
-                    + KEY_PACKSIZE + ", "
-                    + KEY_MULTIPACKSIZE + ", "
+                    + " case when "+ KEY_UPDATED + " = 1 then " + KEY_PACKSIZE + " else 0 end as 'packSize', "
+                    + " case when "+ KEY_UPDATED + " = 1 then " + KEY_MULTIPACKSIZE + " else 0 end as 'multipackSize', "
                     + KEY_PACKTYPECODE + ", "
                     + KEY_UNITCODE + ", "
-                    + KEY_PRICE + ", "
+                    + " case when "+ KEY_UPDATED + " = 1 then " + KEY_PRICE + " else 0 end as 'price', "
                     + KEY_PRICINGID + ", "
                     + KEY_UPDATED
                     + " FROM " + TABLE_DETAILS
                     + " where " + KEY_PRICINGID + " = " + pricingId;
-//                    + " and " + KEY_UPDATED + " = " + 1;
 
             SQLiteDatabase db = this.getWritableDatabase();
             Cursor cursor = db.rawQuery(selectQuery, null);
