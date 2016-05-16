@@ -49,7 +49,7 @@ import java.util.Objects;
  */
 public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
     public static int priceId;
-
+    public static long itemId;
     public static long brandId;
     public static int productCode;
     public static String productName;
@@ -318,9 +318,10 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
     private void setBinding() {
         validations = databaseHelper.getValidations(productCode);
 
-        if (priceId > 0) {
-            pricingDetail = databaseHelper.getPricingDetails(priceId);
+        if (priceId > 0 || itemId > 0) {
+            pricingDetail = databaseHelper.getPricingDetails(priceId, itemId);
         }
+
         if (pricingDetail == null) {
             isUpdate = false;
             pricingDetail = new PricingDetail();

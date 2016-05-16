@@ -183,6 +183,7 @@ public class StoreCheckDetailsActivity extends AppCompatActivity
                         StoreCheckDetail detail = binding.getStoreCheckDetail();
                         if (detail != null) {
                             StoreCheckAddProductDetailsActivity.priceId = detail.getPriceId();
+                            StoreCheckAddProductDetailsActivity.itemId = detail.getItemId();
                             StoreCheckAddProductDetailsActivity.brandId = detail.getBrandId();
                             StoreCheckAddProductDetailsActivity.brandName = detail.getBrand();
                             StoreCheckAddProductDetailsActivity.productCode = detail.getProductCode();
