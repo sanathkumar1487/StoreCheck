@@ -49,11 +49,13 @@ public class Product {
         this._product_name = _product_name;
     }
 
-    public int getResearched() {
+    public int getResearched()
+    {
         return researched;
     }
 
-    public void setResearched(int researched) {
+    public void setResearched(int researched)
+    {
         this.researched = researched;
     }
 

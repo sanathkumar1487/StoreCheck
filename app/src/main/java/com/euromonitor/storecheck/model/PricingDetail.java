@@ -191,5 +191,13 @@ public class PricingDetail {
     }
 
     private String channelName;
-
+    private int newOutletId;
+    public void setNewOutletId(int newOutletId)
+    {
+        this.newOutletId=newOutletId;
+    }
+    public int getNewOutletId()
+    {
+        return newOutletId;
+    }
 }

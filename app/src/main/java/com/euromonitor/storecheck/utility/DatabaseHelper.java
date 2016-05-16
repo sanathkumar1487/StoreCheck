@@ -60,15 +60,13 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
     private static final String TABLE_BRANDS = "brands";
     private static final String TABLE_BRANDCUSTOMFIELDS = "brandcustomfields";
     private static final String TABLE_PACKTYPES = "packtypes";
-    ;
 
 
     private static final String KEY_ID = "id";
     private static final String KEY_BRAND = "brand";
     private static final String KEY_NBO = "nbo";
-
     private static final String KEY_PROJECTID = "projectid";
-    private static final String KEY_UPDATED = "updated";
+    private static final String KEY_UPDATE = "updated";
     private static final String KEY_NEW = "new";
 
 
@@ -77,7 +75,6 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
 
     // Outlets Table Columns names
     private static final String KEY_INDUSTRY_NAME = "industry_name";
-
     private static final String KEY_OUTLET_ID = "outlet_id";
     private static final String KEY_OUTLET_Name = "outlet_name";
     private static final String KEY_CHANNEL_NAME = "channel_name";
@@ -88,6 +85,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
     private static final String KEY_OUTLET_CITY = "outlet_city";
     private static final String KEY_YEAR = "year";
     private static final String KEY_OUTLET_DATE = "outlet_date";
+    private static final String KEY_UPDATED="updated";
 
 
     //Products Table Column Names
@@ -118,6 +116,8 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
     private static final String KEY_UNITCODE = "unitCode";
     private static final String KEY_UNITPRICELOCAL = "unitPriceLocal";
     private static final String KEY_UNITPRICEUS = "unitPriceUS";
+    private static final String KEY_NEWOUTLETID="newOutletId";
+
 
 
     //Markets Table Column Names
@@ -500,7 +500,8 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         db.close();
     }
 
-    private void loadValidationTable(List<Validation> validations) {
+    private void loadValidationTable(List<Validation> validations)
+    {
         Log.e("loadValidationTable::", "loadValidationTable load data");
 
         SQLiteDatabase db = this.getWritableDatabase();
@@ -603,6 +604,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
 
         String CREATE_DETAILS_TABLE = "CREATE TABLE " + TABLE_DETAILS + "("
                 + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+
                 + KEY_CHANNELNAME + " TEXT,"
                 + KEY_MULTIPACKSIZE + " TEXT,"
                 + KEY_OUTLETID + " TEXT,"
@@ -620,6 +622,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
                 + KEY_BRAND + " TEXT,"
                 + KEY_BRANDMARKETID + " TEXT,"
                 + KEY_UPDATED + " TEXT,"
+                + KEY_NEWOUTLETID + "INT,"
                 + KEY_NBO + " TEXT" + ")";
         database.execSQL(CREATE_DETAILS_TABLE);
     }
@@ -1291,6 +1294,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
             values.put(KEY_YEAR, outlet.get_year());
             values.put(KEY_CHCCODE, outlet.get_chccode());
             values.put(KEY_NEW, 1);
+            values.put(KEY_UPDATE,outlet.get_updated());
             db.insert(TABLE_OUTLETS, null, values);
         } catch (Exception ex) {
             throw ex;
@@ -1514,6 +1518,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
             if (pricingDetail.getPricingId() > 0) {
                 values.put(KEY_MULTIPACKSIZE, pricingDetail.getMultiPack());
                 values.put(KEY_OUTLETID, pricingDetail.getSelectedOutletId());
+                values.put(KEY_NEWOUTLETID, pricingDetail.getNewOutletId());
                 values.put(KEY_PRODUCTID, pricingDetail.getProductId());
                 values.put(KEY_OUTLETNAME, pricingDetail.getSelectedOutletName());
                 values.put(KEY_PACKSIZE, pricingDetail.getPackSize());
@@ -1635,10 +1640,10 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
                     StoreCheckDetail temp = new StoreCheckDetail();
 
                     String priceId = cursor.getString(0);
-                    if (priceId != null) {
+                    if (priceId != null)
+                    {
                         temp.setPriceId(Integer.valueOf(priceId));
                     }
-
                     String price = cursor.getString(1);
                     if (price != null) {
                         temp.setPrice(Double.valueOf(price));
