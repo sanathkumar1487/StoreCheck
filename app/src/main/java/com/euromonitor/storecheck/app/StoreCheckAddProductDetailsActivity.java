@@ -137,7 +137,9 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
     private void SavePricing() {
         setBindingProperties();
         if (validateData()) {
-            if (databaseHelper.savePricingDetails(binding.getPricingDetail(), isUpdate)) {
+            PricingDetail pricingDetail = binding.getPricingDetail();
+            pricingDetail.setBrandMarketId((Integer.valueOf(String.valueOf(brandId))));
+            if (databaseHelper.savePricingDetails(pricingDetail, isUpdate)) {
                 Toast.makeText(this.getBaseContext(), "Saved successfully!", Toast.LENGTH_LONG).show();
             }else {
                 Toast.makeText(this.getBaseContext(), "Unable to save!", Toast.LENGTH_LONG).show();
@@ -319,10 +321,11 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
         if (pricingDetail == null) {
             isUpdate = false;
             pricingDetail = new PricingDetail();
+            pricingDetail.setPricingId(priceId);
         }
 
         pricingDetail.setBrandId(brandId);
-        pricingDetail.setPricingId(priceId);
+
         pricingDetail.setBrandName(brandName);
         pricingDetail.setProductId(productCode);
         pricingDetail.setProductName(productName == null ? "" : productName.trim());

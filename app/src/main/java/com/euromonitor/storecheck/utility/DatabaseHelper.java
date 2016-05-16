@@ -1120,85 +1120,6 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         return products;
     }
 
-    public long saveBrand(StoreCheckBrand brand, boolean isUpdate) {
-        boolean result = true;
-        long brandId = 0;
-
-        MetaData metaData = getMetadata();
-
-        SQLiteDatabase db = this.getWritableDatabase();
-        try {
-
-            ContentValues contentValues = new ContentValues();
-            int brandMarketId = -1;
-
-            if(isUpdate){
-                brandMarketId = Integer.valueOf(brand.getSelectedMarket().get_brand_market_id());
-            }
-
-            contentValues.put(KEY_BRANDMARKETID,brandMarketId);
-            contentValues.put(KEY_PROJECTID, String.valueOf(metaData.getProjectId()));
-            contentValues.put(KEY_GEOGRAPHYCODE, metaData.getGeographyCode());
-            contentValues.put(KEY_GEOGRAPHY, metaData.getGeographyName());
-            contentValues.put(KEY_PRODUCTCODE, String.valueOf(brand.getSelectedProduct().get_product_id()));
-            contentValues.put(KEY_PRODUCT, brand.getSelectedProduct().get_product_name());
-            contentValues.put(KEY_BRAND, brand.getBrand());
-            contentValues.put(KEY_NBO, brand.getNbo());
-            contentValues.put(KEY_COMPANYNAME, "");
-            contentValues.put(KEY_ESCI, brand.getSelectMarket().getEsci());
-            contentValues.put(KEY_ESBI, brand.getSelectMarket().getEsbi());
-            contentValues.put(KEY_UPDATED, 1);
-
-            if (isUpdate) {
-                result = db.update(TABLE_MARKETS, contentValues, KEY_ID + " = ?",
-                        new String[]{String.valueOf(brand.getSelectedMarket().get_id())}) > 0;
-                brandId = brand.getSelectedMarket().get_id();
-            } else {
-                brandId = db.insert(TABLE_MARKETS, "", contentValues);
-
-                result = brandId > 0;
-            }
-            if (result) {
-
-                db.delete(TABLE_BRANDCUSTOMFIELDS, KEY_BRANDID + " = ? ", new String[]{String.valueOf(brandId)});
-                db.delete(TABLE_BRANDCUSTOMFIELDS, KEY_BRANDMARKETID + " = ? ", new String[]{String.valueOf(brandMarketId)});
-
-                for (CustomField cf : brand.getCustomFields()) {
-                    if (result) {
-                        contentValues = new ContentValues();
-
-                        contentValues.put(KEY_BRANDID, brandId);
-                        if (brand.getSelectedMarket() != null && brand.getSelectedMarket().get_brand_market_id() != null) {
-                            contentValues.put(KEY_BRANDMARKETID, brand.getSelectedMarket().get_brand_market_id());
-                        }
-                        contentValues.put(KEY_CUSTOMFIELDID, cf.getUniqueID());
-                        contentValues.put(KEY_GROUPID, cf.get_group_id());
-                        contentValues.put(KEY_LABEL, cf.get_label());
-                        contentValues.put(KEY_OPTIONID, cf.getSelectedOption().getOptionId());
-                        if (cf.get_object_id().equals("2")) {
-                            contentValues.put(KEY_OPTIONTEXT, cf.getCustomFieldTextValue());
-                        } else if ((cf.get_object_id().equals("1") || cf.get_object_id().equals("3"))
-                                && cf.getSelectedOption() != null) {
-                            contentValues.put(KEY_OPTIONVALUE, cf.getSelectedOption().getOptionName());
-                        }
-                        contentValues.put(KEY_UPDATED, 1);
-
-                        result = db.insert(TABLE_BRANDCUSTOMFIELDS, "", contentValues) > 0;
-
-                    }
-                }
-            } else {
-                result = false;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            result = false;
-        } finally {
-            db.close();
-        }
-        return result ? brandId : 0;
-    }
-
     public ArrayList<Channel> getAllChannels() {
         ArrayList<Channel> my_array = new ArrayList<Channel>();
         try {
@@ -1505,6 +1426,87 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
             e.printStackTrace();
         }
         return my_array;
+    }
+
+    public long saveBrand(StoreCheckBrand brand, boolean isUpdate) {
+        boolean result = true;
+        long brandId = 0;
+
+        MetaData metaData = getMetadata();
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        try {
+
+            ContentValues contentValues = new ContentValues();
+            int brandMarketId = -1;
+
+            if(isUpdate){
+                brandMarketId = Integer.valueOf(brand.getSelectedMarket().get_brand_market_id());
+            }
+
+            contentValues.put(KEY_BRANDMARKETID,brandMarketId);
+            contentValues.put(KEY_PROJECTID, String.valueOf(metaData.getProjectId()));
+            contentValues.put(KEY_GEOGRAPHYCODE, metaData.getGeographyCode());
+            contentValues.put(KEY_GEOGRAPHY, metaData.getGeographyName());
+            contentValues.put(KEY_PRODUCTCODE, String.valueOf(brand.getSelectedProduct().get_product_id()));
+            contentValues.put(KEY_PRODUCT, brand.getSelectedProduct().get_product_name());
+            contentValues.put(KEY_BRAND, brand.getBrand());
+            contentValues.put(KEY_NBO, brand.getNbo());
+            contentValues.put(KEY_COMPANYNAME, "");
+
+
+            contentValues.put(KEY_ESCI, brand.getSelectMarket()==null?"": brand.getSelectMarket().getEsci());
+            contentValues.put(KEY_ESBI, brand.getSelectMarket()==null?"": brand.getSelectMarket().getEsbi());
+            contentValues.put(KEY_UPDATED, 1);
+
+            if (isUpdate) {
+                result = db.update(TABLE_MARKETS, contentValues, KEY_ID + " = ?",
+                        new String[]{String.valueOf(brand.getSelectedMarket().get_id())}) > 0;
+                brandId = brand.getSelectedMarket().get_id();
+            } else {
+                brandId = db.insert(TABLE_MARKETS, "", contentValues);
+
+                result = brandId > 0;
+            }
+            if (result) {
+
+                db.delete(TABLE_BRANDCUSTOMFIELDS, KEY_BRANDID + " = ? ", new String[]{String.valueOf(brandId)});
+                db.delete(TABLE_BRANDCUSTOMFIELDS, KEY_BRANDMARKETID + " = ? ", new String[]{String.valueOf(brandMarketId)});
+
+                for (CustomField cf : brand.getCustomFields()) {
+                    if (result) {
+                        contentValues = new ContentValues();
+
+                        contentValues.put(KEY_BRANDID, brandId);
+                        if (brand.getSelectedMarket() != null && brand.getSelectedMarket().get_brand_market_id() != null) {
+                            contentValues.put(KEY_BRANDMARKETID, brand.getSelectedMarket().get_brand_market_id());
+                        }
+                        contentValues.put(KEY_CUSTOMFIELDID, cf.getUniqueID());
+                        contentValues.put(KEY_GROUPID, cf.get_group_id());
+                        contentValues.put(KEY_LABEL, cf.get_label());
+                        contentValues.put(KEY_OPTIONID, cf.getSelectedOption().getOptionId());
+                        if (cf.get_object_id().equals("2")) {
+                            contentValues.put(KEY_OPTIONTEXT, cf.getCustomFieldTextValue());
+                        } else if ((cf.get_object_id().equals("1") || cf.get_object_id().equals("3"))
+                                && cf.getSelectedOption() != null) {
+                            contentValues.put(KEY_OPTIONVALUE, cf.getSelectedOption().getOptionName());
+                        }
+                        contentValues.put(KEY_UPDATED, 1);
+
+                        result = db.insert(TABLE_BRANDCUSTOMFIELDS, "", contentValues) > 0;
+
+                    }
+                }
+            } else {
+                result = false;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            result = false;
+        } finally {
+            db.close();
+        }
+        return result ? brandId : 0;
     }
 
     public boolean savePricingDetails(PricingDetail pricingDetail, boolean isUpdate) {
@@ -1931,21 +1933,25 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         return brandCustomFields;
     }
 
-    public String getNboByBrand(Market selectMarket) {
+    public ArrayList<String> getNboByBrand(Market selectMarket) {
         SQLiteDatabase database = this.getReadableDatabase();
 
         String sqlQuery = "SELECT "
-               + KEY_NBO
+               + KEY_NBO + ", "
+                + KEY_ESCI + ", "
+                + KEY_ESBI
                 + " FROM " + TABLE_MARKETS
                 +  " WHERE " + KEY_ID + " = " + selectMarket.get_id();
 
         Cursor cursor = database.rawQuery(sqlQuery, null);
-        String nbo = "";
+        ArrayList<String> nbo = new ArrayList<>();
         try {
             if (cursor.moveToFirst()) {
 
                 do {
-                    nbo = cursor.getString(0);
+                    nbo.add(cursor.getString(0));
+                    nbo.add(cursor.getString(1));
+                    nbo.add(cursor.getString(2));
 
                 }while (cursor.moveToNext());
             }

@@ -342,27 +342,6 @@ public class StoreCheckAddBrandActivity extends AppCompatActivity
                     brand_name.setAdapter(brandAdapter);
                     brand_name.setThreshold(1);
 
-                    brand_name.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-                        @Override
-                        public void onFocusChange(View v, boolean hasFocus) {
-
-                            if(!hasFocus && ((AutoCompleteTextView)v).getText()!=null){
-                               String newValue = ((AutoCompleteTextView)v).getText().toString();
-
-                                if(binding.getStoreCheckBrand().getSelectedMarket()!=null
-                                        && newValue !=  binding.getStoreCheckBrand().getSelectedMarket().get_brand()){
-                                    binding.getStoreCheckBrand().setSelectMarket(null);
-                                    binding.getStoreCheckBrand().setCustomFields(productCustomFields);
-                                    customFieldsAdapter = new StoreCheckCustomFieldsAdapter(LayoutInflater.from(context),
-                                            context, productCustomFields);
-                                    customFieldRecyclerView.setAdapter(customFieldsAdapter);
-
-                                    binding.getStoreCheckBrand().setNbo("");
-                                    binding.nbo.setText("");
-                                }
-                            }
-                        }
-                    });
                     brand_name.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -371,9 +350,15 @@ public class StoreCheckAddBrandActivity extends AppCompatActivity
 
                             storeCheckBrand.setSelectMarket(selectMarket);
 
-                            binding.getStoreCheckBrand().setNbo(databaseHelper.getNboByBrand(selectMarket));
-                            binding.nbo.setText(binding.getStoreCheckBrand().getNbo());
+                            ArrayList<String> nbo = databaseHelper.getNboByBrand(selectMarket);
+                            if(nbo.size()>0) {
+                                selectMarket.set_nbo(nbo.get(0));
+                                selectMarket.setEsci(nbo.get(1));
+                                selectMarket.setEsbi(nbo.get(2));
 
+                                binding.getStoreCheckBrand().setNbo(nbo.get(0));
+                                binding.nbo.setText(binding.getStoreCheckBrand().getNbo());
+                            }
                             ArrayList<BrandCustomField> brandCustomFields = databaseHelper.getBrandCustomFieldsByBrand(selectMarket);
 
                             if(brandCustomFields!=null){
