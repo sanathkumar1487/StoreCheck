@@ -46,6 +46,9 @@ public class Outlet extends BaseObservable implements Serializable {
     @SerializedName("OutletCity")
     private String _outlet_city;
 
+    @SerializedName("Updated")
+    private int _updated;
+
     @Bindable
     public String getOutlet_city(){
         return _outlet_city;
@@ -69,7 +72,9 @@ public class Outlet extends BaseObservable implements Serializable {
     }
 
 
-    public Outlet(String _outlet_date, String _outlet_id, String _outlet_Name, int _project_id, String _geo_code, String _chccode, String _geo_name, String _industry, String _outlet_city, String _year, String _channel_name) {
+    public Outlet(String _outlet_date, String _outlet_id, String _outlet_Name, int _project_id, String _geo_code, String _chccode, String _geo_name, String _industry, String _outlet_city, String _year, String _channel_name,int _updated )
+    {
+
         this._outlet_date = _outlet_date;
         this._outlet_id = _outlet_id;
         this._outlet_Name = _outlet_Name;
@@ -81,6 +86,7 @@ public class Outlet extends BaseObservable implements Serializable {
         this._outlet_city = _outlet_city;
         this._year = _year;
         this._channel_name = _channel_name;
+        this._updated =  _updated;
     }
 
     @Bindable
@@ -174,6 +180,14 @@ public class Outlet extends BaseObservable implements Serializable {
         return dbHelper.getOutlets();
     }
 
+    public  int get_updated()
+    {
+        return _updated;
+    }
+    public void set_updated(int _updated )
+    {
+        this._updated=_updated;
+    }
     @Bindable
     public String get_outlet_Name() {
         return _outlet_Name;

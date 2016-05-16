@@ -102,8 +102,8 @@ public class StoreCheckAddBrandActivity extends AppCompatActivity
         mDrawerLayout = (DrawerLayout) findViewById(R.id.addBrand_Drawer);
         setupToolbar();
         setUpNavigationView();
-
-        if (databaseHelper.isDatabaseAvailable()) {
+        if (databaseHelper.isDatabaseAvailable())
+        {
             setBinding();
             View view = binding.getRoot();
             customFieldRecyclerView = (RecyclerView) view.findViewById(R.id.customFields);
@@ -182,22 +182,27 @@ public class StoreCheckAddBrandActivity extends AppCompatActivity
         boolean isValid = true;
         String errors = "Please correct the following errors: ";
 
-        if(data.getSelectedProduct()!=null && data.getSelectedProduct().getResearched()==0) {
+        if(data.getSelectedProduct()!=null && data.getSelectedProduct().getResearched()==0)
+        {
             Toast.makeText(context, data.getSelectedProduct().get_product_name() + " should not be researched!", Toast.LENGTH_LONG).show();
         }
-        else {
-            if (data.getBrand() == null || data.getBrand().equals("")) {
+        else
+        {
+            if (data.getBrand() == null || data.getBrand().equals(""))
+            {
                 errors += "\n Brand is required";
                 isValid = false;
             }
 
-            if (data.getNbo() == null || data.getNbo().equals("")) {
+            if (data.getNbo() == null || data.getNbo().equals(""))
+            {
                 errors += "\n NBO is required";
                 isValid = false;
             }
             ArrayList<CustomField> customFields = data.getCustomFields();
             if (customFields != null) {
-                for (CustomField cf : customFields) {
+                for (CustomField cf : customFields)
+                {
 
                     Option selectedOption = cf.getSelectedOption();
                     if (selectedOption != null) {
@@ -207,10 +212,10 @@ public class StoreCheckAddBrandActivity extends AppCompatActivity
                             }
                         } else if (cf.get_object_id().equals(StoreCheckAddBrandActivity.TextBox)) {
                             double minimum = 0;
-                            if (selectedOption.getMinimumAllowed() != null) {
+                            if (selectedOption.getMinimumAllowed() != null)
+                            {
                                 minimum = Double.parseDouble(selectedOption.getMinimumAllowed());
                             }
-
                             double maximum = 0;
                             boolean noMaximum = true;
                             if (selectedOption.getMaximumAllowed() != null) {
@@ -218,18 +223,20 @@ public class StoreCheckAddBrandActivity extends AppCompatActivity
                                 noMaximum = false;
                             }
                             double cfValue = 0;
-                            try {
+                            try
+                            {
 
-                                if (cf.getCustomFieldTextValue() != null) {
+                                if (cf.getCustomFieldTextValue() != null)
+                                {
                                     cfValue = Double.parseDouble(cf.getCustomFieldTextValue());
                                 }
 
-                                if (!cf.getIsNumeric()) {
+                                if (!cf.getIsNumeric())
+                                {
                                     if (cf.getCustomFieldTextValue() != null) {
                                         cfValue = cf.getCustomFieldTextValue().trim().length();
                                     }
                                 }
-
                                 if (!validateValue(cfValue, minimum, maximum, noMaximum, cf.getIsZeroAllowed())) {
                                     errors += "\n" + cf.get_label() + " value should be between " + minimum + " and " + maximum;
                                     isValid = false;
@@ -245,10 +252,9 @@ public class StoreCheckAddBrandActivity extends AppCompatActivity
                     }
                 }
             }
-            if (isValid) {
-
+            if (isValid)
+            {
                 isUpdated = data.getSelectedMarket() != null && data.getSelectedMarket().get_id() > 0;
-
                 long brandId = databaseHelper.saveBrand(data, isUpdated);
                 if (brandId > 0) {
                     StoreCheckAddProductDetailsActivity.brandName = binding.getStoreCheckBrand().getBrand();
@@ -256,17 +262,13 @@ public class StoreCheckAddBrandActivity extends AppCompatActivity
                     StoreCheckAddProductDetailsActivity.productCode = Integer.valueOf(binding.getStoreCheckBrand().getSelectedProduct().get_product_id());
                     StoreCheckAddProductDetailsActivity.productName = binding.getStoreCheckBrand().getSelectedProduct().get_product_name();
                     StoreCheckAddProductDetailsActivity.priceId = 0;
-
-
                     binding.brandName.setText(null);
                     binding.nbo.setText(null);
-
                     SearchableSpinnerForAddBrand productSpinner = (SearchableSpinnerForAddBrand) ((View) (binding.getRoot()).findViewById(R.id.products));
                     if (productSpinner.getCount() > 0) {
                         productSpinner.setSelection(0);
                     }
                     setBindingProperties();
-
                     binding.brandName.setText(null);
                     binding.nbo.setText(null);
 
@@ -282,7 +284,8 @@ public class StoreCheckAddBrandActivity extends AppCompatActivity
         }
     }
 
-    private boolean validateValue(double value, double minimumAllowed, double maximumAllowed, boolean noMaximum, boolean isZeroAllowed) {
+    private boolean validateValue(double value, double minimumAllowed, double maximumAllowed, boolean noMaximum, boolean isZeroAllowed)
+    {
         return value >= minimumAllowed && (value <= maximumAllowed || noMaximum || maximumAllowed == 0) || (isZeroAllowed && value == 0);
     }
 

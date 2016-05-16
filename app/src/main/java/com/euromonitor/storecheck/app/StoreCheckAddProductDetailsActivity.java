@@ -59,20 +59,16 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
     final static String TextBox = "2";
     final static String CustomDropDown = "3";
     final static String CustomCompanyID = "4";
-
     ArrayList<Market> markets;
     ArrayList<CustomField> customFields = new ArrayList<CustomField>();
     ArrayList<Validation> validations;
     String errors;
-
     PricingDetail pricingDetail;
     StorecheckProductdetailsBinding binding;
-
     DatabaseHelper databaseHelper;
     DrawerLayout drawerLayout;
     android.support.v7.widget.Toolbar toolbar;
     RecyclerView customFieldRecyclerView;
-
     boolean isUpdate = true;
 
     Context context;
@@ -347,16 +343,14 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
 
     private void setOutletSpinner() {
         Spinner outletSpinner = (Spinner) findViewById(R.id.outlets);
-
         ArrayList<Outlet> outlets = databaseHelper.getOutlets();
-
         StoreCheckAddProductDetailsActivity.OutletAdapter outletAdapter = new StoreCheckAddProductDetailsActivity.OutletAdapter(outlets);
         outletSpinner.setAdapter(outletAdapter);
         outletSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Outlet selectedOutlet = (Outlet) parent.getItemAtPosition(position);
-
+                pricingDetail.setNewOutletId(Integer.valueOf(selectedOutlet.get_id()));
                 pricingDetail.setSelectedOutletId(Integer.valueOf(selectedOutlet.get_outlet_id()));
                 pricingDetail.setSelectedOutletName(selectedOutlet.get_outlet_Name());
                 pricingDetail.setChannelName(selectedOutlet.get_channel_name());
@@ -369,7 +363,6 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
 
             }
         });
-
     }
 
     private void setUnitSpinner() {

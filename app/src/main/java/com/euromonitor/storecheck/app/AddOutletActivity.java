@@ -82,7 +82,6 @@ public class AddOutletActivity extends AppCompatActivity
         setUpNavigationView();
         db = new DatabaseHelper(this);
 
-
             item=db.getOutletName();
             spinner = (Spinner) view.findViewById(R.id.spinner);
             textView = (TextView) view.findViewById(R.id.header);
@@ -158,7 +157,6 @@ public class AddOutletActivity extends AppCompatActivity
             }) ;
 
 
-
             city.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -207,8 +205,6 @@ public class AddOutletActivity extends AppCompatActivity
             });
         }
 
-
-
     public void setupToolbar(){
 
         toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.addOutletToolBar);
@@ -216,7 +212,6 @@ public class AddOutletActivity extends AppCompatActivity
         // actionbar.setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Welcome !");
         toolbar.setSubtitle("Add Outlet");
-
         toolbar.setTitle("Store-check details");
         toolbar.inflateMenu(R.menu.storecheck_menu);
     }
@@ -224,7 +219,6 @@ public class AddOutletActivity extends AppCompatActivity
     private void setUpNavigationView() {
         try {
             Fragment navFragment = StoreCheckNavigationFragment.newInstance(mDrawerLayout.getId(), toolbar.getId());
-
             FragmentManager fragmentManager = this.getFragmentManager();
             FragmentTransaction ft = fragmentManager.beginTransaction();
             ft.replace(R.id.navDrawerFrame, navFragment, "Nav");
@@ -241,7 +235,8 @@ public class AddOutletActivity extends AppCompatActivity
         return outlet;
     }
 
-    public void setOutlet(Outlet outlet) {
+    public void setOutlet(Outlet outlet)
+    {
         this.outlet = outlet;
     }
 
@@ -251,10 +246,8 @@ public class AddOutletActivity extends AppCompatActivity
             outLet_Name.setText(outlet.get_outlet_Name());
             city.setText(outlet.get_outlet_city());
             int index = -1;
-
             for (int i = 0; i < labels.size(); i++) {
                 Channel channel = labels.get(i);
-
                 if (channel.get_chc_name() != null && outlet.get_channel_name()!= null  && channel.get_chc_name().toString().trim().equals(outlet.get_channel_name().toString().trim())) {
                     index = i;
                 }
@@ -309,9 +302,10 @@ public class AddOutletActivity extends AppCompatActivity
                 outlet.set_outlet_city(city.getText().toString());
                 outlet.set_outlet_date(etDate.getText().toString());
                 outlet.set_channel_name(spinner.getSelectedItem().toString());
-
+                outlet.set_updated(1);
                 if (isNew)
                 {
+
                     db.insertOutlet(outlet);
                     Toast.makeText(this.getBaseContext(), "New outlet saved", Toast.LENGTH_LONG).show();
                 }

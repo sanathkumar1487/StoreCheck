@@ -10,6 +10,7 @@ public class ProductDetail {
     String brandName;
     private int brandId;
 
+
     public void setPrice(double price) {
         this.price = price;
     }
@@ -41,4 +42,7 @@ public class ProductDetail {
     public int getBrandId(){
         return brandId;
     }
+
+
+
 }
