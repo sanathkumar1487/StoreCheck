@@ -223,7 +223,9 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
 
                 Option selectedOption = cf.getSelectedOption();
                 if (selectedOption != null) {
-                    if (selectedOption.getMinimumAllowed().equals("0") && selectedOption.getMaximumAllowed().equals("0")) {
+                    if (selectedOption.getMinimumAllowed()!=null && selectedOption.getMaximumAllowed()!=null
+                            && selectedOption.getMinimumAllowed().equals("0")
+                            && selectedOption.getMaximumAllowed().equals("0")) {
                         if (isValid) {
                             isValid = true;
                         }

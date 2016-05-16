@@ -1566,7 +1566,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
 
                 result = db.update(TABLE_DETAILS, values, KEY_ID + " = ?", new String[]{String.valueOf(pricingDetail.getId())});
 
-                newPricingId = Long.valueOf(pricingDetail.getPricingId());
+                newPricingId = Long.valueOf(pricingDetail.getId());
 
             } else {
                 values.put(KEY_MULTIPACKSIZE, pricingDetail.getMultiPack());
