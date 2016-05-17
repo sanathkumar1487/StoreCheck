@@ -98,34 +98,7 @@ public class StoreCheckDetailsActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu)
     {
         getMenuInflater().inflate(R.menu.menu_main, menu);
-//        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-//        SearchView searchView = (SearchView) menu.findItem(R.id.searchItem).getActionView();
-//
-//        if (searchView != null)
-//        {
-//            if (dbHelper.isDatabaseAvailable()) {
-//                searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-//                queryTextListener = new SearchView.OnQueryTextListener() {
-//                    @Override
-//                    public boolean onQueryTextChange(String newText) {
-//                        if (newText != null) {
-//                            adapter.filterByProduct(newText);
-//                        }
-//                        return true;
-//                    }
-//
-//                    @Override
-//                    public boolean onQueryTextSubmit(String query) {
-//                        return true;
-//                    }
-//                };
-//                searchView.setOnQueryTextListener(queryTextListener);
-//            }
-//            else
-//            {
-//
-//            }
-//        }
+
        return true;
     }
 
@@ -185,6 +158,7 @@ public class StoreCheckDetailsActivity extends AppCompatActivity
                             StoreCheckAddProductDetailsActivity.priceId = detail.getPriceId();
                             StoreCheckAddProductDetailsActivity.itemId = detail.getItemId();
                             StoreCheckAddProductDetailsActivity.brandId = detail.getBrandId();
+                            StoreCheckAddProductDetailsActivity.brandMarketId = detail.getBrandMarketId();
                             StoreCheckAddProductDetailsActivity.brandName = detail.getBrand();
                             StoreCheckAddProductDetailsActivity.productCode = detail.getProductCode();
                             StoreCheckAddProductDetailsActivity.productName = detail.getProductName();

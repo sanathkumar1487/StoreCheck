@@ -51,6 +51,7 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
     public static int priceId;
     public static long itemId;
     public static long brandId;
+    public static long brandMarketId;
     public static int productCode;
     public static String productName;
     public static String brandName;
@@ -138,7 +139,8 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
         setBindingProperties();
         if (validateData()) {
             PricingDetail pricingDetail = binding.getPricingDetail();
-            pricingDetail.setBrandMarketId((Integer.valueOf(String.valueOf(brandId))));
+            pricingDetail.setBrandMarketId(brandMarketId);
+            pricingDetail.setBrandId(brandId);
 
             long pricingId = databaseHelper.savePricingDetails(pricingDetail, isUpdate);
             if (pricingId > 0 ) {
@@ -329,14 +331,20 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
             pricingDetail = new PricingDetail();
             pricingDetail.setPricingId(priceId);
             pricingDetail.setBrandId(brandId);
+            pricingDetail.setBrandMarketId(brandMarketId);
         }
 
-        if(pricingDetail.getBrandId() == 0) {
+        if(pricingDetail.getBrandId() == 0 && brandId > 0) {
             pricingDetail.setBrandId(brandId);
         }
+
+        if(pricingDetail.getBrandMarketId() == 0 && brandMarketId > 0 ){
+            pricingDetail.setBrandMarketId(brandMarketId);
+        }
+
         pricingDetail.setBrandName(brandName);
 
-        if(pricingDetail.getProductId() == 0) {
+        if(pricingDetail.getProductId() == 0 && productCode > 0) {
             pricingDetail.setProductId(productCode);
         }
         pricingDetail.setProductName(productName == null ? "" : productName.trim());

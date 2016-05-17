@@ -152,15 +152,15 @@ public class PricingDetail {
 
     private int productId;
 
-    public int getBrandMarketId() {
+    public long getBrandMarketId() {
         return brandMarketId;
     }
 
-    public void setBrandMarketId(int brandMarketId) {
+    public void setBrandMarketId(long brandMarketId) {
         this.brandMarketId = brandMarketId;
     }
 
-    private int brandMarketId;
+    private long brandMarketId;
 
     public String getNbo() {
         return nbo;

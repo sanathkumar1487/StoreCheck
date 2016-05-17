@@ -1,6 +1,5 @@
 package com.euromonitor.storecheck.app;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -9,13 +8,9 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -26,26 +21,16 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ArrayAdapter;
-import android.widget.Filter;
-import android.widget.Filterable;
-import com.euromonitor.storecheck.Constants.NavigationConstants;
-import com.euromonitor.storecheck.R;
 
 import com.euromonitor.storecheck.R;
+
 import com.euromonitor.storecheck.adapter.StoreCheckBrandAdapter;
 import com.euromonitor.storecheck.adapter.StoreCheckCustomFieldsAdapter;
-import com.euromonitor.storecheck.adapter.StoreCheckDetailAdapter;
 import com.euromonitor.storecheck.databinding.StorecheckAddbrandBinding;
-import com.euromonitor.storecheck.databinding.StorecheckProductdetailsBinding;
-import com.euromonitor.storecheck.listener.ClickListener;
-import com.euromonitor.storecheck.listener.RecyclerTouchListener;
 import com.euromonitor.storecheck.model.BrandCustomField;
 import com.euromonitor.storecheck.model.CustomField;
 import com.euromonitor.storecheck.model.Market;
@@ -54,13 +39,7 @@ import com.euromonitor.storecheck.model.Product;
 import com.euromonitor.storecheck.model.StoreCheckBrand;
 import com.euromonitor.storecheck.utility.DatabaseHelper;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
-import java.util.List;
-
-import java.util.logging.LogRecord;
-import java.util.zip.Inflater;
 
 /**
  * Created by Shashwat.Bajpai on 19/04/2016.
@@ -85,8 +64,8 @@ public class StoreCheckAddBrandActivity extends AppCompatActivity
     Context context;
     ArrayAdapter<String> adapter;
     android.support.v7.widget.Toolbar toolbar;
-    AutoCompleteTextView nbo_name;
-    AutoCompleteTextView brand_name;
+    AutoCompleteTextView nboName;
+    AutoCompleteTextView brandName;
     String[] item = new String[]{"Please search here"};
     StoreCheckCustomFieldsAdapter customFieldsAdapter;
     ArrayList<CustomField> productCustomFields ;
@@ -108,10 +87,10 @@ public class StoreCheckAddBrandActivity extends AppCompatActivity
             View view = binding.getRoot();
             customFieldRecyclerView = (RecyclerView) view.findViewById(R.id.customFields);
             item = databaseHelper.getNboName();
-            nbo_name = (AutoCompleteTextView) findViewById(R.id.nbo);
+            nboName = (AutoCompleteTextView) findViewById(R.id.nbo);
             adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, item);
-            nbo_name.setAdapter(adapter);
-            nbo_name.setThreshold(1);
+            nboName.setAdapter(adapter);
+            nboName.setThreshold(1);
         } else {
             Toast.makeText(this, "Please import EMMA generated file to proceed!", Toast.LENGTH_LONG).show();
         }
@@ -267,6 +246,11 @@ public class StoreCheckAddBrandActivity extends AppCompatActivity
                     }
 
                     StoreCheckAddProductDetailsActivity.brandId = brandId;
+
+                    if(data.getSelectedMarket().get_brand_market_id()!=null) {
+                        StoreCheckAddProductDetailsActivity.brandMarketId = Long.valueOf(data.getSelectedMarket().get_brand_market_id());
+                    }
+
                     StoreCheckAddProductDetailsActivity.productCode = Integer.valueOf(binding.getStoreCheckBrand().getSelectedProduct().get_product_id());
                     StoreCheckAddProductDetailsActivity.productName = binding.getStoreCheckBrand().getSelectedProduct().get_product_name();
                     StoreCheckAddProductDetailsActivity.priceId = 0;
@@ -337,12 +321,12 @@ public class StoreCheckAddBrandActivity extends AppCompatActivity
                     productCustomFields = customFields;
 
                     brand_item = databaseHelper.getBrandsByProductId(productID);
-                    brand_name = (AutoCompleteTextView) findViewById(R.id.brandName);
+                    brandName = (AutoCompleteTextView) findViewById(R.id.brandName);
                     brandAdapter = new StoreCheckBrandAdapter(context, android.R.layout.simple_dropdown_item_1line, R.id.brand_name, brand_item);
-                    brand_name.setAdapter(brandAdapter);
-                    brand_name.setThreshold(1);
+                    brandName.setAdapter(brandAdapter);
+                    brandName.setThreshold(1);
 
-                    brand_name.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    brandName.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                             isExistingBrand = true;
@@ -351,7 +335,7 @@ public class StoreCheckAddBrandActivity extends AppCompatActivity
                             storeCheckBrand.setSelectMarket(selectMarket);
 
                             ArrayList<String> nbo = databaseHelper.getNboByBrand(selectMarket);
-                            if(nbo.size()>0) {
+                            if (nbo.size() > 0) {
                                 selectMarket.set_nbo(nbo.get(0));
                                 selectMarket.setEsci(nbo.get(1));
                                 selectMarket.setEsbi(nbo.get(2));
@@ -361,10 +345,10 @@ public class StoreCheckAddBrandActivity extends AppCompatActivity
                             }
                             ArrayList<BrandCustomField> brandCustomFields = databaseHelper.getBrandCustomFieldsByBrand(selectMarket);
 
-                            if(brandCustomFields!=null){
-                                ArrayList<CustomField> customFields =  binding.getStoreCheckBrand().getCustomFields();
+                            if (brandCustomFields != null) {
+                                ArrayList<CustomField> customFields = binding.getStoreCheckBrand().getCustomFields();
                                 for (BrandCustomField preCustomFields : brandCustomFields) {
-                                    for (CustomField cf :customFields) {
+                                    for (CustomField cf : customFields) {
                                         if (Integer.valueOf(cf.get_group_id()) == (preCustomFields.getGroupId())) {
                                             cf.setSelectedOptionById(preCustomFields.getOptionId());
                                             if (cf.get_object_id().equals(TextBox)) {

@@ -1676,9 +1676,10 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
     public ArrayList<StoreCheckDetail> GetDetailsByProductCode(int productCode) {
         SQLiteDatabase database = this.getReadableDatabase();
         String query = "select d.id, d.pricingid, d.price,d.packsize,d.multipackSize, u.unitname, p.product_Name, d.brand," +
-                " d.brandmarketid, p.product_id from details  d " +
-                "inner join    products p on p. product_id =   d.productid  " +
-                " inner join   (select distinct unitid,unitname,unitbase  from units) u on u.unitid = d.unitcode"
+                " d.brandId, d.brandmarketid, p.product_id" +
+                " from details  d" +
+                " inner join products p on p. product_id = d.productid" +
+                " inner join (select distinct unitid,unitname,unitbase  from units) u on u.unitid = d.unitcode"
                 + " where d.productId = " + productCode
                 + " order by d.brand" ;
         Log.e("SQL", query);
@@ -1732,7 +1733,13 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
                         temp.setBrandId(brandId);
                     }
 
-                    int productId = cursor.getInt(9);
+
+                    int brandMarketId = cursor.getInt(9);
+                    if (brandMarketId > 0) {
+                        temp.setBrandMarketId(brandMarketId);
+                    }
+
+                    int productId = cursor.getInt(10);
                     if (productId > 0) {
                         temp.setProductCode(productId);
                     }
@@ -1942,7 +1949,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
 
 
 
-        if(selectMarket.get_brand_market_id() != null){
+        if(selectMarket.get_brand_market_id() != null && !selectMarket.get_brand_market_id().equals("-1")){
             sqlQuery = sqlQuery
                     + " WHERE "
                     + KEY_BRANDMARKETID + " = " + selectMarket.get_brand_market_id();
