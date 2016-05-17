@@ -106,12 +106,27 @@ public class StoreCheckAddBrandActivity extends AppCompatActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
+        switch (item.getItemId())
+        {
             case R.id.Save:
-                validateData();
-                return true;
+                if(databaseHelper.isDatabaseAvailable())
+                {
+                    validateData();
+                    return true;
+                }
+                else
+                {
+                    Toast.makeText(this, "Please import EMMA generated file to proceed!", Toast.LENGTH_LONG).show();
+                }
             case R.id.Clear:
-                resetData();
+                if(databaseHelper.isDatabaseAvailable())
+                {
+                    resetData();
+                }
+                else
+                {
+                    Toast.makeText(this, "Please import EMMA generated file to proceed!", Toast.LENGTH_LONG).show();
+                }
             default:
                 return super.onOptionsItemSelected(item);
         }

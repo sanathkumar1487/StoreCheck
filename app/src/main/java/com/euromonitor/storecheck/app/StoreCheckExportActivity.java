@@ -50,13 +50,9 @@ public class StoreCheckExportActivity extends MainActivity implements AsyncPostE
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.storecheck_export);
-
         mDrawerLayout = (DrawerLayout) findViewById(R.id.exportDrawer_layout);
-
         setupToolbar();
         setUpNavigationView();
-
-
         DatabaseHelper db = new DatabaseHelper(this);
         if(db.isDatabaseAvailable()) {
             export = (Button) findViewById(R.id.browseFolder);
@@ -66,15 +62,12 @@ public class StoreCheckExportActivity extends MainActivity implements AsyncPostE
                     browseFolder();
                 }
             });
-
             progressBar = (MaterialProgressBar) this.findViewById(R.id.exportProgress);
             int color = 0xFF00FF00;
             progressBar.getIndeterminateDrawable().setColorFilter(Color.parseColor("#42A5F5"), PorterDuff.Mode.SRC_IN);
             progressBar.getProgressDrawable().setColorFilter(Color.parseColor("#42A5F5"), PorterDuff.Mode.SRC_IN);
-
             selectedFile = (TextView) findViewById(R.id.selectedFile);
             selectedFile.setVisibility(View.VISIBLE);
-
             exportFile = (Button) findViewById(R.id.exportFile);
             exportFile.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -99,14 +92,14 @@ public class StoreCheckExportActivity extends MainActivity implements AsyncPostE
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
+        switch (item.getItemId())
+        {
             case R.id.Save:
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
-
 
 
     @Override
@@ -126,39 +119,40 @@ public class StoreCheckExportActivity extends MainActivity implements AsyncPostE
     public void progressReport(String message) {
 
     }
-
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
         super.onActivityResult(requestCode, resultCode, data);
-        final String directoryPath = data.getStringExtra(FilePickerActivity.FILE_EXTRA_DATA_PATH);
-        if ((requestCode == 10) && (resultCode == this.RESULT_OK)) {
-            try {
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setTitle("Filename: ");
+        if(data!=null)
+        {
+            final String directoryPath = data.getStringExtra(FilePickerActivity.FILE_EXTRA_DATA_PATH);
+            if ((requestCode == 10) && (resultCode == this.RESULT_OK)) {
+                try {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    builder.setTitle("Filename: ");
+                    final EditText input = new EditText(this);
+                    builder.setView(input);
+                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            fileName = directoryPath + "/" + input.getText().toString() + ".storecheck";
+                            selectedFile.setText(fileName);
+                            selectedFile.setVisibility(View.VISIBLE);
+                            exportFile.setEnabled(true);
+                        }
+                    });
+                    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
 
-                final EditText input = new EditText(this);
-
-                builder.setView(input);
-
-                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        fileName = directoryPath + "/"+ input.getText().toString() + ".storecheck";
-                        selectedFile.setText(fileName);
-                        selectedFile.setVisibility(View.VISIBLE);
-                        exportFile.setEnabled(true);
-                    }
-                });
-                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
-
-                builder.show();
-            } catch (Exception e) {
-                messageBox(e);
+                    builder.show();
+                }
+                catch (Exception e) {
+                    messageBox(e);
+                }
             }
         }
     }
@@ -171,9 +165,7 @@ public class StoreCheckExportActivity extends MainActivity implements AsyncPostE
         startActivityForResult(filePicker, 10);
     }
 
-    public void crash() {
-        throw new NullPointerException("Dummy Exception Thrown");
-    }
+
 
     private void exportData() {
         if (fileName != null && fileName.trim().length() > 0) {
@@ -187,7 +179,6 @@ public class StoreCheckExportActivity extends MainActivity implements AsyncPostE
             Toast.makeText(this.getBaseContext(), "Please provide a filename", Toast.LENGTH_SHORT).show();
         }
     }
-
     public void messageBox(Exception e) {
         AlertDialog.Builder messageBox = new AlertDialog.Builder(this);
         messageBox.setTitle("Error occurred");
