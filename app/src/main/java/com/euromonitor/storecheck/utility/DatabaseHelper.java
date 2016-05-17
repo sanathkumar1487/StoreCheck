@@ -917,7 +917,9 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
             + KEY_UPDATED + "=1"  ;
         }
         else {
-            query = "select id, outlet_id,outlet_city,outlet_date,chccode,outlet_name,channel_name,project_id,geo_code,geo_name,year from outlets order by + " + KEY_OUTLET_Name;
+            query = "select id, outlet_id,outlet_city,outlet_date,chccode,outlet_name,channel_name,project_id,geo_code," +
+                    "geo_name,year from outlets" +
+                    " order by + " + KEY_OUTLET_Name;
         }
         Cursor cursor = database.rawQuery(query, null);
         ArrayList<Outlet> outlets = null;
@@ -1281,7 +1283,9 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
 
         try {
             String selectQuery = "SELECT id, "
+                    + KEY_BRANDID + ", "
                     + KEY_BRAND + ", "
+                    + KEY_BRANDMARKETID + ", "
                     + KEY_OUTLETID + ", "
                     + " case when " + KEY_UPDATED + " = 1 then " + KEY_PACKSIZE + " else 0 end as 'packSize', "
                     + " case when " + KEY_UPDATED + " = 1 then " + KEY_MULTIPACKSIZE + " else 0 end as 'multipackSize', "
@@ -1306,7 +1310,9 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
                 do {
                     pricingDetails = new PricingDetail();
                     pricingDetails.setId(cursor.getString(cursor.getColumnIndex(KEY_ID)));
+                    pricingDetails.setBrandId(cursor.getInt(cursor.getColumnIndex(KEY_BRANDID)));
                     pricingDetails.setBrandName(cursor.getString(cursor.getColumnIndex(KEY_BRAND)));
+                    pricingDetails.setBrandMarketId(cursor.getInt(cursor.getColumnIndex(KEY_BRANDMARKETID)));
                     pricingDetails.setSelectedOutletId(cursor.getInt(cursor.getColumnIndex(KEY_OUTLETID)));
                     pricingDetails.setPackSize(cursor.getInt(cursor.getColumnIndex(KEY_PACKSIZE)));
                     pricingDetails.setMultiPack(cursor.getInt(cursor.getColumnIndex(KEY_MULTIPACKSIZE)));
@@ -1673,7 +1679,9 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
                 " d.brandmarketid, p.product_id from details  d " +
                 "inner join    products p on p. product_id =   d.productid  " +
                 " inner join   (select distinct unitid,unitname,unitbase  from units) u on u.unitid = d.unitcode"
-                + " where d.productId = " + productCode;
+                + " where d.productId = " + productCode
+                + " order by d.brand" ;
+        Log.e("SQL", query);
         Cursor cursor = database.rawQuery(query, null);
         ArrayList<StoreCheckDetail> storeCheckDetails = null;
         try {

@@ -25,6 +25,14 @@
                 app:popupTheme="@style/PopupTheme"
                 android:theme="@style/ToolBarTheme"
                 android:id="@+id/productDetailsToolbar"/>
+<<<<<<< HEAD
+=======
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fillViewport="true">
+>>>>>>> origin/master
             <GridLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -181,6 +189,7 @@
 
                 </LinearLayout>
             </GridLayout>
+            </ScrollView>
         </LinearLayout>
         <FrameLayout
             android:id="@+id/navDrawerFrame"

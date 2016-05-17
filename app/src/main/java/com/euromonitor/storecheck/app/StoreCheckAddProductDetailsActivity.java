@@ -328,12 +328,17 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
             isUpdate = false;
             pricingDetail = new PricingDetail();
             pricingDetail.setPricingId(priceId);
+            pricingDetail.setBrandId(brandId);
         }
 
-        pricingDetail.setBrandId(brandId);
-
+        if(pricingDetail.getBrandId() == 0) {
+            pricingDetail.setBrandId(brandId);
+        }
         pricingDetail.setBrandName(brandName);
-        pricingDetail.setProductId(productCode);
+
+        if(pricingDetail.getProductId() == 0) {
+            pricingDetail.setProductId(productCode);
+        }
         pricingDetail.setProductName(productName == null ? "" : productName.trim());
 
         if (brandId > 0) {
