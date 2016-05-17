@@ -70,18 +70,18 @@
                 android:layout_column="1"
                 />
 
-            <Button
-            android:layout_width="match_parent"
-            android:background="@color/blue_300"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="150sp"
-            android:layout_marginRight="50sp"
-            android:layout_marginLeft="50sp"
-            android:text="Crash the app"
-            android:layout_margin="@dimen/material_item_margin"
-            android:id="@+id/crashApp"
-            android:onClick="crash"
-            />
+            <!--<Button-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:background="@color/blue_300"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginTop="150sp"-->
+            <!--android:layout_marginRight="50sp"-->
+            <!--android:layout_marginLeft="50sp"-->
+            <!--android:text="Crash the app"-->
+            <!--android:layout_margin="@dimen/material_item_margin"-->
+            <!--android:id="@+id/crashApp"-->
+            <!--android:onClick="crash"-->
+            <!--/>-->
 
     </LinearLayout>
         <FrameLayout
