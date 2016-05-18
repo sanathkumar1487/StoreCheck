@@ -117,7 +117,7 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
     }
 
     private void setSelectedUnitCode() {
-        if (pricingDetail.getId() !=null && itemId > 0 && units!=null) {
+        if (pricingDetail.getId() !=null && pricingDetail.isUpdated && itemId > 0 && units!=null) {
             for(int index = 0; index < units.size(); index++){
                 if(units.get(index).get_unit_id().equals(String.valueOf(pricingDetail.getUnitId()))){
                     unitSpinner.setSelection(index);
@@ -129,7 +129,7 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
     }
 
     private void setSelectedPackType() {
-        if (pricingDetail.getId() !=null && itemId > 0 && packTypes!=null) {
+        if (pricingDetail.getId() !=null && pricingDetail.isUpdated && itemId > 0 && packTypes!=null) {
             for(int index = 0; index < packTypes.size(); index++){
                 if(packTypes.get(index).get_packtypecode().equals(String.valueOf(pricingDetail.getPackTypeCode()))){
                     packTypeSpinner.setSelection(index);
@@ -142,7 +142,7 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
 
     private void setSelectedOutletId() {
 
-        if (pricingDetail.getId() !=null && itemId > 0 && outlets!=null) {
+        if (pricingDetail.getId() !=null && pricingDetail.isUpdated && itemId > 0 && outlets!=null) {
             for(int index = 0; index < outlets.size(); index++){
                 if(outlets.get(index).get_id() == pricingDetail.getNewOutletId() ||
                         outlets.get(index).get_outlet_id().equals(String.valueOf(pricingDetail.getSelectedOutletId()))){
