@@ -70,6 +70,13 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
     DrawerLayout drawerLayout;
     android.support.v7.widget.Toolbar toolbar;
     RecyclerView customFieldRecyclerView;
+    Spinner outletSpinner;
+    ArrayList<Outlet> outlets;
+    Spinner packTypeSpinner;
+    ArrayList<PackType> packTypes;
+    Spinner unitSpinner;
+    ArrayList<Unit> units;
+
     boolean isUpdate = true;
 
     Context context;
@@ -96,10 +103,54 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
 
             setCustomFields(productCode, 2);
 
+            setSelectedOutletId();
+
+            setSelectedPackType();
+
+            setSelectedUnitCode();
+
             binding.setPricingDetail(pricingDetail);
         }
         else {
             Toast.makeText(this,"Please import EMMA generated file to proceed!",Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void setSelectedUnitCode() {
+        if (pricingDetail.getId() !=null && itemId > 0 && units!=null) {
+            for(int index = 0; index < units.size(); index++){
+                if(units.get(index).get_unit_id().equals(String.valueOf(pricingDetail.getUnitId()))){
+                    unitSpinner.setSelection(index);
+                    break;
+                }
+            }
+
+        }
+    }
+
+    private void setSelectedPackType() {
+        if (pricingDetail.getId() !=null && itemId > 0 && packTypes!=null) {
+            for(int index = 0; index < packTypes.size(); index++){
+                if(packTypes.get(index).get_packtypecode().equals(String.valueOf(pricingDetail.getPackTypeCode()))){
+                    packTypeSpinner.setSelection(index);
+                    break;
+                }
+            }
+
+        }
+    }
+
+    private void setSelectedOutletId() {
+
+        if (pricingDetail.getId() !=null && itemId > 0 && outlets!=null) {
+            for(int index = 0; index < outlets.size(); index++){
+                if(outlets.get(index).get_id() == pricingDetail.getNewOutletId() ||
+                        outlets.get(index).get_outlet_id().equals(String.valueOf(pricingDetail.getSelectedOutletId()))){
+                    outletSpinner.setSelection(index);
+                    break;
+                }
+            }
+
         }
     }
 
@@ -361,8 +412,8 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
     }
 
     private void setOutletSpinner() {
-        Spinner outletSpinner = (Spinner) findViewById(R.id.outlets);
-        ArrayList<Outlet> outlets = databaseHelper.getOutlets(false);
+        outletSpinner = (Spinner) findViewById(R.id.outlets);
+        outlets = databaseHelper.getOutlets(false);
         StoreCheckAddProductDetailsActivity.OutletAdapter outletAdapter = new StoreCheckAddProductDetailsActivity.OutletAdapter(outlets);
         outletSpinner.setAdapter(outletAdapter);
         outletSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -390,8 +441,8 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
     }
 
     private void setUnitSpinner() {
-        Spinner unitSpinner = (Spinner) findViewById(R.id.units);
-        ArrayList<Unit> units = databaseHelper.getUnits(productCode);
+        unitSpinner = (Spinner) findViewById(R.id.units);
+        units = databaseHelper.getUnits(productCode);
 
         StoreCheckAddProductDetailsActivity.UnitAdapter unitAdapter = new StoreCheckAddProductDetailsActivity.UnitAdapter(units);
         unitSpinner.setAdapter(unitAdapter);
@@ -433,8 +484,8 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
     }
 
     private void setPackTypeSpinner() {
-        Spinner packTypeSpinner = (Spinner) findViewById(R.id.packType);
-        ArrayList<PackType> packTypes = databaseHelper.getPackTypeByProduct(productCode);
+        packTypeSpinner = (Spinner) findViewById(R.id.packType);
+        packTypes = databaseHelper.getPackTypeByProduct(productCode);
         StoreCheckAddProductDetailsActivity.PackTypeAdapter packTypeAdapter = new StoreCheckAddProductDetailsActivity.PackTypeAdapter(packTypes);
         packTypeSpinner.setAdapter(packTypeAdapter);
         packTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

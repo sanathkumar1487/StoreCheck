@@ -27,6 +27,16 @@ public class StoreCheckDetail extends BaseObservable {
     public int priceId;
     private int brandId;
 
+    public int getUpdated() {
+        return updated;
+    }
+
+    public void setUpdated(int updated) {
+        this.updated = updated;
+    }
+
+    private int updated;
+
     public int getBrandMarketId() {
         return brandMarketId;
     }
