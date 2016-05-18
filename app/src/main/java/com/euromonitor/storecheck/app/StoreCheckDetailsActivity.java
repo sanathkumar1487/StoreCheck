@@ -69,6 +69,7 @@ public class StoreCheckDetailsActivity extends AppCompatActivity
     private SearchView.OnQueryTextListener queryTextListener;
     MaterialProgressBar progressBar;
     Product selectedProduct;
+    ProductTouchListener productTouchListener;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -97,7 +98,7 @@ public class StoreCheckDetailsActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.viewdetail_menu, menu);
 
        return true;
     }
@@ -107,6 +108,11 @@ public class StoreCheckDetailsActivity extends AppCompatActivity
         switch (item.getItemId()) {
             case R.id.searchItem:
 
+                break;
+            case R.id.refresh:
+                if(productTouchListener!=null){
+                    productTouchListener.loadSelectedProductItems();
+                }
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -139,7 +145,9 @@ public class StoreCheckDetailsActivity extends AppCompatActivity
         ArrayList<Product> products = dbHelper.getAllProducts();
         StoreCheckDetailsActivity.ProductAdapter productAdapter = new StoreCheckDetailsActivity.ProductAdapter(products);
         packTypeSpinner.setAdapter(productAdapter);
-        packTypeSpinner.setOnItemSelectedListener(new ProductTouchListener());
+
+        productTouchListener = new ProductTouchListener();
+        packTypeSpinner.setOnItemSelectedListener(productTouchListener);
     }
 
     public void setUpStoreCheckDetails(List<StoreCheckDetail> storeCheckItems) {
@@ -233,18 +241,21 @@ public class StoreCheckDetailsActivity extends AppCompatActivity
             AsyncProgressReport,
             AsyncPreExecute{
 
+        private Product selProduct;
+
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            Product product = (Product) parent.getItemAtPosition(position);
+            this.selProduct = (Product) parent.getItemAtPosition(position);
 
-            selectedProduct = product;
+            selectedProduct = this.selProduct;
 
-            ViewDetailsTask viewDetailsTask = new ViewDetailsTask(context);
-            viewDetailsTask.productId = Integer.valueOf(product.get_product_id());
-            viewDetailsTask.preExecute = this;
-            viewDetailsTask.progressReport = this;
-            viewDetailsTask.postExecute = this;
-            viewDetailsTask.execute();
+            loadSelectedProductItems();
+//            ViewDetailsTask viewDetailsTask = new ViewDetailsTask(context);
+//            viewDetailsTask.productId = Integer.valueOf(selProduct.get_product_id());
+//            viewDetailsTask.preExecute = this;
+//            viewDetailsTask.progressReport = this;
+//            viewDetailsTask.postExecute = this;
+//            viewDetailsTask.execute();
         }
 
         @Override
@@ -266,6 +277,15 @@ public class StoreCheckDetailsActivity extends AppCompatActivity
         public void PostExecute(ArrayList<StoreCheckDetail> data) {
             setUpStoreCheckDetails(data);
             progressBar.setVisibility(View.GONE);
+        }
+
+        public  void loadSelectedProductItems(){
+            ViewDetailsTask viewDetailsTask = new ViewDetailsTask(context);
+            viewDetailsTask.productId = Integer.valueOf(selProduct.get_product_id());
+            viewDetailsTask.preExecute = this;
+            viewDetailsTask.progressReport = this;
+            viewDetailsTask.postExecute = this;
+            viewDetailsTask.execute();
         }
     }
 }
