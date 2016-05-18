@@ -1680,9 +1680,12 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         SQLiteDatabase database = this.getReadableDatabase();
         String query = "select d.id, d.pricingid," +
                 " case when d.updated = 1 then d.price else 0 end as 'price' ," +
-                " case when d.updated = 1 then d.packsize else 0 end as 'price' ," +
-                " case when d.updated = 1 then d.multipackSize else 0 end as 'price' ," +
-                " case when d.updated = 1 then  u.unitname else '' end as 'price' ," +
+                //" case when d.updated = 1 then d.packsize else 0 end as 'price' ," +
+                " d.packsize, "+
+                " d.multipackSize, "+
+//                " case when d.updated = 1 then d.multipackSize else 0 end as 'price' ," +
+                " u.unitname, " +
+//                " case when d.updated = 1 then  u.unitname else '' end as 'price' ," +
                 " p.product_Name," +
                 " d.brand," +
                 " d.brandId," +
