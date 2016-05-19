@@ -212,7 +212,7 @@
         <FrameLayout
             android:id="@+id/navDrawerFrame"
             android:name="com.euromonitor.storecheck.app.StoreCheckNavigationFragment"
-            android:layout_width="280dp"
+            android:layout_width="@dimen/nav_drawer_width"
             android:layout_height="match_parent"
             android:layout_gravity="start"
             app:layout="@layout/storecheck_navigation_drawer"

@@ -11,7 +11,8 @@
     <dimen name="default_font_size">18sp</dimen>
     <dimen name="default_margin">10dp</dimen>
     <dimen name="margin_left">16dp</dimen>
-    <dimen name="nav_drawer_width">280dp</dimen>
+    <dimen name="nav_drawer_width">240dp</dimen>
+    <dimen name="nav_drawer_height">240dp</dimen>
     <dimen name="drawer_Item">50dp</dimen>
     <dimen name="drawer_item_paddingtop">20dp</dimen>
     <dimen name="minimum_item_width">100sp</dimen>

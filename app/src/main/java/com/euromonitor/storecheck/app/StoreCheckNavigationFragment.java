@@ -67,7 +67,7 @@ public  class StoreCheckNavigationFragment extends Fragment {
 
             setUpRecyclerView();
         } catch (Exception e) {
-            throw e;
+           // throw e;
         }
         return view;
     }
@@ -163,7 +163,7 @@ public  class StoreCheckNavigationFragment extends Fragment {
                 }
             });
         } catch (Exception e) {
-            throw e;
+//            throw e;
         }
     }
 
