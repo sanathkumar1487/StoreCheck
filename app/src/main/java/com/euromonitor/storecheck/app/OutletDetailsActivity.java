@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import com.melnykov.fab.FloatingActionButton;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -44,12 +45,15 @@ public class OutletDetailsActivity extends AppCompatActivity {
     DrawerLayout mDrawerLayout;
     android.support.v7.widget.Toolbar toolbar;
     DatabaseHelper db;
+    FloatingActionButton fab;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.storecheckoutlet_details);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.manageOutlet_Drawer);
+        fab=(FloatingActionButton)findViewById(R.id.fab);
+        fab.setColorNormal(getResources().getColor(R.color.blue_300));
         db = new DatabaseHelper(this);
         setupToolbar();
         setUpNavigationView();
@@ -57,6 +61,13 @@ public class OutletDetailsActivity extends AppCompatActivity {
 
             View view = binding.getRoot();
             setUpStoreCheckDetails(view);
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    loadAddOutletScreen();
+                }
+            });
         } else {
 
             Toast.makeText(this, "Please import EMMA generated file to proceed!", Toast.LENGTH_LONG).show();
@@ -65,7 +76,7 @@ public class OutletDetailsActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.storecheck_menu, menu);
+        getMenuInflater().inflate(R.menu.outletdetails_menu, menu);
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView = (SearchView) menu.findItem(R.id.searchItem).getActionView();
         if (searchView != null) {
