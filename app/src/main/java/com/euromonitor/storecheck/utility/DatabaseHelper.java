@@ -407,7 +407,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
             db.insert(TABLE_OPTIONS, null, values);
         }
 
-        db.close(); // Closing database connection
+        db.close(); 
     }
 
     private void loadCustomFiledsTable(List<CustomField> customFields) {
