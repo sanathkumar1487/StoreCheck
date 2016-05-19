@@ -66,11 +66,8 @@ public class ExportDataTask extends AsyncTask<Void, Void, Void> {
             String jsonString =  gsonObject.toJson(storeCheckExtended);
             write(jsonString);
 
-        }catch
-
-                (Exception e)
-        {
-
+        }catch(Exception e) {
+            backgroundException = e;
         }
         finally {
             databaseHelper.close();
@@ -111,8 +108,8 @@ public class ExportDataTask extends AsyncTask<Void, Void, Void> {
             MediaScannerConnection.scanFile(context, new String[]{absolutePath.toString()}, null, null);
         }
         catch (IOException e) {
-            Log.w("IOException", e.getMessage(), e);
             status = false;
+            throw e;
         }
 
         finally {

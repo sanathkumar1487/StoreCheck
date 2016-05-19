@@ -51,8 +51,7 @@ public class MainActivity extends AppCompatActivity {
             db=new DatabaseHelper(this);
 
         } catch (Exception e) {
-            Log.i("Main Activity Exception", e.getMessage());
-            //  messageBox(e);
+            throw e;
         }
     }
 
@@ -97,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
             ft.commit();
 
         } catch (Exception e) {
-            Log.e("Setup Drawer", e.getMessage());
+            throw e;
         }
     }
 

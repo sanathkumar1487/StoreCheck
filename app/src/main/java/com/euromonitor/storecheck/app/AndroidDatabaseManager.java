@@ -1149,7 +1149,7 @@ public class AndroidDatabaseManager extends Activity implements OnItemClickListe
   	       try{
   		    column_data = c3.getString(j);
   		}catch(Exception e){
-  			// Column data is not a string , do not display it
+			   throw e;
   		}
                columsView.setText(column_data);
                columsView.setTextColor(Color.parseColor("#000000"));

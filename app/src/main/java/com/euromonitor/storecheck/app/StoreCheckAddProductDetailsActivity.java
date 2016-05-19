@@ -145,7 +145,8 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
         if (pricingDetail.getId() !=null && pricingDetail.isUpdated && itemId > 0 && outlets!=null) {
             for(int index = 0; index < outlets.size(); index++){
                 if(outlets.get(index).get_id() == pricingDetail.getNewOutletId() ||
-                        outlets.get(index).get_outlet_id().equals(String.valueOf(pricingDetail.getSelectedOutletId()))){
+                        (outlets.get(index).get_outlet_id()!=null
+                                && outlets.get(index).get_outlet_id().equals(String.valueOf(pricingDetail.getSelectedOutletId())))){
                     outletSpinner.setSelection(index);
                     break;
                 }

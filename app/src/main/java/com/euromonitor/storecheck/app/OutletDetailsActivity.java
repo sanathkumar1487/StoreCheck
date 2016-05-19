@@ -183,7 +183,7 @@ public class OutletDetailsActivity extends AppCompatActivity {
             ft.commit();
 
         } catch (Exception e) {
-            Log.e("Setup Drawer", e.getMessage());
+            throw e;
         }
     }
 }

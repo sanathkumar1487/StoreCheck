@@ -153,7 +153,7 @@ public class StoreCheckImportActivity extends AppCompatActivity implements Async
             ft.commit();
 
         } catch (Exception e) {
-            Log.e("Setup Drawer", e.getMessage());
+            throw e;
         }
     }
 
@@ -182,7 +182,7 @@ public class StoreCheckImportActivity extends AppCompatActivity implements Async
 
                 Intent i = new Intent(Intent.ACTION_SEND);
                 i.setType("message/rfc822");
-                i.putExtra(Intent.EXTRA_EMAIL, new String[]{"sanath.kumar@euromonitor.com", "Fritze.George@euromonitor.com",});
+                i.putExtra(Intent.EXTRA_EMAIL, new String[]{"StoreCheckAppSupport@Euromonitor.com",});
                 i.putExtra(Intent.EXTRA_SUBJECT, "Storecheck app error Details");
                 i.putExtra(Intent.EXTRA_TEXT, errordata);
                 try {

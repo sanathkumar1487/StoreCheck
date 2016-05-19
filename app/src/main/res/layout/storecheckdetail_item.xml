@@ -14,14 +14,15 @@
     card_view:cardCornerRadius="5dp"
     android:layout_height="wrap_content"
     android:textSize="@dimen/detailfont_size"
-    android:background="@{storeCheckDetail.updated == 1?@color/white:@color/grey_300}">
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_margin="5dp"
-        >
+        android:background="@{storeCheckDetail.updated == 1?@color/white:@color/grey_300}"
+        android:padding="5dp">
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">

@@ -154,7 +154,7 @@ public class StoreCheckAddBrandActivity extends AppCompatActivity
             ft.commit();
 
         } catch (Exception e) {
-            Log.e("Setup Drawer", e.getMessage());
+            throw e;
         }
     }
 

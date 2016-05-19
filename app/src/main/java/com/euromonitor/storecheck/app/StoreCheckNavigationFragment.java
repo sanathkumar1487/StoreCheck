@@ -57,6 +57,7 @@ public  class StoreCheckNavigationFragment extends Fragment {
         try {
             view = inflater.inflate(R.layout.storecheck_navigation_drawer, container, false);
         } catch (InflateException e) {
+            throw e;
         }
 
         try {
@@ -66,7 +67,7 @@ public  class StoreCheckNavigationFragment extends Fragment {
 
             setUpRecyclerView();
         } catch (Exception e) {
-            Log.e("Oncreate view", e.getMessage());
+            throw e;
         }
         return view;
     }
@@ -162,7 +163,7 @@ public  class StoreCheckNavigationFragment extends Fragment {
                 }
             });
         } catch (Exception e) {
-            Log.i("setup drawer exception", e.getMessage());
+            throw e;
         }
     }
 
@@ -170,11 +171,10 @@ public  class StoreCheckNavigationFragment extends Fragment {
         try{
             Log.i("Draw", "Close Called");
 
-
             mDrawerLayout.closeDrawers();
         }
         catch (Exception e){
-            Log.i("Exception", e.getMessage());
+            throw e;
         }
     }
 

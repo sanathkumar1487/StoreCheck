@@ -136,7 +136,7 @@ public class StoreCheckDetailsActivity extends AppCompatActivity
             ft.replace(R.id.navDrawerFrame, navFragment, "Nav");
             ft.commit();
         } catch (Exception e) {
-            Log.e("Setup Drawer", e.getMessage());
+            throw e;
         }
     }
 
