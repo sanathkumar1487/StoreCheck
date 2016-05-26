@@ -227,15 +227,20 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
                         + " and " + validation.getMultiPackMaximum();
                 isValid = false;
             }
+        }
 
-            // Pack Size
-            if (detail.getPackSize() == null || detail.getPackSize().equals("0")) {
-                errors = errors + "\nPack-size field value is invalid";
-                isValid = false;
-            }
+        // Pack Size
+        if (detail.getPackSize() == null || detail.getPackSize().equals("0")) {
+            errors = errors + "\nPack-size field value is invalid";
+            isValid = false;
+        }
 
-            if(Integer.valueOf(detail.getPackSize()) < validation.getUnitMin() || Integer.valueOf(detail.getPackSize()) >validation.getUnitMax()){
-                errors = errors + "\nPack-size field value should be between " + validation.getUnitMin() + " and " + validation.getUnitMax() ;
+        validation = getPackSizeValidation(productCode, binding.getPricingDetail().getUnitId());
+        if(validation!=null) {
+
+
+            if (Integer.valueOf(detail.getPackSize()) < validation.getUnitMin() || Integer.valueOf(detail.getPackSize()) > validation.getUnitMax()) {
+                errors = errors + "\nPack-size field value should be between " + validation.getUnitMin() + " and " + validation.getUnitMax();
                 isValid = false;
             }
         }
@@ -327,6 +332,8 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
 
         return isValid;
     }
+
+
 
     private boolean validateValue(double value, double minimumAllowed, double maximumAllowed, boolean noMaximum, boolean isZeroAllowed) {
         return value >= minimumAllowed && (value <= maximumAllowed || noMaximum || maximumAllowed == 0) || (isZeroAllowed && value == 0);
@@ -638,6 +645,14 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
     private Validation getMultipackMax(int productCode){
         for(Validation validation: validations){
             if(validation.getProductCode() == productCode)
+                return validation;
+        }
+        return null;
+    }
+
+    private Validation getPackSizeValidation(int productCode, int unitId) {
+        for(Validation validation: validations){
+            if(validation.getProductCode() == productCode && validation.getUnitCode() == unitId)
                 return validation;
         }
         return null;
