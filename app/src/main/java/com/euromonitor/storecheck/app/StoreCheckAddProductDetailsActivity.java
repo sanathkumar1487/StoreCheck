@@ -55,7 +55,6 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
     public static int productCode;
     public static String productName;
     public static String brandName;
-
     final static String DropDown = "1";
     final static String TextBox = "2";
     final static String CustomDropDown = "3";
@@ -215,7 +214,8 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
         Validation validation ;
 
         // Multipack Size
-        if (detail.getMultiPack() == null){
+        if (detail.getMultiPack() == null)
+        {
             errors = errors + "\nMultipack field cannot be blank";
         }
 
@@ -239,7 +239,7 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
         if(validation!=null) {
 
 
-            if (Integer.valueOf(detail.getPackSize()) < validation.getUnitMin() || Integer.valueOf(detail.getPackSize()) > validation.getUnitMax()) {
+            if (Double.valueOf(detail.getPackSize()) < validation.getUnitMin() || Double.valueOf(detail.getPackSize()) > validation.getUnitMax()) {
                 errors = errors + "\nPack-size field value should be between " + validation.getUnitMin() + " and " + validation.getUnitMax();
                 isValid = false;
             }
@@ -350,7 +350,7 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
         if (binding.packSize.getText() != null) {
             newValue = binding.packSize.getText().toString();
         }
-        binding.getPricingDetail().setPackSize(newValue != null ? Integer.valueOf(newValue) : 0);
+        binding.getPricingDetail().setPackSize(newValue != null ? Double.valueOf(newValue) : 0);
 
         newValue = null;
         if (binding.price.getText() != null) {

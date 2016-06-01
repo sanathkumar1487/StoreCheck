@@ -30,15 +30,17 @@ public class PricingDetail {
 
     int selectedOutletId = -1;
 
-    public String getPackSize() {
+    public String getPackSize()
+    {
         return String.valueOf(packSize);
     }
 
-    public void setPackSize(int packSize) {
+    public void setPackSize(double packSize)
+    {
         this.packSize = packSize;
     }
 
-    int packSize;
+    double packSize;
 
     public String getMultiPack() {
         return String.valueOf(multiPack);

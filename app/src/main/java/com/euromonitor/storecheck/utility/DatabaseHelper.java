@@ -1317,7 +1317,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
                     pricingDetails.setBrandMarketId(cursor.getInt(cursor.getColumnIndex(KEY_BRANDMARKETID)));
                     pricingDetails.setSelectedOutletId(cursor.getInt(cursor.getColumnIndex(KEY_OUTLETID)));
                     pricingDetails.setNewOutletId(cursor.getInt(cursor.getColumnIndex(KEY_NEWOUTLETID)));
-                    pricingDetails.setPackSize(cursor.getInt(cursor.getColumnIndex(KEY_PACKSIZE)));
+                    pricingDetails.setPackSize(cursor.getDouble(cursor.getColumnIndex(KEY_PACKSIZE)));
                     pricingDetails.setMultiPack(cursor.getInt(cursor.getColumnIndex(KEY_MULTIPACKSIZE)));
                     pricingDetails.setPackTypeCode(cursor.getInt(cursor.getColumnIndex(KEY_PACKTYPECODE)));
                     pricingDetails.setUnitId(cursor.getInt(cursor.getColumnIndex(KEY_UNITCODE)));
