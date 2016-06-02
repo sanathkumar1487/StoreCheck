@@ -36,44 +36,74 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="ProductDetail.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/euromonitor/storecheck/model/ProductDetail.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Product.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/euromonitor/storecheck/model/Product.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="storecheck_productdetails.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/storecheck_productdetails.xml">
-          <provider editor-type-id="android-designer">
-            <state />
-          </provider>
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="3.5172415">
-              <caret line="125" column="60" selection-start-line="125" selection-start-column="60" selection-end-line="125" selection-end-column="60" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="StoreCheckAddProductDetailsActivity.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/euromonitor/storecheck/app/StoreCheckAddProductDetailsActivity.java">
           <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-5.724138">
+              <caret line="195" column="62" selection-start-line="195" selection-start-column="44" selection-end-line="195" selection-end-column="62" />
+              <folding>
+                <element signature="docComment;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+                <element signature="method#onCreate#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+                <element signature="method#setSelectedUnitCode#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+                <element signature="method#setSelectedPackType#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+                <element signature="method#setSelectedOutletId#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+                <element signature="method#onCreateOptionsMenu#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+                <element signature="method#setCustomFields#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+                <element signature="method#validateData#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+                <element signature="method#validateValue#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+                <element signature="method#setupToolbar#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+                <element signature="method#setUpNavigationView#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+                <element signature="method#setBinding#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+                <element signature="method#setSpinners#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+                <element signature="method#onNothingSelected#0;class#16522:17715" expanded="false" />
+                <element signature="method#setUnitSpinner#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+                <element signature="class#18099:18549" expanded="false" />
+                <element signature="method#onItemSelected#0;class#18099:18549" expanded="false" />
+                <element signature="method#onNothingSelected#0;class#18099:18549" expanded="false" />
+                <element signature="method#setCustomFieldByProductCode#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+                <element signature="class#19994:20558" expanded="false" />
+                <element signature="method#onItemSelected#0;class#19994:20558" expanded="false" />
+                <element signature="method#onNothingSelected#0;class#19994:20558" expanded="false" />
+                <element signature="class#OutletAdapter#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+                <element signature="method#getView#0;class#OutletAdapter#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+                <element signature="class#UnitAdapter#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+                <element signature="method#getItemId#0;class#UnitAdapter#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+                <element signature="method#getView#0;class#UnitAdapter#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+                <element signature="class#PackTypeAdapter#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+                <element signature="method#getView#0;class#PackTypeAdapter#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+                <element signature="method#getValidationByColumn#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+                <element signature="method#getMultipackMax#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+                <element signature="method#getPackSizeValidation#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SearchableSpinnerForAddBrand.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/euromonitor/storecheck/app/SearchableSpinnerForAddBrand.java">
+          <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="207" column="0" selection-start-line="207" selection-start-column="0" selection-end-line="207" selection-end-column="0" />
+              <caret line="52" column="13" selection-start-line="52" selection-start-column="13" selection-end-line="52" selection-end-column="13" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="StoreCheckExportActivity.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/euromonitor/storecheck/app/StoreCheckExportActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="169" column="17" selection-start-line="169" selection-start-column="17" selection-end-line="169" selection-end-column="17" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ExportDataTask.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/euromonitor/storecheck/controller/ExportDataTask.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="61" column="76" selection-start-line="61" selection-start-column="56" selection-end-line="61" selection-end-column="76" />
               <folding />
             </state>
           </provider>
@@ -82,12 +112,19 @@
       <file leaf-file-name="DatabaseHelper.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/euromonitor/storecheck/utility/DatabaseHelper.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.33269963">
-              <caret line="1319" column="27" selection-start-line="1319" selection-start-column="20" selection-end-line="1319" selection-end-column="27" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#84022#84037#0" expanded="true" />
-              </folding>
+            <state vertical-scroll-proportion="0.35523978">
+              <caret line="2061" column="92" selection-start-line="2061" selection-start-column="92" selection-end-line="2061" selection-end-column="92" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="StoreCheckImportActivity.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/euromonitor/storecheck/app/StoreCheckImportActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="37" column="13" selection-start-line="37" selection-start-column="13" selection-end-line="37" selection-end-column="13" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -96,13 +133,40 @@
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/euromonitor/storecheck/model/PricingDetail.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="32" column="31" selection-start-line="32" selection-start-column="31" selection-end-line="32" selection-end-column="31" />
+              <caret line="40" column="0" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
               <folding>
-                <element signature="e#631#632#0" expanded="true" />
-                <element signature="e#678#679#0" expanded="true" />
                 <element signature="e#730#731#0" expanded="true" />
-                <element signature="e#770#771#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="StoreCheckNavigationFragment.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/euromonitor/storecheck/app/StoreCheckNavigationFragment.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="27" column="14" selection-start-line="27" selection-start-column="14" selection-end-line="27" selection-end-column="14" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="StoreCheckSearchActivity.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/euromonitor/storecheck/app/StoreCheckSearchActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="16" column="13" selection-start-line="16" selection-start-column="13" selection-end-line="16" selection-end-column="13" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SearchableSpinner.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/euromonitor/storecheck/app/SearchableSpinner.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="20" column="13" selection-start-line="20" selection-start-column="13" selection-end-line="20" selection-end-column="13" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -1548,6 +1612,7 @@
     </option>
     <option name="modificationStamps">
       <map>
+        <entry key="D:\StoreCheck" value="4385225814995" />
         <entry key="D:\StoreCheckVersion1\StoreCheck" value="4388433877059" />
         <entry key="D:\StoreCheck\StoreCheck" value="4390986486314" />
       </map>
@@ -1947,10 +2012,10 @@
     <order />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-8" />
+    <option name="x" value="-1928" />
     <option name="y" value="-8" />
-    <option name="width" value="1696" />
-    <option name="height" value="1026" />
+    <option name="width" value="1936" />
+    <option name="height" value="1056" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -1975,7 +2040,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="AndroidView">
         <subPane>
           <PATH>
@@ -1993,10 +2057,6 @@
               <option name="myItemId" value="app" />
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderNode" />
-            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -2048,7 +2108,7 @@
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="model" />
+              <option name="myItemId" value="controller" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -2072,22 +2132,12 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="app" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="StoreCheck" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
       <pane id="Scratches" />
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -2260,6 +2310,7 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -2267,8 +2318,11 @@
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="recentsLimit" value="5" />
     <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="FBNPFX150672" />
-    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_AVD" value="NewEmulator" />
+    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_AVD" value="Nexus_6_API_23" />
     <property name="FullScreen" value="false" />
+    <property name="DEBUGGABLE_DEVICE" value="asus-p024-FBNPFX150672" />
+    <property name="DEBUGGABLE_PROCESS" value="com.euromonitor.storecheck" />
+    <property name="SHOW_ALL_PROCESSES" value="false" />
   </component>
   <component name="RunManager" selected="Android Application.app">
     <configuration default="true" type="AndroidRunConfigurationType" factoryName="Android Application">
@@ -2443,37 +2497,37 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1696" height="1026" extended-state="6" />
+    <frame x="-1928" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Android Model" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Fabric" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Android Monitor" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32988507" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.31034482" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3816092" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.38153505" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32988507" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24805339" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32988507" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20149253" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32925472" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Fabric" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -2499,8 +2553,38 @@
           <properties />
           <option name="timeStamp" value="1" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/euromonitor/storecheck/app/StoreCheckAddProductDetailsActivity.java</url>
+          <line>429</line>
+          <properties />
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/euromonitor/storecheck/app/StoreCheckAddProductDetailsActivity.java</url>
+          <line>342</line>
+          <properties />
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/euromonitor/storecheck/utility/DatabaseHelper.java</url>
+          <line>1550</line>
+          <properties />
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/euromonitor/storecheck/utility/DatabaseHelper.java</url>
+          <line>1559</line>
+          <properties />
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/euromonitor/storecheck/utility/DatabaseHelper.java</url>
+          <line>2046</line>
+          <properties />
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
       </breakpoints>
-      <option name="time" value="3" />
+      <option name="time" value="8" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -2513,22 +2597,63 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/storecheck_productdetails.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/euromonitor/storecheck/model/Product.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="8" column="8" selection-start-line="8" selection-start-column="8" selection-end-line="8" selection-end-column="8" />
+          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
           <folding />
         </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/storecheck_productdetails.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="125" column="60" selection-start-line="125" selection-start-column="60" selection-end-line="125" selection-end-column="60" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/euromonitor/storecheck/app/StoreCheckAddProductDetailsActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="196" column="28" selection-start-line="189" selection-start-column="17" selection-end-line="189" selection-end-column="28" />
-          <folding />
+          <caret line="207" column="0" selection-start-line="207" selection-start-column="0" selection-end-line="207" selection-end-column="0" />
+          <folding>
+            <element signature="docComment;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+            <element signature="method#onCreate#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+            <element signature="method#setSelectedUnitCode#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+            <element signature="method#setSelectedPackType#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+            <element signature="method#setSelectedOutletId#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+            <element signature="method#onCreateOptionsMenu#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+            <element signature="method#setCustomFields#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+            <element signature="method#validateData#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+            <element signature="method#validateValue#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+            <element signature="method#setupToolbar#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+            <element signature="method#setUpNavigationView#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+            <element signature="method#setBinding#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+            <element signature="method#setSpinners#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+            <element signature="method#onNothingSelected#0;class#16522:17715" expanded="false" />
+            <element signature="method#setUnitSpinner#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+            <element signature="class#18099:18549" expanded="false" />
+            <element signature="method#onItemSelected#0;class#18099:18549" expanded="false" />
+            <element signature="method#onNothingSelected#0;class#18099:18549" expanded="false" />
+            <element signature="method#setCustomFieldByProductCode#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+            <element signature="class#19994:20558" expanded="false" />
+            <element signature="method#onItemSelected#0;class#19994:20558" expanded="false" />
+            <element signature="method#onNothingSelected#0;class#19994:20558" expanded="false" />
+            <element signature="class#OutletAdapter#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+            <element signature="method#getView#0;class#OutletAdapter#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+            <element signature="class#UnitAdapter#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+            <element signature="method#getItemId#0;class#UnitAdapter#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+            <element signature="method#getView#0;class#UnitAdapter#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+            <element signature="class#PackTypeAdapter#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+            <element signature="method#getView#0;class#PackTypeAdapter#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+            <element signature="method#getValidationByColumn#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+            <element signature="method#getMultipackMax#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+            <element signature="method#getPackSizeValidation#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -2537,8 +2662,89 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#84022#84037#0" expanded="true" />
+            <element signature="imports" expanded="false" />
+            <element signature="e#84022#84037#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/euromonitor/storecheck/model/PricingDetail.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="32" column="31" selection-start-line="32" selection-start-column="31" selection-end-line="32" selection-end-column="31" />
+          <folding>
+            <element signature="e#730#731#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/euromonitor/storecheck/model/ProductDetail.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/storecheck_productdetails.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="8" column="8" selection-start-line="8" selection-start-column="8" selection-end-line="8" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/euromonitor/storecheck/app/StoreCheckAddProductDetailsActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="196" column="28" selection-start-line="189" selection-start-column="17" selection-end-line="189" selection-end-column="28" />
+          <folding>
+            <element signature="docComment;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+            <element signature="method#onCreate#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+            <element signature="method#setSelectedUnitCode#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+            <element signature="method#setSelectedPackType#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+            <element signature="method#setSelectedOutletId#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+            <element signature="method#onCreateOptionsMenu#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+            <element signature="method#setCustomFields#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+            <element signature="method#validateData#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+            <element signature="method#validateValue#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+            <element signature="method#setupToolbar#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+            <element signature="method#setUpNavigationView#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+            <element signature="method#setBinding#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+            <element signature="method#setSpinners#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+            <element signature="method#onNothingSelected#0;class#16522:17715" expanded="false" />
+            <element signature="method#setUnitSpinner#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+            <element signature="class#18099:18549" expanded="false" />
+            <element signature="method#onItemSelected#0;class#18099:18549" expanded="false" />
+            <element signature="method#onNothingSelected#0;class#18099:18549" expanded="false" />
+            <element signature="method#setCustomFieldByProductCode#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+            <element signature="class#19994:20558" expanded="false" />
+            <element signature="method#onItemSelected#0;class#19994:20558" expanded="false" />
+            <element signature="method#onNothingSelected#0;class#19994:20558" expanded="false" />
+            <element signature="class#OutletAdapter#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+            <element signature="method#getView#0;class#OutletAdapter#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+            <element signature="class#UnitAdapter#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+            <element signature="method#getItemId#0;class#UnitAdapter#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+            <element signature="method#getView#0;class#UnitAdapter#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+            <element signature="class#PackTypeAdapter#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+            <element signature="method#getView#0;class#PackTypeAdapter#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+            <element signature="method#getValidationByColumn#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+            <element signature="method#getMultipackMax#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+            <element signature="method#getPackSizeValidation#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/euromonitor/storecheck/utility/DatabaseHelper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#84022#84037#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -2548,23 +2754,20 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="39" column="0" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
           <folding>
-            <element signature="e#631#632#0" expanded="true" />
-            <element signature="e#678#679#0" expanded="true" />
             <element signature="e#730#731#0" expanded="true" />
-            <element signature="e#770#771#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/storecheck_productdetails.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="3.5172415">
+        <state vertical-scroll-proportion="0.0">
           <caret line="125" column="60" selection-start-line="125" selection-start-column="60" selection-end-line="125" selection-end-column="60" />
           <folding />
         </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/euromonitor/storecheck/model/ProductDetail.java">
@@ -2583,10 +2786,74 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/euromonitor/storecheck/app/StoreCheckAddProductDetailsActivity.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/euromonitor/storecheck/app/OutletDetailsActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="207" column="0" selection-start-line="207" selection-start-column="0" selection-end-line="207" selection-end-column="0" />
+          <caret line="38" column="13" selection-start-line="38" selection-start-column="13" selection-end-line="38" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/euromonitor/storecheck/app/StoreCheckAddBrandActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="81" column="23" selection-start-line="81" selection-start-column="23" selection-end-line="81" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/euromonitor/storecheck/app/StoreCheckDetailsActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="79" column="38" selection-start-line="79" selection-start-column="38" selection-end-line="79" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/euromonitor/storecheck/app/StoreCheckImportActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="37" column="13" selection-start-line="37" selection-start-column="13" selection-end-line="37" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/euromonitor/storecheck/app/StoreCheckNavigationFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="27" column="14" selection-start-line="27" selection-start-column="14" selection-end-line="27" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/euromonitor/storecheck/app/StoreCheckSearchActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="16" column="13" selection-start-line="16" selection-start-column="13" selection-end-line="16" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/euromonitor/storecheck/app/SearchableSpinner.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="20" column="13" selection-start-line="20" selection-start-column="13" selection-end-line="20" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/euromonitor/storecheck/app/SearchableSpinnerForAddBrand.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="52" column="13" selection-start-line="52" selection-start-column="13" selection-end-line="52" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Android/sdk/sources/android-23/android/widget/AdapterView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33333334">
+          <caret line="901" column="0" selection-start-line="901" selection-start-column="0" selection-end-line="901" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -2594,24 +2861,75 @@
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/euromonitor/storecheck/model/PricingDetail.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="32" column="31" selection-start-line="32" selection-start-column="31" selection-end-line="32" selection-end-column="31" />
+          <caret line="40" column="0" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
           <folding>
-            <element signature="e#631#632#0" expanded="true" />
-            <element signature="e#678#679#0" expanded="true" />
             <element signature="e#730#731#0" expanded="true" />
-            <element signature="e#770#771#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/euromonitor/storecheck/app/StoreCheckAddProductDetailsActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-5.724138">
+          <caret line="195" column="62" selection-start-line="195" selection-start-column="44" selection-end-line="195" selection-end-column="62" />
+          <folding>
+            <element signature="docComment;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+            <element signature="method#onCreate#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+            <element signature="method#setSelectedUnitCode#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+            <element signature="method#setSelectedPackType#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+            <element signature="method#setSelectedOutletId#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+            <element signature="method#onCreateOptionsMenu#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+            <element signature="method#setCustomFields#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+            <element signature="method#validateData#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+            <element signature="method#validateValue#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+            <element signature="method#setupToolbar#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+            <element signature="method#setUpNavigationView#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+            <element signature="method#setBinding#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+            <element signature="method#setSpinners#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+            <element signature="method#onNothingSelected#0;class#16522:17715" expanded="false" />
+            <element signature="method#setUnitSpinner#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+            <element signature="class#18099:18549" expanded="false" />
+            <element signature="method#onItemSelected#0;class#18099:18549" expanded="false" />
+            <element signature="method#onNothingSelected#0;class#18099:18549" expanded="false" />
+            <element signature="method#setCustomFieldByProductCode#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+            <element signature="class#19994:20558" expanded="false" />
+            <element signature="method#onItemSelected#0;class#19994:20558" expanded="false" />
+            <element signature="method#onNothingSelected#0;class#19994:20558" expanded="false" />
+            <element signature="class#OutletAdapter#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+            <element signature="method#getView#0;class#OutletAdapter#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+            <element signature="class#UnitAdapter#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+            <element signature="method#getItemId#0;class#UnitAdapter#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+            <element signature="method#getView#0;class#UnitAdapter#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+            <element signature="class#PackTypeAdapter#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+            <element signature="method#getView#0;class#PackTypeAdapter#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+            <element signature="method#getValidationByColumn#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+            <element signature="method#getMultipackMax#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+            <element signature="method#getPackSizeValidation#0;class#StoreCheckAddProductDetailsActivity#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/euromonitor/storecheck/app/StoreCheckExportActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="169" column="17" selection-start-line="169" selection-start-column="17" selection-end-line="169" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/euromonitor/storecheck/controller/ExportDataTask.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="61" column="76" selection-start-line="61" selection-start-column="56" selection-end-line="61" selection-end-column="76" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/euromonitor/storecheck/utility/DatabaseHelper.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33269963">
-          <caret line="1319" column="27" selection-start-line="1319" selection-start-column="20" selection-end-line="1319" selection-end-column="27" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#84022#84037#0" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="0.35523978">
+          <caret line="2061" column="92" selection-start-line="2061" selection-start-column="92" selection-end-line="2061" selection-end-column="92" />
+          <folding />
         </state>
       </provider>
     </entry>

@@ -2059,6 +2059,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
                 detail.setChannelName(cursor.getString(cursor.getColumnIndex(KEY_CHANNELNAME)));
                 detail.setPackSize(cursor.getInt(cursor.getColumnIndex(KEY_PACKSIZE)));
                 detail.setSelectedOutletId(cursor.getInt(cursor.getColumnIndex(KEY_OUTLETID)));
+                detail.setNewOutletId(cursor.getInt(cursor.getColumnIndex(KEY_NEWOUTLETID)));
                 detail.setProductId(cursor.getInt(cursor.getColumnIndex(KEY_PRODUCTID)));
                 detail.setSelectedOutletName(cursor.getString(cursor.getColumnIndex(KEY_OUTLETNAME)));
                 detail.setMultiPack(cursor.getInt(cursor.getColumnIndex(KEY_MULTIPACKSIZE)));
