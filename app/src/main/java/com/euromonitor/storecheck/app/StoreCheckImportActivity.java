@@ -103,10 +103,11 @@ public class StoreCheckImportActivity extends AppCompatActivity implements Async
         else
         {
             Toast.makeText(this, message, Toast.LENGTH_LONG).show();
-            progressBar.setVisibility(View.GONE);
-            browseFile.setEnabled(true);
-            sqlLiteMonitor.setEnabled(true);
+
         }
+        progressBar.setVisibility(View.GONE);
+        browseFile.setEnabled(true);
+        sqlLiteMonitor.setEnabled(true);
     }
 
     @Override

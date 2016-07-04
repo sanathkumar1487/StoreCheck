@@ -40,7 +40,8 @@ public  class JsonFileParser {
     StringBuilder rawJsonDataBuilder;
     String rawJsonData;
 
-    public void loadEmmaExtractFile(String path) throws Exception {
+    public void loadEmmaExtractFile(String path) throws Exception
+    {
 
         Log.e("calling::", "  loadEmmaExtractFile");
 

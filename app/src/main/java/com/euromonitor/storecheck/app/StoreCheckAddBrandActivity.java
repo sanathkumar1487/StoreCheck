@@ -91,6 +91,13 @@ public class StoreCheckAddBrandActivity extends AppCompatActivity
             adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, item);
             nboName.setAdapter(adapter);
             nboName.setThreshold(1);
+            nboName.setOnItemClickListener(new AdapterView.OnItemClickListener()
+            {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Toast.makeText(getBaseContext(), "This NBO is already exists", Toast.LENGTH_LONG).show();
+                }
+            }) ;
         } else {
             Toast.makeText(this, "Please import EMMA generated file to proceed!", Toast.LENGTH_LONG).show();
         }
@@ -344,6 +351,7 @@ public class StoreCheckAddBrandActivity extends AppCompatActivity
                     brandName.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            Toast.makeText(getBaseContext(), "This brand is already exists", Toast.LENGTH_LONG).show();
                             isExistingBrand = true;
                             Market selectMarket = (Market) parent.getItemAtPosition(position);
 

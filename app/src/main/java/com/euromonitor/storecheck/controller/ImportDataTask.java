@@ -75,12 +75,14 @@ public class ImportDataTask extends AsyncTask<Void,Void,Void> {
 
     @Override
     protected void onPostExecute(Void aVoid) {
-        if (backgroundException != null) {
+        if (backgroundException != null)
+        {
             _mactivity.messageBox(backgroundException);
             postExecute.PostExecute("Error importing file");
 
         }
-        else {
+        else
+        {
             postExecute.PostExecute("Import completed successfully ");
         }
     }
@@ -101,7 +103,8 @@ public class ImportDataTask extends AsyncTask<Void,Void,Void> {
     }
 
 
-    private  void loadFileIntoMemory() throws Exception {
+    private  void loadFileIntoMemory() throws Exception
+    {
 
             fileParser.loadEmmaExtractFile(filePath);
 

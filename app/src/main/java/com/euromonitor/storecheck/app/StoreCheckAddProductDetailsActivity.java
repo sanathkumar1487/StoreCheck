@@ -186,7 +186,8 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
         }
     }
 
-    private void SavePricing() {
+    private void SavePricing()
+    {
         setBindingProperties();
         if (validateData()) {
             PricingDetail pricingDetail = binding.getPricingDetail();
@@ -340,23 +341,23 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
     }
 
     private void setBindingProperties() {
-        String newValue = null;
-        if (binding.multiPacks.getText() != null) {
+        String newValue = "";
+        if (binding.multiPacks.getText() != null && !binding.multiPacks.getText().equals(""))
+        {
             newValue = binding.multiPacks.getText().toString();
         }
-        binding.getPricingDetail().setMultiPack(newValue != null ? Integer.valueOf(newValue) : 0);
+        binding.getPricingDetail().setMultiPack(newValue.equals("")?0: Integer.valueOf(newValue));
 
-        newValue = null;
-        if (binding.packSize.getText() != null) {
+        newValue = "";
+        if (binding.packSize.getText() != null && !binding.packSize.getText().equals("")) {
             newValue = binding.packSize.getText().toString();
         }
-        binding.getPricingDetail().setPackSize(newValue != null ? Double.valueOf(newValue) : 0);
-
-        newValue = null;
-        if (binding.price.getText() != null) {
+        binding.getPricingDetail().setPackSize(newValue.equals("") ? 0: Double.valueOf(newValue));
+        newValue = "";
+        if (binding.price.getText() != null && !binding.price.getText().equals("")) {
             newValue = binding.price.getText().toString();
         }
-        binding.getPricingDetail().setPrice(newValue != null ? Double.valueOf(newValue) : 0.0);
+        binding.getPricingDetail().setPrice(newValue.equals("") ? 0.0: Double.valueOf(newValue));
     }
 
     public void setupToolbar() {

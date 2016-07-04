@@ -251,12 +251,16 @@ public class StoreCheckDetailsActivity extends AppCompatActivity
             selectedProduct = this.selProduct;
 
             loadSelectedProductItems();
-//            ViewDetailsTask viewDetailsTask = new ViewDetailsTask(context);
-//            viewDetailsTask.productId = Integer.valueOf(selProduct.get_product_id());
-//            viewDetailsTask.preExecute = this;
-//            viewDetailsTask.progressReport = this;
-//            viewDetailsTask.postExecute = this;
-//            viewDetailsTask.execute();
+
+            if (selectedProduct.getResearched() == 1)
+            {
+                loadSelectedProductItems();
+            }
+            else
+            {
+                Toast.makeText(context, selectedProduct.get_product_name() + " is not researched!",
+                        Toast.LENGTH_LONG).show();
+            }
         }
 
         @Override

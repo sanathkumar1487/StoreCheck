@@ -26,10 +26,12 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light" />
         <activity android:name=".app.StoreCheckAddBrandActivity"
+            android:noHistory="true"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
         <activity android:name=".app.StoreCheckAddProductDetailsActivity"
             android:configChanges="orientation"
+            android:noHistory="true"
             android:screenOrientation="portrait"
             />
         <activity android:name=".app.StoreCheckImportActivity"
