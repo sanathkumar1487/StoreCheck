@@ -231,7 +231,7 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
         }
 
         // Pack Size
-        if (detail.getPackSize() == null || detail.getPackSize().equals("0")) {
+        if (detail.getPackSize() == null || Double.parseDouble(detail.getPackSize()) == 0.0 ) {
             errors = errors + "\nPack-size field value is invalid";
             isValid = false;
         }

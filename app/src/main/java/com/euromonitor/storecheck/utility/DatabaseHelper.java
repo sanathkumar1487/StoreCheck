@@ -1500,6 +1500,16 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
                 result = db.update(TABLE_MARKETS, contentValues, KEY_ID + " = ?",
                         new String[]{String.valueOf(brand.getSelectedMarket().get_id())}) > 0;
                 brandId = brand.getSelectedMarket().get_id();
+
+                contentValues = new ContentValues();
+                contentValues.put(KEY_BRAND,brand.getBrand());
+                contentValues.put(KEY_BRANDID,brand.getSelectedMarket().get_id());
+                db.update(TABLE_DETAILS, contentValues, KEY_BRANDID + " = ? or " + KEY_BRANDMARKETID + " = ? ",
+                        new String[]{
+                                String.valueOf(brand.getSelectedMarket().get_id()),
+                                        String.valueOf(brand.getSelectedMarket().get_brand_market_id())
+                        });
+
             } else {
                 brandId = db.insert(TABLE_MARKETS, "", contentValues);
 
@@ -2059,6 +2069,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
                 detail.setChannelName(cursor.getString(cursor.getColumnIndex(KEY_CHANNELNAME)));
                 detail.setPackSize(cursor.getInt(cursor.getColumnIndex(KEY_PACKSIZE)));
                 detail.setSelectedOutletId(cursor.getInt(cursor.getColumnIndex(KEY_OUTLETID)));
+                detail.setNewOutletId(cursor.getInt(cursor.getColumnIndex(KEY_NEWOUTLETID)));
                 detail.setNewOutletId(cursor.getInt(cursor.getColumnIndex(KEY_NEWOUTLETID)));
                 detail.setProductId(cursor.getInt(cursor.getColumnIndex(KEY_PRODUCTID)));
                 detail.setSelectedOutletName(cursor.getString(cursor.getColumnIndex(KEY_OUTLETNAME)));
