@@ -26,13 +26,15 @@ public class SearchableSpinner extends Spinner implements View.OnTouchListener,
     private List _items;
     private SearchableListDialog _searchableListDialog;
 
-    public SearchableSpinner(Context context) {
+    public SearchableSpinner(Context context)
+    {
         super(context);
         this._context = context;
         init();
     }
 
-    public SearchableSpinner(Context context, AttributeSet attrs) {
+    public SearchableSpinner(Context context, AttributeSet attrs)
+    {
         super(context, attrs);
         this._context = context;
         init();
@@ -75,7 +77,8 @@ public class SearchableSpinner extends Spinner implements View.OnTouchListener,
         setSelection(_items.indexOf(item));
     }
 
-    public void setTitle(String strTitle) {
+    public void setTitle(String strTitle)
+    {
         _searchableListDialog.setTitle(strTitle);
     }
 
@@ -83,11 +86,13 @@ public class SearchableSpinner extends Spinner implements View.OnTouchListener,
         _searchableListDialog.setPositiveButton(strPositiveButtonText);
     }
 
-    public void setPositiveButton(String strPositiveButtonText, DialogInterface.OnClickListener onClickListener) {
+    public void setPositiveButton(String strPositiveButtonText, DialogInterface.OnClickListener onClickListener)
+    {
         _searchableListDialog.setPositiveButton(strPositiveButtonText, onClickListener);
     }
 
-    private Activity scanForActivity(Context cont) {
+    private Activity scanForActivity(Context cont)
+    {
         if (cont == null)
             return null;
         else if (cont instanceof Activity)

@@ -35,7 +35,8 @@ import com.github.developerpaul123.filepickerlibrary.enums.Request;
 import com.github.developerpaul123.filepickerlibrary.enums.Scope;
 
 import me.zhanghai.android.materialprogressbar.MaterialProgressBar;
-public class StoreCheckImportActivity extends AppCompatActivity implements AsyncPostExecute,AsyncProgressReport,AsyncPreExecute {
+public class StoreCheckImportActivity extends AppCompatActivity implements AsyncPostExecute,AsyncProgressReport,AsyncPreExecute
+{
 
     ImportDataTask importDataController;
     Button browseFile;
@@ -92,11 +93,20 @@ public class StoreCheckImportActivity extends AppCompatActivity implements Async
 
 
     @Override
-    public void PostExecute(String message) {
-        Toast.makeText(this, "PostExecute :: " + message, Toast.LENGTH_LONG).show();
-        progressBar.setVisibility(View.GONE);
-        browseFile.setEnabled(true);
-        sqlLiteMonitor.setEnabled(true);
+    public void PostExecute(String message)
+    {
+
+        if (message.startsWith("Error"))
+        {
+            Toast.makeText(this,message,Toast.LENGTH_LONG).show();
+        }
+        else
+        {
+            Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+            progressBar.setVisibility(View.GONE);
+            browseFile.setEnabled(true);
+            sqlLiteMonitor.setEnabled(true);
+        }
     }
 
     @Override
@@ -171,7 +181,8 @@ public class StoreCheckImportActivity extends AppCompatActivity implements Async
         startActivity(dbmanager);
     }
 
-    public void messageBox(Exception e) {
+    public void messageBox(Exception e)
+    {
         AlertDialog.Builder messageBox = new AlertDialog.Builder(this);
         messageBox.setTitle("Error occurred");
         final String errordata = Log.getStackTraceString(e);

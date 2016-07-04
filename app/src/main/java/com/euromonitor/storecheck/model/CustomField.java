@@ -92,7 +92,8 @@ public class CustomField  extends BaseObservable
 
     private String uniqueID;
 
-    public void setIsNumeric(boolean isNumeric) {
+    public void setIsNumeric(boolean isNumeric)
+    {
         this.isNumeric = isNumeric;
     }
 

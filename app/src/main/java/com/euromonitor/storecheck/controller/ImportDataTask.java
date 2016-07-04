@@ -75,15 +75,15 @@ public class ImportDataTask extends AsyncTask<Void,Void,Void> {
 
     @Override
     protected void onPostExecute(Void aVoid) {
-        if (  backgroundException != null)
-        {
+        if (backgroundException != null) {
             _mactivity.messageBox(backgroundException);
+            postExecute.PostExecute("Error importing file");
 
         }
-
-        postExecute.PostExecute("Import completed successfully ");
+        else {
+            postExecute.PostExecute("Import completed successfully ");
+        }
     }
-
 
     public ImportDataTask(String filePath, Context context, StoreCheckImportActivity activity) {
         this.filePath = filePath;

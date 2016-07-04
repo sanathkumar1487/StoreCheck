@@ -99,6 +99,7 @@
                         android:theme="@style/MaterialTheme"
                         android:id="@+id/multiPacks"
                         android:text="@{pricingDetail.multiPack}"
+                        android:selectAllOnFocus="true"
                         android:inputType="number"
                         android:layout_marginRight="20dp"/>
 
@@ -123,6 +124,7 @@
                             android:layout_height="wrap_content"
                             android:id="@+id/packSize"
                             android:text="@{pricingDetail.packSize}"
+                            android:selectAllOnFocus="true"
                             android:inputType="numberDecimal"
                             android:paddingBottom="16dp"/>
 
@@ -155,6 +157,7 @@
                         android:layout_column="1"
                         android:id="@+id/price"
                         android:text="@{pricingDetail.price}"
+                        android:selectAllOnFocus="true"
                         android:inputType="numberDecimal"
                         android:layout_marginRight="20dp"
                         />

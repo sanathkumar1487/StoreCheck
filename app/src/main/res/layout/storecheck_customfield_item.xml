@@ -20,7 +20,6 @@
             android:maxWidth="@dimen/maximum_item_width"
             android:maxLines="10"
             android:layout_marginRight="@dimen/minimum_item_width"/>
-
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -30,12 +29,12 @@
                 android:layout_height="wrap_content"
                 android:text="@{customField.CustomFieldTextValue}"
                 android:enabled="@{customField.IsEnabled}"
+
                 android:inputType="@{customField.IsNumeric? InputType.TYPE_CLASS_NUMBER:InputType.TYPE_CLASS_TEXT}"
                 android:textSize="@dimen/default_font_size"
                 android:id="@+id/optionName"
                 />
         </LinearLayout>
-
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -46,6 +45,5 @@
                 android:id="@+id/options"
                 android:backgroundTint="@color/blue_500"/>
         </LinearLayout>
-
     </LinearLayout>
 </layout>

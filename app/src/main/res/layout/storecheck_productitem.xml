@@ -5,8 +5,11 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
         android:id="@+id/productItem"
         android:text="Product"
-        android:textSize="@dimen/detailfont_size"
+        android:paddingTop="16dp"
+        android:textColor="@color/cardview_dark_background"
+        android:textSize="14dp"
         android:editable="false" />
 </LinearLayout>

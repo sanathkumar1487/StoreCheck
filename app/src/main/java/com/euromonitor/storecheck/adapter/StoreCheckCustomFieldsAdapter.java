@@ -31,48 +31,51 @@ import java.util.ArrayList;
  * Created by Noora.Akhtar on 13/04/2016.
  */
 
-public class StoreCheckCustomFieldsAdapter extends RecyclerView.Adapter<StoreCheckCustomFieldsAdapter.BindingHolder> {
+public class StoreCheckCustomFieldsAdapter extends RecyclerView.Adapter<StoreCheckCustomFieldsAdapter.BindingHolder>
+{
     private LayoutInflater layoutInflater;
     private ArrayList<CustomField> customFields;
     CustomField current;
-
-    public StoreCheckCustomFieldsAdapter(LayoutInflater layoutInflater, Context context, ArrayList<CustomField> customFields) {
+    public StoreCheckCustomFieldsAdapter(LayoutInflater layoutInflater, Context context, ArrayList<CustomField> customFields)
+    {
         this.layoutInflater = layoutInflater;
         this.customFields = customFields;
     }
-
     @Override
-    public BindingHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public BindingHolder onCreateViewHolder(ViewGroup parent, int viewType)
+    {
         StorecheckCustomfieldItemBinding binding = StorecheckCustomfieldItemBinding.inflate(layoutInflater, parent, false);
+
         return new BindingHolder(binding.getRoot());
     }
 
     @Override
-    public void onBindViewHolder(BindingHolder holder, int position) {
+    public void onBindViewHolder(final BindingHolder holder, int position)
+    {
         current = customFields.get(position);
         StorecheckCustomfieldItemBinding binding = DataBindingUtil.getBinding(holder.itemView);
         binding.setVariable(BR.customField, current);
-
         OptionsAdapter optionsAdapter = new OptionsAdapter(current.get_options(), layoutInflater);
-
         holder.optionsSpinner.setAdapter(optionsAdapter);
-
-
-        if(current.get_object_id().equals("1") || current.get_object_id().equals("3")) {
-            if (current.getSelectedOption() == null && current.get_options().size() > 0) {
+        if(current.get_object_id().equals("1") || current.get_object_id().equals("3"))
+        {
+            if (current.getSelectedOption() == null && current.get_options().size() > 0)
+            {
                 current.setSelectedOption(current.get_options().get(0));
             }
-
             holder.optionsSpinner.setSelection(optionsAdapter.getPositionById(current.getSelectedOption().getOptionId()));
         }
 
-        holder.optionsSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        holder.optionsSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+            {
                 CustomField currentCustomField = null;
                 Option selectedOption = (Option) parent.getItemAtPosition(position);
                 for (CustomField cf : customFields) {
-                    if (cf.getUniqueID().equals(selectedOption.getUniqueID())) {
+                    if (cf.getUniqueID().equals(selectedOption.getUniqueID()))
+                    {
                         currentCustomField = cf;
                         break;
                     }
@@ -80,21 +83,29 @@ public class StoreCheckCustomFieldsAdapter extends RecyclerView.Adapter<StoreChe
 
                 if (currentCustomField != null) {
                     String frameGroupId = String.valueOf(currentCustomField.getFrameGroupID());
-                    for (int index = 0; index < customFields.size(); index++) {
-                        if (customFields.get(index).get_group_id().equals((frameGroupId))) {
+                    for (int index = 0; index < customFields.size(); index++)
+                    {
+                        if (customFields.get(index).get_group_id().equals((frameGroupId)))
+                        {
                             customFields.get(index).setIsEnabled(!(selectedOption.getMinimumAllowed().equals("0") && selectedOption.getMaximumAllowed().equals("0")));
 
-                            if(!customFields.get(index).getIsEnabled()){
+                            if(!customFields.get(index).getIsEnabled())
+                            {
                                 customFields.get(index).setCustomFieldTextValue("");
                             }
 
                             customFields.get(index).setSelectedOption(selectedOption);
                             String isNumeric = selectedOption.getIsNumeric();
 
-                            if (isNumeric.equals("1")) {
+                            if (isNumeric.equals("1"))
+                            {
                                 customFields.get(index).setIsNumeric(true);
-                            } else if (isNumeric.equals("0")) {
+                                holder.optionName.setSelectAllOnFocus(true);
+                            }
+                            else if (isNumeric.equals("0"))
+                            {
                                 customFields.get(index).setIsNumeric(false);
+                                holder.optionName.setSelectAllOnFocus(false);
                             }
 
                             notifyItemChangedAtPosition(index);
@@ -105,23 +116,27 @@ public class StoreCheckCustomFieldsAdapter extends RecyclerView.Adapter<StoreChe
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
+            public void onNothingSelected(AdapterView<?> parent)
+            {
 
             }
         });
         holder.optionName.addTextChangedListener(new EditTextWatcher(current));
     }
 
-    private void notifyItemChangedAtPosition(int position){
+    private void notifyItemChangedAtPosition(int position)
+    {
         this.notifyItemChanged(position);
     }
 
     @Override
-    public int getItemCount() {
+    public int getItemCount()
+    {
         return customFields.size();
     }
 
-    public class BindingHolder  extends RecyclerView.ViewHolder {
+    public class BindingHolder  extends RecyclerView.ViewHolder
+    {
         private ViewDataBinding binding;
         Spinner optionsSpinner;
         public EditText optionName;
@@ -143,7 +158,8 @@ public class StoreCheckCustomFieldsAdapter extends RecyclerView.Adapter<StoreChe
         }
     }
 
-    public class OptionsAdapter extends BaseAdapter implements SpinnerAdapter{
+    public class OptionsAdapter extends BaseAdapter implements SpinnerAdapter
+    {
         private ArrayList<Option> options;
         LayoutInflater layoutInflater;
 
@@ -153,7 +169,8 @@ public class StoreCheckCustomFieldsAdapter extends RecyclerView.Adapter<StoreChe
         }
 
         @Override
-        public int getCount() {
+        public int getCount()
+        {
             return options.size();
         }
 
@@ -172,11 +189,11 @@ public class StoreCheckCustomFieldsAdapter extends RecyclerView.Adapter<StoreChe
             View optionItemView;
             if (convertView != null){
                 optionItemView = convertView;
-            } else {
+            } else
+            {
                 optionItemView = layoutInflater.inflate(R.layout.storecheck_productitem, parent, false);
             }
             TextView productItem = (TextView)optionItemView.findViewById(R.id.productItem);
-
             productItem.setText(options.get(position).getOptionName());
             return optionItemView;
         }

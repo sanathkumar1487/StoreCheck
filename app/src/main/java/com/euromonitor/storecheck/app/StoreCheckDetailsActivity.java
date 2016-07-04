@@ -72,7 +72,8 @@ public class StoreCheckDetailsActivity extends AppCompatActivity
     ProductTouchListener productTouchListener;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.storecheck_details);
         context = this;
