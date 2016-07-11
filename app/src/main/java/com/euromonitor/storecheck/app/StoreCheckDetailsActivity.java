@@ -7,6 +7,7 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -255,9 +256,6 @@ public class StoreCheckDetailsActivity extends AppCompatActivity {
             viewDetailsTask.execute();
         }
     }
-<<<<<<< HEAD
-}
-=======
 
     @Override
     public void onBackPressed()
@@ -267,4 +265,3 @@ public class StoreCheckDetailsActivity extends AppCompatActivity {
         startActivity(intent);
     }
 }
->>>>>>> 9bf3180cd65df542e0e5c1f5269ececfc4d30e87
