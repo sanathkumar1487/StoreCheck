@@ -407,7 +407,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
             db.insert(TABLE_OPTIONS, null, values);
         }
 
-        db.close(); 
+        db.close();
     }
 
     private void loadCustomFiledsTable(List<CustomField> customFields) {
@@ -540,7 +540,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
             values.put(KEY_GROUPID, brandCustomField.getGroupId());
             values.put(KEY_OPTIONID , brandCustomField.getOptionId());
             values.put(KEY_OPTIONTEXT, brandCustomField.getOptionText());
-             values.put(KEY_ISPRICING,0);
+            values.put(KEY_ISPRICING,0);
             db.insert(TABLE_BRANDCUSTOMFIELDS, null, values);
         }
         db.close();
@@ -914,7 +914,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         String query;
         if(isExport){
             query = "select id , outlet_id,outlet_city,outlet_date,chccode,outlet_name,channel_name,project_id,geo_code,geo_name,year from outlets where "
-            + KEY_UPDATED + "=1"  ;
+                    + KEY_UPDATED + "=1"  ;
         }
         else {
             query = "select id, outlet_id,outlet_city,outlet_date,chccode,outlet_name,channel_name,project_id,geo_code," +
@@ -1300,7 +1300,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
 //                 selectQuery = selectQuery + " where " + KEY_PRICINGID + " = " + pricingId;
 //
 //            } else
-           if (itemId > 0) {
+            if (itemId > 0) {
                 selectQuery = selectQuery + " where " + KEY_ID + " = " + itemId;
             }
 
@@ -1507,7 +1507,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
                 db.update(TABLE_DETAILS, contentValues, KEY_BRANDID + " = ? or " + KEY_BRANDMARKETID + " = ? ",
                         new String[]{
                                 String.valueOf(brand.getSelectedMarket().get_id()),
-                                        String.valueOf(brand.getSelectedMarket().get_brand_market_id())
+                                String.valueOf(brand.getSelectedMarket().get_brand_market_id())
                         });
 
             } else {
@@ -1557,14 +1557,18 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         return result ? brandId : 0;
     }
 
-    public long savePricingDetails(PricingDetail pricingDetail, boolean isUpdate) {
+    public long savePricingDetails(PricingDetail pricingDetail, boolean isUpdate)
+    {
         boolean status = false;
         long result = 0;
+
         SQLiteDatabase db = this.getWritableDatabase();
         try {
-            long newPricingId;
+
             ContentValues values = new ContentValues();
-            if (pricingDetail.getId()!=null && Integer.valueOf(pricingDetail.getId()) > 0) {
+            if (pricingDetail.getId()!=null && Integer.valueOf(pricingDetail.getId()) > 0 )
+            {
+
                 values.put(KEY_MULTIPACKSIZE, pricingDetail.getMultiPack());
                 values.put(KEY_OUTLETID, pricingDetail.getSelectedOutletId());
                 values.put(KEY_NEWOUTLETID, pricingDetail.getNewOutletId());
@@ -1581,14 +1585,14 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
                 values.put(KEY_BRANDMARKETID, pricingDetail.getBrandMarketId());
                 values.put(KEY_NBO, pricingDetail.getNbo());
                 values.put(KEY_CHANNELNAME, pricingDetail.getChannelName());
-
                 values.put(KEY_UPDATED, "1");
+                // TODO: Even if updates fails still the id of the item is saved in the result
+                db.update(TABLE_DETAILS, values, KEY_ID + " = ?", new String[]{String.valueOf(pricingDetail.getId())});
+                result = Long.valueOf(pricingDetail.getId());
 
-                result = db.update(TABLE_DETAILS, values, KEY_ID + " = ?", new String[]{String.valueOf(pricingDetail.getId())});
-
-                newPricingId = Long.valueOf(pricingDetail.getId());
-
-            } else {
+            }
+            else
+            {
                 values.put(KEY_MULTIPACKSIZE, pricingDetail.getMultiPack());
                 values.put(KEY_OUTLETID, pricingDetail.getSelectedOutletId());
                 values.put(KEY_NEWOUTLETID, pricingDetail.getNewOutletId());
@@ -1604,15 +1608,12 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
                 values.put(KEY_BRAND, pricingDetail.getBrandName());
                 values.put(KEY_NBO, pricingDetail.getNbo());
                 values.put(KEY_CHANNELNAME, pricingDetail.getChannelName());
-
                 values.put(KEY_UPDATED, "1");
-
                 result = db.insert(TABLE_DETAILS, null, values);
-                newPricingId = result;
 
             }
             if (result > 0) {
-                status = saveCustomFields(newPricingId, pricingDetail.getPricingId(), pricingDetail.getCustomFields(), db, isUpdate);
+                status = saveCustomFields(result, pricingDetail.getPricingId(), pricingDetail.getCustomFields(), db, isUpdate);
             }
 
         } catch (Exception ex) {
@@ -1628,24 +1629,31 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
     private boolean saveCustomFields(long newPricingId, int pricingId, ArrayList<CustomField> customFields, SQLiteDatabase db, boolean isUpdate) {
         boolean result = true;
         if (isUpdate) {
-            if (pricingId > 0) {
+            if (pricingId > 0)
+            {
                 db.delete(TABLE_BRANDCUSTOMFIELDS, KEY_PRICINGID + " = ? ", new String[]{String.valueOf(pricingId)});
-            } else if (newPricingId > 0) {
+            } else if (newPricingId > 0)
+            {
                 db.delete(TABLE_BRANDCUSTOMFIELDS, KEY_NEWPRICINGID + " = ? ", new String[]{String.valueOf(newPricingId)});
             }
         }
-        if (result) {
+        if (result)
+        {
             for (CustomField cf : customFields) {
                 ContentValues contentValues = new ContentValues();
-                if (result) {
+                if (result)
+                {
                     contentValues = new ContentValues();
                     contentValues.put(KEY_PRICINGID, pricingId);
                     contentValues.put(KEY_NEWPRICINGID, newPricingId);
                     contentValues.put(KEY_CUSTOMFIELDID, cf.getUniqueID());
                     contentValues.put(KEY_OPTIONID, cf.getSelectedOption().getOptionId());
-                    if (cf.get_object_id().equals("2")) {
+                    if (cf.get_object_id().equals("2"))
+                    {
                         contentValues.put(KEY_OPTIONVALUE, cf.getCustomFieldTextValue());
-                    } else {
+                    }
+                    else
+                    {
                         contentValues.put(KEY_OPTIONVALUE, cf.getSelectedOption().getOptionName());
                     }
                     contentValues.put(KEY_UPDATED, 1);
@@ -1686,7 +1694,8 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         return my_array;
     }
 
-    public ArrayList<StoreCheckDetail> GetDetailsByProductCode(int productCode) {
+    public ArrayList<StoreCheckDetail> GetDetailsByProductCode(int productCode)
+    {
         SQLiteDatabase database = this.getReadableDatabase();
         String query = "select d.id, d.pricingid," +
                 " case when d.updated = 1 then d.price else 0 end as 'price' ," +
@@ -1715,9 +1724,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
                 storeCheckDetails = new ArrayList<>();
                 do {
                     StoreCheckDetail temp = new StoreCheckDetail();
-
                     temp.setItemId(cursor.getInt(0));
-
                     String priceId = cursor.getString(1);
                     if (priceId != null)
                     {
@@ -1780,18 +1787,19 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
     }
 
     //AutoSuggestion for outlet Name
-    public String[] getOutletName() {
+    public String[] getOutletName()
+    {
         SQLiteDatabase database = this.getReadableDatabase();
         String query = "select outlet_name from outlets";
         Cursor cursor = database.rawQuery(query, null);
         String[] outlets = new String[cursor.getCount()];
         try {
-            if (cursor.moveToFirst()) {
+            if (cursor.moveToFirst())
+            {
                 int i = 0;
                 do {
                     outlets[i] = cursor.getString(cursor.getColumnIndex(KEY_OUTLET_Name));
                     i++;
-
                 } while ((cursor.moveToNext()));
             }
             return outlets;
@@ -2021,7 +2029,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         SQLiteDatabase database = this.getReadableDatabase();
 
         String sqlQuery = "SELECT "
-               + KEY_NBO + ", "
+                + KEY_NBO + ", "
                 + KEY_ESCI + ", "
                 + KEY_ESBI
                 + " FROM " + TABLE_MARKETS
@@ -2095,7 +2103,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         return detailList;
     }
 
-     public  ArrayList<Market> getAllUpdatedMarkets()
+    public  ArrayList<Market> getAllUpdatedMarkets()
     {
 
         ArrayList<Market> marketList = new ArrayList<Market>();

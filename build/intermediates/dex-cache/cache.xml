@@ -1,3 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<items version="2" />
+<items version="2" >
 
+    <item
+        jar="D:\StoreCheck\StoreCheck\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="833f93a472b0fca6da3303c3e45031b5750214c1">
+        <dex dex="D:\StoreCheck\StoreCheck\app\build\intermediates\pre-dexed\debug\instant-run-bootstrap_5784fb692f6bba068bbfdb0dc0d588724bd46175.jar" />
+    </item>
+
+</items>

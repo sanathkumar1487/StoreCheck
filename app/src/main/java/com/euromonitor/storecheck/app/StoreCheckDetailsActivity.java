@@ -255,4 +255,16 @@ public class StoreCheckDetailsActivity extends AppCompatActivity {
             viewDetailsTask.execute();
         }
     }
+<<<<<<< HEAD
 }
+=======
+
+    @Override
+    public void onBackPressed()
+    {
+        Intent intent= new Intent(this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+    }
+}
+>>>>>>> 9bf3180cd65df542e0e5c1f5269ececfc4d30e87
