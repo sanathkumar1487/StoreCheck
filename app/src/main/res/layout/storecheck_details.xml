@@ -32,52 +32,45 @@
                 app:mpb_progressStyle="horizontal"
                 android:visibility="gone"
                 style="@style/Widget.MaterialProgressBar.ProgressBar.Horizontal" />
+
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="8dp">
+                android:padding="10dp"
+                android:weightSum="100">
 
-
-                <GridLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-                    android:columnCount="1"
-                    android:rowCount="1"
-                    android:orientation="horizontal"
-                    <TextView
+                <TextView
                         android:text="Products"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/grey_700"
-                        android:layout_row="0"
-                        android:layout_column="0"
-                        android:layout_gravity="left|top"
-                        android:layout_margin ="15sp"
+                        android:textColor="@color/blue_500"
                         android:textSize="@dimen/detailfont_size"
-                        />
-                    <com.euromonitor.storecheck.app.SearchableSpinner
-                        android:spinnerMode="dropdown"
-                        android:theme="@style/MaterialTheme"
-                        android:id="@+id/products"
-                        android:layout_row="0"
-                        android:layout_column="1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="15sp"
-                        android:paddingBottom="14dp"
-                        android:paddingRight="20dp"
-                        />
+                        android:gravity="top"
+                        android:layout_weight="5"/>
 
-                </GridLayout>
+                <com.euromonitor.storecheck.app.SearchableSpinner
+                        android:spinnerMode="dropdown"
+                        android:id="@+id/products"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight="5"/>
+
+
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/storecheckDetailsView"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
                     android:textColor="@color/grey_700"
                     android:layout_margin="@dimen/material_item_margin"
-                    android:textSize="@dimen/detailfont_size"/>
+                    android:textSize="@dimen/detailfont_size"
+                    android:layout_weight="85"/>
+
+
+
+
             </LinearLayout>
         </LinearLayout>
         <FrameLayout

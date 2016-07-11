@@ -55,6 +55,8 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
     public static int productCode;
     public static String productName;
     public static String brandName;
+    public static boolean isCopy;
+
     final static String DropDown = "1";
     final static String TextBox = "2";
     final static String CustomDropDown = "3";
@@ -109,6 +111,10 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
             setSelectedUnitCode();
 
             binding.setPricingDetail(pricingDetail);
+
+            if(isCopy){
+                Toast.makeText(this, brandName + " is copied!",Toast.LENGTH_LONG).show();
+            }
         }
         else {
             Toast.makeText(this,"Please import EMMA generated file to proceed!",Toast.LENGTH_LONG).show();
@@ -386,12 +392,21 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
             pricingDetail = databaseHelper.getPricingDetails(priceId, itemId);
         }
 
+
+
         if (pricingDetail == null) {
             isUpdate = false;
             pricingDetail = new PricingDetail();
             pricingDetail.setPricingId(priceId);
             pricingDetail.setBrandId(brandId);
             pricingDetail.setBrandMarketId(brandMarketId);
+        }
+
+        if(isCopy){
+            pricingDetail.setId(null);
+            pricingDetail.setMultiPack(1);
+            pricingDetail.setPackSize(0);
+            pricingDetail.setPrice(0);
         }
 
         if(pricingDetail.getBrandId() == 0 && brandId > 0) {
