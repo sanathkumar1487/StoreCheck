@@ -453,7 +453,7 @@ public class StoreCheckAddBrandActivity extends AppCompatActivity
             }
             TextView productItem = (TextView) productItemView.findViewById(R.id.productItem);
 
-            productItem.setText(products.get(position).get_product_name());
+            productItem.setText(products.get(position).get_product_name().trim());
             return productItemView;
         }
     }

@@ -38,16 +38,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:padding="10dp"
-                android:weightSum="100">
+                android:weightSum="100"
+                android:baselineAligned="false"
+                android:textAlignment="center">
 
                 <TextView
                         android:text="Products"
-                        android:layout_width="wrap_content"
+                        android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:textColor="@color/blue_500"
                         android:textSize="@dimen/detailfont_size"
                         android:gravity="top"
-                        android:layout_weight="5"/>
+                        android:layout_weight="3"
+                    android:textAlignment="viewStart" />
 
                 <com.euromonitor.storecheck.app.SearchableSpinner
                         android:spinnerMode="dropdown"
@@ -55,7 +58,8 @@
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="10dp"
-                        android:layout_weight="5"/>
+                        android:layout_weight="5"
+                    android:textAlignment="viewStart" />
 
 
 

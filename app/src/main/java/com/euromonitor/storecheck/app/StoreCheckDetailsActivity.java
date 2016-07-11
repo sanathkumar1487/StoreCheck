@@ -24,6 +24,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -193,8 +194,8 @@ public class StoreCheckDetailsActivity extends AppCompatActivity {
                 productView = getLayoutInflater().inflate(R.layout.storecheck_productitem, parent, false);
             }
 
-            TextView outletItem = (TextView) productView.findViewById(R.id.productItem);
-            outletItem.setText(products.get(position).get_product_name());
+            TextView pricingItem = (TextView) productView.findViewById(R.id.productItem);
+            pricingItem.setText(products.get(position).get_product_name().trim());
 
             return productView;
         }
