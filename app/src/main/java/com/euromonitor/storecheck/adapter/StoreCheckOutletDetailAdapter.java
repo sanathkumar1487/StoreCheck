@@ -36,11 +36,11 @@ public class StoreCheckOutletDetailAdapter extends RecyclerView.Adapter<StoreChe
         allOutletItems.addAll(outletItems);
     }
 
-    public StoreCheckOutletDetailAdapter(LayoutInflater layoutInflater, Context context)
+    public StoreCheckOutletDetailAdapter(LayoutInflater layoutInflater, Context context, List<Outlet> details)
     {
 
         this.layoutInflater = layoutInflater;
-        this.outletItems = Outlet.getData(context);
+        this.outletItems = details;
         allOutletItems = new ArrayList<>();
         if(outletItems!=null) {
             allOutletItems.addAll(outletItems);

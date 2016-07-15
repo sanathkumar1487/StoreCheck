@@ -175,10 +175,10 @@ public class Outlet extends BaseObservable implements Serializable {
         this._chccode = _chccode;
     }
 
-    public  static ArrayList<Outlet> getData(Context context){
-        DatabaseHelper dbHelper = new DatabaseHelper(context);
-        return dbHelper.getOutlets(false);
-    }
+//    public  static ArrayList<Outlet> getData(Context context){
+//        DatabaseHelper dbHelper = new DatabaseHelper(context);
+//        return dbHelper.getOutlets(false);
+//    }
 
     public  int get_updated()
     {
@@ -205,5 +205,15 @@ public class Outlet extends BaseObservable implements Serializable {
     public void set_channel_name(String _channel_name) {
         this._channel_name = _channel_name;
     }
+
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
+    }
+
+    private boolean isSelected;
 
 }

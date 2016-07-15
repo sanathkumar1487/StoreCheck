@@ -5,6 +5,7 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -146,12 +147,13 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
     }
 
     private void setSelectedOutletId() {
-
-        if (pricingDetail.getId() !=null && pricingDetail.isUpdated && itemId > 0 && outlets!=null) {
+        if (outlets!=null) {
             for(int index = 0; index < outlets.size(); index++){
-                if(outlets.get(index).get_id() == pricingDetail.getNewOutletId() ||
-                        (outlets.get(index).get_outlet_id()!=null
-                                && outlets.get(index).get_outlet_id().equals(String.valueOf(pricingDetail.getSelectedOutletId())))){
+                if( outlets.get(index).get_id() == pricingDetail.getNewOutletId()
+                        || (outlets.get(index).get_outlet_id()!=null
+                                && outlets.get(index).get_outlet_id()
+                                .equals(String.valueOf(pricingDetail.getSelectedOutletId())))
+                        || (!pricingDetail.isUpdated && outlets.get(index).get_id() == pricingDetail.getSelectedOutletId())){
                     outletSpinner.setSelection(index);
                     break;
                 }
@@ -393,14 +395,17 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
         }
 
 
-
         if (pricingDetail == null) {
             isUpdate = false;
             pricingDetail = new PricingDetail();
+            pricingDetail.setSelectedOutletId(databaseHelper.getSelectedOutlet());
+
             pricingDetail.setPricingId(priceId);
             pricingDetail.setBrandId(brandId);
             pricingDetail.setBrandMarketId(brandMarketId);
         }
+
+
 
         if(isCopy){
             pricingDetail.setId(null);
@@ -440,6 +445,7 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
         outlets = databaseHelper.getOutlets(false);
         StoreCheckAddProductDetailsActivity.OutletAdapter outletAdapter = new StoreCheckAddProductDetailsActivity.OutletAdapter(outlets);
         outletSpinner.setAdapter(outletAdapter);
+        
         outletSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -673,4 +679,5 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
         }
         return null;
     }
+
 }
