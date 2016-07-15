@@ -42,6 +42,7 @@ public class OutletDetailsActivity extends AppCompatActivity {
     android.support.v7.widget.Toolbar toolbar;
     DatabaseHelper db;
     FloatingActionButton fab;
+    Context context;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -53,10 +54,16 @@ public class OutletDetailsActivity extends AppCompatActivity {
         db = new DatabaseHelper(this);
         setupToolbar();
         setUpNavigationView();
+
+        recyclerView = (RecyclerView) findViewById(R.id.storecheckOutletDetailsView);
+
+        context = this;
+
         if (db.isDatabaseAvailable()) {
 
             View view = binding.getRoot();
-            setUpStoreCheckDetails(view);
+            setUpStoreCheckDetails();
+
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -64,6 +71,8 @@ public class OutletDetailsActivity extends AppCompatActivity {
                     loadAddOutletScreen();
                 }
             });
+
+            Toast.makeText(this, "Press and hold an item to make it default selected!", Toast.LENGTH_LONG).show();
         } else {
 
             Toast.makeText(this, "Please import EMMA generated file to proceed!", Toast.LENGTH_LONG).show();
@@ -103,10 +112,11 @@ public class OutletDetailsActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
 
-    public void setUpStoreCheckDetails(View view) {
-        recyclerView = (RecyclerView) view.findViewById(R.id.storecheckOutletDetailsView);
+    public void setUpStoreCheckDetails() {
+
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new StoreCheckOutletDetailAdapter(this.getLayoutInflater(), this);
+        adapter = new StoreCheckOutletDetailAdapter(this.getLayoutInflater(), this, db.getOutlets(false));
+
         recyclerView.setAdapter(adapter);
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(this.getApplicationContext(), recyclerView, new ClickListener() {
             @Override
@@ -121,9 +131,18 @@ public class OutletDetailsActivity extends AppCompatActivity {
 
             @Override
             public void onLongClick(View view, int position) {
+                StorecheckoutletItemBinding binding = DataBindingUtil.getBinding(view);
+                Outlet detail = binding.getStoreCheckOutlet();
+                db.saveSelectedOutlet(detail.get_id());
+                refreshData();
+
+                Toast.makeText(context, detail.get_outlet_Name() + " is selected as default outlet", Toast.LENGTH_LONG).show();
             }
         }));
+
     }
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -155,7 +174,7 @@ public class OutletDetailsActivity extends AppCompatActivity {
     private void refreshData() {
         db = new DatabaseHelper(this);
         if (db.isDatabaseAvailable()) {
-            adapter = new StoreCheckOutletDetailAdapter(this.getLayoutInflater(), this);
+            adapter = new StoreCheckOutletDetailAdapter(this.getLayoutInflater(), this, db.getOutlets(false));
             recyclerView.setAdapter(adapter);
             recyclerView.invalidate();
         } else {

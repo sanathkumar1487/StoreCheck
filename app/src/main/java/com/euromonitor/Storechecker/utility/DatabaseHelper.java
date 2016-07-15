@@ -70,7 +70,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
 
 
     // Meta-data Table columns name
-
+    private static final String KEY_SELECTEDOUTLETID = "selectedOutletId";
 
     // Outlets Table Columns names
     private static final String KEY_INDUSTRY_NAME = "industry_name";
@@ -251,6 +251,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         values.put(KEY_INDUSTRY_NAME, storeCheckMetaData.getIndustryName());
         values.put(KEY_YEAR, storeCheckMetaData.getYear());
         values.put(KEY_PROJECTID, storeCheckMetaData.getProjectId());
+        values.put(KEY_SELECTEDOUTLETID, 0);
         db.insert(TABLE_METADATA, null, values);
         db.close();
     }
@@ -553,7 +554,8 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
                 + KEY_GEOGRAPHY + " TEXT, "
                 + KEY_INDUSTRY_NAME + " INT, "
                 + KEY_PROJECTID + " INT, "
-                + KEY_YEAR + " TEXT"
+                + KEY_YEAR + " TEXT, "
+                + KEY_SELECTEDOUTLETID + " INT"
                 + ")";
 
         database.execSQL(CREATE_METADAT_TABLE);
@@ -911,6 +913,23 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
     public ArrayList<Outlet> getOutlets(boolean isExport) {
         SQLiteDatabase database = this.getReadableDatabase();
         String query;
+
+        query = "select " + KEY_SELECTEDOUTLETID + " from " + TABLE_METADATA;
+
+        int selectedOutletId = 0;
+        Cursor cursor = database.rawQuery(query, null);
+        try {
+            if(cursor.moveToFirst()){
+                selectedOutletId = cursor.getInt(0);
+            }
+        } catch (Exception ex) {
+            throw ex;
+        } finally
+        {
+            if (cursor != null)
+                cursor.close();
+        }
+
         if(isExport){
             query = "select id , outlet_id,outlet_city,outlet_date,chccode,outlet_name,channel_name,project_id,geo_code,geo_name,year from outlets where "
                     + KEY_UPDATED + "=1"  ;
@@ -920,7 +939,8 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
                     "geo_name,year from outlets" +
                     " order by + " + KEY_OUTLET_Name;
         }
-        Cursor cursor = database.rawQuery(query, null);
+
+        cursor = database.rawQuery(query, null);
         ArrayList<Outlet> outlets = null;
         try {
             if (cursor.moveToFirst()) {
@@ -939,6 +959,9 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
                     outlet.set_geo_code(cursor.getString(8));
                     outlet.set_geo_name(cursor.getString(9));
                     outlet.set_year(cursor.getString(10));
+
+                    outlet.setSelected(selectedOutletId == outlet.get_id());
+
                     outlets.add(outlet);
 
                 } while ((cursor.moveToNext()));
@@ -1331,7 +1354,8 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
                 cursor.close();
             }
 
-            if (pricingDetails != null && pricingDetails.isUpdated) {
+            if (pricingDetails != null) {
+
                 if(pricingId>0) {
                     selectQuery = "select "
                             + KEY_ID + ", "
@@ -1376,12 +1400,14 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
                 }
                 cursor.close();
             }
-
-
             db.close();
 
         } catch (Exception e) {
             e.printStackTrace();
+        }
+
+        if(pricingDetails!=null && !pricingDetails.isUpdated){
+            pricingDetails.setSelectedOutletId(getSelectedOutlet());
         }
 
         return pricingDetails;
@@ -2186,7 +2212,43 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
 
     }
 
+    public void saveSelectedOutlet(int id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        try {
 
+            ContentValues contentValues = new ContentValues();
 
+            contentValues.put(KEY_SELECTEDOUTLETID, id);
+
+            db.update(TABLE_METADATA, contentValues, "id = ?", new String[]{"1"});
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            db.close();
+        }
+    }
+
+    public int getSelectedOutlet() {
+        SQLiteDatabase database = this.getReadableDatabase();
+        String query;
+
+        query = "select " + KEY_SELECTEDOUTLETID + " from " + TABLE_METADATA;
+
+        int selectedOutletId = 0;
+        Cursor cursor = database.rawQuery(query, null);
+        try {
+            if(cursor.moveToFirst()){
+                selectedOutletId = cursor.getInt(0);
+            }
+        } catch (Exception ex) {
+            throw ex;
+        } finally
+        {
+            if (cursor != null)
+                cursor.close();
+        }
+        return selectedOutletId;
+    }
 
 }

@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
@@ -141,12 +142,13 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
     }
 
     private void setSelectedOutletId() {
-
-        if (pricingDetail.getId() !=null && pricingDetail.isUpdated && itemId > 0 && outlets!=null) {
+        if (outlets!=null) {
             for(int index = 0; index < outlets.size(); index++){
-                if(outlets.get(index).get_id() == pricingDetail.getNewOutletId() ||
-                        (outlets.get(index).get_outlet_id()!=null
-                                && outlets.get(index).get_outlet_id().equals(String.valueOf(pricingDetail.getSelectedOutletId())))){
+                if( outlets.get(index).get_id() == pricingDetail.getNewOutletId()
+                        || (outlets.get(index).get_outlet_id()!=null
+                                && outlets.get(index).get_outlet_id()
+                                .equals(String.valueOf(pricingDetail.getSelectedOutletId())))
+                        || (!pricingDetail.isUpdated && outlets.get(index).get_id() == pricingDetail.getSelectedOutletId())){
                     outletSpinner.setSelection(index);
                     break;
                 }
@@ -390,18 +392,30 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
         }
 
 
+<<<<<<< HEAD:app/src/main/java/com/euromonitor/Storechecker/app/StoreCheckAddProductDetailsActivity.java
 
         if (pricingDetail == null)
         {
+=======
+        if (pricingDetail == null) {
+>>>>>>> 11fb852e50056cc3d66c3081d0a726b45ba08111:app/src/main/java/com/euromonitor/storecheck/app/StoreCheckAddProductDetailsActivity.java
             isUpdate = false;
             pricingDetail = new PricingDetail();
+            pricingDetail.setSelectedOutletId(databaseHelper.getSelectedOutlet());
+
             pricingDetail.setPricingId(priceId);
             pricingDetail.setBrandId(brandId);
             pricingDetail.setBrandMarketId(brandMarketId);
         }
 
+<<<<<<< HEAD:app/src/main/java/com/euromonitor/Storechecker/app/StoreCheckAddProductDetailsActivity.java
         if(isCopy)
         {
+=======
+
+
+        if(isCopy){
+>>>>>>> 11fb852e50056cc3d66c3081d0a726b45ba08111:app/src/main/java/com/euromonitor/storecheck/app/StoreCheckAddProductDetailsActivity.java
             pricingDetail.setId(null);
             pricingDetail.setMultiPack(1);
             pricingDetail.setPackSize(0);
@@ -441,6 +455,7 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
         outlets = databaseHelper.getOutlets(false);
         StoreCheckAddProductDetailsActivity.OutletAdapter outletAdapter = new StoreCheckAddProductDetailsActivity.OutletAdapter(outlets);
         outletSpinner.setAdapter(outletAdapter);
+        
         outletSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -690,4 +705,5 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
         }
         return null;
     }
+
 }
