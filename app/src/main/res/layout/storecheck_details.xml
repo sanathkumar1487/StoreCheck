@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
     <data>
         <import type="java.util.List"/>
-        <import type="com.euromonitor.storecheck.model.StoreCheckDetail"/>
+        <import type="com.euromonitor.Storechecker.model.StoreCheckDetail"/>
         <variable
             name="storeCheckDetailList"
             type="List&lt;StoreCheckDetail>"/>
@@ -52,7 +52,7 @@
                         android:layout_weight="3"
                     android:textAlignment="viewStart" />
 
-                <com.euromonitor.storecheck.app.SearchableSpinner
+                <com.euromonitor.Storechecker.app.SearchableSpinner
                         android:spinnerMode="dropdown"
                         android:id="@+id/products"
                         android:layout_width="fill_parent"
@@ -79,7 +79,7 @@
         </LinearLayout>
         <FrameLayout
             android:id="@+id/navDrawerFrame"
-            android:name="com.euromonitor.storecheck.app.StoreCheckNavigationFragment"
+            android:name="com.euromonitor.Storechecker.app.StoreCheckNavigationFragment"
             android:layout_width="@dimen/nav_drawer_width"
             android:layout_height="match_parent"
             android:layout_gravity="start"

@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <import type="java.util.List"/>
-        <import type="com.euromonitor.storecheck.model.Outlet"/>
+        <import type="com.euromonitor.Storechecker.model.Outlet"/>
         <variable
             name="storeCheckOutletList"
             type="List&lt;Outlet>"/>
@@ -51,7 +51,7 @@
         </LinearLayout>
         <FrameLayout
             android:id="@+id/navDrawerFrame"
-            android:name="com.euromonitor.storecheck.app.StoreCheckNavigationFragment"
+            android:name="com.euromonitor.Storechecker.app.StoreCheckNavigationFragment"
             android:layout_width="280dp"
             android:layout_height="match_parent"
             android:layout_gravity="start"

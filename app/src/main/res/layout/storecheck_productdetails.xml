@@ -6,7 +6,7 @@
     <data>
         <variable
             name="pricingDetail"
-            type="com.euromonitor.storecheck.model.PricingDetail"/>
+            type="com.euromonitor.Storechecker.model.PricingDetail"/>
     </data>
     <android.support.v4.widget.DrawerLayout
         android:id="@+id/addProductDetails_Drawer"
@@ -83,7 +83,7 @@
                     <TextView
                         android:layout_height="wrap_content"
                         android:layout_width="wrap_content"
-                        android:text="@string/multipack"
+                        android:text="@string/product_price"
                         android:layout_row="2"
                         android:layout_column="0"
                         android:layout_margin="@dimen/default_margin"
@@ -97,14 +97,11 @@
                         android:layout_margin="@dimen/material_item_margin"
                         android:drawSelectorOnTop="true"
                         android:theme="@style/MaterialTheme"
-                        android:id="@+id/multiPacks"
-                        android:text="@{pricingDetail.multiPack}"
+                        android:id="@+id/price"
+                        android:text="@{pricingDetail.price}"
                         android:selectAllOnFocus="true"
-                        android:inputType="number"
+                        android:inputType="numberDecimal"
                         android:layout_marginRight="20dp"/>
-
-
-
                     <LinearLayout
                         android:layout_height="wrap_content"
                         android:layout_width="match_parent"
@@ -112,13 +109,11 @@
                         android:layout_column="0"
                         android:layout_columnSpan="2"
                         android:layout_margin="@dimen/default_margin">
-
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/packSize"
                             android:paddingRight="50dp"/>
-
                         <EditText
                             android:layout_width="@dimen/maximum_item_width"
                             android:layout_height="wrap_content"
@@ -127,7 +122,6 @@
                             android:selectAllOnFocus="true"
                             android:inputType="numberDecimal"
                             android:paddingBottom="16dp"/>
-
                         <Spinner
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -143,7 +137,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/product_price"
+                        android:text="@string/multipack"
                         android:layout_margin="@dimen/material_item_margin"
                         android:layout_row="4"
                         android:layout_column="0"
@@ -155,10 +149,10 @@
                         android:layout_margin="@dimen/material_item_margin"
                         android:layout_row="4"
                         android:layout_column="1"
-                        android:id="@+id/price"
-                        android:text="@{pricingDetail.price}"
+                        android:id="@+id/multiPacks"
+                        android:text="@{pricingDetail.multiPack}"
                         android:selectAllOnFocus="true"
-                        android:inputType="numberDecimal"
+                        android:inputType="number"
                         android:layout_marginRight="20dp"
                         />
 
@@ -214,7 +208,7 @@
         </LinearLayout>
         <FrameLayout
             android:id="@+id/navDrawerFrame"
-            android:name="com.euromonitor.storecheck.app.StoreCheckNavigationFragment"
+            android:name="com.euromonitor.Storechecker.app.StoreCheckNavigationFragment"
             android:layout_width="@dimen/nav_drawer_width"
             android:layout_height="match_parent"
             android:layout_gravity="start"

@@ -1,3 +1,187 @@
 <?xml version="1.0" encoding="utf-8"?>
-<items version="2" />
+<items version="2" >
 
+    <item
+        jar="C:\Users\Shashwat.Bajpai\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\23.2.1\support-annotations-23.2.1.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="ccb693bc0774fcb637246f7360de25b4af7df318">
+        <dex dex="D:\StoreCheck\StoreCheck\app\build\intermediates\pre-dexed\debug\support-annotations-23.2.1_9abca5ee7c2d4e875e7502682d4b51b23fa007e5.jar" />
+    </item>
+    <item
+        jar="D:\StoreCheck\StoreCheck\app\build\intermediates\exploded-aar\com.crashlytics.sdk.android\crashlytics\2.5.5\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="611605b6b640c1558f9bdea41de8ff837ab68ca8">
+        <dex dex="D:\StoreCheck\StoreCheck\app\build\intermediates\pre-dexed\debug\com.crashlytics.sdk.android-crashlytics-2.5.5_b1b1502e2684e475f79578d5e9dfb194bffb8ed7.jar" />
+    </item>
+    <item
+        jar="D:\StoreCheck\StoreCheck\app\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\23.2.1\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="3469cb457f10f74c28cbc05f069b6c894f6cbdd0">
+        <dex dex="D:\StoreCheck\StoreCheck\app\build\intermediates\pre-dexed\debug\com.android.support-animated-vector-drawable-23.2.1_219f2f77169b7143b57435217c21e9cdb6218a1e.jar" />
+    </item>
+    <item
+        jar="D:\StoreCheck\StoreCheck\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.2.1\jars\libs\internal_impl-23.2.1.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="607a3d0b8013b4ccbfeb0b7cb293351994e021fb">
+        <dex dex="D:\StoreCheck\StoreCheck\app\build\intermediates\pre-dexed\debug\internal_impl-23.2.1_5fc1ba12ff094293415fee40d09805e8b4a7c783.jar" />
+    </item>
+    <item
+        jar="D:\StoreCheck\StoreCheck\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.2.1\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="e4d0cbb0b999604b349062f0214a0a228a7fd151">
+        <dex dex="D:\StoreCheck\StoreCheck\app\build\intermediates\pre-dexed\debug\com.android.support-appcompat-v7-23.2.1_8b317630afea8c764b28897b506d3ecbd5b8dcef.jar" />
+    </item>
+    <item
+        jar="D:\StoreCheck\StoreCheck\app\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\23.2.1\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="673d77a5bbddd766037f088e775df525c46407f0">
+        <dex dex="D:\StoreCheck\StoreCheck\app\build\intermediates\pre-dexed\debug\com.android.support-support-vector-drawable-23.2.1_acd635ae69cd67421b75ec67364155f4400d215d.jar" />
+    </item>
+    <item
+        jar="D:\StoreCheck\StoreCheck\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.2.1\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="3be474b1b21b31cf2fa93fe6bd641ae108d96452">
+        <dex dex="D:\StoreCheck\StoreCheck\app\build\intermediates\pre-dexed\debug\com.android.support-support-v4-23.2.1_ee7ca7161b8f73b09d617ecf21dffeecdd9f312d.jar" />
+    </item>
+    <item
+        jar="D:\StoreCheck\StoreCheck\app\build\intermediates\exploded-aar\com.crashlytics.sdk.android\crashlytics-core\2.3.8\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="c9ef45dcbd082cd63aac09a5e2cd443adb5df837">
+        <dex dex="D:\StoreCheck\StoreCheck\app\build\intermediates\pre-dexed\debug\com.crashlytics.sdk.android-crashlytics-core-2.3.8_f7d478d83d6d310691ad225590a346bd83ff82f2.jar" />
+    </item>
+    <item
+        jar="D:\StoreCheck\StoreCheck\app\build\intermediates\exploded-aar\com.github.afollestad.material-dialogs\core\0.8.5.4\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="828f50e8aff9f21c75e61a319c38993efc0590ca">
+        <dex dex="D:\StoreCheck\StoreCheck\app\build\intermediates\pre-dexed\debug\com.github.afollestad.material-dialogs-core-0.8.5.4_52ed9f538c0ed607c9b43763fd8b5dae0059f8c3.jar" />
+    </item>
+    <item
+        jar="D:\StoreCheck\StoreCheck\app\libs\gson-2.6.2.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="f1bc476cc167b18e66c297df599b2377131a8947">
+        <dex dex="D:\StoreCheck\StoreCheck\app\build\intermediates\pre-dexed\debug\gson-2.6.2_fd2fee4fcfdc978dd18e61d4511c4110a5d92f3a.jar" />
+    </item>
+    <item
+        jar="D:\StoreCheck\StoreCheck\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="22ec075cf46a8e6cb897a45212b18206aaeccb49">
+        <dex dex="D:\StoreCheck\StoreCheck\app\build\intermediates\pre-dexed\debug\instant-run-bootstrap_5784fb692f6bba068bbfdb0dc0d588724bd46175.jar" />
+    </item>
+    <item
+        jar="D:\StoreCheck\StoreCheck\app\build\intermediates\exploded-aar\com.android.support\design\23.2.1\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="72961d8b453b46e277702f18de9d210bc019e36e">
+        <dex dex="D:\StoreCheck\StoreCheck\app\build\intermediates\pre-dexed\debug\com.android.support-design-23.2.1_5cfe1182a04bd81bf68795634c0168c5e85196e2.jar" />
+    </item>
+    <item
+        jar="D:\StoreCheck\StoreCheck\app\build\intermediates\exploded-aar\com.crashlytics.sdk.android\answers\1.3.6\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="9af3b9b8114e685291aa00e6572b0a9131244956">
+        <dex dex="D:\StoreCheck\StoreCheck\app\build\intermediates\pre-dexed\debug\com.crashlytics.sdk.android-answers-1.3.6_e4b24fd7eb4bd899d9ad02c6b3b1afcab6484a2b.jar" />
+    </item>
+    <item
+        jar="D:\StoreCheck\StoreCheck\app\build\intermediates\exploded-aar\com.android.databinding\adapters\1.1\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="3cae403175958af8baa00bed0bd6e04187d69415">
+        <dex dex="D:\StoreCheck\StoreCheck\app\build\intermediates\pre-dexed\debug\com.android.databinding-adapters-1.1_a94cc2ca4d6aae58a63340bb4dd3d93f9a41d28d.jar" />
+    </item>
+    <item
+        jar="D:\StoreCheck\StoreCheck\app\build\intermediates\exploded-aar\io.fabric.sdk.android\fabric\1.3.10\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="a5db9a2dd46d84285ef737f65030b74b6e8ee2a4">
+        <dex dex="D:\StoreCheck\StoreCheck\app\build\intermediates\pre-dexed\debug\io.fabric.sdk.android-fabric-1.3.10_8d4eee1494a444589a545e69b498a4e8cb17212e.jar" />
+    </item>
+    <item
+        jar="D:\StoreCheck\StoreCheck\app\build\intermediates\exploded-aar\me.zhanghai.android.materialprogressbar\library\1.1.5\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="4a9f97c742d058ca55948643c06f447895a9af76">
+        <dex dex="D:\StoreCheck\StoreCheck\app\build\intermediates\pre-dexed\debug\me.zhanghai.android.materialprogressbar-library-1.1.5_d3df51a3aabe40e843006278e9e0a000a6fc1646.jar" />
+    </item>
+    <item
+        jar="C:\Users\Shashwat.Bajpai\.gradle\caches\modules-2\files-2.1\com.nineoldandroids\library\2.4.0\e9b63380f3a242dbdbf103a2355ad7e43bad17cb\library-2.4.0.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="e9b63380f3a242dbdbf103a2355ad7e43bad17cb">
+        <dex dex="D:\StoreCheck\StoreCheck\app\build\intermediates\pre-dexed\debug\library-2.4.0_5d0182336df00174407184e7be200888df5b2157.jar" />
+    </item>
+    <item
+        jar="C:\Program Files\Android\Android Studio\gradle\m2repository\com\android\databinding\baseLibrary\2.1.2\baseLibrary-2.1.2.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="357d1307d303c4771283372a53fd7c45e0c19c89">
+        <dex dex="D:\StoreCheck\StoreCheck\app\build\intermediates\pre-dexed\debug\baseLibrary-2.1.2_f6ad1ae1922fb0874a89daab4d55c4f5ac88c56a.jar" />
+    </item>
+    <item
+        jar="D:\StoreCheck\StoreCheck\app\build\intermediates\exploded-aar\com.crashlytics.sdk.android\beta\1.1.4\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="ad5bb101ced4d3939225c9b57e5a3d81547c1fbb">
+        <dex dex="D:\StoreCheck\StoreCheck\app\build\intermediates\pre-dexed\debug\com.crashlytics.sdk.android-beta-1.1.4_ffe0bf369b44fcbc2116472be87813d232165cdb.jar" />
+    </item>
+    <item
+        jar="D:\StoreCheck\StoreCheck\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\23.2.1\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="e3885783ff8926ed9e2fdcd16816c2e1e73e7aee">
+        <dex dex="D:\StoreCheck\StoreCheck\app\build\intermediates\pre-dexed\debug\com.android.support-recyclerview-v7-23.2.1_3a98378b555623709bb3d4af5d1b6421ab876ca5.jar" />
+    </item>
+    <item
+        jar="D:\StoreCheck\StoreCheck\app\build\intermediates\exploded-aar\com.android.databinding\library\1.1\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="d985cdf99de8a63824b52d8a8efc309f9e5fbf01">
+        <dex dex="D:\StoreCheck\StoreCheck\app\build\intermediates\pre-dexed\debug\com.android.databinding-library-1.1_3eb60e742a8ee4a2d819b0c51b2be65f6b10fb32.jar" />
+    </item>
+    <item
+        jar="D:\StoreCheck\StoreCheck\app\build\intermediates\exploded-aar\com.melnykov\floatingactionbutton\1.3.0\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="8c6ebb7d087d1a30bf84356bd2aecf85309fc024">
+        <dex dex="D:\StoreCheck\StoreCheck\app\build\intermediates\pre-dexed\debug\com.melnykov-floatingactionbutton-1.3.0_bce84ae0935c529d8b05b28e4f3b4a9b4b6a3746.jar" />
+    </item>
+    <item
+        jar="D:\StoreCheck\StoreCheck\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="22d633573cc14e336abc773ffede201ccb13d8b5">
+        <dex dex="D:\StoreCheck\StoreCheck\app\build\intermediates\pre-dexed\debug\instant-run_7cb9d0ae51131dddc3c651197072a05efcccb445.jar" />
+    </item>
+    <item
+        jar="D:\StoreCheck\StoreCheck\app\build\intermediates\exploded-aar\com.github.DeveloperPaul123\MaterialLibrary\1.0.5\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="e66616684d8fd587fa67a6591b2dca606af85408">
+        <dex dex="D:\StoreCheck\StoreCheck\app\build\intermediates\pre-dexed\debug\com.github.DeveloperPaul123-MaterialLibrary-1.0.5_8696be1e365db17e00e53666a6d2703cafa15b04.jar" />
+    </item>
+    <item
+        jar="D:\StoreCheck\StoreCheck\app\build\intermediates\exploded-aar\com.android.support\cardview-v7\23.1.1\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="5e412e954a24c5310a459c09870e4e2081aceb03">
+        <dex dex="D:\StoreCheck\StoreCheck\app\build\intermediates\pre-dexed\debug\com.android.support-cardview-v7-23.1.1_a808a2e1556778408d913099502bd8a742a1e70c.jar" />
+    </item>
+    <item
+        jar="D:\StoreCheck\StoreCheck\app\build\intermediates\exploded-aar\com.github.DeveloperPaul123\FilePickerLibrary\3.5.1\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="b7ab6407bbc157efb37a48de636a6c31750faae7">
+        <dex dex="D:\StoreCheck\StoreCheck\app\build\intermediates\pre-dexed\debug\com.github.DeveloperPaul123-FilePickerLibrary-3.5.1_6a1e37dc8deffec1fb61052540e935593befea70.jar" />
+    </item>
+
+</items>

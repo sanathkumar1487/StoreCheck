@@ -2,9 +2,9 @@
     <data>
         <import type="android.view.View"/>
         <import type=" android.text.InputType"/>
-        <import type="com.euromonitor.storecheck.R"/>
+        <import type="com.euromonitor.Storechecker.R"/>
         <variable name="customField"
-            type="com.euromonitor.storecheck.model.CustomField"/>
+            type="com.euromonitor.Storechecker.model.CustomField"/>
     </data>
     <LinearLayout
         android:orientation="horizontal"

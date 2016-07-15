@@ -2,7 +2,7 @@
     <data>
         <variable
             name="storeCheckDetail"
-            type="com.euromonitor.storecheck.model.StoreCheckDetail"/>
+            type="com.euromonitor.Storechecker.model.StoreCheckDetail"/>
     </data>
 <android.support.v7.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"

@@ -6,7 +6,7 @@
     <data>
         <variable
             name="pricingDetail"
-            type="com.euromonitor.storecheck.model.PricingDetail"/>
+            type="com.euromonitor.Storechecker.model.PricingDetail"/>
     </data>
     <android.support.v4.widget.DrawerLayout
         android:id="@+id/addProductDetails_Drawer"
@@ -234,7 +234,7 @@
             </LinearLayout>
         <FrameLayout
             android:id="@+id/navDrawerFrame"
-            android:name="com.euromonitor.storecheck.app.StoreCheckNavigationFragment"
+            android:name="com.euromonitor.Storechecker.app.StoreCheckNavigationFragment"
             android:layout_width="@dimen/nav_drawer_width"
             android:layout_height="match_parent"
             android:layout_gravity="start"
