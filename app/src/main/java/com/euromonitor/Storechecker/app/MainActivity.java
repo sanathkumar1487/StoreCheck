@@ -13,6 +13,8 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 import com.crashlytics.android.Crashlytics;
 import com.euromonitor.Storechecker.R;
@@ -28,20 +30,72 @@ public class MainActivity extends AppCompatActivity {
     boolean isLaunch = true;
     StoreCheckNavigationFragment storeCheckNavigationFragment;
 
+    Button manageOutlet;
+    Button viewDetails;
+    Button addBrand;
+    Button importData;
+    Button export;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         try {
             super.onCreate(savedInstanceState);
 
-          Fabric.with(this, new Crashlytics());
+            Fabric.with(this, new Crashlytics());
             setContentView(R.layout.activity_main);
 
-            drawerLayout=(DrawerLayout)findViewById(R.id.drawer_layout);
+            drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
             setupToolbar();
-            setUpNavigationView();
-            db=new DatabaseHelper(this);
+            //setUpNavigationView();
+            db = new DatabaseHelper(this);
+
+            manageOutlet = (Button) findViewById(R.id.manageOutlet);
+            viewDetails = (Button) findViewById(R.id.viewDetails);
+            addBrand = (Button) findViewById(R.id.addBrand);
+            importData = (Button) findViewById(R.id.importData);
+            export = (Button) findViewById(R.id.export);
+
+
+            manageOutlet.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getBaseContext(), OutletDetailsActivity.class);
+                    startActivity(intent);
+                }
+            });
+
+            viewDetails.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getBaseContext(), StoreCheckDetailsActivity.class);
+                    startActivity(intent);
+                }
+            });
+
+            addBrand.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getBaseContext(), StoreCheckAddBrandActivity.class);
+                    startActivity(intent);
+                }
+            });
+
+            importData.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getBaseContext(), StoreCheckImportActivity.class);
+                    startActivity(intent);
+                }
+            });
+
+            export.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getBaseContext(), StoreCheckExportActivity.class);
+                    startActivity(intent);
+                }
+            });
 
         } catch (Exception e) {
             throw e;

@@ -14,14 +14,16 @@
             <include
                 android:id="@+id/toolbar"
                 layout="@layout/storecheckdetail_toolbar"/>
-            <ImageView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:src="@drawable/storecheckmagazine" />
+            <!--<ImageView-->
+                <!--android:layout_width="fill_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:src="@drawable/storecheckmagazine" />-->
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/containerFrame"/>
+                android:id="@+id/containerFrame">
+                <include layout="@layout/main_screen_option" />
+            </FrameLayout>
 
         </LinearLayout>
         <FrameLayout
