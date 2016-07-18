@@ -386,62 +386,53 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
     {
         validations = databaseHelper.getValidations(productCode);
 
-        if (priceId > 0 || itemId > 0)
-        {
+        if (priceId > 0 || itemId > 0) {
             pricingDetail = databaseHelper.getPricingDetails(priceId, itemId);
         }
 
 
-<<<<<<< HEAD:app/src/main/java/com/euromonitor/Storechecker/app/StoreCheckAddProductDetailsActivity.java
 
-        if (pricingDetail == null)
-        {
-=======
-        if (pricingDetail == null) {
->>>>>>> 11fb852e50056cc3d66c3081d0a726b45ba08111:app/src/main/java/com/euromonitor/storecheck/app/StoreCheckAddProductDetailsActivity.java
-            isUpdate = false;
-            pricingDetail = new PricingDetail();
-            pricingDetail.setSelectedOutletId(databaseHelper.getSelectedOutlet());
+            if (pricingDetail == null) {
 
-            pricingDetail.setPricingId(priceId);
-            pricingDetail.setBrandId(brandId);
-            pricingDetail.setBrandMarketId(brandMarketId);
+                isUpdate = false;
+                pricingDetail = new PricingDetail();
+                pricingDetail.setSelectedOutletId(databaseHelper.getSelectedOutlet());
+
+                pricingDetail.setPricingId(priceId);
+                pricingDetail.setBrandId(brandId);
+                pricingDetail.setBrandMarketId(brandMarketId);
+            }
+
+
+            if (isCopy) {
+
+                pricingDetail.setId(null);
+                pricingDetail.setMultiPack(1);
+                pricingDetail.setPackSize(0);
+                pricingDetail.setPrice(0);
+            }
+
+            if (pricingDetail.getBrandId() == 0 && brandId > 0) {
+                pricingDetail.setBrandId(brandId);
+            }
+
+            if (pricingDetail.getBrandMarketId() == 0 && brandMarketId > 0) {
+                pricingDetail.setBrandMarketId(brandMarketId);
+            }
+
+            pricingDetail.setBrandName(brandName);
+
+            if (pricingDetail.getProductId() == 0 && productCode > 0) {
+                pricingDetail.setProductId(productCode);
+            }
+            pricingDetail.setProductName(productName == null ? "" : productName.trim());
+
+            if (brandId > 0) {
+                binding.setPricingDetail(pricingDetail);
+            }
+            setSpinners();
         }
 
-<<<<<<< HEAD:app/src/main/java/com/euromonitor/Storechecker/app/StoreCheckAddProductDetailsActivity.java
-        if(isCopy)
-        {
-=======
-
-
-        if(isCopy){
->>>>>>> 11fb852e50056cc3d66c3081d0a726b45ba08111:app/src/main/java/com/euromonitor/storecheck/app/StoreCheckAddProductDetailsActivity.java
-            pricingDetail.setId(null);
-            pricingDetail.setMultiPack(1);
-            pricingDetail.setPackSize(0);
-            pricingDetail.setPrice(0);
-        }
-
-        if(pricingDetail.getBrandId() == 0 && brandId > 0) {
-            pricingDetail.setBrandId(brandId);
-        }
-
-        if(pricingDetail.getBrandMarketId() == 0 && brandMarketId > 0 ){
-            pricingDetail.setBrandMarketId(brandMarketId);
-        }
-
-        pricingDetail.setBrandName(brandName);
-
-        if(pricingDetail.getProductId() == 0 && productCode > 0) {
-            pricingDetail.setProductId(productCode);
-        }
-        pricingDetail.setProductName(productName == null ? "" : productName.trim());
-
-        if (brandId > 0) {
-            binding.setPricingDetail(pricingDetail);
-        }
-        setSpinners();
-    }
 
     private void setSpinners()
     {
@@ -493,7 +484,8 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
         }
         return 0;
     }
-    private void setUnitSpinner() {
+    private void setUnitSpinner()
+        {
         unitSpinner = (Spinner) findViewById(R.id.units);
         units = databaseHelper.getUnits(productCode);
 
@@ -679,7 +671,8 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
         }
     }
 
-    private Validation getValidationByColumn(String columnName) {
+    private Validation getValidationByColumn(String columnName)
+        {
         if (validations != null) {
             for (Validation validation : validations) {
                 if (validation.getColumnName().equals(columnName)) {
