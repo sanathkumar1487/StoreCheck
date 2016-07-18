@@ -43,8 +43,7 @@ public class StoreCheckNavigationAdapter extends RecyclerView.Adapter<StoreCheck
         holder.title.setText(current.getTitle());
         if (position == 0)
         {
-            holder.imgIcon.setBackgroundResource(R.mipmap.ic_pageview_black_24dp);
-
+            holder.imgIcon.setBackgroundResource(R.mipmap.ic_library_add_black_24dp);
         }
         else if (position == 1)
         {
@@ -52,7 +51,7 @@ public class StoreCheckNavigationAdapter extends RecyclerView.Adapter<StoreCheck
         }
         else if (position == 2)
         {
-            holder.imgIcon.setBackgroundResource(R.mipmap.ic_library_add_black_24dp);
+            holder.imgIcon.setBackgroundResource(R.mipmap.ic_pageview_black_24dp);
         }
         else if  (position == 3)
         {
