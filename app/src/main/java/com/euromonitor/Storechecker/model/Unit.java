@@ -27,6 +27,11 @@ public class Unit {
     @SerializedName("ProductCodes")
     private ArrayList<String> _productcodes;
 
+    public Unit()
+    {
+
+    }
+
 
 
     public Unit(String _unit_id, String _unit_name, String _unit_base, String _unit_multiplier) {

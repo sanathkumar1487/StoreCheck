@@ -217,6 +217,19 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
         PricingDetail detail = binding.getPricingDetail();
         Validation validation ;
 
+        //Validate Unit
+        if(detail.getUnitId()==0)
+        {
+            errors = errors + "\nPlease select a value";
+            isValid=false;
+        }
+        //Validate PackType
+        if(detail.getPackTypeCode()==0)
+        {
+            errors = errors + "\nPlease select a value";
+            isValid=false;
+        }
+
         // Multipack Size
         if (detail.getMultiPack() == null)
         {
@@ -489,9 +502,18 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
         unitSpinner = (Spinner) findViewById(R.id.units);
         units = databaseHelper.getUnits(productCode);
 
+            final Unit defaultUnit = new Unit();
+            defaultUnit.set_id(-1);
+            defaultUnit.set_unit_id("0");
+            defaultUnit.set_unit_name("Please Select");
+
+            units.add(0,defaultUnit);
+
         StoreCheckAddProductDetailsActivity.UnitAdapter unitAdapter = new StoreCheckAddProductDetailsActivity.UnitAdapter(units);
         unitSpinner.setAdapter(unitAdapter);
-        unitSpinner.setSelection(DefaultUnitSelection());
+            if(!isCopy) {
+                unitSpinner.setSelection(DefaultUnitSelection());
+            }
         unitSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
         {
             @Override
@@ -499,6 +521,7 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
                 Unit unit = (Unit)parent.getItemAtPosition(position);
 
                 binding.getPricingDetail().setUnitId (Integer.valueOf(unit.get_unit_id()));
+
             }
 
             @Override
@@ -533,6 +556,14 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
     private void setPackTypeSpinner() {
         packTypeSpinner = (Spinner) findViewById(R.id.packType);
         packTypes = databaseHelper.getPackTypeByProduct(productCode);
+
+        final PackType pk=new PackType();
+        pk.set_id(-1);
+        pk.set_packtypecode("0");
+        pk.set_packtypename("Please Select");
+
+        packTypes.add(0,pk);
+
         StoreCheckAddProductDetailsActivity.PackTypeAdapter packTypeAdapter = new StoreCheckAddProductDetailsActivity.PackTypeAdapter(packTypes);
         packTypeSpinner.setAdapter(packTypeAdapter);
         packTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -541,6 +572,7 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
                 PackType packType = (PackType)parent.getItemAtPosition(position);
                 binding.getPricingDetail().setPackTypeCode(Integer.valueOf(packType.get_packtypecode()));
                 binding.getPricingDetail().setPackTypeName(packType.get_packtypename());
+
             }
 
             @Override
@@ -630,6 +662,16 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
             return unitView;
         }
 
+        @Override
+        public boolean isEnabled(int position) {
+            if(units.get(position).get_id() == -1){
+                return false;
+            }
+            else {
+                return  true;
+            }
+        }
+
     }
 
     public class PackTypeAdapter extends BaseAdapter implements SpinnerAdapter {
@@ -668,6 +710,16 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
             outletItem.setText(packTypes.get(position).get_packtypename());
 
             return packTypeView;
+        }
+
+        @Override
+        public boolean isEnabled(int position) {
+            if(packTypes.get(position).get_id() == -1){
+                return false;
+            }
+            else {
+                return  true;
+            }
         }
     }
 
