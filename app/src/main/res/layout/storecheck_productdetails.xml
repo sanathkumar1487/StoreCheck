@@ -16,7 +16,6 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
             <android.support.v7.widget.Toolbar
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -25,7 +24,6 @@
                 app:popupTheme="@style/PopupTheme"
                 android:theme="@style/ToolBarTheme"
                 android:id="@+id/productDetailsToolbar"/>
-
             <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -33,175 +31,204 @@
                 <GridLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:rowCount="9"
-                    android:columnCount="2"
-                    >
-
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:rowCount="18"
+                    android:columnCount="1">
                     <TextView
-                        android:id="@+id/productName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="ProductType"
+                        android:layout_marginLeft="10dp"
                         android:layout_row="0"
+                        android:textColor="@color/blue_500"
                         android:layout_column="0"
-                        android:textSize="@dimen/default_font_size"
-                        android:layout_margin="@dimen/material_item_margin"
-                        android:textColor="@color/grey_700"
-                        android:text="@{pricingDetail.productName}"
-                        android:maxLines="10"
-                        android:maxWidth="100sp"/>
-
-                    <TextView
-                        android:id="@+id/brandName"
-                        android:layout_row="0"
-                        android:layout_column="1"
-                        android:textSize="@dimen/default_font_size"
-                        android:layout_margin="@dimen/material_item_margin"
-                        android:text="@{pricingDetail.brandName}"
-                        android:textColor="@color/blue_300"
-                        android:layout_width="wrap_content"
-                        android:layout_marginRight="20dp"
-                        android:maxLines="10"
-                        android:maxWidth="100sp"/>
-
-                    <TextView
-                        android:layout_height="wrap_content"
-                        android:layout_width="wrap_content"
-                        android:text="@string/outlet"
-                        android:layout_row="1"
-                        android:layout_column="0"
-                        android:layout_margin="@dimen/default_margin"
-                        android:textColor="@color/grey_700"/>
-
-                    <Spinner
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_row="1"
-                        android:layout_column="1"
-                        android:layout_margin="@dimen/material_item_margin"
-                        android:drawSelectorOnTop="true"
-                        android:theme="@style/MaterialTheme"
-                        android:id="@+id/outlets"/>
-
-                    <TextView
-                        android:layout_height="wrap_content"
-                        android:layout_width="wrap_content"
-                        android:text="@string/product_price"
-                        android:layout_row="2"
-                        android:layout_column="0"
-                        android:layout_margin="@dimen/default_margin"
-                        android:textColor="@color/grey_700"/>
-
+                        android:layout_marginTop="20dp"/>
                     <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/productName"
+                        android:background="@drawable/edit_text_shape"
+                        android:textSize="15dp"
+                        android:layout_row="1"
+                        android:layout_column="0"
+                        android:cursorVisible="false"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
+                        android:text="@{pricingDetail.productName}"
+                        android:clickable="false"/>
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:textColor="@color/blue_500"
                         android:layout_row="2"
-                        android:layout_column="1"
-                        android:layout_margin="@dimen/material_item_margin"
-                        android:drawSelectorOnTop="true"
-                        android:theme="@style/MaterialTheme"
-                        android:id="@+id/price"
-                        android:text="@{pricingDetail.price}"
-                        android:selectAllOnFocus="true"
-                        android:inputType="numberDecimal"
-                        android:layout_marginRight="20dp"/>
-                    <LinearLayout
-                        android:layout_height="wrap_content"
+                        android:layout_column="0"
+                        android:text="@string/brandName"
+                        android:layout_marginTop="20dp"/>
+                    <EditText
+                        android:id="@+id/brandName"
                         android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/edit_text_shape"
+                        android:textSize="15dp"
                         android:layout_row="3"
                         android:layout_column="0"
-                        android:layout_columnSpan="2"
-                        android:layout_margin="@dimen/default_margin">
+                        android:cursorVisible="false"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
+                        android:text="@{pricingDetail.brandName}"
+                        android:clickable="false"/>
+                    <TextView  android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="40dp"
+                        android:text="Pack and pricing details"
+                        android:textColor="@color/blue_500"
+                        android:textStyle="bold"
+                        android:textSize="15dp"
+                        android:layout_row="4"
+                        android:layout_column="0"
+                        android:layout_marginLeft="10dp"/>
+                    <LinearLayout
+                        android:layout_row="5"
+                        android:layout_column="0"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        >
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/packSize"
-                            android:paddingRight="50dp"/>
-                        <EditText
-                            android:layout_width="@dimen/maximum_item_width"
+                            android:layout_marginLeft="10dp"
+                            android:textColor="@color/blue_500"
+                            android:layout_marginTop="35dp"
+                            android:text="@string/outlet"
+                            />
+                        <Spinner
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:id="@+id/packSize"
+                            android:id="@+id/outlets"
+                            android:layout_marginTop="18dp"
+                            android:layout_marginLeft="80dp"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_row="8"
+                        android:layout_column="0"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="20dp">
+                        <TextView
+                            android:layout_height="wrap_content"
+                            android:layout_width="wrap_content"
+                            android:textColor="@color/blue_500"
+                            android:layout_marginLeft="10dp"
+                            android:text="@string/multipack"/>
+                        <EditText
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
+                            android:text="@{pricingDetail.multiPack}"
+                            android:background="@drawable/edit_text_shape"
+                            android:inputType="number"
+                            android:layout_marginLeft="60dp"
+                            android:id="@+id/multiPacks"
+                            android:selectAllOnFocus="true"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_row="7"
+                        android:layout_column="0"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="20dp">
+                        <TextView
+                            android:layout_height="wrap_content"
+                            android:layout_width="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="20dp"
+                            android:textColor="@color/blue_500"
+                            android:text="@string/packSize"/>
+                        <EditText
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="60dp"
+                            android:layout_marginTop="20dp"
+                            android:gravity=""
+                            android:background="@drawable/edit_text_shape"
                             android:text="@{pricingDetail.packSize}"
-                            android:selectAllOnFocus="true"
                             android:inputType="numberDecimal"
-                            android:paddingBottom="16dp"/>
+                            android:id="@+id/packSize"
+                            android:selectAllOnFocus="true"/>
+
                         <Spinner
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:drawSelectorOnTop="true"
-                            android:theme="@style/MaterialTheme"
-                            android:id="@+id/units"
-                            android:layout_marginRight="20dp"
-                            android:paddingTop="20dp"
-                            />
-
+                            android:layout_marginTop="10dp"
+                            android:layout_marginLeft="40dp"
+                            android:id="@+id/units"/>
                     </LinearLayout>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/multipack"
-                        android:layout_margin="@dimen/material_item_margin"
-                        android:layout_row="4"
-                        android:layout_column="0"
-                        />
-
-                    <EditText
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/material_item_margin"
-                        android:layout_row="4"
-                        android:layout_column="1"
-                        android:id="@+id/multiPacks"
-                        android:text="@{pricingDetail.multiPack}"
-                        android:selectAllOnFocus="true"
-                        android:inputType="number"
-                        android:layout_marginRight="20dp"
-                        />
-
                     <LinearLayout
+                        android:layout_row="6"
+                        android:layout_column="0"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_row="5"
-                        android:layout_column="0"
-                        android:layout_columnSpan="2"
-                        android:orientation="horizontal">
-
+                        android:orientation="horizontal"
+                        android:layout_marginTop="20dp">
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/packType"
-                            android:layout_margin="@dimen/material_item_margin"
-                            />
-
+                            android:layout_marginLeft="10dp"
+                            android:textColor="@color/blue_500"
+                            android:text="Price"/>
+                        <EditText
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/edit_text_shape"
+                            android:id="@+id/price"
+                            android:layout_marginLeft="90dp"
+                            android:text="@{pricingDetail.price}"
+                            android:inputType="numberDecimal"
+                            android:selectAllOnFocus="true"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_row="9"
+                        android:layout_column="0"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        >
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="30dp"
+                            android:textColor="@color/blue_500"
+                            android:text="@string/packType"/>
                         <Spinner
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginRight="20dp"
-                            android:theme="@style/MaterialTheme"
-                            android:id="@+id/packType"
-                            android:paddingTop="8dp"/>
-
+                            android:layout_marginLeft="53dp"
+                            android:layout_marginTop="10dp"
+                            android:id="@+id/packType"/>
                     </LinearLayout>
-
                     <LinearLayout
+                        android:layout_row="10"
+                        android:layout_column="0"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_row="6"
-                        android:layout_columnSpan="2"
-                        android:layout_column="0"
-                        android:orientation="vertical"
-                        android:layout_margin="@dimen/default_margin"
-                        android:layout_marginRight="20dp">
-
+                        android:orientation="horizontal"
+                        android:layout_marginTop="20dp">
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:textColor="@color/blue_500"
                             android:text="@string/customFields"/>
-
                         <android.support.v7.widget.RecyclerView
                             android:id="@+id/customFields"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="16dp"/>
-
+                            android:layout_height="wrap_content"/>
                     </LinearLayout>
                 </GridLayout>
             </ScrollView>
