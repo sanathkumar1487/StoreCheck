@@ -395,8 +395,7 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
         ft.commit();
     }
 
-    private void setBinding()
-    {
+    private void setBinding() {
         validations = databaseHelper.getValidations(productCode);
 
         if (priceId > 0 || itemId > 0) {
@@ -404,49 +403,47 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
         }
 
 
+        if (pricingDetail == null) {
 
-            if (pricingDetail == null) {
+            isUpdate = false;
+            pricingDetail = new PricingDetail();
+            pricingDetail.setSelectedOutletId(databaseHelper.getSelectedOutlet());
 
-                isUpdate = false;
-                pricingDetail = new PricingDetail();
-                pricingDetail.setSelectedOutletId(databaseHelper.getSelectedOutlet());
-
-                pricingDetail.setPricingId(priceId);
-                pricingDetail.setBrandId(brandId);
-                pricingDetail.setBrandMarketId(brandMarketId);
-            }
-
-
-            if (isCopy) {
-
-                pricingDetail.setId(null);
-                pricingDetail.setMultiPack(1);
-                pricingDetail.setPackSize(0);
-                pricingDetail.setPrice(0);
-                pricingDetail.setPricingId(0);
-                pricingDetail.setBrandMarketId(brandMarketId);
-            }
-
-            if (pricingDetail.getBrandId() == 0 && brandId > 0) {
-                pricingDetail.setBrandId(brandId);
-            }
-
-            if (pricingDetail.getBrandMarketId() == 0 && brandMarketId > 0) {
-                pricingDetail.setBrandMarketId(brandMarketId);
-            }
-
-            pricingDetail.setBrandName(brandName);
-
-            if (pricingDetail.getProductId() == 0 && productCode > 0) {
-                pricingDetail.setProductId(productCode);
-            }
-            pricingDetail.setProductName(productName == null ? "" : productName.trim());
-
-            if (brandId > 0) {
-                binding.setPricingDetail(pricingDetail);
-            }
-            setSpinners();
+            pricingDetail.setPricingId(priceId);
+            pricingDetail.setBrandId(brandId);
+            pricingDetail.setBrandMarketId(brandMarketId);
         }
+
+        pricingDetail.setMultiPack(1);
+        if (isCopy) {
+
+            pricingDetail.setId(null);
+            pricingDetail.setPackSize(0);
+            pricingDetail.setPrice(0);
+            pricingDetail.setPricingId(0);
+            pricingDetail.setBrandMarketId(brandMarketId);
+        }
+
+        if (pricingDetail.getBrandId() == 0 && brandId > 0) {
+            pricingDetail.setBrandId(brandId);
+        }
+
+        if (pricingDetail.getBrandMarketId() == 0 && brandMarketId > 0) {
+            pricingDetail.setBrandMarketId(brandMarketId);
+        }
+
+        pricingDetail.setBrandName(brandName);
+
+        if (pricingDetail.getProductId() == 0 && productCode > 0) {
+            pricingDetail.setProductId(productCode);
+        }
+        pricingDetail.setProductName(productName == null ? "" : productName.trim());
+
+        if (brandId > 0) {
+            binding.setPricingDetail(pricingDetail);
+        }
+        setSpinners();
+    }
 
 
     private void setSpinners()
