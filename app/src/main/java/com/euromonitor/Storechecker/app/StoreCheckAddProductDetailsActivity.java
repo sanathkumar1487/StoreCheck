@@ -499,6 +499,19 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
         }
         return 0;
     }
+
+    public int DefaultPackTypeSelection()
+    {
+        for(int index = 0; index < packTypes.size(); index++)
+        {
+            if(packTypes.get(index).get_packtypecode().equals(String.valueOf(pricingDetail.getPackTypeCode())))
+            {
+                return index;
+            }
+        }
+        return 0;
+    }
+
     private void setUnitSpinner()
         {
         unitSpinner = (Spinner) findViewById(R.id.units);
@@ -523,6 +536,12 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
                 Unit unit = (Unit)parent.getItemAtPosition(position);
 
                 binding.getPricingDetail().setUnitId (Integer.valueOf(unit.get_unit_id()));
+
+                if(units.contains(defaultUnit))
+                {
+                    units.remove(0);
+                }
+                unitSpinner.setSelection(DefaultUnitSelection());
 
             }
 
@@ -568,12 +587,22 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
 
         StoreCheckAddProductDetailsActivity.PackTypeAdapter packTypeAdapter = new StoreCheckAddProductDetailsActivity.PackTypeAdapter(packTypes);
         packTypeSpinner.setAdapter(packTypeAdapter);
+        if(!isCopy)
+        {
+            packTypeSpinner.setSelection(DefaultPackTypeSelection());
+        }
         packTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 PackType packType = (PackType)parent.getItemAtPosition(position);
                 binding.getPricingDetail().setPackTypeCode(Integer.valueOf(packType.get_packtypecode()));
                 binding.getPricingDetail().setPackTypeName(packType.get_packtypename());
+
+                if(packTypes.contains(pk))
+                {
+                    packTypes.remove(0);
+                }
+                packTypeSpinner.setSelection(DefaultPackTypeSelection());
 
             }
 
