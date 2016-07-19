@@ -147,7 +147,7 @@ public class StoreCheckImportActivity extends AppCompatActivity implements Async
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Welcome !");
         toolbar.setSubtitle("Import File");
-        toolbar.setTitle("Storechecker details");
+        toolbar.setTitle("StoreChecker");
         toolbar.inflateMenu(R.menu.storecheck_menu);
     }
 

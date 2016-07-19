@@ -1619,6 +1619,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
             else
             {
                 values.put(KEY_MULTIPACKSIZE, pricingDetail.getMultiPack());
+                values.put(KEY_BRANDMARKETID, pricingDetail.getBrandMarketId());
                 values.put(KEY_OUTLETID, pricingDetail.getSelectedOutletId());
                 values.put(KEY_NEWOUTLETID, pricingDetail.getNewOutletId());
                 values.put(KEY_PRODUCTID, pricingDetail.getProductId());

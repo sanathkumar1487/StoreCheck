@@ -146,7 +146,7 @@ public class StoreCheckAddBrandActivity extends AppCompatActivity
         getSupportActionBar().setTitle("Welcome !");
         toolbar.setSubtitle("Add Brand");
 
-        toolbar.setTitle("Storechecker details");
+        toolbar.setTitle("StoreChecker");
         toolbar.inflateMenu(R.menu.storecheck_menu);
     }
 

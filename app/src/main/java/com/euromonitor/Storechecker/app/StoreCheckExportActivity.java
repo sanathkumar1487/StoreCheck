@@ -209,7 +209,7 @@ public class StoreCheckExportActivity extends MainActivity implements AsyncPostE
         getSupportActionBar().setTitle("Welcome !");
         toolbar.setSubtitle("Export file");
 
-        toolbar.setTitle("Storechecker details");
+        toolbar.setTitle("StoreChecker");
         toolbar.inflateMenu(R.menu.storecheck_menu);
 
     }

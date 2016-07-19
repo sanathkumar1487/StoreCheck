@@ -130,7 +130,7 @@ public class StoreCheckDetailsActivity extends AppCompatActivity {
 
         getSupportActionBar().setTitle("Welcome !");
         toolbar.setSubtitle("Item Details");
-        toolbar.setTitle("Storechecker details");
+        toolbar.setTitle("StoreChecker");
         toolbar.inflateMenu(R.menu.storecheck_menu);
     }
 

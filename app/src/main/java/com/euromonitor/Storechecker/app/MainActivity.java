@@ -127,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Welcome !");
         toolbar.setSubtitle("");
 
-        toolbar.setTitle("Storechecker details");
+        toolbar.setTitle("StoreChecker");
         toolbar.inflateMenu(R.menu.menu_main);
 
     }

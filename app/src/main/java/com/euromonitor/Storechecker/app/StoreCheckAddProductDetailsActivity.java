@@ -383,7 +383,7 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
         // actionbar.setDisplayHomeAsUpEnabled(true);
         toolbar.setSubtitle("Add/Edit Price Details");
 
-        toolbar.setTitle("Storechecker");
+        toolbar.setTitle("StoreChecker");
         toolbar.inflateMenu(R.menu.addoutlet_menu);
     }
 
@@ -423,6 +423,8 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
                 pricingDetail.setMultiPack(1);
                 pricingDetail.setPackSize(0);
                 pricingDetail.setPrice(0);
+                pricingDetail.setPricingId(0);
+                pricingDetail.setBrandMarketId(brandMarketId);
             }
 
             if (pricingDetail.getBrandId() == 0 && brandId > 0) {

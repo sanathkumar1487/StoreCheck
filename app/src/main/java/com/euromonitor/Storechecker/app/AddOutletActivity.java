@@ -203,7 +203,7 @@ public class AddOutletActivity extends AppCompatActivity
         // actionbar.setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Welcome !");
         toolbar.setSubtitle("Add Outlet");
-        toolbar.setTitle("Storechecker details");
+        toolbar.setTitle("StoreChecker");
         toolbar.inflateMenu(R.menu.storecheck_menu);
     }
 
