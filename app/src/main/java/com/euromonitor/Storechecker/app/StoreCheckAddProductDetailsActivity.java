@@ -91,8 +91,6 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
 
         if(databaseHelper.isDatabaseAvailable())
         {
-
-
             setBinding();
 
             setCustomFields(productCode, 2);
@@ -220,13 +218,13 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
         //Validate Unit
         if(detail.getUnitId()==0)
         {
-            errors = errors + "\nPlease select a value";
+            errors = errors + "\nPlease select a value for Units";
             isValid=false;
         }
         //Validate PackType
         if(detail.getPackTypeCode()==0)
         {
-            errors = errors + "\nPlease select a value";
+            errors = errors + "\nPlease select a value for Pack-Type";
             isValid=false;
         }
 
@@ -402,7 +400,6 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
             pricingDetail = databaseHelper.getPricingDetails(priceId, itemId);
         }
 
-
         if (pricingDetail == null) {
 
             isUpdate = false;
@@ -414,14 +411,15 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
             pricingDetail.setBrandMarketId(brandMarketId);
         }
 
-        pricingDetail.setMultiPack(1);
         if (isCopy) {
-
             pricingDetail.setId(null);
+            pricingDetail.setMultiPack(1);
             pricingDetail.setPackSize(0);
             pricingDetail.setPrice(0);
             pricingDetail.setPricingId(0);
             pricingDetail.setBrandMarketId(brandMarketId);
+            pricingDetail.setUnitId(0);
+            pricingDetail.setPackTypeCode(0);
         }
 
         if (pricingDetail.getBrandId() == 0 && brandId > 0) {
@@ -485,7 +483,7 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
             }
         });
     }
-    public int DefaultUnitSelection()
+    public int defaultUnitSelection()
     {
         for(int index = 0; index < units.size(); index++)
         {
@@ -497,7 +495,7 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
         return 0;
     }
 
-    public int DefaultPackTypeSelection()
+    public int defaultPackTypeSelection()
     {
         for(int index = 0; index < packTypes.size(); index++)
         {
@@ -509,37 +507,31 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
         return 0;
     }
 
-    private void setUnitSpinner()
-        {
+    private void setUnitSpinner() {
         unitSpinner = (Spinner) findViewById(R.id.units);
         units = databaseHelper.getUnits(productCode);
 
-            final Unit defaultUnit = new Unit();
-            defaultUnit.set_id(-1);
-            defaultUnit.set_unit_id("0");
-            defaultUnit.set_unit_name("Please Select");
+        final Unit defaultUnit = new Unit();
+        defaultUnit.set_id(-1);
+        defaultUnit.set_unit_id("0");
+        defaultUnit.set_unit_name("Please Select");
 
-            units.add(0,defaultUnit);
+        units.add(0, defaultUnit);
 
         StoreCheckAddProductDetailsActivity.UnitAdapter unitAdapter = new StoreCheckAddProductDetailsActivity.UnitAdapter(units);
         unitSpinner.setAdapter(unitAdapter);
-            if(!isCopy) {
-                unitSpinner.setSelection(DefaultUnitSelection());
-            }
-        unitSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
-        {
+        if (!isCopy) {
+            unitSpinner.setSelection(defaultUnitSelection());
+        }
+        unitSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Unit unit = (Unit)parent.getItemAtPosition(position);
+                Unit unit = (Unit) parent.getItemAtPosition(position);
 
-                binding.getPricingDetail().setUnitId (Integer.valueOf(unit.get_unit_id()));
-
-                if(units.contains(defaultUnit))
-                {
-                    units.remove(0);
+                int unitId = Integer.valueOf(unit.get_unit_id());
+                if (unitId > 0) {
+                    binding.getPricingDetail().setUnitId(Integer.valueOf(unit.get_unit_id()));
                 }
-                unitSpinner.setSelection(DefaultUnitSelection());
-
             }
 
             @Override
@@ -547,7 +539,6 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
 
             }
         });
-
     }
 
     private void setCustomFieldByProductCode(int productCode, int typeId) {
@@ -586,7 +577,7 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
         packTypeSpinner.setAdapter(packTypeAdapter);
         if(!isCopy)
         {
-            packTypeSpinner.setSelection(DefaultPackTypeSelection());
+            packTypeSpinner.setSelection(defaultPackTypeSelection());
         }
         packTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -594,12 +585,6 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
                 PackType packType = (PackType)parent.getItemAtPosition(position);
                 binding.getPricingDetail().setPackTypeCode(Integer.valueOf(packType.get_packtypecode()));
                 binding.getPricingDetail().setPackTypeName(packType.get_packtypename());
-
-                if(packTypes.contains(pk))
-                {
-                    packTypes.remove(0);
-                }
-                packTypeSpinner.setSelection(DefaultPackTypeSelection());
 
             }
 
