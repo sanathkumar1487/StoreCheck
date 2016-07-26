@@ -11,6 +11,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -320,6 +321,7 @@ public class StoreCheckAddBrandActivity extends AppCompatActivity
         ArrayList<Product> products = databaseHelper.getAllProducts();
 
         Spinner productSpinner = (Spinner) ((View) (binding.getRoot()).findViewById(R.id.products));
+
         if (productSpinner != null) {
             StoreCheckAddBrandActivity.ProductAdapter adapter = new StoreCheckAddBrandActivity.ProductAdapter(products);
             productSpinner.setAdapter(adapter);
@@ -327,20 +329,24 @@ public class StoreCheckAddBrandActivity extends AppCompatActivity
             productSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(final AdapterView<?> parent, View view, final int position, long id) {
+
                     final StoreCheckBrandAdapter brandAdapter;
                     Product selectedProduct = (Product) parent.getItemAtPosition(position);
 
-                    if(selectedProduct.getResearched()==0){
+                    if (selectedProduct.getResearched() == 0) {
                         Toast.makeText(context, selectedProduct.get_product_name() + " should not be researched!", Toast.LENGTH_LONG).show();
                     }
 
                     int productID = Integer.valueOf(selectedProduct.get_product_id());
-                    storeCheckBrand.setSelectedProduct(selectedProduct);
-                    binding.getStoreCheckBrand().setSelectedProduct(selectedProduct);
-                    setCustomFieldByProductCode(productID);
-                    storeCheckBrand.setCustomFields(customFields);
 
-                    productCustomFields = customFields;
+                    storeCheckBrand.setSelectedProduct(selectedProduct);
+
+                    binding.getStoreCheckBrand().setSelectedProduct(selectedProduct);
+
+                    setCustomFieldByProductCode(productID);
+
+                    //storeCheckBrand.setCustomFields(customFields);
+                    binding.getStoreCheckBrand().setCustomFields(customFields);
 
                     brand_item = databaseHelper.getBrandsByProductId(productID);
                     brandName = (AutoCompleteTextView) findViewById(R.id.brandName);
@@ -397,13 +403,13 @@ public class StoreCheckAddBrandActivity extends AppCompatActivity
                         customFieldRecyclerView.setLayoutManager(new LinearLayoutManager(context));
                         customFieldsAdapter = new StoreCheckCustomFieldsAdapter(LayoutInflater.from(context), context, customFields);
                         customFieldRecyclerView.setAdapter(customFieldsAdapter);
-
                     }
+
                 }
 
                 @Override
                 public void onNothingSelected(AdapterView<?> parent) {
-
+                    ArrayList<CustomField> cf = binding.getStoreCheckBrand().getCustomFields();
                 }
             });
         }
@@ -415,9 +421,6 @@ public class StoreCheckAddBrandActivity extends AppCompatActivity
         customFields = databaseHelper.updateCustomFieldOptions(customFields);
     }
 
-    private void setCustomDieldByBrand(int brandId) {
-        //custom
-    }
 
     public class ProductAdapter extends BaseAdapter implements SpinnerAdapter {
 
