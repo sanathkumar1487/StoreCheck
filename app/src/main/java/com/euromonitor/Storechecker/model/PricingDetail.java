@@ -48,7 +48,7 @@ public class PricingDetail {
         this.multiPack = multiPack;
     }
 
-    int multiPack;
+    int multiPack = 1;
 
     public int getUnitId() {
         return unitId;

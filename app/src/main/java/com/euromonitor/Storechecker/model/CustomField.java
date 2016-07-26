@@ -262,6 +262,7 @@ public class CustomField  extends BaseObservable
         for(Option option: this._options){
             if(option.getOptionId().equals(String.valueOf(optionId))){
                 this.setSelectedOption(option);
+
                 break;
             }
         }

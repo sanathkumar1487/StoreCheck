@@ -160,7 +160,7 @@ public class MainActivity extends AppCompatActivity {
 
                         Intent i = new Intent(Intent.ACTION_SEND);
                         i.setType("message/rfc822");
-                        i.putExtra(Intent.EXTRA_EMAIL, new String[]{"sanath.kumar@euromonitor.com", "Fritze.George@euromonitor.com",});
+                        i.putExtra(Intent.EXTRA_EMAIL, new String[]{"StoreCheckAppSupport@Euromonitor.com"});
                         i.putExtra(Intent.EXTRA_SUBJECT, "Storecheck app error Details");
                         i.putExtra(Intent.EXTRA_TEXT, errordata);
                         try {

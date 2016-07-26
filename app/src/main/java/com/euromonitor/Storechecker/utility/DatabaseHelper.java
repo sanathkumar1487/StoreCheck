@@ -717,7 +717,8 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
                 + KEY_UPDATED + " INT, "
                 + KEY_OPTIONVALUE + " TEXT,"
                 + KEY_NEWPRICINGID + " INT,"
-                +  KEY_ISPRICING+ " INT" +") ";
+                + KEY_OBJECTID + " INT, "
+                + KEY_ISPRICING+ " INT" +") ";
         database.execSQL(CREATE_BRANDCUSTOMFIELD_TABLE);
     }
 
@@ -1103,7 +1104,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
                             customField.setIsNumeric(false);
                         }
                         customField.setSelectedOption(options.get(0));
-                    } else if (customField.get_object_id().equals(DropDown) && customField.get_object_id().equals(CustomDropDown)) {
+                    } else if (customField.get_object_id().equals(DropDown) || customField.get_object_id().equals(CustomDropDown)) {
                         customField.setSelectedOption(options.get(0));
                     }
                 }
@@ -1558,6 +1559,8 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
                         contentValues.put(KEY_GROUPID, cf.get_group_id());
                         contentValues.put(KEY_LABEL, cf.get_label());
                         contentValues.put(KEY_OPTIONID, cf.getSelectedOption().getOptionId());
+                        contentValues.put(KEY_OBJECTID, cf.get_object_id());
+
                         if (cf.get_object_id().equals("2")) {
                             contentValues.put(KEY_OPTIONTEXT, cf.getCustomFieldTextValue());
                         } else if ((cf.get_object_id().equals("1") || cf.get_object_id().equals("3"))
@@ -2193,7 +2196,9 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
                     brandmarketField.setOptionText(cursor.getString(8));
                     brandmarketField.setUpdated(Integer.parseInt(cursor.getString(9)));
                     brandmarketField.setOptionValue(cursor.getString(10));
-                    brandmarketField.setIsPricingCustomField(Boolean.parseBoolean(cursor.getString(11)));
+                    brandmarketField.setObjectId(cursor.getInt(12));
+                    brandmarketField.setIsPricingCustomField(Boolean.parseBoolean(cursor.getString(13)));
+
                     customFieldList.add(brandmarketField);
                 } while (cursor.moveToNext());
             }
