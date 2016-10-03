@@ -122,7 +122,7 @@
                             android:layout_marginLeft="10dp"
                             android:text="@string/multipack"/>
                         <EditText
-                            android:layout_width="100dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@{pricingDetail.multiPack}"
                             android:background="@drawable/edit_text_shape"
@@ -146,7 +146,7 @@
                             android:textColor="@color/blue_500"
                             android:text="@string/packSize"/>
                         <EditText
-                            android:layout_width="100dp"
+                            android:layout_width="70dp"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="60dp"
                             android:layout_marginTop="20dp"
@@ -162,7 +162,7 @@
                             android:layout_height="wrap_content"
                             android:drawSelectorOnTop="true"
                             android:layout_marginTop="10dp"
-                            android:layout_marginLeft="40dp"
+                            android:layout_marginLeft="35dp"
                             android:id="@+id/units"/>
                     </LinearLayout>
                     <LinearLayout
@@ -179,7 +179,7 @@
                             android:textColor="@color/blue_500"
                             android:text="Price"/>
                         <EditText
-                            android:layout_width="100dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/edit_text_shape"
                             android:id="@+id/price"
