@@ -82,3 +82,6 @@ app/app.iml
 .idea/libraries/cardview_v7_23_1_1.xml
 .idea/libraries/design_23_2_1.xml
 .idea/libraries/support_annotations_23_2_1.xml
+*.xml
+*.xml
+.idea/workspace.xml
