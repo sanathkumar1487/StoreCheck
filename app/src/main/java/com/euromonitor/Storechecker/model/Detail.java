@@ -65,6 +65,14 @@ public class Detail {
     @SerializedName("nbo")
     private  String _nbo;
 
+
+    @SerializedName("shareBrandID")
+    private  String _shareBrandID;
+
+
+    @SerializedName("shareBrandName")
+    private  String _shareBrandName;
+
     public int getUpdated() {
         return updated;
     }
@@ -75,7 +83,8 @@ public class Detail {
 
     private int updated;
 
-    public Detail(String _channel_name, String _multipack_size, String _outlet_id, String _outlet_name, String _pack_size, String _pack_type, String _packtype_code, String _price, String _pricing_id, String _unit_code, String _unit_price_local, String unitPriceUS, String _brand, String nbo) {
+    public Detail(String _channel_name, String _multipack_size, String _outlet_id, String _outlet_name, String _pack_size, String _pack_type, String _packtype_code, String _price, String _pricing_id, String _unit_code, String _unit_price_local, String unitPriceUS, String _brand, String nbo, String shareBrandName) {
+        _shareBrandName = shareBrandName;
         this.set_channel_name(_channel_name);
         this.set_multipack_size(_multipack_size);
         this.set_outlet_id(_outlet_id);
@@ -221,5 +230,21 @@ public class Detail {
 
     public void set_nbo(String _nbo) {
         this._nbo = _nbo;
+    }
+
+    public String get_shareBrandID() {
+        return _shareBrandID;
+    }
+
+    public void set_shareBrandID(String _shareBrandID) {
+        this._shareBrandID = _shareBrandID;
+    }
+
+    public String get_shareBrandName() {
+        return _shareBrandName;
+    }
+
+    public void set_shareBrandName(String _shareBrandName) {
+        this._shareBrandName = _shareBrandName;
     }
 }

@@ -1,0 +1,35 @@
+﻿Merge branch 'master' of https://github.com/sanathkumar1487/StoreCheck
+
+# Conflicts:
+#	local.properties
+#
+# It looks like you may be committing a merge.
+# If this is not correct, please remove the file
+#	.git/MERGE_HEAD
+# and try again.
+
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+# On branch master
+# Your branch and 'origin/master' have diverged,
+# and have 1 and 3 different commits each, respectively.
+#   (use "git pull" to merge the remote branch into yours)
+#
+# All conflicts fixed but you are still merging.
+#
+# Changes to be committed:
+#	new file:   1zi5ovzz.jb4.txt
+#	new file:   4hrqjkhz.j1k.txt
+#	modified:   app/src/main/java/com/euromonitor/Storechecker/adapter/StoreCheckCustomFieldsAdapter.java
+#	modified:   app/src/main/java/com/euromonitor/Storechecker/app/MainActivity.java
+#	modified:   app/src/main/java/com/euromonitor/Storechecker/app/StoreCheckAddBrandActivity.java
+#	modified:   app/src/main/java/com/euromonitor/Storechecker/app/StoreCheckAddProductDetailsActivity.java
+#	modified:   app/src/main/java/com/euromonitor/Storechecker/model/BrandCustomField.java
+#	modified:   app/src/main/java/com/euromonitor/Storechecker/model/CustomField.java
+#	modified:   app/src/main/java/com/euromonitor/Storechecker/model/PricingDetail.java
+#	modified:   app/src/main/java/com/euromonitor/Storechecker/utility/DatabaseHelper.java
+#	modified:   build/generated/mockable-android-23.jar
+#	modified:   local.properties
+#
+

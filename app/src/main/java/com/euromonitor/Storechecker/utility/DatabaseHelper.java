@@ -116,6 +116,8 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
     private static final String KEY_UNITPRICELOCAL = "unitPriceLocal";
     private static final String KEY_UNITPRICEUS = "unitPriceUS";
     private static final String KEY_NEWOUTLETID="newOutletId";
+    private static final String KEY_SHAREBRANDID="sharebrandid";
+    private static final String KEY_SHAREBRANDNAME="sharebrandname";
 
 
 
@@ -350,6 +352,8 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
             values.put(KEY_BRAND, detail.get_brand());
             values.put(KEY_BRANDMARKETID, detail.getBrandMarketId());
             values.put(KEY_NBO, detail.get_nbo());
+            values.put(KEY_SHAREBRANDID,detail.get_shareBrandID());
+            values.put(KEY_SHAREBRANDNAME,detail.get_shareBrandName());
             // Inserting Row
             db.insert(TABLE_DETAILS, null, values);
         }
@@ -625,7 +629,9 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
                 + KEY_BRANDMARKETID + " TEXT,"
                 + KEY_UPDATED + " TEXT,"
                 + KEY_NEWOUTLETID + " INT,"
-                + KEY_NBO + " TEXT" + ")";
+                + KEY_NBO + " TEXT,"
+                + KEY_SHAREBRANDID + " TEXT,"
+                + KEY_SHAREBRANDNAME + " TEXT"+ ")";
         database.execSQL(CREATE_DETAILS_TABLE);
     }
 
@@ -1313,6 +1319,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
                     + KEY_NEWOUTLETID + ", "
                     +KEY_PACKSIZE+","
                     +KEY_MULTIPACKSIZE+","
+                    +KEY_SHAREBRANDNAME+","
                     + KEY_PACKTYPECODE + ", "
                     + KEY_UNITCODE + ", "
                     + " case when " + KEY_UPDATED + " = 1 then " + KEY_PRICE + " else 0 end as 'price', "
@@ -1346,6 +1353,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
                     pricingDetails.setUnitId(cursor.getInt(cursor.getColumnIndex(KEY_UNITCODE)));
                     pricingDetails.setPrice(cursor.getDouble(cursor.getColumnIndex(KEY_PRICE)));
                     pricingDetails.setPricingId(cursor.getInt(cursor.getColumnIndex(KEY_PRICINGID)));
+                    pricingDetails.setShareBrandName(cursor.getString(cursor.getColumnIndex(KEY_SHAREBRANDNAME)));
 
                     pricingDetails.isUpdated = cursor.getInt(cursor.getColumnIndex(KEY_UPDATED)) == 1 ? true : false;
 
@@ -1585,10 +1593,33 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         return result ? brandId : 0;
     }
 
+
+    private void updateMarketTableWhenBrandUpdated (String brandMarketID, String brandName)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        try
+        {
+            ContentValues values = new ContentValues();
+            values.put(KEY_BRAND,brandName);
+            values.put(KEY_UPDATED, 1);
+            db.update(TABLE_MARKETS, values, KEY_BRANDMARKETID + " = ?", new String[]{brandMarketID});
+        }
+        catch (Exception ex) {
+
+            throw ex;
+        } finally {
+            if (db != null)
+                db.close();
+    }
+    }
+
     public long savePricingDetails(PricingDetail pricingDetail, boolean isUpdate)
     {
         boolean status = false;
         long result = 0;
+
+
+        updateMarketTableWhenBrandUpdated(String.valueOf(pricingDetail.getBrandMarketId()),pricingDetail.getBrandName());
 
         SQLiteDatabase db = this.getWritableDatabase();
         try {
@@ -2155,10 +2186,13 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
                 market.set_product(cursor.getString(6));
                 market.set_brand(cursor.getString(7));
                 market.set_nbo(cursor.getString(8));
-                market.set_company_name(cursor.getString(9));
-                market.setEsci(cursor.getString(10));
-                market.setEsbi(cursor.getString(11));
+                market.setUpdated(cursor.getInt(9));
+                market.set_company_name(cursor.getString(10));
+                market.setEsci(cursor.getString(11));
+                market.setEsbi(cursor.getString(12));
+
                 marketList.add(market);
+
             } while (cursor.moveToNext());
         }
 

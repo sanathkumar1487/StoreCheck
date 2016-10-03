@@ -189,11 +189,13 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
 
     private void SavePricing()
     {
-        setBindingProperties();
+
+       setBindingProperties();
         if (validateData()) {
             PricingDetail pricingDetail = binding.getPricingDetail();
             pricingDetail.setBrandMarketId(brandMarketId);
             pricingDetail.setBrandId(brandId);
+            pricingDetail.setBrandName(binding.brandName.getText().toString());
 
             long pricingId = databaseHelper.savePricingDetails(pricingDetail, isUpdate);
             if (pricingId > 0 ) {

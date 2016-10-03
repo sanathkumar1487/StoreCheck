@@ -201,4 +201,14 @@ public class PricingDetail {
     }
 
     private int newOutletId;
+
+    private String shareBrandName;
+
+    public String getShareBrandName() {
+        return shareBrandName;
+    }
+
+    public void setShareBrandName(String shareBrandName) {
+        this.shareBrandName = shareBrandName;
+    }
 }
