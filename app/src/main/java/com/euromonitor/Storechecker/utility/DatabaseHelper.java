@@ -1652,9 +1652,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
 
 
             ContentValues values = new ContentValues();
-            values.put(KEY_BRAND,pricingDetail.getBrandName());
-            values.put(KEY_UPDATED, 1);
-            db.update(TABLE_DETAILS, values, KEY_BRANDMARKETID + " = ?", new String[]{String.valueOf(pricingDetail.getBrandMarketId())});
+
             if (pricingDetail.getId()!=null && Integer.valueOf(pricingDetail.getId()) > 0 )
             {
 
