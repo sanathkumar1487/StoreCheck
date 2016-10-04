@@ -2,13 +2,6 @@
 <items version="2" >
 
     <item
-        jar="C:\Users\Shashwat.Bajpai\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\23.2.1\support-annotations-23.2.1.jar"
-        jumboMode="true"
-        revision="23.0.2"
-        sha1="ccb693bc0774fcb637246f7360de25b4af7df318">
-        <dex dex="D:\StoreCheck\app\build\intermediates\transforms\dex\debug\folders\1000\10\support-annotations-23.2.1_9abca5ee7c2d4e875e7502682d4b51b23fa007e5\classes.dex" />
-    </item>
-    <item
         jar="D:\StoreCheck\app\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\23.2.1\jars\classes.jar"
         jumboMode="true"
         revision="23.0.2"
@@ -86,17 +79,31 @@
         <dex dex="D:\StoreCheck\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.crashlytics.sdk.android-beta-1.1.4_d6ae656f2495772e63d74353c5f367f71aa65794\classes.dex" />
     </item>
     <item
+        jar="C:\Users\debasish.sahoo\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\23.2.1\support-annotations-23.2.1.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="ccb693bc0774fcb637246f7360de25b4af7df318">
+        <dex dex="D:\StoreCheck\app\build\intermediates\transforms\dex\debug\folders\1000\10\support-annotations-23.2.1_78ce6e1018efccf91d1184d471d5ab876ff39c8f\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\debasish.sahoo\.gradle\caches\modules-2\files-2.1\com.nineoldandroids\library\2.4.0\e9b63380f3a242dbdbf103a2355ad7e43bad17cb\library-2.4.0.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="e9b63380f3a242dbdbf103a2355ad7e43bad17cb">
+        <dex dex="D:\StoreCheck\app\build\intermediates\transforms\dex\debug\folders\1000\10\library-2.4.0_5b60201216a490efaa0a08fc5442a8d14ef3ec45\classes.dex" />
+    </item>
+    <item
         jar="D:\StoreCheck\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
         jumboMode="true"
         revision="23.0.2"
-        sha1="9f5e60b0dd492ca28ec5f825cbf590f4eb66d76e">
+        sha1="fa7b1e6a6438d00c2c87b7012c187a7fefef9be1">
         <dex dex="D:\StoreCheck\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_d79e9e34b6d7ec2d576b7527357e90c9d9e948df\classes.dex" />
     </item>
     <item
         jar="D:\StoreCheck\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
         jumboMode="true"
         revision="23.0.2"
-        sha1="3b0637e1ec75b486b1f48b68cbe8b04369127485">
+        sha1="1c953137a69a599b90242e1bbcbe415ddbff1f34">
         <dex dex="D:\StoreCheck\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_3b4c767bc15ad6f22bef3d7f8ae7a6182688e4e7\classes.dex" />
     </item>
     <item
@@ -126,13 +133,6 @@
         revision="23.0.2"
         sha1="611605b6b640c1558f9bdea41de8ff837ab68ca8">
         <dex dex="D:\StoreCheck\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.crashlytics.sdk.android-crashlytics-2.5.5_ca27e7fb1c938fac98de88ba1e9a3c6fefec1f65\classes.dex" />
-    </item>
-    <item
-        jar="C:\Users\Shashwat.Bajpai\.gradle\caches\modules-2\files-2.1\com.nineoldandroids\library\2.4.0\e9b63380f3a242dbdbf103a2355ad7e43bad17cb\library-2.4.0.jar"
-        jumboMode="true"
-        revision="23.0.2"
-        sha1="e9b63380f3a242dbdbf103a2355ad7e43bad17cb">
-        <dex dex="D:\StoreCheck\app\build\intermediates\transforms\dex\debug\folders\1000\10\library-2.4.0_5d0182336df00174407184e7be200888df5b2157\classes.dex" />
     </item>
     <item
         jar="C:\Program Files\Android\Android Studio\gradle\m2repository\com\android\databinding\baseLibrary\2.1.2\baseLibrary-2.1.2.jar"

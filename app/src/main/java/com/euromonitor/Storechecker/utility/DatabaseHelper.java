@@ -1599,6 +1599,7 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         try
         {
+
             ContentValues values = new ContentValues();
             values.put(KEY_BRAND,brandName);
             values.put(KEY_UPDATED, 1);
@@ -1613,18 +1614,47 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
     }
     }
 
+    private void updateDetailsTableWhenBrandUpdated (String brandMarketID, String brandName)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        try
+        {
+
+            ContentValues values = new ContentValues();
+            values.put(KEY_BRAND,brandName);
+            values.put(KEY_UPDATED, 1);
+            db.update(TABLE_DETAILS, values, KEY_BRANDMARKETID + " = ?", new String[]{brandMarketID});
+        }
+        catch (Exception ex) {
+
+            throw ex;
+        } finally {
+            if (db != null)
+                db.close();
+        }
+    }
+
+
+
     public long savePricingDetails(PricingDetail pricingDetail, boolean isUpdate)
     {
         boolean status = false;
         long result = 0;
 
 
+
         updateMarketTableWhenBrandUpdated(String.valueOf(pricingDetail.getBrandMarketId()),pricingDetail.getBrandName());
+
+        updateDetailsTableWhenBrandUpdated(String.valueOf(pricingDetail.getBrandMarketId()),pricingDetail.getBrandName());
 
         SQLiteDatabase db = this.getWritableDatabase();
         try {
 
+
             ContentValues values = new ContentValues();
+            values.put(KEY_BRAND,pricingDetail.getBrandName());
+            values.put(KEY_UPDATED, 1);
+            db.update(TABLE_DETAILS, values, KEY_BRANDMARKETID + " = ?", new String[]{String.valueOf(pricingDetail.getBrandMarketId())});
             if (pricingDetail.getId()!=null && Integer.valueOf(pricingDetail.getId()) > 0 )
             {
 
@@ -1645,7 +1675,8 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
                 values.put(KEY_NBO, pricingDetail.getNbo());
                 values.put(KEY_CHANNELNAME, pricingDetail.getChannelName());
                 values.put(KEY_UPDATED, "1");
-                // TODO: Even if updates fails still the id of the item is saved in the result
+                // TODO: Even if updates fails still the id of the item is saved in the result~
+
                 db.update(TABLE_DETAILS, values, KEY_ID + " = ?", new String[]{String.valueOf(pricingDetail.getId())});
                 result = Long.valueOf(pricingDetail.getId());
 
