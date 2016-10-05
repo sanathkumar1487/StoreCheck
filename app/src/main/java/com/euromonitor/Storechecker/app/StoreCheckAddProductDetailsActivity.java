@@ -191,7 +191,8 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
     {
 
        setBindingProperties();
-        if (validateData()) {
+        if (validateData())
+        {
             PricingDetail pricingDetail = binding.getPricingDetail();
             pricingDetail.setBrandMarketId(brandMarketId);
             pricingDetail.setBrandId(brandId);
@@ -356,7 +357,8 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
         return value >= minimumAllowed && (value <= maximumAllowed || noMaximum || maximumAllowed == 0) || (isZeroAllowed && value == 0);
     }
 
-    private void setBindingProperties() {
+    private void setBindingProperties()
+    {
         String newValue = "";
         if (binding.multiPacks.getText() != null && !binding.multiPacks.getText().equals(""))
         {
@@ -395,25 +397,28 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
         ft.commit();
     }
 
-    private void setBinding() {
+    private void setBinding()
+    {
         validations = databaseHelper.getValidations(productCode);
 
         if (priceId > 0 || itemId > 0) {
             pricingDetail = databaseHelper.getPricingDetails(priceId, itemId);
         }
 
-        if (pricingDetail == null) {
+        if (pricingDetail == null)
+        {
 
             isUpdate = false;
             pricingDetail = new PricingDetail();
             pricingDetail.setSelectedOutletId(databaseHelper.getSelectedOutlet());
-
+            //brandMarketId=0;
             pricingDetail.setPricingId(priceId);
             pricingDetail.setBrandId(brandId);
             pricingDetail.setBrandMarketId(brandMarketId);
         }
 
-        if (isCopy) {
+        if (isCopy)
+        {
             pricingDetail.setId(null);
             pricingDetail.setMultiPack(1);
             pricingDetail.setPackSize(0);
@@ -424,7 +429,8 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
             pricingDetail.setPackTypeCode(0);
         }
 
-        if (pricingDetail.getBrandId() == 0 && brandId > 0) {
+        if (pricingDetail.getBrandId() == 0 && brandId > 0)
+        {
             pricingDetail.setBrandId(brandId);
         }
 
@@ -439,7 +445,8 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
         }
         pricingDetail.setProductName(productName == null ? "" : productName.trim());
 
-        if (brandId > 0) {
+        if (brandId > 0)
+        {
             binding.setPricingDetail(pricingDetail);
         }
         setSpinners();

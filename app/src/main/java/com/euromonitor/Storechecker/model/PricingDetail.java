@@ -7,6 +7,11 @@ import java.util.ArrayList;
  */
 public class PricingDetail {
 
+    public PricingDetail()
+    {
+
+    }
+
 
     public String getPrice() {
         return String.valueOf(price);

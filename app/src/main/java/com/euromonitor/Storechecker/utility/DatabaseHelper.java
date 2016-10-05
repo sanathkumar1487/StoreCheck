@@ -1642,9 +1642,10 @@ public class DatabaseHelper extends  SQLiteOpenHelper {
         long result = 0;
 
 
-        if (isUpdate)
+        if (isUpdate && pricingDetail.getBrandMarketId() != 0)
         {
             updateMarketTableWhenBrandUpdated(String.valueOf(pricingDetail.getBrandMarketId()),pricingDetail.getBrandName());
+
             updateDetailsTableWhenBrandUpdated(String.valueOf(pricingDetail.getBrandMarketId()),pricingDetail.getBrandName());
         }
 
