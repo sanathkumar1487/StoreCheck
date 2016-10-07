@@ -411,7 +411,7 @@ public class StoreCheckAddProductDetailsActivity extends AppCompatActivity {
             isUpdate = false;
             pricingDetail = new PricingDetail();
             pricingDetail.setSelectedOutletId(databaseHelper.getSelectedOutlet());
-            //brandMarketId=0;
+            brandMarketId=0;
             pricingDetail.setPricingId(priceId);
             pricingDetail.setBrandId(brandId);
             pricingDetail.setBrandMarketId(brandMarketId);

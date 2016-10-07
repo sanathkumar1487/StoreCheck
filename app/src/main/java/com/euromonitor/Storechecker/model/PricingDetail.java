@@ -7,10 +7,6 @@ import java.util.ArrayList;
  */
 public class PricingDetail {
 
-    public PricingDetail()
-    {
-
-    }
 
 
     public String getPrice() {
